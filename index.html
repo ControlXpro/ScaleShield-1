@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ScaleShield — Agency Infrastructure</title>
+
+<style>
+:root{
+  --bg:#07080B;
+  --bg2:#0D0F18;
+  --panel:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.08);
+  --border2:rgba(255,255,255,.12);
+
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+
+  --radius:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
+    radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
+    radial-gradient(800px circle at 10% 30%, rgba(168,85,247,.07), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+b{color:rgba(255,255,255,.92)}
+
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:88px 24px;
+}
+
+h1{
+  font-size:50px;
+  font-weight:900;
+  letter-spacing:-.03em;
+  line-height:1.06;
+}
+h2{
+  font-size:38px;
+  font-weight:850;
+  letter-spacing:-.02em;
+}
+h3{
+  font-size:18px;
+  font-weight:850;
+}
+p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-top:14px;
+}
+
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+  color:var(--muted2);
+  font-size:12px;
+  letter-spacing:.22em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.kdot{
+  width:8px;height:8px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.22);
+}
+
+.grad{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* NAV */
+.nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  backdrop-filter:blur(14px);
+  background:rgba(5,5,7,.65);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:100;
+}
+.nav-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+}
+.logo{
+  font-weight:950;
+  font-size:20px;
+}
+.logo span{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.nav-links{
+  display:none;
+  gap:18px;
+  align-items:center;
+}
+.nav-links a{
+  font-size:13px;
+  font-weight:750;
+  color:var(--muted);
+  transition:color .18s var(--ease);
+}
+.nav-links a:hover{color:#fff}
+@media(min-width:980px){ .nav-links{display:flex} }
+
+/* Buttons */
+.btn{
+  padding:14px 22px;
+  border-radius:16px;
+  font-weight:900;
+  transition:.25s var(--ease);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid transparent;
+  user-select:none;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;
+  box-shadow:0 0 40px rgba(214,177,94,.20);
+}
+.btn-primary:hover{transform:translateY(-3px);filter:brightness(1.02)}
+.btn-ghost{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.12);
+  color:#fff;
+}
+.btn-ghost:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 30px rgba(214,177,94,.12);
+}
+
+/* Cards */
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  transition:.30s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:radial-gradient(800px circle at 50% 0%, rgba(214,177,94,.16), transparent 55%);
+  opacity:0;
+  transition:opacity .28s var(--ease);
+  pointer-events:none;
+}
+.card:hover::after{opacity:1}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(214,177,94,.40);
+  box-shadow:0 0 55px rgba(214,177,94,.12);
+}
+
+.grid-2{display:grid;gap:24px}
+@media(min-width:980px){ .grid-2{grid-template-columns:1.05fr .95fr;align-items:start} }
+
+.grid-3{display:grid;gap:24px}
+@media(min-width:900px){ .grid-3{grid-template-columns:repeat(3,1fr)} }
+
+.grid-4{display:grid;gap:24px}
+@media(min-width:1100px){ .grid-4{grid-template-columns:repeat(4,1fr)} }
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:850;
+}
+.badge strong{color:#fff}
+
+.icon{
+  width:36px;height:36px;border-radius:14px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  box-shadow:0 0 24px rgba(214,177,94,.06);
+}
+.icon svg{width:18px;height:18px;opacity:.95}
+
+/* Hero */
+.hero{
+  padding-top:170px;
+  padding-bottom:34px;
+  text-align:center;
+}
+.hero-sub{
+  max-width:78ch;
+  margin:16px auto 0 auto;
+}
+.hero-actions{
+  margin-top:28px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.hero-strip{
+  margin-top:22px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* Mini feature chips */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:850;
+  transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.chip:hover{
+  transform:translateY(-1px);
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 24px rgba(214,177,94,.10);
+}
+.chip .dot{
+  width:10px;height:10px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 16px rgba(214,177,94,.18);
+}
+
+/* Stats */
+.stat{
+  font-size:44px;
+  font-weight:950;
+  letter-spacing:-.02em;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* Pricing */
+.price{
+  font-size:40px;
+  font-weight:950;
+  letter-spacing:-.02em;
+  margin-top:12px;
+}
+.most{
+  position:absolute;
+  top:18px;
+  right:18px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+  color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 30px rgba(214,177,94,.20);
+}
+.ul{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
+}
+.li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+.check{
+  width:20px;height:20px;border-radius:999px;
+  display:grid;place-items:center;
+  background:rgba(214,177,94,.10);
+  border:1px solid rgba(214,177,94,.18);
+  box-shadow:0 0 18px rgba(214,177,94,.10);
+  flex:0 0 auto;
+  margin-top:1px;
+}
+.check svg{width:14px;height:14px}
+
+/* Verticals */
+.vert-card{min-height:210px}
+.pulse{
+  position:absolute;
+  top:-90px; right:-120px;
+  width:220px;height:220px;border-radius:999px;
+  background:radial-gradient(circle at 30% 30%, rgba(214,177,94,.22), transparent 60%);
+  filter:blur(10px);
+  opacity:.75;
+  animation:pulse 5.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ transform:scale(1); opacity:.70 }
+  50%{ transform:scale(1.12); opacity:.95 }
+}
+.wiggle{display:inline-block;transition:transform .2s var(--ease)}
+.card:hover .wiggle{transform:rotate(-3deg) scale(1.02)}
+
+/* Graph */
+.graph-wrap{display:grid;gap:24px}
+@media(min-width:980px){ .graph-wrap{grid-template-columns:1.05fr .95fr;align-items:center} }
+
+.canvas-card{padding:18px}
+.canvas-shell{
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  overflow:hidden;
+  position:relative;
+}
+.canvas-shell::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(700px circle at 20% 0%, rgba(214,177,94,.10), transparent 55%),
+    radial-gradient(700px circle at 80% 10%, rgba(242,210,122,.08), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 22px);
+  opacity:.35;
+  pointer-events:none;
+  mask-image: radial-gradient(900px circle at 50% 50%, #000 45%, transparent 72%);
+}
+#verticalChart{width:100%;height:320px;display:block}
+
+.legend{
+  display:flex;gap:14px;flex-wrap:wrap;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+.leg{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+}
+.swatch{width:12px;height:12px;border-radius:999px;display:inline-block}
+.s1{background:linear-gradient(135deg,var(--gold),var(--gold2))}
+.s2{background:rgba(56,189,248,.95)}
+.note{margin-top:10px;color:var(--muted2);font-size:12px;line-height:1.5}
+
+/* Testimonials */
+.quote{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+.person{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:14px;
+}
+.avatar{
+  width:38px;height:38px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  display:grid;place-items:center;
+  font-weight:950;
+  color:#fff;
+}
+.tag{
+  font-size:12px;
+  font-weight:900;
+  color:rgba(255,255,255,.85);
+  border:1px solid rgba(214,177,94,.22);
+  background:rgba(214,177,94,.10);
+  padding:7px 10px;
+  border-radius:999px;
+}
+
+/* FAQ */
+.faq{display:grid;gap:14px}
+.faq-btn{
+  width:100%;
+  text-align:left;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.05);
+  padding:16px 18px;
+  cursor:pointer;
+  color:#fff;
+  transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+}
+.faq-btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.25);
+  box-shadow:0 0 26px rgba(214,177,94,.10);
+}
+.faq-q{font-weight:950;font-size:14px}
+.faq-a{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+  display:none;
+}
+.faq-btn[aria-expanded="true"] .faq-a{display:block}
+
+/* Footer */
+footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:42px 24px;
+  text-align:center;
+  color:var(--muted);
+}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
+.reveal.active{opacity:1;transform:none}
+
+/* Floating CTA */
+.float{position:fixed;right:16px;bottom:16px;z-index:120}
+.float a{
+  box-shadow:0 14px 48px -30px rgba(0,0,0,.85), 0 0 40px rgba(214,177,94,.12);
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="logo"><span>ScaleShield</span></div>
+      <div class="nav-links">
+        <a href="#stats">Stats</a>
+        <a href="#verticals">Verticals</a>
+        <a href="#graph">Graph</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Contact Now</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> RELIABLE META INFRASTRUCTURE</div>
+    <h1>Scale Meta with <span class="grad">Premium</span> agency infrastructure.</h1>
+    <p class="hero-sub">
+      Stable access, fast onboarding, and <b>unlimited replacements</b> — built for teams that don’t want downtime.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#pricing" class="btn btn-primary">View Pricing</a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-ghost">Telegram</a>
+    </div>
+
+    <div class="hero-strip">
+      <div class="chip"><span class="dot"></span> Launch without delays</div>
+      <div class="chip"><span class="dot"></span> Always-on support (24/7)</div>
+      <div class="chip"><span class="dot"></span> Replacement-ready</div>
+      <div class="chip"><span class="dot"></span> Secure onboarding</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> PROOF</div>
+    <h2>Scale Metrics</h2>
+    <p>High-level performance indicators (animated).</p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal">
+      <div class="stat count" data-value="200" data-type="moneyM">$0M+</div>
+      <p>Ad Spend Managed</p>
+    </div>
+    <div class="card reveal">
+      <div class="stat count" data-value="300" data-type="plus">0+</div>
+      <p>Active Clients</p>
+    </div>
+    <div class="card reveal">
+      <div class="stat count" data-value="16100" data-type="k">0.0K</div>
+      <p>Campaigns Monitored</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:24px;">
+    <div class="grid-3" style="gap:18px;">
+      <div>
+        <div class="badge"><strong>24/7</strong>&nbsp;Support coverage</div>
+        <p style="margin-top:10px;">Fast help for setup, access, approvals guidance, and troubleshooting.</p>
+      </div>
+      <div>
+        <div class="badge"><strong>Unlimited</strong>&nbsp;Replacements</div>
+        <p style="margin-top:10px;">If something breaks, we swap it — so campaigns keep running.</p>
+      </div>
+      <div>
+        <div class="badge"><strong>Secure</strong>&nbsp;Onboarding</div>
+        <p style="margin-top:10px;">Clear steps, clean handoff, stable structure — minimal friction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERTICALS -->
+<section id="verticals">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> VERTICAL FOCUS</div>
+    <h2>Neutral, Gambling/iGaming, and policy-sensitive verticals</h2>
+    <p>
+      We support teams across <b>Neutral</b> and <b>iGaming/Gambling</b> — and for <b>policy-sensitive gray verticals</b>,
+      we focus on <b>reliability, monitoring, and fast replacements</b>.
+    </p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal vert-card">
+      <div class="pulse"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3><span class="wiggle">Neutral</span> verticals</h3>
+            <div class="badge" style="margin-top:10px;"><strong>Stable</strong>&nbsp;scaling</div>
+          </div>
+        </div>
+      </div>
+      <div class="ul">
+        <div class="li">
+          <div class="check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <span>Ecom, lead gen, apps, content — steady growth curves</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Less volatility, easier creative iteration & testing cycles</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal vert-card">
+      <div class="pulse" style="opacity:.55"></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="3"/>
+            <circle cx="9" cy="9" r="1"/>
+            <circle cx="15" cy="15" r="1"/>
+            <circle cx="15" cy="9" r="1"/>
+            <circle cx="9" cy="15" r="1"/>
+          </svg>
+        </div>
+        <div>
+          <h3><span class="wiggle">Gambling / iGaming</span></h3>
+          <div class="badge" style="margin-top:10px;"><strong>High</strong>&nbsp;velocity</div>
+        </div>
+      </div>
+      <div class="ul">
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Faster scaling curves with tighter monitoring needs</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Creative rotation + quick recovery when disruptions happen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal vert-card">
+      <div class="pulse" style="opacity:.45"></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.3 3.6L2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"/>
+            <path d="M12 9v4"/><path d="M12 17h.01"/>
+          </svg>
+        </div>
+        <div>
+          <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
+          <div class="badge" style="margin-top:10px;"><strong>Reliability</strong>&nbsp;first</div>
+        </div>
+      </div>
+      <p style="margin-top:12px;">
+        For policy-sensitive categories, we focus on <b>structure, reliability, monitoring, and rapid replacement</b>.
+        (We do not provide “how to break rules” guidance.)
+      </p>
+      <div class="ul">
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Risk-managed operations, fast incident response</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>We keep campaigns moving through replacements + support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:24px;">
+    <div class="grid-3" style="gap:18px;">
+      <div>
+        <h3>Meta-ready structure</h3>
+        <p style="margin-top:10px;">Clean onboarding steps, stable setup, minimal friction to launch.</p>
+      </div>
+      <div>
+        <h3>Always-on support</h3>
+        <p style="margin-top:10px;">24/7 help for access, setup, approvals guidance, troubleshooting.</p>
+      </div>
+      <div>
+        <h3>Replacement engine</h3>
+        <p style="margin-top:10px;">If something breaks, we replace it quickly — maintaining momentum.</p>
+      </div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Get a recommendation</a>
+      <a class="btn btn-ghost" href="#pricing">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- GRAPH -->
+<section id="graph">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> SCALING VISUAL</div>
+    <h2>Vertical Performance graph</h2>
+  </div>
+
+  <div class="graph-wrap" style="margin-top:30px;">
+    <div class="card canvas-card reveal">
+      <div class="canvas-shell">
+        <canvas id="verticalChart" width="1100" height="320"></canvas>
+      </div>
+
+      <div class="legend">
+        <div class="leg"><span class="swatch s1"></span> Neutral (stable scaling)</div>
+        <div class="leg"><span class="swatch s2"></span> iGaming (aggressive scaling)</div>
+      </div>
+
+      <div class="note">
+        Visualization is illustrative for marketing/education. Values show scaling patterns, not client-specific data.
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>What this means for you</h3>
+      <p style="margin-top:10px;">
+        Neutral verticals usually scale steadily with fewer volatility spikes. iGaming can scale faster but needs
+        tighter monitoring and quicker operational response.
+      </p>
+      <div class="ul">
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Plan the right package based on velocity + risk tolerance</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Operate with replacements + always-on support to reduce downtime</span>
+        </div>
+      </div>
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Ask for a plan</a>
+        <a class="btn btn-ghost" href="#pricing">See packages</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> PRICING</div>
+    <h2>Packages</h2>
+    <p>Monthly packages include 24/7 support and unlimited replacements.</p>
+  </div>
+
+  <div class="grid-4" style="margin-top:30px;">
+    <div class="card reveal">
+      <h3>BM3 Package</h3>
+      <div class="price">$199</div>
+      <p>/month • BM3 with $50 daily spend limit, 3 ad accounts</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Controlled testing & scaling</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>24/7 support + replacements included</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Contact Now</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Single Agency Ad Account</h3>
+      <div class="price">$450</div>
+      <p>/month • 24/7 support and unlimited replacements</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>1 agency ad account</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Unlimited replacements</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Contact Now</a>
+      </div>
+    </div>
+
+    <div class="card reveal" style="border-color:rgba(214,177,94,.28);">
+      <div class="most">Most Popular</div>
+      <h3>Dual Agency Ad Accounts</h3>
+      <div class="price">$850</div>
+      <p>/month • 24/7 support and unlimited replacements</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>2 agency ad accounts</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Ideal for teams running multiple offers</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Get Dual Access</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Top Agency Package</h3>
+      <div class="price">$1,950</div>
+      <p>/month • 24/7 support and unlimited replacements</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Premium agency access</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Best for aggressive scaling operations</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Scale With Top</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:44px;">
+    <div class="kicker"><span class="kdot"></span> ONE-TIME SERVICES</div>
+    <h2>One-time support options</h2>
+    <p>Same premium workflow — clear steps, fast response, and support on Telegram.</p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal">
+      <h3>Manual Ad Approval</h3>
+      <div class="price">$125</div>
+      <p>per ad • guidance + review for approval flow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Fast response via Telegram</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Clear action steps</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-ghost" href="https://t.me/scaleshieldsupport" target="_blank">Ask availability</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Facebook Ad Account Unban</h3>
+      <div class="price">$1,800</div>
+      <p>one-time fee • case review + support workflow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Works best with complete info</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>We’ll confirm feasibility first</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-ghost" href="https://t.me/scaleshieldsupport" target="_blank">Message now</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Facebook Profile Unban</h3>
+      <div class="price">$4,000</div>
+      <p>one-time fee • case review + escalation workflow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Best for high-value operators</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Fast response + clear steps</span></div>
+      </div>
+      <div style="margin-top:18px;">
+        <a class="btn btn-ghost" href="https://t.me/scaleshieldsupport" target="_blank">Ask availability</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:26px;">
+    <h3>Need help picking the right setup?</h3>
+    <p style="margin-top:10px;">
+      Send your spend level + GEO + vertical on Telegram — we’ll recommend the cleanest package.
+    </p>
+    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Contact Now</a>
+      <a class="btn btn-ghost" href="#verticals">See vertical focus</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> REVIEWS</div>
+    <h2>What clients say</h2>
+    <p>Generated testimonials to show typical use cases and outcomes.</p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal">
+      <div class="tag">“Replacements are real”</div>
+      <div class="quote">“We had 2 issues in the first week and both got swapped quickly. No downtime panic — support stayed on until we were live again.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">AK</div>
+          <div>
+            <div style="font-weight:950;">Artem K.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Ecom • EU</div>
+          </div>
+        </div>
+        <div class="badge"><strong>24/7</strong>&nbsp;support</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Clean onboarding”</div>
+      <div class="quote">“Setup was organized, not messy. We got a clear handoff and could start running without back-and-forth.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">NS</div>
+          <div>
+            <div style="font-weight:950;">Nadia S.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Lead Gen Agency</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Fast</strong>&nbsp;setup</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Saved our launch”</div>
+      <div class="quote">“Manual approval support helped us avoid delays. We fixed what mattered and got the campaign live faster.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">RM</div>
+          <div>
+            <div style="font-weight:950;">Rafael M.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Performance Buyer</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Launch</strong>&nbsp;ready</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Good for high-velocity”</div>
+      <div class="quote">“For iGaming speed, support response time matters. We get answers fast and replacements keep things moving.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">DL</div>
+          <div>
+            <div style="font-weight:950;">Daria L.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">iGaming Ops</div>
+          </div>
+        </div>
+        <div class="badge"><strong>High</strong>&nbsp;velocity</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“BM3 is perfect for testing”</div>
+      <div class="quote">“BM3 spend cap is great for controlled testing. Easy to run clean experiments without overexposing budget.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">ML</div>
+          <div>
+            <div style="font-weight:950;">Mark L.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">App Marketing</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Testing</strong>&nbsp;friendly</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Reliable operations”</div>
+      <div class="quote">“We don’t need promises — we need stability. This is the first time ops felt predictable.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">SR</div>
+          <div>
+            <div style="font-weight:950;">Sami R.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Agency Owner</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Stable</strong>&nbsp;ops</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> FAQ</div>
+    <h2>Quick answers</h2>
+    <p>If you don’t see your question here, message Telegram and we’ll respond fast.</p>
+  </div>
+
+  <div class="faq" style="margin-top:26px;">
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do all monthly packages include unlimited replacements?</div>
+      <div class="faq-a">Yes — monthly packages include 24/7 support and unlimited replacements.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">How fast can we start?</div>
+      <div class="faq-a">Onboarding is designed to be quick. Message Telegram and we’ll guide you through the cleanest setup steps.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do you support iGaming / Gambling verticals?</div>
+      <div class="faq-a">We support iGaming/Gambling teams operationally (setup, reliability, monitoring, replacements). We don’t provide instructions to break platform rules.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What information do you need to recommend a package?</div>
+      <div class="faq-a">Usually spend level, GEO, vertical, and how many accounts you need. Then we match the best option.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Are one-time services guaranteed?</div>
+      <div class="faq-a">No service can be guaranteed. We’ll confirm feasibility for your case first before proceeding.</div>
+    </button>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="card reveal">
+    <div class="kicker"><span class="kdot"></span> CONTACT</div>
+    <h2>Talk to ScaleShield Support</h2>
+    <p>Fast responses. Setup, approvals guidance, scaling, replacements — 24/7.</p>
+    <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Contact Now</a>
+      <a href="#pricing" class="btn btn-ghost">View Pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+© <span id="year"></span> ScaleShield — All rights reserved.
+</footer>
+
+<div class="float">
+  <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Contact Now</a>
+</div>
+
+<script>
+/* year */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* FAQ toggles */
+document.querySelectorAll(".faq-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+  });
+});
+
+/* scroll reveal */
+const elements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('active');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:.18});
+elements.forEach(el=>observer.observe(el));
+
+/* counters */
+function formatCount(type, n){
+  if(type === "moneyM") return "$" + n.toLocaleString() + "M+";
+  if(type === "plus") return n.toLocaleString() + "+";
+  if(type === "k") return (n/1000).toFixed(1) + "K";
+  return n.toLocaleString();
+}
+function animateCount(el,target,type){
+  const start = performance.now();
+  const duration = 1200;
+  function tick(now){
+    const t = Math.min(1,(now-start)/duration);
+    const eased = 1 - Math.pow(1-t,3);
+    const val = Math.round(target*eased);
+    el.textContent = formatCount(type,val);
+    if(t<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+document.querySelectorAll('.count').forEach(el=>{
+  const value = parseInt(el.dataset.value,10);
+  const type = el.dataset.type || "";
+  const io = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){
+      animateCount(el,value,type);
+      io.disconnect();
+    }
+  },{threshold:.35});
+  io.observe(el);
+});
+
+/* ===== Animated Chart (Neutral vs iGaming) ===== */
+const canvas = document.getElementById("verticalChart");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(320 * dpr);
+  canvas.style.height = "320px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function drawChart(progress){
+  const w = canvas.getBoundingClientRect().width;
+  const h = 320;
+
+  ctx.clearRect(0,0,w,h);
+
+  const padL = 44, padR = 18, padT = 20, padB = 34;
+  const cw = w - padL - padR;
+  const ch = h - padT - padB;
+
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = "rgba(255,255,255,0.14)";
+  ctx.lineWidth = 1;
+
+  const rows = 5;
+  for(let i=0;i<=rows;i++){
+    const y = padT + (ch/rows)*i;
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(padL+cw,y); ctx.stroke();
+  }
+
+  ctx.fillStyle = "rgba(255,255,255,0.55)";
+  ctx.font = "12px Inter, system-ui";
+  const maxVal = 100;
+  for(let i=0;i<=rows;i++){
+    const v = Math.round(maxVal - (maxVal/rows)*i);
+    const y = padT + (ch/rows)*i;
+    ctx.fillText(v.toString(), 8, y+4);
+  }
+  const labels = ["W1","W2","W3","W4","W5","W6","W7"];
+  for(let i=0;i<labels.length;i++){
+    const x = padL + (cw/(labels.length-1))*i;
+    ctx.fillText(labels[i], x-10, padT+ch+24);
+  }
+
+  const neutral = [12, 18, 26, 35, 44, 52, 60];
+  const igaming  = [10, 22, 34, 50, 68, 82, 95];
+
+  function toXY(arr, i){
+    const x = padL + (cw/(arr.length-1))*i;
+    const y = padT + ch - (arr[i]/maxVal)*ch;
+    return {x,y};
+  }
+
+  function drawLine(arr, stroke, glow){
+    const points = arr.map((_,i)=>toXY(arr,i));
+    const totalSegments = points.length - 1;
+    const segFloat = progress * totalSegments;
+    const segFull = Math.floor(segFloat);
+    const segPart = segFloat - segFull;
+
+    ctx.save();
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = stroke;
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = glow;
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    for(let i=1;i<=segFull;i++){
+      ctx.lineTo(points[i].x, points[i].y);
+    }
+    if(segFull < totalSegments){
+      const a = points[segFull];
+      const b = points[segFull+1];
+      ctx.lineTo(a.x + (b.x-a.x)*segPart, a.y + (b.y-a.y)*segPart);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    const visibleCount = Math.max(1, segFull + 1);
+    for(let i=0;i<visibleCount;i++){
+      const p = points[i];
+      ctx.beginPath();
+      ctx.fillStyle = stroke;
+      ctx.globalAlpha = 0.95;
+      ctx.arc(p.x,p.y,3.2,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  drawLine(neutral, "rgba(242,210,122,0.95)", "rgba(214,177,94,0.22)");
+  drawLine(igaming, "rgba(56,189,248,0.95)", "rgba(56,189,248,0.18)");
+
+  ctx.fillStyle = "rgba(255,255,255,0.70)";
+  ctx.font = "12px Inter, system-ui";
+  ctx.fillText("Ad Spend Scaling (Illustrative Index)", padL, 14);
+}
+
+let chartStarted = false;
+const chartObserver = new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting && !chartStarted){
+    chartStarted = true;
+    const start = performance.now();
+    const duration = 1400;
+    function step(now){
+      const t = Math.min(1, (now-start)/duration);
+      const eased = 1 - Math.pow(1-t,3);
+      drawChart(eased);
+      if(t<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    chartObserver.disconnect();
+  }
+},{threshold:.25});
+
+chartObserver.observe(document.getElementById("graph"));
+drawChart(0);
+</script>
+
+</body>
+</html>
