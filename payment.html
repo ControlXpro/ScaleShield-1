@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ScaleShield — Payment Details</title>
+
+<style>
+:root{
+  --bg:#07080B;
+  --bg2:#0D0F18;
+  --panel:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.10);
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+  --radius:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
+    radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
+    radial-gradient(800px circle at 10% 30%, rgba(168,85,247,.07), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:34px 20px 84px;
+}
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(14px);
+  background:rgba(5,5,7,.65);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.logo{
+  font-weight:950;
+  font-size:18px;
+  letter-spacing:-.01em;
+}
+.logo span{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.btn{
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:900;
+  transition:.25s var(--ease);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  user-select:none;
+  white-space:nowrap;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 30px rgba(214,177,94,.12);
+}
+
+.hero{
+  margin-top:26px;
+  padding:34px 26px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:radial-gradient(900px circle at 40% -10%, rgba(214,177,94,.18), transparent 55%);
+  opacity:.9;
+  pointer-events:none;
+}
+.hero-inner{position:relative; z-index:1}
+
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--muted2);
+  font-size:12px;
+  letter-spacing:.22em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.kdot{
+  width:8px;height:8px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.22);
+}
+
+h1{
+  margin-top:12px;
+  font-size:42px;
+  line-height:1.08;
+  letter-spacing:-.03em;
+  font-weight:950;
+}
+.sub{
+  margin-top:12px;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:80ch;
+}
+
+.grid{
+  margin-top:22px;
+  display:grid;
+  gap:18px;
+}
+@media(min-width:900px){
+  .grid{grid-template-columns:1fr 1fr}
+}
+
+.card{
+  border-radius:22px;
+  border:1px solid var(--border);
+  background:var(--panel);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  transition:.25s var(--ease);
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:radial-gradient(700px circle at 30% 0%, rgba(214,177,94,.16), transparent 55%);
+  opacity:0;
+  transition:opacity .25s var(--ease);
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 40px rgba(214,177,94,.10);
+}
+.card:hover::after{opacity:1}
+
+.row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+}
+.badge strong{color:#fff}
+
+.name{
+  margin-top:10px;
+  font-weight:950;
+  font-size:16px;
+}
+.addr{
+  margin-top:8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px;
+  color:rgba(255,255,255,.86);
+  line-height:1.55;
+  word-break:break-all;
+}
+
+.copy{
+  margin-top:14px;
+  width:100%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(214,177,94,.22);
+  background:rgba(214,177,94,.10);
+  color:#fff;
+  font-weight:950;
+  cursor:pointer;
+  transition:.22s var(--ease);
+  user-select:none;
+}
+.copy:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.40);
+  box-shadow:0 0 28px rgba(214,177,94,.12);
+}
+.copy:active{transform:translateY(0)}
+.copy svg{width:18px;height:18px}
+
+.note{
+  margin-top:18px;
+  padding:16px 18px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+  line-height:1.7;
+}
+.note b{color:rgba(255,255,255,.92)}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%) translateY(18px);
+  opacity:0;
+  pointer-events:none;
+  transition:.28s var(--ease);
+  z-index:200;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+.toast-inner{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.28);
+  background:rgba(10,10,14,.75);
+  backdrop-filter:blur(12px);
+  box-shadow:0 14px 48px -30px rgba(0,0,0,.85), 0 0 40px rgba(214,177,94,.10);
+  color:#fff;
+  font-weight:950;
+  font-size:13px;
+}
+.toast-inner .dot{
+  width:10px;height:10px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 16px rgba(214,177,94,.22);
+}
+
+</style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="logo"><span>ScaleShield</span> <span style="color:rgba(255,255,255,.80);font-weight:900;">Payments</span></div>
+      <a class="btn" href="index.html">← Back to site</a>
+    </div>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker"><span class="kdot"></span> PAYMENT DETAILS</div>
+        <h1>Copy-ready crypto addresses</h1>
+        <div class="sub">
+          Click any card to <b>copy the address instantly</b>. Always double-check network before sending.
+        </div>
+
+        <div class="grid">
+          <!-- USDT TRC20 -->
+          <div class="card" data-copy="TFD9M2PveubYocfWLVgCTzmdSaZ4zZRQZv">
+            <div class="row">
+              <div>
+                <div class="badge"><strong>USDT</strong>&nbsp;TRC20</div>
+                <div class="name">USDT TRC20 address</div>
+                <div class="addr">TFD9M2PveubYocfWLVgCTzmdSaZ4zZRQZv</div>
+              </div>
+            </div>
+            <button class="copy" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="3"></rect>
+                <rect x="2" y="2" width="13" height="13" rx="3"></rect>
+              </svg>
+              Click to copy
+            </button>
+          </div>
+
+          <!-- USDT ERC20 -->
+          <div class="card" data-copy="0x338B11b9e9A31948F902600c82ED5AE6bF0ED21B">
+            <div class="row">
+              <div>
+                <div class="badge"><strong>USDT</strong>&nbsp;ERC20</div>
+                <div class="name">USDT ERC20 address</div>
+                <div class="addr">0x338B11b9e9A31948F902600c82ED5AE6bF0ED21B</div>
+              </div>
+            </div>
+            <button class="copy" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="3"></rect>
+                <rect x="2" y="2" width="13" height="13" rx="3"></rect>
+              </svg>
+              Click to copy
+            </button>
+          </div>
+
+          <!-- BTC -->
+          <div class="card" data-copy="bc1q96dl6lg70pghsm5s3r9ttcnzu6slv3uw0lg8h2">
+            <div class="row">
+              <div>
+                <div class="badge"><strong>BTC</strong>&nbsp;Bitcoin</div>
+                <div class="name">BTC address</div>
+                <div class="addr">bc1q96dl6lg70pghsm5s3r9ttcnzu6slv3uw0lg8h2</div>
+              </div>
+            </div>
+            <button class="copy" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="3"></rect>
+                <rect x="2" y="2" width="13" height="13" rx="3"></rect>
+              </svg>
+              Click to copy
+            </button>
+          </div>
+
+          <!-- ETH -->
+          <div class="card" data-copy="0x338B11b9e9A31948F902600c82ED5AE6bF0ED21B">
+            <div class="row">
+              <div>
+                <div class="badge"><strong>ETH</strong>&nbsp;Ethereum</div>
+                <div class="name">ETH address</div>
+                <div class="addr">0x338B11b9e9A31948F902600c82ED5AE6bF0ED21B</div>
+              </div>
+            </div>
+            <button class="copy" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="3"></rect>
+                <rect x="2" y="2" width="13" height="13" rx="3"></rect>
+              </svg>
+              Click to copy
+            </button>
+          </div>
+        </div>
+
+        <div class="note">
+          <b>Reminder:</b> Always send using the correct network (TRC20 vs ERC20).
+          If you’re unsure, message Telegram support before sending.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-inner"><span class="dot"></span><span id="toastText">Copied</span></div>
+  </div>
+
+<script>
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+  let toastTimer = null;
+
+  function showToast(msg){
+    toastText.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove("show"), 1600);
+  }
+
+  async function copyText(text){
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){
+      return false;
+    }
+  }
+
+  document.querySelectorAll(".card").forEach(card=>{
+    const addr = card.getAttribute("data-copy") || "";
+    const btn = card.querySelector(".copy");
+
+    function handleCopy(){
+      copyText(addr).then(ok=>{
+        showToast(ok ? "Copied to clipboard" : "Copy failed — please copy manually");
+      });
+    }
+
+    // Click button OR anywhere on card (except selecting text)
+    btn.addEventListener("click", (e)=>{ e.stopPropagation(); handleCopy(); });
+    card.addEventListener("click", ()=> handleCopy());
+  });
+</script>
+
+</body>
+</html>
