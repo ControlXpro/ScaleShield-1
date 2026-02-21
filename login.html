@@ -9,9 +9,7 @@
 :root{
   --bg:#07080B;
   --panel:rgba(255,255,255,.05);
-  --panel2:rgba(255,255,255,.035);
   --border:rgba(255,255,255,.10);
-  --border2:rgba(255,255,255,.14);
   --gold:#D6B15E;
   --gold2:#F2D27A;
   --text:#fff;
@@ -48,6 +46,7 @@ a{color:inherit;text-decoration:none}
   transition:.25s var(--ease);
   display:inline-flex;align-items:center;gap:10px;
   user-select:none;
+  cursor:pointer;
 }
 .btn:hover{transform:translateY(-2px);border-color:rgba(214,177,94,.35);box-shadow:0 0 28px rgba(214,177,94,.12)}
 .btn-primary{
@@ -253,6 +252,9 @@ td{color:rgba(255,255,255,.88);font-size:13px}
   transition:.25s var(--ease);
 }
 .toast.show{opacity:1}
+
+/* Hide sensitive content until login */
+#dashboard, #authBar { display:none; }
 </style>
 </head>
 
@@ -260,11 +262,12 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 <div class="wrap">
   <div class="top">
     <div class="brand"><span>ScaleShield</span></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;" id="authBar">
       <a class="btn" href="index.html">Back to site</a>
       <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram</a>
       <a class="btn btn-whatsapp" href="https://wa.me/16087204445" target="_blank" rel="noopener">WhatsApp</a>
       <a class="btn" href="payment.html" target="_blank" rel="noopener">Payment Details</a>
+      <button class="btn" id="btnLogout" type="button">Log Out</button>
     </div>
   </div>
 
@@ -272,26 +275,27 @@ td{color:rgba(255,255,255,.88);font-size:13px}
     <div class="h1">Client Log In</div>
     <div class="p">Enter the login and password you received from support.</div>
 
-    <div class="form" id="loginForm">
+    <!-- LOGIN FORM (always visible until success) -->
+    <form class="form" id="loginForm">
       <div>
         <label for="login">Login</label>
-        <input id="login" autocomplete="username" placeholder="Your login" />
+        <input id="login" name="login" autocomplete="username" placeholder="Your login" required />
       </div>
       <div>
         <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" placeholder="Your password" />
+        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required />
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" id="btnLogin" type="button">Log In</button>
-        <button class="btn" id="btnLogout" type="button" style="display:none;">Log Out</button>
+        <button class="btn btn-primary" id="btnLogin" type="submit">Log In</button>
       </div>
 
       <div class="err" id="err">Invalid login or password.</div>
-    </div>
+    </form>
 
     <div class="hr"></div>
 
+    <!-- DASHBOARD (hidden until login) -->
     <div class="dashboard" id="dashboard">
       <div class="kicker"><span class="kdot"></span> CLIENT DASHBOARD</div>
       <div class="p" style="margin-top:10px;">Subscription + account mapping (organized view).</div>
@@ -310,7 +314,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
               <span style="opacity:.7">🔎</span>
               <input id="search" placeholder="Search accounts…" />
             </div>
-            <button class="copyBtn gold" id="copyAllBm" type="button">Copy BM ID</button>
+            <button class="copyBtn gold" id="copyBmTop" type="button">Copy BM ID</button>
           </div>
         </div>
 
@@ -339,7 +343,14 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 <div class="toast" id="toast">Copied</div>
 
 <script>
-/* ✅ USERS LIST (Titan Ltda only) */
+/*
+IMPORTANT:
+This is ONLY "front-end login" (HTML/JS).
+It hides data visually, but a technical user can still view page source.
+For real security, you need a server-side login.
+*/
+
+/* ✅ CLIENT DATA */
 const USERS = [
   {
     name: "Titan Ltda",
@@ -358,16 +369,22 @@ const USERS = [
   }
 ];
 
+/* UI refs */
 const toast = document.getElementById("toast");
-let toastTimer = null;
+const err = document.getElementById("err");
+const loginForm = document.getElementById("loginForm");
+const dashboard = document.getElementById("dashboard");
+const authBar = document.getElementById("authBar");
+const btnLogout = document.getElementById("btnLogout");
 
+/* toast */
+let toastTimer = null;
 function showToast(msg){
   toast.textContent = msg;
   toast.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=>toast.classList.remove("show"), 1100);
 }
-
 async function copyText(text){
   try{
     await navigator.clipboard.writeText(text);
@@ -380,15 +397,23 @@ async function copyText(text){
   ta.style.top = "-9999px";
   document.body.appendChild(ta);
   ta.focus(); ta.select();
-  try{
-    document.execCommand("copy");
-    showToast("Copied");
-  }catch(e){
-    showToast("Copy failed");
-  }
+  try{ document.execCommand("copy"); showToast("Copied"); }
+  catch(e){ showToast("Copy failed"); }
   document.body.removeChild(ta);
 }
 
+/* sanitize */
+function escapeHtml(s){
+  return String(s ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+function escapeAttr(s){ return escapeHtml(s).replaceAll('"',"&quot;"); }
+
+/* build UI */
 function buildSummary(client){
   const grid = document.getElementById("summaryGrid");
   grid.innerHTML = "";
@@ -397,11 +422,11 @@ function buildSummary(client){
   a.className = "box";
   a.innerHTML = `
     <div class="title">Subscription</div>
-    <div class="small"><b>Client:</b> ${client.name}</div>
-    <div class="small"><b>Package:</b> ${client.packageName}</div>
+    <div class="small"><b>Client:</b> ${escapeHtml(client.name)}</div>
+    <div class="small"><b>Package:</b> ${escapeHtml(client.packageName)}</div>
     <div class="pillRow">
-      <div class="pill gold"><strong>Price</strong> ${client.price}</div>
-      <div class="pill"><strong>Billing</strong> ${client.paymentDue}</div>
+      <div class="pill gold"><strong>Price</strong> ${escapeHtml(client.price)}</div>
+      <div class="pill"><strong>Billing</strong> ${escapeHtml(client.paymentDue)}</div>
       <div class="pill"><strong>Accounts</strong> ${(client.adAccounts||[]).length}</div>
     </div>
   `;
@@ -417,16 +442,14 @@ function buildSummary(client){
       <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
     </div>
     <div class="small" style="margin-top:12px;color:rgba(255,255,255,.75)">
-      Default BM ID: <span class="mono" title="${bm}">${bm || "—"}</span>
+      Default BM ID: <span class="mono" title="${escapeAttr(bm)}">${escapeHtml(bm || "—")}</span>
     </div>
   `;
 
   grid.appendChild(a);
   grid.appendChild(b);
 
-  const quickCopyBm = document.getElementById("quickCopyBm");
-  quickCopyBm.addEventListener("click", ()=> bm ? copyText(bm) : showToast("No BM ID"));
-
+  document.getElementById("quickCopyBm").addEventListener("click", ()=> bm ? copyText(bm) : showToast("No BM ID"));
   document.getElementById("quickCopyAllAd").addEventListener("click", ()=>{
     const ids = (client.adAccounts || []).map(x => x.adId).join("\n");
     if(!ids) return showToast("No Ad IDs");
@@ -438,10 +461,8 @@ function buildRows(client){
   const tbody = document.getElementById("rows");
   tbody.innerHTML = "";
 
-  (client.adAccounts || []).forEach((a, idx)=>{
+  (client.adAccounts || []).forEach((a)=>{
     const tr = document.createElement("tr");
-    tr.dataset.idx = idx;
-
     tr.innerHTML = `
       <td data-label="Ad Account Name">${escapeHtml(a.name)}</td>
       <td data-label="Ad Account ID"><span class="mono" title="${escapeAttr(a.adId)}">${escapeHtml(a.adId)}</span></td>
@@ -459,87 +480,79 @@ function buildRows(client){
   document.querySelectorAll(".copyBtn[data-copy]").forEach(btn=>{
     btn.addEventListener("click", ()=>copyText(btn.getAttribute("data-copy")));
   });
+
+  const bm = (client.adAccounts?.[0]?.bmId) || "";
+  document.getElementById("copyBmTop").addEventListener("click", ()=> bm ? copyText(bm) : showToast("No BM ID"));
 }
 
 function filterRows(q){
   const query = (q || "").toLowerCase().trim();
   document.querySelectorAll("#rows tr").forEach(tr=>{
-    const text = tr.textContent.toLowerCase();
-    tr.style.display = text.includes(query) ? "" : "none";
+    tr.style.display = tr.textContent.toLowerCase().includes(query) ? "" : "none";
   });
 }
 
-function escapeHtml(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-function escapeAttr(s){
-  return escapeHtml(s).replaceAll('"',"&quot;");
-}
+/* login state */
+function showDashboard(client){
+  // Hide form and error
+  err.style.display = "none";
+  loginForm.style.display = "none";
 
-function setLoggedInUI(client){
-  document.getElementById("err").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-  document.getElementById("btnLogout").style.display = "inline-flex";
-  document.getElementById("btnLogin").style.display = "none";
-  document.getElementById("login").disabled = true;
-  document.getElementById("password").disabled = true;
+  // Show dashboard + top bar
+  authBar.style.display = "flex";
+  dashboard.style.display = "block";
 
   buildSummary(client);
   buildRows(client);
-
-  const bm = (client.adAccounts?.[0]?.bmId) || "";
-  document.getElementById("copyAllBm").onclick = ()=> bm ? copyText(bm) : showToast("No BM ID");
 
   const search = document.getElementById("search");
   search.value = "";
   search.oninput = ()=>filterRows(search.value);
 }
 
-function setLoggedOutUI(){
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("btnLogout").style.display = "none";
-  document.getElementById("btnLogin").style.display = "inline-flex";
-  document.getElementById("login").disabled = false;
-  document.getElementById("password").disabled = false;
+function logout(){
+  localStorage.removeItem("ss_login");
+  localStorage.removeItem("ss_pass");
+  dashboard.style.display = "none";
+  authBar.style.display = "none";
+  loginForm.style.display = "grid";
+  err.style.display = "none";
   document.getElementById("login").value = "";
   document.getElementById("password").value = "";
-  localStorage.removeItem("ss_client_login");
-  localStorage.removeItem("ss_client_pass");
 }
 
-function tryAutoLogin(){
-  const l = localStorage.getItem("ss_client_login") || "";
-  const p = localStorage.getItem("ss_client_pass") || "";
-  if(!l || !p) return;
+btnLogout.addEventListener("click", logout);
 
-  const client = USERS.find(u => u.login === l && u.password === p);
-  if(client) setLoggedInUI(client);
-}
+/* Submit handler (fix: use form submit, prevent reload) */
+loginForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
 
-document.getElementById("btnLogin").addEventListener("click", ()=>{
   const login = document.getElementById("login").value.trim();
   const pass = document.getElementById("password").value;
 
   const client = USERS.find(u => u.login === login && u.password === pass);
+
   if(!client){
-    document.getElementById("err").style.display = "block";
+    err.style.display = "block";
     return;
   }
-  localStorage.setItem("ss_client_login", login);
-  localStorage.setItem("ss_client_pass", pass);
-  setLoggedInUI(client);
+
+  // Save session (optional)
+  localStorage.setItem("ss_login", login);
+  localStorage.setItem("ss_pass", pass);
+
+  showDashboard(client);
 });
 
-document.getElementById("btnLogout").addEventListener("click", ()=>{
-  setLoggedOutUI();
-});
-
-tryAutoLogin();
+/* Auto-login if saved */
+(function autoLogin(){
+  const l = localStorage.getItem("ss_login") || "";
+  const p = localStorage.getItem("ss_pass") || "";
+  if(!l || !p) return;
+  const client = USERS.find(u => u.login === l && u.password === p);
+  if(client) showDashboard(client);
+})();
 </script>
+
 </body>
 </html>
