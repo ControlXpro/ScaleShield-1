@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ScaleShield — Presentation</title>
+  <meta name="description" content="ScaleShield — Agency infrastructure: ad accounts, 24/7 support, fast replacements, onboarding + client panel." />
+
+  <style>
+    :root{
+      --bg:#07080B;
+      --bg2:#0D0F18;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --border:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.90);
+      --muted:rgba(255,255,255,.66);
+      --muted2:rgba(255,255,255,.45);
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --r: 18px;
+      --max: 1180px;
+
+      /* juicy accents */
+      --a1:#6D5BFF;
+      --a2:#00E5FF;
+      --a3:#22FF99;
+      --a4:#FF4D7D;
+      --a5:#FFB800;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(109,91,255,.18), transparent 55%),
+                  radial-gradient(900px 700px at 80% 20%, rgba(0,229,255,.14), transparent 55%),
+                  radial-gradient(1000px 900px at 60% 90%, rgba(255,77,125,.12), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* presentation scroll */
+    main{
+      scroll-snap-type:y mandatory;
+      height:100vh;
+      overflow-y:auto;
+      overscroll-behavior: none;
+      scroll-behavior: smooth; /* smoother anchor jumps */
+      scroll-padding-top: 96px;
+    }
+    /* extra smooth feel on touch devices */
+    main{ -webkit-overflow-scrolling: touch; }
+
+    section{
+      min-height:100vh;
+      scroll-snap-align:start;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 92px 20px 56px;
+    }
+    .wrap{
+      width:min(var(--max), calc(100% - 0px));
+      margin:0 auto;
+      position:relative;
+      z-index:3;
+    }
+
+    /* top nav */
+    header{
+      position:fixed;
+      top:14px;
+      left:0; right:0;
+      z-index:10;
+      pointer-events:none;
+    }
+    .nav{
+      pointer-events:auto;
+      width:min(var(--max), calc(100% - 40px));
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(10,12,18,.55);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      padding-left:8px;
+      user-select:none;
+    }
+    .logo{
+      width:34px; height:34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(10px 10px at 30% 35%, rgba(255,255,255,.9), transparent 55%),
+        radial-gradient(18px 18px at 70% 65%, rgba(255,255,255,.25), transparent 60%),
+        conic-gradient(from 220deg, var(--a1), var(--a2), var(--a3), var(--a4), var(--a5), var(--a1));
+      box-shadow: 0 10px 30px rgba(0,0,0,.45);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 60%);
+      transform: rotate(18deg);
+    }
+    .brand b{letter-spacing:.2px}
+    .brand span{color:var(--muted2); font-size:12px; display:block; margin-top:1px}
+
+    .navlinks{
+      display:flex; gap:6px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      text-decoration:none;
+      color:var(--muted);
+      font-size:13px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{
+      transform: translateY(-1px);
+      color: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* background */
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .grain{
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.06) 1px, transparent 1.2px),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.05) 1px, transparent 1.2px),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,.04) 1px, transparent 1.2px);
+      background-size: 160px 160px, 210px 210px, 260px 260px;
+      opacity:.25;
+      mix-blend-mode: overlay;
+      filter: blur(.2px);
+    }
+    .bgGlow{
+      position:absolute; inset:-20%;
+      background:
+        radial-gradient(600px 400px at 15% 35%, rgba(109,91,255,.22), transparent 65%),
+        radial-gradient(700px 500px at 85% 30%, rgba(0,229,255,.18), transparent 68%),
+        radial-gradient(700px 550px at 55% 85%, rgba(255,77,125,.12), transparent 70%);
+      filter: blur(18px);
+      opacity:.85;
+      transform: translateZ(0);
+      animation: glowPulse 7s ease-in-out infinite;
+    }
+    @keyframes glowPulse{
+      0%,100%{ transform: translateZ(0) scale(1); opacity:.82 }
+      50%{ transform: translateZ(0) scale(1.03); opacity:.95 }
+    }
+
+    .floaters{ position:absolute; inset:0; opacity:.55; filter: blur(.2px); }
+    .floater{
+      position:absolute; width: 180px; height: 180px;
+      opacity: .12;
+      transform: translate3d(0,0,0);
+      will-change: transform, opacity;
+      animation: drift 12s ease-in-out infinite;
+    }
+    .floater:nth-child(2){width:140px;height:140px; animation-duration: 16s}
+    .floater:nth-child(3){width:220px;height:220px; animation-duration: 18s}
+    .floater:nth-child(4){width:160px;height:160px; animation-duration: 14s}
+    .floater:nth-child(5){width:260px;height:260px; animation-duration: 22s}
+    .floater:nth-child(6){width:120px;height:120px; animation-duration: 15s}
+    .floater:nth-child(7){width:200px;height:200px; animation-duration: 19s}
+    .floater:nth-child(8){width:150px;height:150px; animation-duration: 17s}
+    @keyframes drift{
+      0%,100%{ transform: translate3d(0,0,0) rotate(0deg) }
+      50%{ transform: translate3d(0,-18px,0) rotate(8deg) }
+    }
+
+    /* cards and typography */
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-60%;
+      background: conic-gradient(from 180deg,
+        rgba(109,91,255,.15), rgba(0,229,255,.12),
+        rgba(34,255,153,.08), rgba(255,77,125,.10),
+        rgba(255,184,0,.10), rgba(109,91,255,.15));
+      filter: blur(22px);
+      opacity:.55;
+      transform: translateZ(0);
+      animation: cardAura 10s linear infinite;
+    }
+    @keyframes cardAura{ to{ transform: translateZ(0) rotate(360deg) } }
+
+    .cardPad{ padding: 18px 18px; position:relative; z-index:1; }
+
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius:999px;
+      color: rgba(255,255,255,.86);
+      font-weight: 650;
+      letter-spacing:.2px;
+      font-size: 12.5px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;
+      background: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a4), var(--a5), var(--a1));
+      box-shadow: 0 0 0 5px rgba(255,255,255,.03);
+    }
+    .title{
+      font-size: 46px;
+      line-height: 1.02;
+      margin:0 0 10px;
+      letter-spacing: -0.8px;
+    }
+    @media (max-width: 520px){ .title{font-size: 38px} }
+    .sub{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.45;
+      max-width: 60ch;
+    }
+    .h2{
+      margin: 14px 0 8px;
+      font-size: 34px;
+      letter-spacing:-.5px;
+      line-height:1.1;
+    }
+    .p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 15px;
+      max-width: 74ch;
+    }
+
+    .btnRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px;}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      color: rgba(255,255,255,.92);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      font-weight: 700;
+      letter-spacing:.2px;
+      user-select:none;
+      min-width: 140px;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+    }
+    .btnPrimary{
+      border-color: rgba(109,91,255,.35);
+      background: linear-gradient(135deg, rgba(109,91,255,.38), rgba(0,229,255,.22));
+    }
+    .btnPrimary:hover{
+      border-color: rgba(0,229,255,.35);
+      background: linear-gradient(135deg, rgba(109,91,255,.46), rgba(0,229,255,.30));
+    }
+    .btnTelegram{
+      border-color: rgba(34,255,153,.28);
+      background: linear-gradient(135deg, rgba(34,255,153,.18), rgba(0,229,255,.12));
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 14px 0;
+    }
+    .fine{
+      color: var(--muted2);
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    /* HERO layout */
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns:1fr; gap:14px}
+      .navlinks{display:none}
+    }
+
+    /* rotating icon stage */
+    .stage{
+      min-height: 320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .stage:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:
+        radial-gradient(260px 220px at 25% 30%, rgba(255,184,0,.10), transparent 60%),
+        radial-gradient(280px 240px at 70% 40%, rgba(0,229,255,.10), transparent 62%),
+        radial-gradient(320px 280px at 55% 75%, rgba(255,77,125,.10), transparent 62%);
+      filter: blur(18px);
+      opacity:.9;
+      transform: translateZ(0);
+    }
+    .iconStack{
+      width:min(420px, 100%);
+      aspect-ratio: 1/1;
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,12,18,.45);
+      backdrop-filter: blur(12px);
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 25px 90px rgba(0,0,0,.55);
+      transform: translateZ(0);
+    }
+    .iconStack:after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: conic-gradient(from 180deg, rgba(109,91,255,.22), rgba(0,229,255,.18), rgba(34,255,153,.14), rgba(255,77,125,.14), rgba(255,184,0,.16), rgba(109,91,255,.22));
+      filter: blur(22px);
+      opacity:.75;
+      animation: spin 9s linear infinite;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg) } }
+    .iconSlide{
+      position:absolute;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      transform: scale(.90) translateY(12px);
+      transition: opacity .7s ease, transform .7s ease;
+      z-index:2;
+      padding: 26px;
+    }
+    .iconSlide.active{ opacity:1; transform: scale(1) translateY(0); }
+    .iconLabel{
+      position:absolute;
+      left: 16px;
+      bottom: 16px;
+      right: 16px;
+      z-index:3;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-end;
+      pointer-events:none;
+    }
+    .iconLabel .big{ font-size: 14px; font-weight: 800; letter-spacing:.2px; color: rgba(255,255,255,.92); }
+    .iconLabel .small{ font-size: 12px; color: var(--muted2); max-width: 44ch; text-align:right; }
+
+    /* grids */
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+
+    .mini{
+      padding: 14px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.035);
+      position:relative;
+      overflow:hidden;
+      transform: translateZ(0);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .mini:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+    }
+    .mini:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(200px 160px at 20% 30%, rgba(109,91,255,.12), transparent 60%),
+                  radial-gradient(220px 180px at 80% 60%, rgba(0,229,255,.10), transparent 62%);
+      filter: blur(18px);
+      opacity:.7;
+    }
+    .mini > *{ position:relative; z-index:1; }
+    .mini b{display:block; margin-bottom:6px; letter-spacing:.2px}
+    .mini .m{ color: var(--muted); font-size: 13.8px; line-height:1.5 }
+
+    /* PRICING */
+    .pricingGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px){ .pricingGrid{grid-template-columns:1fr} }
+
+    .priceCard{
+      padding: 16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      transform: translateZ(0);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+    .priceCard:hover{
+      transform: translateY(-4px) scale(1.01);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 26px 90px rgba(0,0,0,.55);
+    }
+    .priceCard.featured{
+      border-color: rgba(0,229,255,.26);
+      background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(109,91,255,.10), rgba(255,77,125,.08));
+    }
+    .priceTop{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .badge{
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.88);
+      white-space:nowrap;
+      user-select:none;
+    }
+    .priceName{ font-weight: 900; letter-spacing:.2px; font-size: 16px; margin:0; }
+    .price{ margin: 10px 0 6px; font-size: 34px; font-weight: 950; letter-spacing: -.6px; }
+    .per{ font-size: 13px; color: var(--muted2); font-weight: 750; margin-left: 6px; }
+    .desc{ color: var(--muted); font-size: 13.8px; line-height: 1.45; margin: 0 0 10px; }
+    .ul{
+      margin: 10px 0 14px;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.45;
+    }
+    .li{ display:flex; gap:10px; align-items:flex-start; }
+    .check{
+      width:18px;height:18px;
+      border-radius: 7px;
+      background: rgba(34,255,153,.14);
+      border:1px solid rgba(34,255,153,.25);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+      margin-top:1px;
+    }
+    .check svg{width:12px;height:12px; opacity:.95}
+
+    /* ONBOARDING */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px){ .steps{grid-template-columns:1fr} }
+    .step{
+      padding: 14px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.035);
+      position:relative;
+      overflow:hidden;
+      transform: translateZ(0);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .step:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+    }
+    .step:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(240px 200px at 25% 35%, rgba(255,184,0,.10), transparent 62%),
+                  radial-gradient(240px 200px at 75% 55%, rgba(0,229,255,.10), transparent 62%);
+      filter: blur(18px);
+      opacity:.7;
+    }
+    .step > *{ position:relative; z-index:1; }
+    .num{
+      width:34px;height:34px;border-radius: 14px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight: 950;
+      margin-bottom: 10px;
+    }
+    .step b{ display:block; margin-bottom: 6px; }
+    .step p{ margin:0; color: var(--muted); line-height:1.5; font-size: 14px; }
+
+    /* reveal */
+    .reveal{
+      opacity:0;
+      transform: translateY(16px) scale(.99);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.on{ opacity:1; transform: translateY(0) scale(1); }
+
+    /* section spotlight that moves */
+    .spotlight{
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(320px 220px at var(--sx, 50%) var(--sy, 50%),
+        rgba(0,229,255,.10), transparent 62%);
+      opacity:.7;
+      filter: blur(24px);
+      transform: translateZ(0);
+      pointer-events:none;
+      transition: opacity .3s ease;
+      z-index:0;
+    }
+
+    /* scroll hint */
+    .scrollHint{
+      position:absolute;
+      left:50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      color: var(--muted2);
+      font-size: 12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      user-select:none;
+      z-index:4;
+    }
+    .wheel{
+      width:22px;height:34px;border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      position:relative;
+      background: rgba(255,255,255,.03);
+    }
+    .wheel:after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top: 8px;
+      transform: translateX(-50%);
+      width:4px;height:6px;border-radius: 99px;
+      background: rgba(255,255,255,.55);
+      animation: wheel 1.4s ease-in-out infinite;
+    }
+    @keyframes wheel{
+      0%,100%{ transform: translateX(-50%) translateY(0); opacity:.6}
+      50%{ transform: translateX(-50%) translateY(8px); opacity:1}
+    }
+
+    a.inlineLink{ color: rgba(255,255,255,.86); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.18); }
+    a.inlineLink:hover{ border-bottom-color: rgba(0,229,255,.45); }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+      main{ scroll-behavior:auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- background -->
+  <div class="bg" aria-hidden="true">
+    <div class="bgGlow"></div>
+    <div class="floaters" id="floaters">
+      <!-- 8 dim floaters -->
+      <div class="floater" style="left:6%; top:18%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <circle cx="100" cy="100" r="78" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <circle cx="100" cy="100" r="56" fill="rgba(109,91,255,.12)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+          <g stroke="rgba(255,255,255,.16)" stroke-width="8" stroke-linecap="round">
+            <path d="M100 18v20"/><path d="M100 162v20"/>
+            <path d="M18 100h20"/><path d="M162 100h20"/>
+            <path d="M40 40l14 14"/><path d="M146 146l14 14"/>
+            <path d="M160 40l-14 14"/><path d="M40 160l14-14"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:72%; top:10%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect x="62" y="40" width="76" height="120" rx="24" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <rect x="62" y="40" width="76" height="34" rx="16" fill="rgba(0,229,255,.12)"/>
+          <rect x="74" y="88" width="52" height="42" rx="14" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:18%; top:68%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect x="48" y="28" width="104" height="144" rx="18" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <path d="M72 60h56" stroke="rgba(255,255,255,.14)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M72 86h44" stroke="rgba(255,255,255,.12)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M72 112h50" stroke="rgba(255,255,255,.10)" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:80%; top:62%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect x="44" y="44" width="112" height="112" rx="22" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <rect x="62" y="76" width="76" height="48" rx="14" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+          <circle cx="80" cy="100" r="10" fill="rgba(255,184,0,.18)"/>
+          <circle cx="100" cy="100" r="10" fill="rgba(34,255,153,.16)"/>
+          <circle cx="120" cy="100" r="10" fill="rgba(109,91,255,.18)"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:44%; top:8%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <path d="M100 22c28 18 52 18 70 18v56c0 44-30 74-70 92C60 170 30 140 30 96V40c18 0 42 0 70-18Z"
+                fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <path d="M64 104l18 18 54-54" fill="none" stroke="rgba(34,255,153,.16)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:6%; top:46%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <ellipse cx="92" cy="70" rx="54" ry="16" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <path d="M38 70v54c0 10 24 18 54 18s54-8 54-18V70" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.12)" stroke-width="4"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:56%; top:74%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect x="40" y="48" width="120" height="104" rx="18" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <path d="M40 74h120" stroke="rgba(255,255,255,.12)" stroke-width="4"/>
+          <path d="M58 102h84" stroke="rgba(0,229,255,.12)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M58 126h60" stroke="rgba(255,255,255,.10)" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="floater" style="left:34%; top:44%">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect x="54" y="72" width="92" height="56" rx="28" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+          <path d="M100 72v56" stroke="rgba(255,255,255,.12)" stroke-width="4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>ScaleShield</b>
+          <span>Agency Infrastructure</span>
+        </div>
+      </div>
+
+      <nav class="navlinks" aria-label="Sections">
+        <a class="pill" href="#services">Services</a>
+        <a class="pill" href="#pricing">Pricing</a>
+        <a class="pill" href="#onboarding">Onboarding</a>
+        <a class="pill" href="#panel">Client Panel</a>
+        <a class="pill" href="#support">Support</a>
+        <a class="pill" href="#start">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app">
+    <!-- HERO -->
+    <section id="home">
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <div class="wrap heroGrid">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Presentation</div>
+            <h1 class="title">Scale up with stable agency infrastructure.</h1>
+            <p class="sub">
+              We share <b>agency ad accounts</b> to your BM, with <b>24/7 support</b>, <b>fast replacements (30–60 minutes)</b>,
+              and a <b>private client panel</b> to track accounts + billing.
+            </p>
+
+            <div class="btnRow">
+              <a class="btn btnPrimary" href="#pricing">Choose Package</a>
+              <a class="btn" href="#onboarding">Onboarding</a>
+              <a class="btn" href="https://scaleshield.pro/" target="_blank" rel="noopener">Open Website</a>
+            </div>
+
+            <div class="divider"></div>
+            <div class="fine">
+              Official website: <a class="inlineLink" href="https://scaleshield.pro/" target="_blank" rel="noopener">https://scaleshield.pro/</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card stage reveal" aria-label="Dynamic feature stage">
+          <div class="iconStack" id="iconStack">
+            <!-- Slide 1 -->
+            <div class="iconSlide active" data-label="Agency Ad Accounts" data-desc="Shared to your BM for clean scaling.">
+              <svg viewBox="0 0 220 220" width="100%" height="100%" aria-hidden="true">
+                <defs>
+                  <linearGradient id="h1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#6D5BFF" stop-opacity=".9"/>
+                    <stop offset="1" stop-color="#00E5FF" stop-opacity=".85"/>
+                  </linearGradient>
+                </defs>
+                <rect x="46" y="58" width="128" height="108" rx="22" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+                <path d="M46 84h128" stroke="rgba(255,255,255,.12)" stroke-width="4"/>
+                <circle cx="66" cy="72" r="6" fill="rgba(255,77,125,.22)"/>
+                <circle cx="84" cy="72" r="6" fill="rgba(255,184,0,.20)"/>
+                <circle cx="102" cy="72" r="6" fill="rgba(34,255,153,.20)"/>
+                <path d="M70 114h100" stroke="url(#h1)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M70 140h68" stroke="rgba(255,255,255,.14)" stroke-width="10" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="iconSlide" data-label="Unlimited Replacements" data-desc="If something breaks — we replace fast (30–60 min).">
+              <svg viewBox="0 0 220 220" width="100%" height="100%" aria-hidden="true">
+                <defs>
+                  <linearGradient id="h2" x1="0" x2="1">
+                    <stop offset="0" stop-color="#22FF99" stop-opacity=".9"/>
+                    <stop offset="1" stop-color="#00E5FF" stop-opacity=".85"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="110" cy="110" r="74" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+                <path d="M110 60v54l36 22" fill="none" stroke="url(#h2)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M70 162c16 12 40 16 64 10" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="iconSlide" data-label="Client Panel" data-desc="Log in to see accounts, billing, and BM connections.">
+              <svg viewBox="0 0 220 220" width="100%" height="100%" aria-hidden="true">
+                <defs>
+                  <linearGradient id="h3" x1="0" x2="1">
+                    <stop offset="0" stop-color="#FF4D7D" stop-opacity=".9"/>
+                    <stop offset="1" stop-color="#FFB800" stop-opacity=".85"/>
+                  </linearGradient>
+                </defs>
+                <rect x="52" y="54" width="116" height="112" rx="22" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)" stroke-width="4"/>
+                <path d="M52 82h116" stroke="rgba(255,255,255,.12)" stroke-width="4"/>
+                <path d="M76 110h88" stroke="url(#h3)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M76 136h64" stroke="rgba(255,255,255,.14)" stroke-width="10" stroke-linecap="round"/>
+                <circle cx="78" cy="70" r="6" fill="rgba(34,255,153,.20)"/>
+                <circle cx="96" cy="70" r="6" fill="rgba(255,184,0,.20)"/>
+                <circle cx="114" cy="70" r="6" fill="rgba(0,229,255,.20)"/>
+              </svg>
+            </div>
+
+            <div class="iconLabel" id="iconLabel">
+              <div class="big">Agency Ad Accounts</div>
+              <div class="small">Shared to your BM for clean scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrollHint" aria-hidden="true">
+        <div class="wheel"></div>
+        <div>Scroll to continue</div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Services</div>
+            <div class="h2">What we provide</div>
+            <p class="p">
+              ScaleShield is built for speed and stability: packages, fast sharing to your BM, and operational support when it matters.
+            </p>
+
+            <div class="grid3">
+              <div class="mini">
+                <b>Agency Ad Accounts</b>
+                <div class="m">We share ad accounts to your BM ID for immediate launch & scaling.</div>
+              </div>
+              <div class="mini">
+                <b>24/7 Support</b>
+                <div class="m">Always-on chat support with quick actions (not ticket delays).</div>
+              </div>
+              <div class="mini">
+                <b>Fast Replacements</b>
+                <div class="m">Typical replacement timeframe: <b>30–60 minutes</b>.</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <p class="fine">
+              Learn more: <a class="inlineLink" href="https://scaleshield.pro/" target="_blank" rel="noopener">https://scaleshield.pro/</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Pricing</div>
+            <div class="h2">Choose your package</div>
+            <p class="p">
+              Monthly access plans + unban services. All packages include <b>24/7 support</b>. Replacements are included where stated.
+            </p>
+
+            <div class="pricingGrid" id="pricingGrid"></div>
+
+            <div class="divider"></div>
+            <p class="fine">
+              Official website: <a class="inlineLink" href="https://scaleshield.pro/" target="_blank" rel="noopener">https://scaleshield.pro/</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONBOARDING -->
+    <section id="onboarding">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Onboarding</div>
+            <div class="h2">Simple 4-step onboarding</div>
+            <p class="p">Fast start — just the BM ID and we do the rest.</p>
+
+            <div class="steps">
+              <div class="step">
+                <div class="num">1</div>
+                <b>Pick a package</b>
+                <p>Select the tier that matches your scaling needs.</p>
+              </div>
+              <div class="step">
+                <div class="num">2</div>
+                <b>Send your BM ID</b>
+                <p>Share your Business Manager ID so we can grant access properly.</p>
+              </div>
+              <div class="step">
+                <div class="num">3</div>
+                <b>We share ad accounts</b>
+                <p>Our agency shares ad accounts directly to your BM ID.</p>
+              </div>
+              <div class="step">
+                <div class="num">4</div>
+                <b>Scale with support</b>
+                <p>24/7 support + fast replacements (typical <b>30–60 minutes</b>).</p>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="grid3">
+              <div class="mini">
+                <b>Replacement speed</b>
+                <div class="m">Typical 30–60 minutes, depending on volume/time.</div>
+              </div>
+              <div class="mini">
+                <b>Support</b>
+                <div class="m">24/7 chat support for operational issues.</div>
+              </div>
+              <div class="mini">
+                <b>Goal</b>
+                <div class="m">Keep campaigns live and scaling with minimal downtime.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT PANEL -->
+    <section id="panel">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Client Panel</div>
+            <div class="h2">Private internal dashboard (included)</div>
+            <p class="p">
+              Every client gets access to a private internal panel inside our website.
+              You can log in anytime to check your ad accounts, billing details, and exactly which BM each account is connected to.
+            </p>
+
+            <div class="grid3">
+              <div class="mini">
+                <b>Ad accounts overview</b>
+                <div class="m">See every ad account ID + name in one place.</div>
+              </div>
+              <div class="mini">
+                <b>BM connections</b>
+                <div class="m">Clear visibility on which BM(s) each ad account is shared to.</div>
+              </div>
+              <div class="mini">
+                <b>Billing & package</b>
+                <div class="m">Check package, price, billing date, and support status.</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="btnRow">
+              <a class="btn btnPrimary" href="#start">Start onboarding</a>
+              <a class="btn" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Ask about access</a>
+            </div>
+
+            <p class="fine">Panel access is provided after onboarding (package selected + BM ID received).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT -->
+    <section id="support">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Support</div>
+            <div class="h2">How we keep you stable</div>
+            <p class="p">
+              Always-on support + clean workflows for replacements and cases.
+            </p>
+
+            <div class="grid3">
+              <div class="mini">
+                <b>24/7 Support</b>
+                <div class="m">We respond fast and keep things moving.</div>
+              </div>
+              <div class="mini">
+                <b>Replacement workflow</b>
+                <div class="m">If an account has issues, we provide a replacement quickly.</div>
+              </div>
+              <div class="mini">
+                <b>Case services</b>
+                <div class="m">Unban services start with feasibility confirmation.</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <p class="fine">
+              Telegram support: <a class="inlineLink" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">https://t.me/scaleshieldsupport</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="start">
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="card reveal">
+          <div class="cardPad">
+            <div class="kicker"><span class="dot"></span> Start</div>
+            <div class="h2">Ready to onboard?</div>
+            <p class="p">
+              Choose a package, send your BM ID, and we’ll share accounts to your BM.
+              For fastest onboarding, message us on Telegram:
+            </p>
+
+            <div class="btnRow">
+              <a class="btn btnPrimary" href="#pricing">Choose Package</a>
+              <a class="btn" href="#onboarding">Onboarding Steps</a>
+              <a class="btn btnTelegram" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram Support</a>
+              <a class="btn" href="https://scaleshield.pro/" target="_blank" rel="noopener">https://scaleshield.pro/</a>
+            </div>
+
+            <div class="divider"></div>
+            <p class="fine">© <span id="year"></span> ScaleShield • Presentation landing page</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ===== PRICING DATA (your packages) =====
+    const PRICING_DATA = [
+      {
+        name: "BM3 Package",
+        price: 199,
+        per: "/month",
+        badge: "Starter",
+        featured: true,
+        desc: "BM3 with $50 daily spend limit, 3 ad accounts",
+        bullets: [
+          "Controlled testing & scaling",
+          "24/7 support + replacements included",
+          "BM3 access",
+          "$50 daily spend limit",
+          "3 ad accounts"
+        ]
+      },
+      {
+        name: "Single Agency Ad Account",
+        price: 450,
+        per: "/month",
+        badge: "Popular",
+        featured: false,
+        desc: "24/7 support and unlimited replacements",
+        bullets: [
+          "1 agency ad account",
+          "Unlimited replacements",
+          "24/7 support"
+        ]
+      },
+      {
+        name: "Dual Agency Ad Accounts",
+        price: 850,
+        per: "/month",
+        badge: "Teams",
+        featured: false,
+        desc: "24/7 support and unlimited replacements",
+        bullets: [
+          "2 agency ad accounts",
+          "Unlimited replacements",
+          "Ideal for teams running multiple offers",
+          "24/7 support"
+        ]
+      },
+      {
+        name: "Top Agency Package",
+        price: 1950,
+        per: "/month",
+        badge: "Aggressive scaling",
+        featured: false,
+        desc: "24/7 support and unlimited replacements",
+        bullets: [
+          "Premium agency access",
+          "Best for aggressive scaling operations",
+          "Unlimited replacements",
+          "24/7 support"
+        ]
+      },
+      {
+        name: "Facebook Ad Account Unban",
+        price: 1800,
+        per: "one-time fee",
+        badge: "Case service",
+        featured: false,
+        desc: "Case review + support workflow",
+        bullets: [
+          "Works best with complete info",
+          "We’ll confirm feasibility first",
+          "Clear support workflow"
+        ]
+      },
+      {
+        name: "Facebook Profile Unban",
+        price: 4000,
+        per: "one-time fee",
+        badge: "High value",
+        featured: false,
+        desc: "Case review + escalation workflow",
+        bullets: [
+          "Best for high-value operators",
+          "Fast response + clear steps",
+          "Escalation workflow"
+        ]
+      }
+    ];
+
+    // Build pricing cards
+    const pricingGrid = document.getElementById("pricingGrid");
+    const checkSVG = `
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M20 6L9 17l-5-5" stroke="rgba(255,255,255,.92)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+    PRICING_DATA.forEach((p, i) => {
+      const div = document.createElement("div");
+      div.className = "priceCard" + (p.featured ? " featured" : "");
+      div.innerHTML = `
+        <div class="priceTop">
+          <div>
+            <p class="priceName">${p.name}</p>
+            <div class="price">$${p.price}<span class="per">${p.per}</span></div>
+          </div>
+          <span class="badge">${p.badge}</span>
+        </div>
+        <p class="desc">${p.desc}</p>
+        <ul class="ul">
+          ${p.bullets.map(b => `<li class="li"><span class="check">${checkSVG}</span><span>${b}</span></li>`).join("")}
+        </ul>
+        <a class="btn ${p.featured ? "btnPrimary" : ""}" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Start on Telegram</a>
+      `;
+      pricingGrid.appendChild(div);
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("on"); });
+    }, { threshold: 0.16 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // Dynamic icon stack rotation
+    const slides = Array.from(document.querySelectorAll(".iconSlide"));
+    const label = document.getElementById("iconLabel");
+    let idx = 0;
+    function setSlide(i){
+      slides.forEach(s => s.classList.remove("active"));
+      slides[i].classList.add("active");
+      label.querySelector(".big").textContent = slides[i].dataset.label || "";
+      label.querySelector(".small").textContent = slides[i].dataset.desc || "";
+    }
+    setInterval(() => {
+      idx = (idx + 1) % slides.length;
+      setSlide(idx);
+    }, 2400);
+
+    // Smooth section-to-section wheel scrolling (feels more “presentation”)
+    const main = document.getElementById("app");
+    let isSnapScrolling = false;
+
+    function getSections(){
+      return Array.from(document.querySelectorAll("main section"));
+    }
+    function scrollToSection(i){
+      const secs = getSections();
+      const target = secs[Math.max(0, Math.min(secs.length - 1, i))];
+      if (!target) return;
+      isSnapScrolling = true;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => { isSnapScrolling = false; }, 650);
+    }
+    function currentSectionIndex(){
+      const secs = getSections();
+      const top = main.scrollTop;
+      let best = 0;
+      let bestDist = Infinity;
+      secs.forEach((s, i) => {
+        const dist = Math.abs(s.offsetTop - top);
+        if (dist < bestDist){ bestDist = dist; best = i; }
+      });
+      return best;
+    }
+
+    main.addEventListener("wheel", (e) => {
+      if (isSnapScrolling) { e.preventDefault(); return; }
+      // ignore tiny touchpad noise
+      if (Math.abs(e.deltaY) < 6) return;
+
+      e.preventDefault();
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const idx = currentSectionIndex();
+      scrollToSection(idx + dir);
+    }, { passive:false });
+
+    // Background parallax + moving spotlight
+    const floaters = Array.from(document.querySelectorAll(".floater"));
+    function onScroll(){
+      const t = main.scrollTop || 0;
+
+      floaters.forEach((el, i) => {
+        const speed = 0.06 + (i * 0.012);
+        const rot = (t * 0.01) + (i * 7);
+        el.style.transform = `translate3d(0, ${-(t * speed)}px, 0) rotate(${rot}deg)`;
+        const o = 0.08 + Math.min(0.08, t / 8000);
+        el.style.opacity = o.toFixed(3);
+      });
+
+      document.querySelectorAll(".spotlight").forEach((sp, i) => {
+        const local = (t + i * 700);
+        const sx = 50 + Math.sin(local / 900) * 18;
+        const sy = 45 + Math.cos(local / 1100) * 18;
+        sp.style.setProperty("--sx", sx + "%");
+        sp.style.setProperty("--sy", sy + "%");
+      });
+    }
+    main.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Smooth anchor jumps within main scroller
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (ev) => {
+        const id = a.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        ev.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Respect reduced motion
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // disable the wheel snap if user prefers reduced motion
+      main.removeEventListener("wheel", () => {});
+    }
+  </script>
+</body>
+</html>
