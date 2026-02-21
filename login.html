@@ -1,592 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ScaleShield — Client Login</title>
-  <style>
-    :root{
-      --bg:#07080B;
-      --bg2:#0D0F18;
-      --panel:rgba(255,255,255,.06);
-      --border:rgba(255,255,255,.10);
-      --border2:rgba(255,255,255,.14);
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ScaleShield — Client Login</title>
 
-      --gold:#D6B15E;
-      --gold2:#F2D27A;
+<style>
+:root{
+  --bg:#07080B;
+  --panel:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.10);
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+  --text:#fff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+  --radius:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
+    radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
 
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.70);
-      --muted2:rgba(255,255,255,.45);
+.wrap{max-width:980px;margin:auto;padding:36px 18px 80px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 0 22px;
+}
+.brand{
+  font-weight:950;font-size:20px;
+}
+.brand span{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.btn{
+  padding:12px 16px;border-radius:16px;font-weight:900;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  transition:.25s var(--ease);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn:hover{transform:translateY(-2px);border-color:rgba(214,177,94,.35);box-shadow:0 0 28px rgba(214,177,94,.12)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;border-color:transparent;
+}
+.btn-primary:hover{filter:brightness(1.02)}
+.btn-whatsapp{
+  background:rgba(34,197,94,.12);
+  border-color:rgba(34,197,94,.25);
+  color:#fff;
+}
+.btn-whatsapp:hover{border-color:rgba(34,197,94,.45);box-shadow:0 0 26px rgba(34,197,94,.18)}
+.h1{
+  font-size:36px;font-weight:950;letter-spacing:-.02em;line-height:1.1;
+}
+.p{margin-top:10px;color:var(--muted);line-height:1.7}
+.card{
+  margin-top:18px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+.card:before{
+  content:"";
+  position:absolute;inset:-2px;
+  background:radial-gradient(700px circle at 30% 0%, rgba(214,177,94,.18), transparent 55%);
+  opacity:.7;
+  pointer-events:none;
+  mask-image: radial-gradient(900px circle at 50% 30%, #000 45%, transparent 80%);
+}
+.card > *{position:relative}
 
-      --radius:22px;
-      --ease:cubic-bezier(.2,.8,.2,1);
-    }
+.form{
+  display:grid;gap:12px;margin-top:16px;
+  max-width:520px;
+}
+label{font-weight:900;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
+input{
+  width:100%;
+  padding:14px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:#fff;
+  outline:none;
+}
+input:focus{
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 22px rgba(214,177,94,.10);
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background:
-        radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
-        radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
-        radial-gradient(800px circle at 10% 30%, rgba(168,85,247,.07), transparent 60%),
-        linear-gradient(135deg,#050507,#0b0d14,#090a10);
-      color:var(--text);
-      overflow-x:hidden;
-    }
+.err{
+  margin-top:10px;
+  color:#ffb4b4;
+  font-weight:900;
+  display:none;
+}
+.hr{
+  height:1px;background:rgba(255,255,255,.08);
+  margin:18px 0;
+}
 
-    a{color:inherit;text-decoration:none}
+.clientBox{
+  display:none;
+  margin-top:14px;
+}
+.kicker{
+  display:flex;align-items:center;gap:10px;
+  color:var(--muted2);
+  font-size:12px;
+  letter-spacing:.22em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.kdot{
+  width:8px;height:8px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.22);
+}
+.grid{
+  margin-top:14px;
+  display:grid;
+  gap:14px;
+}
+@media(min-width:900px){ .grid{grid-template-columns:1fr 1fr} }
 
-    .nav{
-      position:fixed;
-      top:0;left:0;right:0;
-      backdrop-filter:blur(14px);
-      background:rgba(5,5,7,.65);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      z-index:100;
-    }
-    .nav-inner{
-      max-width:1100px;
-      margin:auto;
-      padding:16px 18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-    .logo{
-      font-weight:950;
-      font-size:18px;
-      letter-spacing:-.02em;
-    }
-    .logo span{
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .btn{
-      padding:12px 18px;
-      border-radius:16px;
-      font-weight:900;
-      transition:.25s var(--ease);
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid transparent;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn-primary{
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
-      color:#111;
-      box-shadow:0 0 40px rgba(214,177,94,.20);
-    }
-    .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.02)}
-    .btn-ghost{
-      background:rgba(255,255,255,.05);
-      border-color:rgba(255,255,255,.12);
-      color:#fff;
-    }
-    .btn-ghost:hover{
-      transform:translateY(-2px);
-      border-color:rgba(214,177,94,.35);
-      box-shadow:0 0 30px rgba(214,177,94,.12);
-    }
-
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:120px 18px 60px 18px;
-    }
-
-    .kicker{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:12px;
-      color:var(--muted2);
-      font-size:12px;
-      letter-spacing:.22em;
-      font-weight:950;
-      text-transform:uppercase;
-    }
-    .kdot{
-      width:8px;height:8px;border-radius:999px;
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
-      box-shadow:0 0 18px rgba(214,177,94,.22);
-    }
-
-    h1{
-      font-size:40px;
-      line-height:1.08;
-      letter-spacing:-.03em;
-      font-weight:950;
-    }
-    p{color:var(--muted);line-height:1.7;margin-top:12px}
-
-    .card{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-      transition:.30s var(--ease);
-      box-shadow:0 18px 70px -50px rgba(0,0,0,.85);
-    }
-    .card:hover{
-      border-color:rgba(214,177,94,.30);
-      box-shadow:0 0 55px rgba(214,177,94,.10);
-    }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:radial-gradient(700px circle at 50% 0%, rgba(214,177,94,.14), transparent 60%);
-      opacity:.8;
-      pointer-events:none;
-      mask-image: radial-gradient(900px circle at 50% 50%, #000 42%, transparent 70%);
-    }
-
-    .grid{
-      display:grid;
-      gap:18px;
-      margin-top:22px;
-    }
-    @media(min-width:980px){
-      .grid{grid-template-columns: 0.95fr 1.05fr; align-items:start;}
-    }
-
-    .field{
-      display:grid;
-      gap:8px;
-      margin-top:14px;
-      position:relative;
-      z-index:2;
-    }
-    label{
-      font-size:12px;
-      color:var(--muted2);
-      font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    input{
-      width:100%;
-      padding:14px 14px;
-      border-radius:16px;
-      background:rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.12);
-      color:#fff;
-      outline:none;
-      transition:border-color .18s var(--ease), box-shadow .18s var(--ease);
-      font-weight:750;
-    }
-    input:focus{
-      border-color:rgba(214,177,94,.45);
-      box-shadow:0 0 0 4px rgba(214,177,94,.10);
-    }
-
-    .actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:16px;
-      position:relative;
-      z-index:2;
-    }
-
-    .alert{
-      margin-top:14px;
-      border-radius:16px;
-      padding:12px 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      color:var(--muted);
-      display:none;
-      position:relative;
-      z-index:2;
-    }
-    .alert.error{
-      border-color:rgba(248,113,113,.30);
-      background:rgba(248,113,113,.06);
-      color:rgba(255,255,255,.85);
-    }
-    .alert.success{
-      border-color:rgba(214,177,94,.28);
-      background:rgba(214,177,94,.08);
-      color:rgba(255,255,255,.90);
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-size:12px;
-      font-weight:850;
-      margin-top:12px;
-      position:relative;
-      z-index:2;
-    }
-    .pill strong{color:#fff}
-
-    .subgrid{
-      display:grid;
-      gap:14px;
-      margin-top:14px;
-      position:relative;
-      z-index:2;
-    }
-    .kv{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-weight:800;
-      flex-wrap:wrap;
-    }
-    .kv b{color:#fff}
-    .kv span{color:var(--muted2);font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
-
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      margin-top:12px;
-      position:relative;
-      z-index:2;
-    }
-    th, td{
-      padding:12px 12px;
-      text-align:left;
-      font-size:13px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      color:var(--muted);
-      font-weight:800;
-      vertical-align:top;
-    }
-    th{
-      color:rgba(255,255,255,.88);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      background:rgba(255,255,255,.04);
-    }
-    tr:last-child td{border-bottom:none}
-
-    .copy{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.20);
-      cursor:pointer;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
-      user-select:none;
-      color:rgba(255,255,255,.90);
-      font-weight:900;
-      font-size:13px;
-    }
-    .copy:hover{
-      transform:translateY(-2px);
-      border-color:rgba(214,177,94,.35);
-      box-shadow:0 0 26px rgba(214,177,94,.10);
-    }
-    .muted{color:var(--muted2);font-size:12px;margin-top:8px}
-
-    .support{
-      position:fixed;
-      right:16px;
-      bottom:16px;
-      z-index:120;
-    }
-    .support a{
-      box-shadow:0 14px 48px -30px rgba(0,0,0,.85), 0 0 40px rgba(214,177,94,.12);
-    }
-  </style>
+.box{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  border-radius:18px;
+  padding:16px;
+}
+.title{font-weight:950}
+.small{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
+.mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12.5px;color:rgba(255,255,255,.88);
+}
+.copy{
+  margin-top:10px;
+  padding:10px 12px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  font-weight:900;color:#fff;
+  cursor:pointer;
+  transition:.2s var(--ease);
+}
+.copy:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,94,.10)}
+.toast{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,.14);
+  padding:10px 12px;border-radius:999px;
+  color:rgba(255,255,255,.9);
+  font-weight:900;font-size:12px;
+  opacity:0;pointer-events:none;
+  transition:.25s var(--ease);
+}
+.toast.show{opacity:1}
+</style>
 </head>
 
 <body>
-  <div class="nav">
-    <div class="nav-inner">
-      <div class="logo"><span>ScaleShield</span> Client Area</div>
-      <a class="btn btn-ghost" href="index.html">← Back to site</a>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span>ScaleShield</span></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn" href="index.html">Back to site</a>
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram</a>
+      <a class="btn btn-whatsapp" href="https://wa.me/16087204445" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn" href="payment.html" target="_blank" rel="noopener">Payment Details</a>
     </div>
   </div>
 
-  <div class="wrap">
-    <div class="kicker"><span class="kdot"></span> CLIENT ACCESS</div>
-    <h1>Log in to view your subscription details.</h1>
-    <p>Use the login and password we provided. If you have issues, contact support.</p>
+  <div class="card">
+    <div class="h1">Client Log In</div>
+    <div class="p">Enter the login and password you received from support.</div>
 
-    <div class="grid">
-      <!-- LOGIN CARD -->
-      <div class="card">
-        <div class="kicker" style="margin-bottom:6px;"><span class="kdot"></span> LOGIN</div>
-        <p style="margin-top:0;">Enter your credentials below.</p>
-
-        <div class="field">
-          <label for="login">Login</label>
-          <input id="login" type="text" autocomplete="username" placeholder="Your login" />
-        </div>
-
-        <div class="field">
-          <label for="password">Password</label>
-          <input id="password" type="password" autocomplete="current-password" placeholder="Your password" />
-        </div>
-
-        <div class="actions">
-          <button id="btnLogin" class="btn btn-primary" type="button">Log In</button>
-          <button id="btnClear" class="btn btn-ghost" type="button">Clear</button>
-        </div>
-
-        <div id="msg" class="alert error" role="alert"></div>
-
-        <div class="pill"><strong>Tip:</strong>&nbsp;Press Enter to log in</div>
+    <div class="form" id="loginForm">
+      <div>
+        <label for="login">Login</label>
+        <input id="login" autocomplete="username" placeholder="Your login" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Your password" />
       </div>
 
-      <!-- DETAILS CARD -->
-      <div class="card" id="detailsCard" style="display:none;">
-        <div class="kicker" style="margin-bottom:6px;"><span class="kdot"></span> YOUR DETAILS</div>
-        <h2 id="clientName" style="font-size:26px;font-weight:950;letter-spacing:-.02em;position:relative;z-index:2;">Client</h2>
-        <p id="clientMeta" style="margin-top:8px;position:relative;z-index:2;">Subscription information</p>
-
-        <div class="subgrid">
-          <div class="kv">
-            <span>Package</span>
-            <b id="pkg">—</b>
-          </div>
-          <div class="kv">
-            <span>Price</span>
-            <b id="price">—</b>
-          </div>
-          <div class="kv">
-            <span>Payment due</span>
-            <b id="due">—</b>
-          </div>
-        </div>
-
-        <div style="margin-top:16px;position:relative;z-index:2;">
-          <div class="kicker" style="margin-bottom:10px;"><span class="kdot"></span> AD ACCOUNTS</div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Ad Account Name</th>
-                <th>Ad Account ID</th>
-                <th>BM ID Shared To</th>
-                <th>Copy</th>
-              </tr>
-            </thead>
-            <tbody id="accountsBody"></tbody>
-          </table>
-
-          <div class="muted">Click “Copy” to copy IDs quickly.</div>
-
-          <div class="actions" style="margin-top:16px;">
-            <button id="btnLogout" class="btn btn-ghost" type="button">Log Out</button>
-            <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Support on Telegram</a>
-          </div>
-
-          <div id="ok" class="alert success" style="display:none;"></div>
-        </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnLogin" type="button">Log In</button>
+        <button class="btn" id="btnLogout" type="button" style="display:none;">Log Out</button>
       </div>
+
+      <div class="err" id="err">Invalid login or password.</div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="clientBox" id="clientBox">
+      <div class="kicker"><span class="kdot"></span> CLIENT DASHBOARD</div>
+      <div class="p" style="margin-top:10px;">Your subscription and account details:</div>
+      <div class="grid" id="clientGrid"></div>
+    </div>
+
+    <div class="p" style="margin-top:18px;">
+      Need help? Contact support:
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram Support</a>
+      <a class="btn btn-whatsapp" href="https://wa.me/16087204445" target="_blank" rel="noopener">WhatsApp Support</a>
     </div>
   </div>
+</div>
 
-  <div class="support">
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Support</a>
-  </div>
+<div class="toast" id="toast">Copied</div>
 
-  <script>
-    // ===== Client database (simple static demo) =====
-    // NOTE: This is NOT secure for real authentication (credentials are visible in page source).
-    // If you later want real secure login, you’ll need a backend (server) or auth provider.
-    const clients = [
-      {
-        name: "Mirzo Inomov",
-        login: "Mirzo1112",
-        password: "Bulbahbah",
-        package: "Dual Agency Ad Accounts",
-        price: "$850",
-        due: "Every 1st of the month",
-        accounts: [
-          { name: "123Test", adId: "12345", bmId: "67890" },
-          { name: "456Test", adId: "6789",  bmId: "11111" }
-        ]
-      },
-      {
-        name: "Subo test",
-        login: "SuboM5",
-        password: "M5CS",
-        package: "Single Agency Ad Account",
-        price: "$450",
-        due: "Every 4th of the month",
-        accounts: [
-          { name: "M5", adId: "M5555", bmId: "M5cs" }
-        ]
-      }
-    ];
+<script>
+/* ✅ USERS LIST (ONLY Titan Ltda as requested) */
+const USERS = [
+  {
+    name: "Titan Ltda",
+    login: "Titantda",
+    password: "Titan445566",
+    packageName: "Top Agency Package Dimond",
+    price: "$2250/month",
+    paymentDue: "Every 21st of every month",
+    adAccounts: [
+      { name: "HelpNxt_1711_Aceone_Metal", adId: "1100253422137323", bmId: "1199667670512101" },
+      { name: "HelpNxt_1712_paikori",        adId: "1687346411916980", bmId: "1199667670512101" },
+      { name: "Sonda Sweet 2",              adId: "18852646662376339", bmId: "1199667670512101" },
+      { name: "1",                          adId: "25565742243067148", bmId: "1199667670512101" },
+      { name: "As9",                        adId: "1495797358151854", bmId: "1199667670512101" }
+    ]
+  }
+];
 
-    const $ = (id) => document.getElementById(id);
+const toast = document.getElementById("toast");
+let toastTimer = null;
 
-    const loginEl = $("login");
-    const passEl  = $("password");
-    const msgEl   = $("msg");
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toast.classList.remove("show"), 1100);
+}
 
-    const detailsCard = $("detailsCard");
-    const clientName  = $("clientName");
-    const clientMeta  = $("clientMeta");
-    const pkgEl       = $("pkg");
-    const priceEl     = $("price");
-    const dueEl       = $("due");
-    const accountsBody= $("accountsBody");
-    const okEl        = $("ok");
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast("Copied");
+    return;
+  }catch(e){}
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.top = "-9999px";
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try{
+    document.execCommand("copy");
+    showToast("Copied");
+  }catch(e){
+    showToast("Copy failed");
+  }
+  document.body.removeChild(ta);
+}
 
-    function showError(text){
-      msgEl.textContent = text;
-      msgEl.className = "alert error";
-      msgEl.style.display = "block";
-      okEl.style.display = "none";
-    }
+function renderClient(client){
+  const grid = document.getElementById("clientGrid");
+  grid.innerHTML = "";
 
-    function showOk(text){
-      okEl.textContent = text;
-      okEl.className = "alert success";
-      okEl.style.display = "block";
-      setTimeout(()=>{ okEl.style.display = "none"; }, 1600);
-    }
+  const box1 = document.createElement("div");
+  box1.className = "box";
+  box1.innerHTML = `
+    <div class="title">${client.name}</div>
+    <div class="small"><b>Package:</b> ${client.packageName}</div>
+    <div class="small"><b>Price:</b> ${client.price}</div>
+    <div class="small"><b>Billing Date:</b> ${client.paymentDue}</div>
+  `;
 
-    function clearError(){
-      msgEl.textContent = "";
-      msgEl.style.display = "none";
-    }
+  const box2 = document.createElement("div");
+  box2.className = "box";
 
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        showOk("Copied!");
-      }catch(e){
-        // Fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        showOk("Copied!");
-      }
-    }
+  const accounts = (client.adAccounts || []).map((a, idx)=>`
+    <div style="margin-top:${idx===0?0:14}px">
+      <div class="small"><b>Ad Account Name:</b> ${a.name}</div>
+      <div class="small"><b>Ad Account ID:</b> <span class="mono">${a.adId}</span></div>
+      <button class="copy" data-copy="${a.adId}">Copy Ad Account ID</button>
 
-    function renderClient(c){
-      clientName.textContent = c.name;
-      clientMeta.textContent = "Your subscription and account mapping.";
-      pkgEl.textContent = c.package;
-      priceEl.textContent = c.price;
-      dueEl.textContent = c.due;
+      <div class="small" style="margin-top:10px"><b>Shared To BM ID:</b> <span class="mono">${a.bmId}</span></div>
+      <button class="copy" data-copy="${a.bmId}">Copy BM ID</button>
+    </div>
+  `).join("");
 
-      accountsBody.innerHTML = "";
-      c.accounts.forEach((a) => {
-        const tr = document.createElement("tr");
+  box2.innerHTML = `
+    <div class="title">Accounts</div>
+    <div class="small" style="margin-top:10px">${accounts || "No accounts available."}</div>
+  `;
 
-        const tdName = document.createElement("td");
-        tdName.textContent = a.name;
+  grid.appendChild(box1);
+  grid.appendChild(box2);
 
-        const tdAd = document.createElement("td");
-        tdAd.innerHTML = `<b style="color:#fff;">${a.adId}</b>`;
+  document.querySelectorAll(".copy[data-copy]").forEach(btn=>{
+    btn.addEventListener("click", ()=>copyText(btn.getAttribute("data-copy")));
+  });
+}
 
-        const tdBm = document.createElement("td");
-        tdBm.innerHTML = `<b style="color:#fff;">${a.bmId}</b>`;
+function setLoggedInUI(client){
+  document.getElementById("err").style.display = "none";
+  document.getElementById("clientBox").style.display = "block";
+  document.getElementById("btnLogout").style.display = "inline-flex";
+  document.getElementById("btnLogin").style.display = "none";
+  document.getElementById("login").disabled = true;
+  document.getElementById("password").disabled = true;
+  renderClient(client);
+}
 
-        const tdCopy = document.createElement("td");
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "copy";
-        btn.textContent = "Copy IDs";
-        btn.addEventListener("click", () => {
-          copyText(`Ad Account: ${a.adId}\nBM: ${a.bmId}`);
-        });
-        tdCopy.appendChild(btn);
+function setLoggedOutUI(){
+  document.getElementById("clientBox").style.display = "none";
+  document.getElementById("btnLogout").style.display = "none";
+  document.getElementById("btnLogin").style.display = "inline-flex";
+  document.getElementById("login").disabled = false;
+  document.getElementById("password").disabled = false;
+  document.getElementById("login").value = "";
+  document.getElementById("password").value = "";
+  localStorage.removeItem("ss_client_login");
+  localStorage.removeItem("ss_client_pass");
+}
 
-        tr.appendChild(tdName);
-        tr.appendChild(tdAd);
-        tr.appendChild(tdBm);
-        tr.appendChild(tdCopy);
-        accountsBody.appendChild(tr);
-      });
+function tryAutoLogin(){
+  const l = localStorage.getItem("ss_client_login") || "";
+  const p = localStorage.getItem("ss_client_pass") || "";
+  if(!l || !p) return;
 
-      detailsCard.style.display = "block";
-    }
+  const client = USERS.find(u => u.login === l && u.password === p);
+  if(client) setLoggedInUI(client);
+}
 
-    function login(){
-      clearError();
+document.getElementById("btnLogin").addEventListener("click", ()=>{
+  const login = document.getElementById("login").value.trim();
+  const pass = document.getElementById("password").value;
 
-      const loginVal = (loginEl.value || "").trim();
-      const passVal  = (passEl.value || "").trim();
+  const client = USERS.find(u => u.login === login && u.password === pass);
+  if(!client){
+    document.getElementById("err").style.display = "block";
+    return;
+  }
+  localStorage.setItem("ss_client_login", login);
+  localStorage.setItem("ss_client_pass", pass);
+  setLoggedInUI(client);
+});
 
-      if(!loginVal || !passVal){
-        showError("Please enter both login and password.");
-        return;
-      }
+document.getElementById("btnLogout").addEventListener("click", ()=>{
+  setLoggedOutUI();
+});
 
-      const c = clients.find(x => x.login === loginVal && x.password === passVal);
-      if(!c){
-        showError("Wrong login or password.");
-        detailsCard.style.display = "none";
-        return;
-      }
-
-      renderClient(c);
-      showOk("Logged in!");
-    }
-
-    function logout(){
-      detailsCard.style.display = "none";
-      loginEl.value = "";
-      passEl.value = "";
-      clearError();
-      showOk("Logged out.");
-      loginEl.focus();
-    }
-
-    $("btnLogin").addEventListener("click", login);
-    $("btnClear").addEventListener("click", ()=>{
-      loginEl.value = "";
-      passEl.value = "";
-      clearError();
-      loginEl.focus();
-    });
-    $("btnLogout").addEventListener("click", logout);
-
-    // Press Enter to log in
-    [loginEl, passEl].forEach(el=>{
-      el.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter") login();
-      });
-    });
-
-    // Focus first input
-    setTimeout(()=>loginEl.focus(), 200);
-  </script>
+tryAutoLogin();
+</script>
 </body>
 </html>
