@@ -162,16 +162,6 @@ p{
   border-color:rgba(214,177,94,.35);
   box-shadow:0 0 30px rgba(214,177,94,.12);
 }
-.btn-whatsapp{
-  background:rgba(34,197,94,.12);
-  border-color:rgba(34,197,94,.25);
-  color:#fff;
-}
-.btn-whatsapp:hover{
-  transform:translateY(-2px);
-  border-color:rgba(34,197,94,.45);
-  box-shadow:0 0 26px rgba(34,197,94,.18);
-}
 
 /* Cards */
 .card{
@@ -199,6 +189,9 @@ p{
   box-shadow:0 0 55px rgba(214,177,94,.12);
 }
 
+.grid-2{display:grid;gap:24px}
+@media(min-width:980px){ .grid-2{grid-template-columns:1.05fr .95fr;align-items:start} }
+
 .grid-3{display:grid;gap:24px}
 @media(min-width:900px){ .grid-3{grid-template-columns:repeat(3,1fr)} }
 
@@ -218,6 +211,15 @@ p{
   font-weight:850;
 }
 .badge strong{color:#fff}
+
+.icon{
+  width:36px;height:36px;border-radius:14px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  box-shadow:0 0 24px rgba(214,177,94,.06);
+}
+.icon svg{width:18px;height:18px;opacity:.95}
 
 /* Hero */
 .hero{
@@ -323,9 +325,127 @@ p{
 }
 .check svg{width:14px;height:14px}
 
-/* Reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
-.reveal.active{opacity:1;transform:none}
+/* Verticals */
+.vert-card{min-height:210px}
+.pulse{
+  position:absolute;
+  top:-90px; right:-120px;
+  width:220px;height:220px;border-radius:999px;
+  background:radial-gradient(circle at 30% 30%, rgba(214,177,94,.22), transparent 60%);
+  filter:blur(10px);
+  opacity:.75;
+  animation:pulse 5.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ transform:scale(1); opacity:.70 }
+  50%{ transform:scale(1.12); opacity:.95 }
+}
+.wiggle{display:inline-block;transition:transform .2s var(--ease)}
+.card:hover .wiggle{transform:rotate(-3deg) scale(1.02)}
+
+/* Graph */
+.graph-wrap{display:grid;gap:24px}
+@media(min-width:980px){ .graph-wrap{grid-template-columns:1.05fr .95fr;align-items:center} }
+
+.canvas-card{padding:18px}
+.canvas-shell{
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  overflow:hidden;
+  position:relative;
+}
+.canvas-shell::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(700px circle at 20% 0%, rgba(214,177,94,.10), transparent 55%),
+    radial-gradient(700px circle at 80% 10%, rgba(242,210,122,.08), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 22px);
+  opacity:.35;
+  pointer-events:none;
+  mask-image: radial-gradient(900px circle at 50% 50%, #000 45%, transparent 72%);
+}
+#verticalChart{width:100%;height:320px;display:block}
+
+.legend{
+  display:flex;gap:14px;flex-wrap:wrap;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+.leg{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+}
+.swatch{width:12px;height:12px;border-radius:999px;display:inline-block}
+.s1{background:linear-gradient(135deg,var(--gold),var(--gold2))}
+.s2{background:rgba(56,189,248,.95)}
+.note{margin-top:10px;color:var(--muted2);font-size:12px;line-height:1.5}
+
+/* Testimonials */
+.quote{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+.person{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:14px;
+}
+.avatar{
+  width:38px;height:38px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  display:grid;place-items:center;
+  font-weight:950;
+  color:#fff;
+}
+.tag{
+  font-size:12px;
+  font-weight:900;
+  color:rgba(255,255,255,.85);
+  border:1px solid rgba(214,177,94,.22);
+  background:rgba(214,177,94,.10);
+  padding:7px 10px;
+  border-radius:999px;
+}
+
+/* FAQ */
+.faq{display:grid;gap:14px}
+.faq-btn{
+  width:100%;
+  text-align:left;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.05);
+  padding:16px 18px;
+  cursor:pointer;
+  color:#fff;
+  transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+}
+.faq-btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.25);
+  box-shadow:0 0 26px rgba(214,177,94,.10);
+}
+.faq-q{font-weight:950;font-size:14px}
+.faq-a{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+  display:none;
+}
+.faq-btn[aria-expanded="true"] .faq-a{display:block}
 
 /* Footer */
 footer{
@@ -335,16 +455,12 @@ footer{
   color:var(--muted);
 }
 
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
+.reveal.active{opacity:1;transform:none}
+
 /* Floating CTA */
-.float{
-  position:fixed;
-  right:16px;
-  bottom:16px;
-  z-index:120;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
+.float{position:fixed;right:16px;bottom:16px;z-index:120;display:flex;gap:10px;flex-wrap:wrap}
 .float a{
   box-shadow:0 14px 48px -30px rgba(0,0,0,.85), 0 0 40px rgba(214,177,94,.12);
 }
@@ -365,14 +481,12 @@ footer{
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
-        <a href="payment.html" target="_blank" rel="noopener">Payment Details</a>
-        <a href="login.html" target="_blank" rel="noopener">Log In</a>
       </div>
     </div>
-
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Telegram</a>
-      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost btn-whatsapp">WhatsApp</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-ghost">Telegram</a>
+      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost">WhatsApp</a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Contact Now</a>
     </div>
   </div>
 </div>
@@ -389,7 +503,7 @@ footer{
     <div class="hero-actions">
       <a href="#pricing" class="btn btn-primary">View Pricing</a>
       <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-ghost">Telegram</a>
-      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost btn-whatsapp">WhatsApp</a>
+      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost">WhatsApp</a>
     </div>
 
     <div class="hero-strip">
@@ -454,32 +568,114 @@ footer{
   </div>
 
   <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal">
-      <h3>Neutral verticals</h3>
+    <div class="card reveal vert-card">
+      <div class="pulse"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3><span class="wiggle">Neutral</span> verticals</h3>
+            <div class="badge" style="margin-top:10px;"><strong>Stable</strong>&nbsp;scaling</div>
+          </div>
+        </div>
+      </div>
       <div class="ul">
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Ecom, lead gen, apps, content</span></div>
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Steady scaling & clean testing</span></div>
+        <div class="li">
+          <div class="check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <span>Ecom, lead gen, apps, content — steady growth curves</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Less volatility, easier creative iteration & testing cycles</span>
+        </div>
       </div>
     </div>
 
-    <div class="card reveal">
-      <h3>Gambling / iGaming</h3>
+    <div class="card reveal vert-card">
+      <div class="pulse" style="opacity:.55"></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="3"/>
+            <circle cx="9" cy="9" r="1"/>
+            <circle cx="15" cy="15" r="1"/>
+            <circle cx="15" cy="9" r="1"/>
+            <circle cx="9" cy="15" r="1"/>
+          </svg>
+        </div>
+        <div>
+          <h3><span class="wiggle">Gambling / iGaming</span></h3>
+          <div class="badge" style="margin-top:10px;"><strong>High</strong>&nbsp;velocity</div>
+        </div>
+      </div>
       <div class="ul">
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>High velocity operations</span></div>
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Monitoring + fast replacements</span></div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Faster scaling curves with tighter monitoring needs</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Creative rotation + quick recovery when disruptions happen</span>
+        </div>
       </div>
     </div>
 
-    <div class="card reveal">
-      <h3>Gray / policy-sensitive</h3>
+    <div class="card reveal vert-card">
+      <div class="pulse" style="opacity:.45"></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.3 3.6L2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"/>
+            <path d="M12 9v4"/><path d="M12 17h.01"/>
+          </svg>
+        </div>
+        <div>
+          <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
+          <div class="badge" style="margin-top:10px;"><strong>Reliability</strong>&nbsp;first</div>
+        </div>
+      </div>
       <p style="margin-top:12px;">
-        We focus on <b>structure, reliability, monitoring, and rapid replacement</b>.
+        For policy-sensitive categories, we focus on <b>structure, reliability, monitoring, and rapid replacement</b>.
         (We do not provide “how to break rules” guidance.)
       </p>
       <div class="ul">
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Risk-managed operations</span></div>
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Incident response + support</span></div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Risk-managed operations, fast incident response</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>We keep campaigns moving through replacements + support</span>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:24px;">
+    <div class="grid-3" style="gap:18px;">
+      <div>
+        <h3>Meta-ready structure</h3>
+        <p style="margin-top:10px;">Clean onboarding steps, stable setup, minimal friction to launch.</p>
+      </div>
+      <div>
+        <h3>Always-on support</h3>
+        <p style="margin-top:10px;">24/7 help for access, setup, approvals guidance, troubleshooting.</p>
+      </div>
+      <div>
+        <h3>Replacement engine</h3>
+        <p style="margin-top:10px;">If something breaks, we replace it quickly — maintaining momentum.</p>
+      </div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Get a recommendation</a>
+      <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+      <a class="btn btn-ghost" href="#pricing">See pricing</a>
     </div>
   </div>
 </section>
@@ -491,14 +687,43 @@ footer{
     <h2>Vertical Performance graph</h2>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal" style="grid-column:1/-1; padding:18px;">
-      <div style="border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);overflow:hidden;position:relative;">
-        <canvas id="verticalChart" width="1100" height="320" style="width:100%;height:320px;display:block"></canvas>
+  <div class="graph-wrap" style="margin-top:30px;">
+    <div class="card canvas-card reveal">
+      <div class="canvas-shell">
+        <canvas id="verticalChart" width="1100" height="320"></canvas>
       </div>
-      <p style="margin-top:10px;color:var(--muted2);font-size:12px;line-height:1.5">
+
+      <div class="legend">
+        <div class="leg"><span class="swatch s1"></span> Neutral (stable scaling)</div>
+        <div class="leg"><span class="swatch s2"></span> iGaming (aggressive scaling)</div>
+      </div>
+
+      <div class="note">
         Visualization is illustrative for marketing/education. Values show scaling patterns, not client-specific data.
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>What this means for you</h3>
+      <p style="margin-top:10px;">
+        Neutral verticals usually scale steadily with fewer volatility spikes. iGaming can scale faster but needs
+        tighter monitoring and quicker operational response.
       </p>
+      <div class="ul">
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Plan the right package based on velocity + risk tolerance</span>
+        </div>
+        <div class="li">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <span>Operate with replacements + always-on support to reduce downtime</span>
+        </div>
+      </div>
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Ask for a plan</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost" href="#pricing">See packages</a>
+      </div>
     </div>
   </div>
 </section>
@@ -520,9 +745,9 @@ footer{
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Controlled testing & scaling</span></div>
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>24/7 support + replacements included</span></div>
       </div>
-      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
-        <a class="btn btn-ghost btn-whatsapp" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
       </div>
     </div>
 
@@ -534,9 +759,9 @@ footer{
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>1 agency ad account</span></div>
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Unlimited replacements</span></div>
       </div>
-      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
-        <a class="btn btn-ghost btn-whatsapp" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
       </div>
     </div>
 
@@ -549,9 +774,9 @@ footer{
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>2 agency ad accounts</span></div>
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Ideal for teams running multiple offers</span></div>
       </div>
-      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
-        <a class="btn btn-ghost btn-whatsapp" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
       </div>
     </div>
 
@@ -561,12 +786,74 @@ footer{
       <p>/month • 24/7 support and unlimited replacements</p>
       <div class="ul">
         <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Premium agency access</span></div>
-        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Best for aggressive scaling</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Best for aggressive scaling operations</span></div>
       </div>
-      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
-        <a class="btn btn-ghost btn-whatsapp" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
       </div>
+    </div>
+  </div>
+
+  <!-- RESTORED: ONE-TIME SERVICES (REGULAR SERVICES) -->
+  <div class="reveal" style="margin-top:44px;">
+    <div class="kicker"><span class="kdot"></span> ONE-TIME SERVICES</div>
+    <h2>One-time support options</h2>
+    <p>Same premium workflow — clear steps, fast response, and support on Telegram/WhatsApp.</p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal">
+      <h3>Manual Ad Approval</h3>
+      <div class="price">$125</div>
+      <p>per ad • guidance + review for approval flow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Fast response via Telegram / WhatsApp</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Clear action steps</span></div>
+      </div>
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Facebook Ad Account Unban</h3>
+      <div class="price">$1,800</div>
+      <p>one-time fee • case review + support workflow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Works best with complete info</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>We confirm feasibility first</span></div>
+      </div>
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3>Facebook Profile Unban</h3>
+      <div class="price">$4,000</div>
+      <p>one-time fee • case review + escalation workflow</p>
+      <div class="ul">
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Best for high-value operations</span></div>
+        <div class="li"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><span>Fast response + clear steps</span></div>
+      </div>
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
+        <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:26px;">
+    <h3>Need help picking the right setup?</h3>
+    <p style="margin-top:10px;">
+      Send your spend level + GEO + vertical on Telegram/WhatsApp — we’ll recommend the cleanest package.
+    </p>
+    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank">Telegram</a>
+      <a class="btn btn-ghost" href="https://wa.me/16087204445" target="_blank">WhatsApp</a>
     </div>
   </div>
 </section>
@@ -581,19 +868,93 @@ footer{
 
   <div class="grid-3" style="margin-top:30px;">
     <div class="card reveal">
-      <div class="badge"><strong>24/7</strong>&nbsp;support</div>
-      <p style="margin-top:12px;">“Replacements are real. We got swapped quickly with no downtime panic.”</p>
-      <p style="margin-top:10px;color:var(--muted2);font-size:12px;">Ecom • EU</p>
+      <div class="tag">“Replacements are real”</div>
+      <div class="quote">“We had 2 issues in the first week and both got swapped quickly. No downtime panic — support stayed on until we were live again.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">AK</div>
+          <div>
+            <div style="font-weight:950;">Artem K.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Ecom • EU</div>
+          </div>
+        </div>
+        <div class="badge"><strong>24/7</strong>&nbsp;support</div>
+      </div>
     </div>
+
     <div class="card reveal">
-      <div class="badge"><strong>Fast</strong>&nbsp;setup</div>
-      <p style="margin-top:12px;">“Clean onboarding. Clear handoff, we launched fast without back-and-forth.”</p>
-      <p style="margin-top:10px;color:var(--muted2);font-size:12px;">Lead Gen Agency</p>
+      <div class="tag">“Clean onboarding”</div>
+      <div class="quote">“Setup was organized, not messy. We got a clear handoff and could start running without back-and-forth.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">NS</div>
+          <div>
+            <div style="font-weight:950;">Nadia S.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Lead Gen Agency</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Fast</strong>&nbsp;setup</div>
+      </div>
     </div>
+
     <div class="card reveal">
-      <div class="badge"><strong>High</strong>&nbsp;velocity</div>
-      <p style="margin-top:12px;">“For iGaming speed, response time matters. We get answers fast.”</p>
-      <p style="margin-top:10px;color:var(--muted2);font-size:12px;">iGaming Ops</p>
+      <div class="tag">“Saved our launch”</div>
+      <div class="quote">“Manual approval support helped us avoid delays. We fixed what mattered and got the campaign live faster.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">RM</div>
+          <div>
+            <div style="font-weight:950;">Rafael M.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Performance Buyer</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Launch</strong>&nbsp;ready</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Good for high-velocity”</div>
+      <div class="quote">“For iGaming speed, support response time matters. We get answers fast and replacements keep things moving.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">DL</div>
+          <div>
+            <div style="font-weight:950;">Daria L.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">iGaming Ops</div>
+          </div>
+        </div>
+        <div class="badge"><strong>High</strong>&nbsp;velocity</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“BM3 is perfect for testing”</div>
+      <div class="quote">“BM3 spend cap is great for controlled testing. Easy to run clean experiments without overexposing budget.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">ML</div>
+          <div>
+            <div style="font-weight:950;">Mark L.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">App Marketing</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Testing</strong>&nbsp;friendly</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="tag">“Reliable operations”</div>
+      <div class="quote">“We don’t need promises — we need stability. This is the first time ops felt predictable.”</div>
+      <div class="person">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">SR</div>
+          <div>
+            <div style="font-weight:950;">Sami R.</div>
+            <div style="color:var(--muted2);font-size:12px;margin-top:2px;">Agency Owner</div>
+          </div>
+        </div>
+        <div class="badge"><strong>Stable</strong>&nbsp;ops</div>
+      </div>
     </div>
   </div>
 </section>
@@ -603,13 +964,34 @@ footer{
   <div class="reveal">
     <div class="kicker"><span class="kdot"></span> FAQ</div>
     <h2>Quick answers</h2>
-    <p>If you don’t see your question here, message support and we’ll respond fast.</p>
+    <p>If you don’t see your question here, message Telegram/WhatsApp and we’ll respond fast.</p>
   </div>
 
-  <div class="card reveal" style="margin-top:26px;">
-    <p><b>Do all monthly packages include unlimited replacements?</b><br><span style="color:var(--muted)">Yes — monthly packages include 24/7 support and unlimited replacements.</span></p>
-    <p style="margin-top:14px;"><b>How fast can we start?</b><br><span style="color:var(--muted)">Usually same day. Message us and we’ll guide the cleanest setup steps.</span></p>
-    <p style="margin-top:14px;"><b>Do you support iGaming / Gambling verticals?</b><br><span style="color:var(--muted)">Operational support (setup, reliability, monitoring, replacements). We don’t provide instructions to break platform rules.</span></p>
+  <div class="faq" style="margin-top:26px;">
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do all monthly packages include unlimited replacements?</div>
+      <div class="faq-a">Yes — monthly packages include 24/7 support and unlimited replacements.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">How fast can we start?</div>
+      <div class="faq-a">Onboarding is designed to be quick. Message Telegram/WhatsApp and we’ll guide you through the cleanest setup steps.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do you support iGaming / Gambling verticals?</div>
+      <div class="faq-a">We support iGaming/Gambling teams operationally (setup, reliability, monitoring, replacements). We don’t provide instructions to break platform rules.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What information do you need to recommend a package?</div>
+      <div class="faq-a">Usually spend level, GEO, vertical, and how many accounts you need. Then we match the best option.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Are one-time services guaranteed?</div>
+      <div class="faq-a">No service can be guaranteed. We’ll confirm feasibility for your case first before proceeding.</div>
+    </button>
   </div>
 </section>
 
@@ -621,9 +1003,8 @@ footer{
     <p>Fast responses. Setup, approvals guidance, scaling, replacements — 24/7.</p>
     <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
       <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Telegram</a>
-      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost btn-whatsapp">WhatsApp</a>
-      <a href="payment.html" target="_blank" rel="noopener" class="btn btn-ghost">Payment Details</a>
-      <a href="login.html" target="_blank" rel="noopener" class="btn btn-ghost">Log In</a>
+      <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost">WhatsApp</a>
+      <a href="#pricing" class="btn btn-ghost">View Pricing</a>
     </div>
   </div>
 </section>
@@ -634,12 +1015,20 @@ footer{
 
 <div class="float">
   <a href="https://t.me/scaleshieldsupport" target="_blank" class="btn btn-primary">Telegram</a>
-  <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost btn-whatsapp">WhatsApp</a>
+  <a href="https://wa.me/16087204445" target="_blank" class="btn btn-ghost">WhatsApp</a>
 </div>
 
 <script>
 /* year */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* FAQ toggles */
+document.querySelectorAll(".faq-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+  });
+});
 
 /* scroll reveal */
 const elements = document.querySelectorAll('.reveal');
@@ -727,7 +1116,6 @@ function drawChart(progress){
     const y = padT + (ch/rows)*i;
     ctx.fillText(v.toString(), 8, y+4);
   }
-
   const labels = ["W1","W2","W3","W4","W5","W6","W7"];
   for(let i=0;i<labels.length;i++){
     const x = padL + (cw/(labels.length-1))*i;
