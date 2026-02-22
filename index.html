@@ -22,6 +22,14 @@
 
   --radius:22px;
   --ease:cubic-bezier(.2,.8,.2,1);
+
+  /* brand colors */
+  --tg:#2AABEE;
+  --wa:#25D366;
+  --ig1:#F58529;
+  --ig2:#DD2A7B;
+  --ig3:#8134AF;
+  --ig4:#515BD4;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -145,6 +153,7 @@ p{
   border:1px solid transparent;
   user-select:none;
   white-space:nowrap;
+  line-height:1;
 }
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
@@ -162,21 +171,32 @@ p{
   border-color:rgba(214,177,94,.35);
   box-shadow:0 0 30px rgba(214,177,94,.12);
 }
+
 .btn-icon{
   width:18px;height:18px;display:inline-block;flex:0 0 auto;
   opacity:.95;
 }
-.btn-social:hover{
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 34px rgba(214,177,94,.16);
-}
-.btn-ig:hover{
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 34px rgba(214,177,94,.16);
+
+/* Brand hover animations */
+.btn-tg:hover{
+  color:var(--tg);
+  border-color:rgba(42,171,238,.55);
+  box-shadow:0 0 34px rgba(42,171,238,.22);
 }
 .btn-wa:hover{
-  border-color:rgba(34,197,94,.45);
-  box-shadow:0 0 34px rgba(34,197,94,.16);
+  color:var(--wa);
+  border-color:rgba(37,211,102,.55);
+  box-shadow:0 0 34px rgba(37,211,102,.22);
+}
+.btn-ig:hover{
+  color:#fff;
+  border-color:rgba(245,133,41,.35);
+  box-shadow:
+    0 0 26px rgba(245,133,41,.12),
+    0 0 36px rgba(221,42,123,.10),
+    0 0 42px rgba(129,52,175,.10);
+  background:
+    linear-gradient(135deg, rgba(245,133,41,.14), rgba(221,42,123,.10), rgba(81,91,212,.10));
 }
 
 /* Cards */
@@ -425,8 +445,9 @@ p{
   content:"";
   position:absolute; inset:0;
   background:
-    radial-gradient(700px circle at 30% 20%, rgba(214,177,94,.18), transparent 60%),
-    radial-gradient(700px circle at 70% 70%, rgba(56,189,248,.10), transparent 62%),
+    radial-gradient(700px circle at 30% 20%, rgba(245,133,41,.16), transparent 60%),
+    radial-gradient(700px circle at 70% 70%, rgba(221,42,123,.12), transparent 62%),
+    radial-gradient(700px circle at 30% 80%, rgba(81,91,212,.10), transparent 62%),
     linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
   opacity:.9;
 }
@@ -439,8 +460,11 @@ p{
 }
 .ig-post:hover{
   transform:translateY(-3px);
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 40px rgba(214,177,94,.10);
+  border-color:rgba(245,133,41,.35);
+  box-shadow:
+    0 0 26px rgba(245,133,41,.12),
+    0 0 34px rgba(221,42,123,.10),
+    0 0 40px rgba(81,91,212,.10);
 }
 .ig-post:hover::after{opacity:1}
 .ig-post-inner{
@@ -472,38 +496,6 @@ p{
 .ig-mini{
   color:rgba(255,255,255,.55);
   font-size:12px;
-}
-
-/* Testimonials */
-.quote{
-  margin-top:12px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.65;
-}
-.person{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-top:14px;
-}
-.avatar{
-  width:38px;height:38px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  display:grid;place-items:center;
-  font-weight:950;
-  color:#fff;
-}
-.tag{
-  font-size:12px;
-  font-weight:900;
-  color:rgba(255,255,255,.85);
-  border:1px solid rgba(214,177,94,.22);
-  background:rgba(214,177,94,.10);
-  padding:7px 10px;
-  border-radius:999px;
 }
 
 /* FAQ */
@@ -565,6 +557,7 @@ footer{
         <a href="#verticals">Verticals</a>
         <a href="#graph">Graph</a>
         <a href="#pricing">Pricing</a>
+        <!-- ✅ removed Social from header nav -->
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
         <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
@@ -573,9 +566,9 @@ footer{
       </div>
     </div>
 
-    <!-- ✅ Instagram removed ONLY from header buttons -->
+    <!-- header buttons: Telegram + WhatsApp only (brand hover) -->
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-social">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -583,7 +576,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -609,14 +602,16 @@ footer{
 
     <div class="hero-actions">
       <a href="#pricing" class="btn btn-primary">View Pricing</a>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-social">
+
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
         </svg>
         Telegram
       </a>
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-wa">
+
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -624,8 +619,7 @@ footer{
         WhatsApp
       </a>
 
-      <!-- Instagram still kept everywhere else -->
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -699,90 +693,20 @@ footer{
   <div class="grid-3" style="margin-top:30px;">
     <div class="card reveal vert-card">
       <div class="pulse"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
-            </svg>
-          </div>
-          <div>
-            <h3><span class="wiggle">Neutral</span> verticals</h3>
-            <div class="badge" style="margin-top:10px;"><strong>Stable</strong>&nbsp;scaling</div>
-          </div>
-        </div>
-      </div>
-      <div class="ul">
-        <div class="li">
-          <div class="check">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-          </div>
-          <span>Ecom, lead gen, apps, content — steady growth curves</span>
-        </div>
-        <div class="li">
-          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <span>Less volatility, easier creative iteration & testing cycles</span>
-        </div>
-      </div>
+      <h3><span class="wiggle">Neutral</span> verticals</h3>
+      <p>Ecom, lead gen, apps, content — steady growth curves.</p>
     </div>
 
     <div class="card reveal vert-card">
       <div class="pulse" style="opacity:.55"></div>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="4" y="4" width="16" height="16" rx="3"/>
-            <circle cx="9" cy="9" r="1"/>
-            <circle cx="15" cy="15" r="1"/>
-            <circle cx="15" cy="9" r="1"/>
-            <circle cx="9" cy="15" r="1"/>
-          </svg>
-        </div>
-        <div>
-          <h3><span class="wiggle">Gambling / iGaming</span></h3>
-          <div class="badge" style="margin-top:10px;"><strong>High</strong>&nbsp;velocity</div>
-        </div>
-      </div>
-      <div class="ul">
-        <div class="li">
-          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <span>Faster scaling curves with tighter monitoring needs</span>
-        </div>
-        <div class="li">
-          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <span>Creative rotation + quick recovery when disruptions happen</span>
-        </div>
-      </div>
+      <h3><span class="wiggle">Gambling / iGaming</span></h3>
+      <p>High velocity operations with tighter monitoring needs.</p>
     </div>
 
     <div class="card reveal vert-card">
       <div class="pulse" style="opacity:.45"></div>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10.3 3.6L2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"/>
-            <path d="M12 9v4"/><path d="M12 17h.01"/>
-          </svg>
-        </div>
-        <div>
-          <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
-          <div class="badge" style="margin-top:10px;"><strong>Reliability</strong>&nbsp;first</div>
-        </div>
-      </div>
-      <p style="margin-top:12px;">
-        For policy-sensitive categories, we focus on <b>structure, reliability, monitoring, and rapid replacement</b>.
-        (We do not provide “how to break rules” guidance.)
-      </p>
-      <div class="ul">
-        <div class="li">
-          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <span>Risk-managed operations, fast incident response</span>
-        </div>
-        <div class="li">
-          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <span>We keep campaigns moving through replacements + support</span>
-        </div>
-      </div>
+      <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
+      <p>Reliability first — structure, monitoring, rapid replacement.</p>
     </div>
   </div>
 </section>
@@ -812,10 +736,7 @@ footer{
 
     <div class="card reveal">
       <h3>What this means for you</h3>
-      <p style="margin-top:10px;">
-        Neutral verticals usually scale steadily with fewer volatility spikes. iGaming can scale faster but needs
-        tighter monitoring and quicker operational response.
-      </p>
+      <p>Neutral usually scales steadily; iGaming can scale faster but needs tighter monitoring.</p>
     </div>
   </div>
 </section>
@@ -907,19 +828,11 @@ footer{
     <div class="ig-grid">
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
-          <div class="ig-pill">
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-              <circle cx="12" cy="12" r="4"></circle>
-              <circle cx="17.5" cy="6.5" r="1"></circle>
-            </svg>
-            Update
-          </div>
+          <div class="ig-pill">Update</div>
           <div class="ig-caption">Scaling tips • reliability • replacements workflow</div>
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
           <div class="ig-pill">Case Study</div>
@@ -927,7 +840,6 @@ footer{
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
           <div class="ig-pill">Support</div>
@@ -935,7 +847,6 @@ footer{
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
           <div class="ig-pill">Infra</div>
@@ -943,7 +854,6 @@ footer{
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
           <div class="ig-pill">News</div>
@@ -951,7 +861,6 @@ footer{
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-
       <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
         <div class="ig-post-inner">
           <div class="ig-pill">Creative</div>
@@ -959,30 +868,6 @@ footer{
           <div class="ig-mini">Tap to open Instagram</div>
         </div>
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section id="reviews">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> REVIEWS</div>
-    <h2>What clients say</h2>
-    <p>Generated testimonials to show typical use cases and outcomes.</p>
-  </div>
-
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal">
-      <div class="tag">“Replacements are real”</div>
-      <div class="quote">“We had 2 issues in the first week and both got swapped quickly. No downtime panic.”</div>
-    </div>
-    <div class="card reveal">
-      <div class="tag">“Clean onboarding”</div>
-      <div class="quote">“Setup was organized, clear handoff, launched fast.”</div>
-    </div>
-    <div class="card reveal">
-      <div class="tag">“High velocity ready”</div>
-      <div class="quote">“Fast responses matter. We get answers quick.”</div>
     </div>
   </div>
 </section>
@@ -1023,7 +908,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1031,7 +916,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -1051,7 +936,7 @@ footer{
 </footer>
 
 <div class="float">
-  <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-ig">
+  <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
     <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="3" y="3" width="18" height="18" rx="5"></rect>
       <circle cx="12" cy="12" r="4"></circle>
@@ -1060,7 +945,7 @@ footer{
     Instagram
   </a>
   <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Telegram</a>
-  <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-social btn-wa">
+  <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
     <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
       <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1070,7 +955,6 @@ footer{
 </div>
 
 <script>
-/* year */
 document.getElementById("year").textContent = new Date().getFullYear();
 
 /* FAQ toggles */
@@ -1168,6 +1052,7 @@ function drawChart(progress){
     const y = padT + (ch/rows)*i;
     ctx.fillText(v.toString(), 8, y+4);
   }
+
   const labels = ["W1","W2","W3","W4","W5","W6","W7"];
   for(let i=0;i<labels.length;i++){
     const x = padL + (cw/(labels.length-1))*i;
