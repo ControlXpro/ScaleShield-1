@@ -34,6 +34,7 @@
       background:linear-gradient(135deg,var(--gold),var(--gold2));
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
+
     .btn{
       padding:10px 14px;border-radius:14px;font-weight:900;
       border:1px solid rgba(255,255,255,.12);
@@ -58,6 +59,7 @@
       background:rgba(34,197,94,.12);
       color:#fff;
     }
+
     .card{
       background:var(--panel);
       border:1px solid var(--border);
@@ -79,7 +81,7 @@
       outline:none;
     }
     input:focus, select:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
-    .inlineInput{width:180px;padding:8px 10px;border-radius:12px;font-size:12px}
+    .inlineInput{width:170px;padding:8px 10px;border-radius:12px;font-size:12px}
 
     table{width:100%;border-collapse:collapse}
     th,td{padding:10px 10px;text-align:left;vertical-align:top}
@@ -94,6 +96,7 @@
     }
     tr{border-bottom:1px solid rgba(255,255,255,.06)}
     td{color:rgba(255,255,255,.88);font-size:13px}
+
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       font-size:12.5px;
@@ -104,6 +107,7 @@
       max-width:100%;
       overflow:hidden;text-overflow:ellipsis;
     }
+
     .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .tabBtn{
       padding:9px 12px;border-radius:999px;font-weight:950;
@@ -116,6 +120,7 @@
       border-color:rgba(214,177,94,.35);
       box-shadow:0 0 24px rgba(214,177,94,.10);
     }
+
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 10px;border-radius:999px;
@@ -126,8 +131,10 @@
     }
     .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
+
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
+
     .toast{
       position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
       background:rgba(0,0,0,.65);
@@ -154,7 +161,7 @@
     }
     .modal.show{display:flex}
     .modalCard{
-      width:560px; max-width:100%;
+      width:520px; max-width:100%;
       background:rgba(15,15,18,.96);
       border:1px solid rgba(255,255,255,.12);
       border-radius:22px;
@@ -186,7 +193,7 @@
     <div class="row" style="justify-content:space-between">
       <div>
         <h1 style="margin:0">Billing Dashboard</h1>
-        <div class="p">Bank balance, paychecks, income, expenses, report.</div>
+        <div class="p">Bank Balance + Paychecks + Report Search</div>
         <div class="tabs">
           <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
           <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
@@ -214,9 +221,7 @@
       <div style="overflow:auto;margin-top:12px">
         <table>
           <thead>
-            <tr>
-              <th>Client</th><th>Status</th><th>Next Due</th><th>Days</th><th>Monthly $</th><th>Invoice (month)</th><th>Actions</th>
-            </tr>
+            <tr><th>Client</th><th>Status</th><th>Next Due</th><th>Days</th><th>Monthly $</th><th>Invoice (month)</th><th>Actions</th></tr>
           </thead>
           <tbody id="billingRows"></tbody>
         </table>
@@ -240,9 +245,7 @@
 
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr>
-          </thead>
+          <thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr></thead>
           <tbody id="expensesRows"></tbody>
         </table>
       </div>
@@ -250,18 +253,31 @@
 
     <!-- Paychecks -->
     <div id="viewPaychecks" class="hide">
-      <div class="row" style="justify-content:space-between">
-        <h1 style="font-size:18px;margin:0">Paychecks (separate from expenses)</h1>
-        <button class="btn btn-primary" id="btnAddPaycheck" type="button">+ Add Paycheck</button>
-      </div>
-      <div class="p">Paychecks reduce only Bank Balance when marked PAID. They do NOT reduce Profit.</div>
+      <h1 style="font-size:18px;margin:0">Add Paycheck (separate from expenses)</h1>
+      <div class="p">Paychecks do NOT reduce profit. They reduce Bank Balance only when marked paid.</div>
 
-      <div style="overflow:auto;margin-top:12px">
+      <form id="payForm" style="margin-top:12px" class="row">
+        <div style="flex:1;min-width:160px"><label>Date</label><input id="payDate" type="date" required /></div>
+        <div style="flex:1;min-width:160px"><label>Employee</label><input id="payName" required /></div>
+        <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="payAmount" type="number" step="0.01" required /></div>
+        <div style="flex:1;min-width:160px">
+          <label>Status</label>
+          <select id="payStatus">
+            <option value="unpaid">unpaid</option>
+            <option value="paid">paid</option>
+          </select>
+        </div>
+        <div style="flex:2;min-width:220px"><label>Note</label><input id="payNote" /></div>
+        <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Add</button></div>
+      </form>
+
+      <div class="hr"></div>
+      <h1 style="font-size:18px;margin:0">Paychecks (month)</h1>
+
+      <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Date</th><th>Employee</th><th>Amount</th><th>Status</th><th>Note</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="paycheckRows"></tbody>
+          <thead><tr><th>Date</th><th>Employee</th><th>Amount</th><th>Status</th><th>Note</th><th>Actions</th></tr></thead>
+          <tbody id="payRows"></tbody>
         </table>
       </div>
     </div>
@@ -271,11 +287,11 @@
       <div class="row" style="justify-content:space-between">
         <div>
           <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-          <div class="p">Search filters all report tables below.</div>
+          <div class="p">Search filters all tables below.</div>
         </div>
         <div class="row">
-          <input id="reportSearch" class="inlineInput" placeholder="Search report…" />
-          <button class="btn" id="btnSetBank" type="button">Set Bank Balance</button>
+          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale</button>
+          <button class="btn" id="btnAdjustment" type="button">+ Adjustment</button>
         </div>
       </div>
 
@@ -284,12 +300,17 @@
         <div class="pill bad" id="pillExpenses">Expenses: $0</div>
         <div class="pill" id="pillProfit">Profit: $0</div>
         <div class="pill" id="pillUnpaid">Unpaid: $0</div>
+        <div class="pill" id="pillBankStart">Bank Start: $0</div>
+        <div class="pill" id="pillPayPaid">Paychecks Paid: $0</div>
+        <div class="pill ok" id="pillBankEnd">Bank End: $0</div>
+        <button class="btn" id="btnSetBank" type="button">Set Bank Balance</button>
       </div>
 
-      <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap">
-        <div class="pill" id="pillStartBank">Start Bank: $0</div>
-        <div class="pill bad" id="pillPaychecksPaid">Paychecks Paid: $0</div>
-        <div class="pill ok" id="pillEndBank">End Bank: $0</div>
+      <div class="hr"></div>
+
+      <div class="row">
+        <label style="width:auto">Search</label>
+        <input id="reportSearch" class="inlineInput" placeholder="Search report…" />
       </div>
 
       <div class="hr"></div>
@@ -297,9 +318,7 @@
       <h1 style="font-size:16px;margin:0">Income (Client Payments)</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Client</th><th>Amount</th><th>Method</th><th>Paid At</th><th>Note</th><th>Actions</th></tr>
-          </thead>
+          <thead><tr><th>Client</th><th>Amount</th><th>Method</th><th>Paid At</th><th>Note</th><th>Actions</th></tr></thead>
           <tbody id="incomeRows"></tbody>
         </table>
       </div>
@@ -309,9 +328,7 @@
       <h1 style="font-size:16px;margin:0">Manual Sales</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Date</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
-          </thead>
+          <thead><tr><th>Date</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr></thead>
           <tbody id="manualSalesRows"></tbody>
         </table>
       </div>
@@ -321,9 +338,7 @@
       <h1 style="font-size:16px;margin:0">Adjustments</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Type</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
-          </thead>
+          <thead><tr><th>Type</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr></thead>
           <tbody id="adjustRows"></tbody>
         </table>
       </div>
@@ -333,9 +348,7 @@
       <h1 style="font-size:16px;margin:0">Expenses (Rows)</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr>
-          </thead>
+          <thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr></thead>
           <tbody id="reportExpenseRows"></tbody>
         </table>
       </div>
@@ -345,10 +358,8 @@
       <h1 style="font-size:16px;margin:0">Paychecks (Rows)</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
-          <thead>
-            <tr><th>Date</th><th>Employee</th><th>Amount</th><th>Status</th><th>Note</th></tr>
-          </thead>
-          <tbody id="reportPaycheckRows"></tbody>
+          <thead><tr><th>Date</th><th>Employee</th><th>Amount</th><th>Status</th><th>Note</th><th>Actions</th></tr></thead>
+          <tbody id="reportPayRows"></tbody>
         </table>
       </div>
     </div>
@@ -357,16 +368,58 @@
 
 <div class="toast" id="toast">Saved</div>
 
+<!-- Manual Sale Modal -->
+<div class="modal" id="saleModal">
+  <div class="modalCard">
+    <div class="row" style="justify-content:space-between">
+      <h1 style="font-size:18px;margin:0">Add Manual Sale</h1>
+      <button class="btn" id="closeSale" type="button">Close</button>
+    </div>
+    <form id="saleForm" class="row" style="margin-top:12px">
+      <div style="flex:1;min-width:160px"><label>Date</label><input id="saleDate" type="date" required /></div>
+      <div style="flex:2;min-width:220px"><label>Title</label><input id="saleTitle" required /></div>
+      <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="saleAmount" type="number" step="0.01" required /></div>
+      <div style="flex:2;min-width:220px"><label>Note</label><input id="saleNote" /></div>
+      <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Save</button></div>
+    </form>
+    <div class="p" id="saleMsg" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- Adjustment Modal -->
+<div class="modal" id="adjModal">
+  <div class="modalCard">
+    <div class="row" style="justify-content:space-between">
+      <h1 style="font-size:18px;margin:0">Add Adjustment</h1>
+      <button class="btn" id="closeAdj" type="button">Close</button>
+    </div>
+    <form id="adjForm" class="row" style="margin-top:12px">
+      <div style="flex:1;min-width:180px">
+        <label>Type</label>
+        <select id="adjType" required>
+          <option value="revenue">revenue</option>
+          <option value="expense">expense</option>
+        </select>
+      </div>
+      <div style="flex:2;min-width:220px"><label>Title</label><input id="adjTitle" required /></div>
+      <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="adjAmount" type="number" step="0.01" required /></div>
+      <div style="flex:2;min-width:220px"><label>Note</label><input id="adjNote" /></div>
+      <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Save</button></div>
+    </form>
+    <div class="p" id="adjMsg" style="margin-top:10px"></div>
+  </div>
+</div>
+
 <!-- Bank Balance Modal -->
 <div class="modal" id="bankModal">
   <div class="modalCard">
     <div class="row" style="justify-content:space-between">
-      <h1 style="font-size:18px;margin:0">Set Starting Bank Balance</h1>
+      <h1 style="font-size:18px;margin:0">Set Bank Balance</h1>
       <button class="btn" id="closeBank" type="button">Close</button>
     </div>
-    <div class="p" style="margin-top:6px">This sets your starting balance used in reports.</div>
+    <div class="p">This sets your starting bank balance used in the report.</div>
     <form id="bankForm" class="row" style="margin-top:12px">
-      <div style="flex:1;min-width:220px">
+      <div style="flex:1;min-width:200px">
         <label>Balance USD</label>
         <input id="bankValue" type="number" step="0.01" required />
       </div>
@@ -375,31 +428,6 @@
       </div>
     </form>
     <div class="p" id="bankMsg" style="margin-top:10px"></div>
-  </div>
-</div>
-
-<!-- Paycheck Modal -->
-<div class="modal" id="payModal">
-  <div class="modalCard">
-    <div class="row" style="justify-content:space-between">
-      <h1 style="font-size:18px;margin:0">Add Paycheck</h1>
-      <button class="btn" id="closePay" type="button">Close</button>
-    </div>
-    <form id="payForm" class="row" style="margin-top:12px">
-      <div style="flex:1;min-width:180px"><label>Date</label><input id="payDate" type="date" required /></div>
-      <div style="flex:1;min-width:200px"><label>Employee</label><input id="payName" required /></div>
-      <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="payAmount" type="number" step="0.01" required /></div>
-      <div style="flex:1;min-width:160px">
-        <label>Status</label>
-        <select id="payStatus">
-          <option value="unpaid">unpaid</option>
-          <option value="paid">paid</option>
-        </select>
-      </div>
-      <div style="flex:2;min-width:220px"><label>Note</label><input id="payNote" /></div>
-      <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Save</button></div>
-    </form>
-    <div class="p" id="payMsg" style="margin-top:10px"></div>
   </div>
 </div>
 
@@ -424,21 +452,29 @@
   }
 
   // Tabs
-  const tabs = {
-    clients: { btn: document.getElementById("tabClients"), view: document.getElementById("viewClients") },
-    expenses: { btn: document.getElementById("tabExpenses"), view: document.getElementById("viewExpenses") },
-    paychecks:{ btn: document.getElementById("tabPaychecks"), view: document.getElementById("viewPaychecks") },
-    report:  { btn: document.getElementById("tabReport"), view: document.getElementById("viewReport") }
-  };
-  function setTab(key){
-    Object.values(tabs).forEach(t=>{ t.btn.classList.remove("active"); t.view.classList.add("hide"); });
-    tabs[key].btn.classList.add("active");
-    tabs[key].view.classList.remove("hide");
+  const tabClients = document.getElementById("tabClients");
+  const tabExpenses = document.getElementById("tabExpenses");
+  const tabPaychecks = document.getElementById("tabPaychecks");
+  const tabReport = document.getElementById("tabReport");
+  const viewClients = document.getElementById("viewClients");
+  const viewExpenses = document.getElementById("viewExpenses");
+  const viewPaychecks = document.getElementById("viewPaychecks");
+  const viewReport = document.getElementById("viewReport");
+  function setTab(which){
+    [tabClients, tabExpenses, tabPaychecks, tabReport].forEach(x=>x.classList.remove("active"));
+    viewClients.classList.add("hide");
+    viewExpenses.classList.add("hide");
+    viewPaychecks.classList.add("hide");
+    viewReport.classList.add("hide");
+    if(which==="clients"){ tabClients.classList.add("active"); viewClients.classList.remove("hide"); }
+    if(which==="expenses"){ tabExpenses.classList.add("active"); viewExpenses.classList.remove("hide"); }
+    if(which==="paychecks"){ tabPaychecks.classList.add("active"); viewPaychecks.classList.remove("hide"); }
+    if(which==="report"){ tabReport.classList.add("active"); viewReport.classList.remove("hide"); }
   }
-  tabs.clients.btn.onclick = ()=>setTab("clients");
-  tabs.expenses.btn.onclick = ()=>setTab("expenses");
-  tabs.paychecks.btn.onclick = ()=>setTab("paychecks");
-  tabs.report.btn.onclick = ()=>setTab("report");
+  tabClients.onclick = ()=>setTab("clients");
+  tabExpenses.onclick = ()=>setTab("expenses");
+  tabPaychecks.onclick = ()=>setTab("paychecks");
+  tabReport.onclick = ()=>setTab("report");
 
   // Month
   const billMonth = document.getElementById("billMonth");
@@ -450,20 +486,6 @@
   document.getElementById("btnRefresh").onclick = ()=> refreshAll();
   document.getElementById("btnQuickAddClient").onclick = ()=> window.location.href = "admin.html";
 
-  // Search
-  const reportSearch = document.getElementById("reportSearch");
-  reportSearch.addEventListener("input", ()=> applyReportSearch());
-
-  function applyReportSearch(){
-    const q = (reportSearch.value || "").toLowerCase().trim();
-    const ids = ["incomeRows","manualSalesRows","adjustRows","reportExpenseRows","reportPaycheckRows"];
-    ids.forEach(id=>{
-      document.querySelectorAll(`#${id} tr`).forEach(tr=>{
-        tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
-      });
-    });
-  }
-
   // Billing clients
   const billingRows = document.getElementById("billingRows");
   const topPills = document.getElementById("topPills");
@@ -471,6 +493,179 @@
   let invoiceMap = new Map();
   document.getElementById("sortDueSoon").onclick = ()=>{ billingSort="due_soon"; refreshClients(); };
   document.getElementById("sortName").onclick = ()=>{ billingSort="name"; refreshClients(); };
+
+  // Expenses rows
+  const expensesRows = document.getElementById("expensesRows");
+
+  // Paychecks rows
+  const payRows = document.getElementById("payRows");
+  const reportPayRows = document.getElementById("reportPayRows");
+
+  // Report rows
+  const incomeRows = document.getElementById("incomeRows");
+  const manualSalesRows = document.getElementById("manualSalesRows");
+  const adjustRows = document.getElementById("adjustRows");
+  const reportExpenseRows = document.getElementById("reportExpenseRows");
+
+  // Pills report
+  const pillRevenue = document.getElementById("pillRevenue");
+  const pillExpenses = document.getElementById("pillExpenses");
+  const pillProfit = document.getElementById("pillProfit");
+  const pillUnpaid = document.getElementById("pillUnpaid");
+  const pillBankStart = document.getElementById("pillBankStart");
+  const pillPayPaid = document.getElementById("pillPayPaid");
+  const pillBankEnd = document.getElementById("pillBankEnd");
+
+  // Search
+  const reportSearch = document.getElementById("reportSearch");
+  reportSearch.addEventListener("input", ()=>{
+    const q = reportSearch.value.toLowerCase().trim();
+    filterTable("incomeRows", q);
+    filterTable("manualSalesRows", q);
+    filterTable("adjustRows", q);
+    filterTable("reportExpenseRows", q);
+    filterTable("reportPayRows", q);
+  });
+  function filterTable(tbodyId, q){
+    document.querySelectorAll(`#${tbodyId} tr`).forEach(tr=>{
+      tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
+    });
+  }
+
+  // Manual sale modal
+  const saleModal = document.getElementById("saleModal");
+  document.getElementById("btnManualSale").onclick = ()=>{
+    document.getElementById("saleDate").value = new Date().toISOString().slice(0,10);
+    document.getElementById("saleTitle").value = "";
+    document.getElementById("saleAmount").value = "";
+    document.getElementById("saleNote").value = "";
+    saleModal.classList.add("show");
+  };
+  document.getElementById("closeSale").onclick = ()=> saleModal.classList.remove("show");
+  saleModal.addEventListener("click", (e)=>{ if(e.target === saleModal) saleModal.classList.remove("show"); });
+
+  document.getElementById("saleForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const month = billMonth.value;
+    const date = document.getElementById("saleDate").value;
+    const title = document.getElementById("saleTitle").value.trim();
+    const amountUsd = Number(document.getElementById("saleAmount").value);
+    const note = document.getElementById("saleNote").value.trim();
+
+    const r = await apiFetch("/billing/manual-sales", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period: month, date, title, amountUsd, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Manual sale failed"); return; }
+    saleModal.classList.remove("show");
+    showToast("Manual sale added ✅");
+    await refreshAll();
+  });
+
+  // Adjustment modal
+  const adjModal = document.getElementById("adjModal");
+  document.getElementById("btnAdjustment").onclick = ()=>{
+    document.getElementById("adjType").value = "revenue";
+    document.getElementById("adjTitle").value = "";
+    document.getElementById("adjAmount").value = "";
+    document.getElementById("adjNote").value = "";
+    adjModal.classList.add("show");
+  };
+  document.getElementById("closeAdj").onclick = ()=> adjModal.classList.remove("show");
+  adjModal.addEventListener("click", (e)=>{ if(e.target === adjModal) adjModal.classList.remove("show"); });
+
+  document.getElementById("adjForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const month = billMonth.value;
+    const type = document.getElementById("adjType").value;
+    const title = document.getElementById("adjTitle").value.trim();
+    const amountUsd = Number(document.getElementById("adjAmount").value);
+    const note = document.getElementById("adjNote").value.trim();
+
+    const r = await apiFetch("/billing/adjustments", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period: month, type, title, amountUsd, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Adjustment failed"); return; }
+    adjModal.classList.remove("show");
+    showToast("Adjustment added ✅");
+    await refreshAll();
+  });
+
+  // Bank modal
+  const bankModal = document.getElementById("bankModal");
+  document.getElementById("btnSetBank").onclick = async ()=>{
+    const cur = await apiFetch("/billing/bank-balance");
+    const cd = await cur.json().catch(()=>({}));
+    document.getElementById("bankValue").value = Number(cd.balance_usd || 0).toFixed(2);
+    bankModal.classList.add("show");
+  };
+  document.getElementById("closeBank").onclick = ()=> bankModal.classList.remove("show");
+  bankModal.addEventListener("click", (e)=>{ if(e.target === bankModal) bankModal.classList.remove("show"); });
+
+  document.getElementById("bankForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const balanceUsd = Number(document.getElementById("bankValue").value);
+    const r = await apiFetch("/billing/bank-balance", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ balanceUsd })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Set bank failed"); return; }
+    bankModal.classList.remove("show");
+    showToast("Bank balance saved ✅");
+    await refreshAll();
+  });
+
+  // Expenses form
+  document.getElementById("expenseForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const date = document.getElementById("expDate").value;
+    const category = document.getElementById("expCategory").value.trim();
+    const amountUsd = Number(document.getElementById("expAmount").value);
+    const vendor = document.getElementById("expVendor").value.trim();
+    const note = document.getElementById("expNote").value.trim();
+
+    const r = await apiFetch("/billing/expenses", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ date, category, amountUsd, vendor, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Add expense failed"); return; }
+
+    showToast("Expense added ✅");
+    e.target.reset();
+    await refreshAll();
+  });
+
+  // Paychecks form
+  document.getElementById("payForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const month = billMonth.value;
+    const date = document.getElementById("payDate").value;
+    const employeeName = document.getElementById("payName").value.trim();
+    const amountUsd = Number(document.getElementById("payAmount").value);
+    const status = document.getElementById("payStatus").value;
+    const note = document.getElementById("payNote").value.trim();
+
+    const r = await apiFetch("/billing/paychecks", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period: month, date, employeeName, amountUsd, status, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Add paycheck failed"); return; }
+
+    showToast("Paycheck added ✅");
+    e.target.reset();
+    await refreshAll();
+  });
 
   async function refreshAll(){
     await Promise.all([
@@ -483,9 +678,9 @@
       refreshManualSalesRows(),
       refreshAdjustments(),
       refreshReportExpensesRows(),
-      refreshReportPaycheckRows()
+      refreshReportPayRows()
     ]);
-    applyReportSearch();
+    await refreshClients();
   }
 
   async function refreshInvoices(){
@@ -499,8 +694,6 @@
   async function refreshClients(){
     const r = await apiFetch("/billing/clients?sort=" + encodeURIComponent(billingSort));
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){ showToast(d.error || "Billing load failed"); return; }
-
     const rows = d.rows || [];
     const dueSoonCount = rows.filter(x => (x.days_until_due ?? 999999) <= 7).length;
     topPills.innerHTML = `<div class="pill">Clients: ${rows.length}</div><div class="pill bad">Due ≤7d: ${dueSoonCount}</div>`;
@@ -517,7 +710,7 @@
       const statusVal = row.status || "active";
       const dueVal = row.next_due_date || "";
       const amtVal = (row.monthly_amount_usd ?? 0);
-      const daysTxt = (row.days_until_due === null || row.days_until_due === undefined) ? "—" : String(row.days_until_due);
+      const daysTxt = (row.days_until_due ?? "—");
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -530,7 +723,7 @@
           </select>
         </td>
         <td><input class="inlineInput" type="date" value="${escAttr(dueVal)}" data-due="${row.client_id}"/></td>
-        <td>${esc(daysTxt)}</td>
+        <td>${esc(String(daysTxt))}</td>
         <td><input class="inlineInput" type="number" step="0.01" value="${escAttr(String(amtVal))}" data-amt="${row.client_id}"/></td>
         <td>${invPill}</td>
         <td>
@@ -574,7 +767,9 @@
 
     await saveClient(clientId);
 
-    let invoiceId = invoiceMap.get(clientId)?.id;
+    const existing = invoiceMap.get(clientId);
+    let invoiceId = existing?.id;
+
     if(!invoiceId){
       const create = await apiFetch("/billing/invoices", {
         method:"POST",
@@ -601,7 +796,7 @@
   async function markUnpaid(clientId){
     const inv = invoiceMap.get(clientId);
     if(!inv?.id){ showToast("No invoice for this month"); return; }
-    if(!confirm("Mark UNPAID? Removes payments for that invoice.")) return;
+    if(!confirm("Mark UNPAID?")) return;
 
     const r = await apiFetch("/billing/invoices/unpay", {
       method:"POST",
@@ -615,14 +810,12 @@
     await refreshAll();
   }
 
-  // Expenses
-  const expensesRows = document.getElementById("expensesRows");
   async function refreshExpenses(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     expensesRows.innerHTML = "";
-    (d.expenses || []).forEach(x=>{
+    (d.expenses||[]).forEach(x=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${esc(x.date||"")}</td><td>${esc(x.category||"")}</td>
@@ -634,9 +827,8 @@
     });
     document.querySelectorAll("[data-del-exp]").forEach(b=> b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp"))));
   }
-
   async function deleteExpense(id){
-    if(!confirm("Delete this expense?")) return;
+    if(!confirm("Delete expense?")) return;
     const r = await apiFetch("/billing/expenses?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
@@ -644,43 +836,16 @@
     await refreshAll();
   }
 
-  document.getElementById("expenseForm").addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const date = document.getElementById("expDate").value;
-    const category = document.getElementById("expCategory").value.trim();
-    const amountUsd = Number(document.getElementById("expAmount").value);
-    const vendor = document.getElementById("expVendor").value.trim();
-    const note = document.getElementById("expNote").value.trim();
-
-    const r = await apiFetch("/billing/expenses", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ date, category, amountUsd, vendor, note })
-    });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){ showToast(d.error || "Add expense failed"); return; }
-
-    showToast("Expense saved ✅");
-    e.target.reset();
-    await refreshAll();
-  });
-
-  // Paychecks
-  const paycheckRows = document.getElementById("paycheckRows");
-  const reportPaycheckRows = document.getElementById("reportPaycheckRows");
-
   async function refreshPaychecks(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/paychecks?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){ showToast(d.error || "Paychecks load failed"); return; }
-
-    paycheckRows.innerHTML = "";
-    (d.paychecks || []).forEach(p=>{
+    payRows.innerHTML = "";
+    (d.paychecks||[]).forEach(p=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${esc(p.date||"")}</td>
-        <td><b>${esc(p.employee_name||"")}</b></td>
+        <td>${esc(p.employee_name||"")}</td>
         <td><span class="mono">$${Number(p.amount_usd||0).toFixed(2)}</span></td>
         <td>
           <select class="inlineInput" data-pay-status="${p.id}">
@@ -696,31 +861,11 @@
           </div>
         </td>
       `;
-      paycheckRows.appendChild(tr);
+      payRows.appendChild(tr);
     });
-
     document.querySelectorAll("[data-pay-save]").forEach(b=> b.onclick = ()=> savePayStatus(Number(b.getAttribute("data-pay-save"))));
-    document.querySelectorAll("[data-pay-del]").forEach(b=> b.onclick = ()=> deletePaycheck(Number(b.getAttribute("data-pay-del"))));
+    document.querySelectorAll("[data-pay-del]").forEach(b=> b.onclick = ()=> deletePay(Number(b.getAttribute("data-pay-del"))));
   }
-
-  async function refreshReportPaycheckRows(){
-    const month = billMonth.value;
-    const r = await apiFetch("/billing/paychecks?month=" + encodeURIComponent(month));
-    const d = await r.json().catch(()=>({}));
-    reportPaycheckRows.innerHTML = "";
-    (d.paychecks || []).forEach(p=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${esc(p.date||"")}</td>
-        <td>${esc(p.employee_name||"")}</td>
-        <td><span class="mono">$${Number(p.amount_usd||0).toFixed(2)}</span></td>
-        <td>${esc(p.status||"")}</td>
-        <td>${esc(p.note||"")}</td>
-      `;
-      reportPaycheckRows.appendChild(tr);
-    });
-  }
-
   async function savePayStatus(id){
     const status = document.querySelector(`[data-pay-status="${id}"]`)?.value || "unpaid";
     const r = await apiFetch("/billing/paychecks/status", {
@@ -733,9 +878,8 @@
     showToast("Paycheck updated ✅");
     await refreshAll();
   }
-
-  async function deletePaycheck(id){
-    if(!confirm("Delete this paycheck?")) return;
+  async function deletePay(id){
+    if(!confirm("Delete paycheck?")) return;
     const r = await apiFetch("/billing/paychecks?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
@@ -743,106 +887,27 @@
     await refreshAll();
   }
 
-  // Add paycheck modal
-  const payModal = document.getElementById("payModal");
-  document.getElementById("btnAddPaycheck").onclick = ()=>{
-    document.getElementById("payDate").value = new Date().toISOString().slice(0,10);
-    document.getElementById("payName").value = "";
-    document.getElementById("payAmount").value = "";
-    document.getElementById("payStatus").value = "unpaid";
-    document.getElementById("payNote").value = "";
-    document.getElementById("payMsg").textContent = "";
-    payModal.classList.add("show");
-  };
-  document.getElementById("closePay").onclick = ()=> payModal.classList.remove("show");
-  payModal.addEventListener("click",(e)=>{ if(e.target===payModal) payModal.classList.remove("show"); });
-
-  document.getElementById("payForm").addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const month = billMonth.value;
-    const date = document.getElementById("payDate").value;
-    const employeeName = document.getElementById("payName").value.trim();
-    const amountUsd = Number(document.getElementById("payAmount").value);
-    const status = document.getElementById("payStatus").value;
-    const note = document.getElementById("payNote").value.trim();
-
-    const r = await apiFetch("/billing/paychecks", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ period: month, date, employeeName, amountUsd, status, note })
-    });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){ document.getElementById("payMsg").textContent = d.error || "Save failed"; return; }
-
-    showToast("Paycheck added ✅");
-    payModal.classList.remove("show");
-    await refreshAll();
-  });
-
-  // Report totals + bank balance
-  const pillRevenue = document.getElementById("pillRevenue");
-  const pillExpenses = document.getElementById("pillExpenses");
-  const pillProfit = document.getElementById("pillProfit");
-  const pillUnpaid = document.getElementById("pillUnpaid");
-  const pillStartBank = document.getElementById("pillStartBank");
-  const pillPaychecksPaid = document.getElementById("pillPaychecksPaid");
-  const pillEndBank = document.getElementById("pillEndBank");
-
   async function refreshReport(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){ showToast(d.error || "Report load failed"); return; }
+    if(!r.ok){ showToast(d.error || "Report failed"); return; }
 
     pillRevenue.textContent = `Revenue: $${Number(d.revenue||0).toFixed(2)}`;
     pillExpenses.textContent = `Expenses: $${Number(d.expenses||0).toFixed(2)}`;
     pillProfit.textContent = `Profit: $${Number(d.profit||0).toFixed(2)}`;
     pillUnpaid.textContent = `Unpaid: $${Number(d.unpaid_total||0).toFixed(2)}`;
-
-    pillStartBank.textContent = `Start Bank: $${Number(d.starting_balance||0).toFixed(2)}`;
-    pillPaychecksPaid.textContent = `Paychecks Paid: $${Number(d.paychecks_paid||0).toFixed(2)}`;
-    pillEndBank.textContent = `End Bank: $${Number(d.bank_balance_end||0).toFixed(2)}`;
+    pillBankStart.textContent = `Bank Start: $${Number(d.starting_balance||0).toFixed(2)}`;
+    pillPayPaid.textContent = `Paychecks Paid: $${Number(d.paychecks_paid||0).toFixed(2)}`;
+    pillBankEnd.textContent = `Bank End: $${Number(d.bank_balance_end||0).toFixed(2)}`;
   }
-
-  // Bank balance set modal
-  const bankModal = document.getElementById("bankModal");
-  document.getElementById("btnSetBank").onclick = async ()=>{
-    const r = await apiFetch("/billing/bank-balance");
-    const d = await r.json().catch(()=>({}));
-    document.getElementById("bankValue").value = Number(d.balance_usd||0);
-    document.getElementById("bankMsg").textContent = "";
-    bankModal.classList.add("show");
-  };
-  document.getElementById("closeBank").onclick = ()=> bankModal.classList.remove("show");
-  bankModal.addEventListener("click",(e)=>{ if(e.target===bankModal) bankModal.classList.remove("show"); });
-
-  document.getElementById("bankForm").addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const balanceUsd = Number(document.getElementById("bankValue").value);
-    const r = await apiFetch("/billing/bank-balance", {
-      method:"PUT",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ balanceUsd })
-    });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){ document.getElementById("bankMsg").textContent = d.error || "Save failed"; return; }
-    showToast("Bank balance saved ✅");
-    bankModal.classList.remove("show");
-    await refreshAll();
-  });
-
-  // Income, manual sales, adjustments, report expenses
-  const incomeRows = document.getElementById("incomeRows");
-  const manualSalesRows = document.getElementById("manualSalesRows");
-  const adjustRows = document.getElementById("adjustRows");
-  const reportExpenseRows = document.getElementById("reportExpenseRows");
 
   async function refreshIncomeRows(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/payments?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     incomeRows.innerHTML = "";
-    (d.payments || []).forEach(p=>{
+    (d.payments||[]).forEach(p=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${esc(p.client_name||"")}</td>
@@ -856,9 +921,8 @@
     });
     document.querySelectorAll("[data-del-pay]").forEach(b=> b.onclick = ()=> deletePayment(Number(b.getAttribute("data-del-pay"))));
   }
-
   async function deletePayment(id){
-    if(!confirm("Delete this income payment?")) return;
+    if(!confirm("Delete income?")) return;
     const r = await apiFetch("/billing/payments?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
@@ -871,11 +935,10 @@
     const r = await apiFetch("/billing/manual-sales?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     manualSalesRows.innerHTML = "";
-    (d.sales || []).forEach(s=>{
+    (d.sales||[]).forEach(s=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${esc(s.date||"")}</td>
-        <td>${esc(s.title||"")}</td>
+        <td>${esc(s.date||"")}</td><td>${esc(s.title||"")}</td>
         <td><span class="mono">$${Number(s.amount_usd||0).toFixed(2)}</span></td>
         <td>${esc(s.note||"")}</td>
         <td><button class="btn btn-danger mini" data-del-ms="${s.id}">Delete</button></td>
@@ -884,9 +947,8 @@
     });
     document.querySelectorAll("[data-del-ms]").forEach(b=> b.onclick = ()=> deleteManualSale(Number(b.getAttribute("data-del-ms"))));
   }
-
   async function deleteManualSale(id){
-    if(!confirm("Delete this manual sale?")) return;
+    if(!confirm("Delete manual sale?")) return;
     const r = await apiFetch("/billing/manual-sales?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
@@ -899,10 +961,10 @@
     const r = await apiFetch("/billing/adjustments?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     adjustRows.innerHTML = "";
-    (d.adjustments || []).forEach(a=>{
+    (d.adjustments||[]).forEach(a=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><span class="mono">${esc(a.type||"")}</span></td>
+        <td><span class="mono">${esc(a.type)}</span></td>
         <td>${esc(a.title||"")}</td>
         <td><span class="mono">$${Number(a.amount_usd||0).toFixed(2)}</span></td>
         <td>${esc(a.note||"")}</td>
@@ -912,9 +974,8 @@
     });
     document.querySelectorAll("[data-del-adj]").forEach(b=> b.onclick = ()=> deleteAdjustment(Number(b.getAttribute("data-del-adj"))));
   }
-
   async function deleteAdjustment(id){
-    if(!confirm("Delete this adjustment?")) return;
+    if(!confirm("Delete adjustment?")) return;
     const r = await apiFetch("/billing/adjustments?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
@@ -927,14 +988,12 @@
     const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     reportExpenseRows.innerHTML = "";
-    (d.expenses || []).forEach(x=>{
+    (d.expenses||[]).forEach(x=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${esc(x.date||"")}</td>
-        <td>${esc(x.category||"")}</td>
+        <td>${esc(x.date||"")}</td><td>${esc(x.category||"")}</td>
         <td><span class="mono">$${Number(x.amount_usd||0).toFixed(2)}</span></td>
-        <td>${esc(x.vendor||"")}</td>
-        <td>${esc(x.note||"")}</td>
+        <td>${esc(x.vendor||"")}</td><td>${esc(x.note||"")}</td>
         <td><button class="btn btn-danger mini" data-del-exp2="${x.id}">Delete</button></td>
       `;
       reportExpenseRows.appendChild(tr);
@@ -942,14 +1001,35 @@
     document.querySelectorAll("[data-del-exp2]").forEach(b=> b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp2"))));
   }
 
-  // Bank/Pay modals
-  const bankModal = document.getElementById("bankModal");
-  const payModal = document.getElementById("payModal");
+  async function refreshReportPayRows(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/paychecks?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    reportPayRows.innerHTML = "";
+    (d.paychecks||[]).forEach(p=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${esc(p.date||"")}</td>
+        <td>${esc(p.employee_name||"")}</td>
+        <td><span class="mono">$${Number(p.amount_usd||0).toFixed(2)}</span></td>
+        <td><span class="mono">${esc(p.status||"")}</span></td>
+        <td>${esc(p.note||"")}</td>
+        <td><button class="btn btn-danger mini" data-pay-del2="${p.id}">Delete</button></td>
+      `;
+      reportPayRows.appendChild(tr);
+    });
+    document.querySelectorAll("[data-pay-del2]").forEach(b=> b.onclick = ()=> deletePay(Number(b.getAttribute("data-pay-del2"))));
+  }
 
-  function esc(s){ return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
   function escAttr(s){ return esc(s).replaceAll('"',"&quot;"); }
 
-  // Auth + initial load
+  // Auth check + load
   (async function init(){
     if(!localStorage.getItem(TOKEN_KEY)){
       document.getElementById("mainCard").classList.add("hide");
