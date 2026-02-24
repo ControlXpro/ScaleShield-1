@@ -114,7 +114,7 @@
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.05);
       cursor:pointer;
-      color:#fff; /* ✅ FIX: TEXT WHITE */
+      color:#fff;
     }
     .tabBtn.active{
       border-color:rgba(214,177,94,.35);
@@ -160,7 +160,7 @@
     </div>
   </div>
 
-  <div class="card" id="needLogin" class="hide">
+  <div class="card hide" id="needLogin">
     <h1>Admin login required</h1>
     <div class="p">Open <b>admin.html</b>, login, then return here.</div>
     <div class="hr"></div>
@@ -249,7 +249,7 @@
         <table>
           <thead>
             <tr>
-              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th>
+              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="expensesRows"></tbody>
@@ -259,14 +259,50 @@
 
     <!-- Report -->
     <div id="viewReport" class="hide">
-      <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-      <div class="p">Revenue from payments, expenses from expenses table.</div>
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
+          <div class="p">Now shows detailed rows + delete buttons.</div>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale</button>
+        </div>
+      </div>
 
       <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap">
         <div class="pill ok" id="pillRevenue">Revenue: $0</div>
         <div class="pill bad" id="pillExpenses">Expenses: $0</div>
         <div class="pill" id="pillProfit">Profit: $0</div>
         <div class="pill" id="pillUnpaid">Unpaid: $0</div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:16px;margin:0">Income (Payments)</h1>
+      <div class="p">These are sales recorded by “Mark Paid”. (Manual Sales comes next step.)</div>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th><th>Amount</th><th>Method</th><th>Paid At</th><th>Note</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="incomeRows"></tbody>
+        </table>
+      </div>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:16px;margin:0">Expenses (Rows)</h1>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="reportExpenseRows"></tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -324,10 +360,7 @@
     const d = new Date();
     billMonth.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
   })();
-
-  // ✅ Month change auto-refresh
   billMonth.addEventListener("change", ()=> refreshAll());
-
   document.getElementById("btnRefresh").onclick = ()=> refreshAll();
   document.getElementById("btnQuickAddClient").onclick = ()=> window.location.href = "admin.html";
 
@@ -340,12 +373,22 @@
   document.getElementById("sortDueSoon").onclick = ()=>{ billingSort="due_soon"; refreshClients(); };
   document.getElementById("sortName").onclick = ()=>{ billingSort="name"; refreshClients(); };
 
+  // Report rows
+  const incomeRows = document.getElementById("incomeRows");
+  const reportExpenseRows = document.getElementById("reportExpenseRows");
+
+  document.getElementById("btnManualSale").onclick = ()=>{
+    showToast("Manual Sale: next step ✅");
+  };
+
   async function refreshAll(){
     await Promise.all([
       refreshInvoices(),
       refreshClients(),
       refreshExpenses(),
-      refreshReport()
+      refreshReport(),
+      refreshIncomeRows(),
+      refreshReportExpensesRows()
     ]);
     await refreshClients();
   }
@@ -381,10 +424,7 @@
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>
-          <b>${escapeHtml(row.name || "")}</b><br/>
-          <span class="mono">${escapeHtml(row.login || "")}</span>
-        </td>
+        <td><b>${escapeHtml(row.name || "")}</b><br/><span class="mono">${escapeHtml(row.login || "")}</span></td>
         <td>
           <select class="inlineInput" data-status="${row.client_id}">
             <option value="active" ${statusVal==="active"?"selected":""}>active</option>
@@ -415,7 +455,6 @@
     const r = await apiFetch("/billing/invoices?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Invoices load failed"); return; }
-
     invoiceMap = new Map();
     (d.invoices || []).forEach(inv => invoiceMap.set(inv.client_id, inv));
   }
@@ -424,7 +463,6 @@
     const status = document.querySelector(`[data-status="${clientId}"]`)?.value || "active";
     const nextDueDate = document.querySelector(`[data-due="${clientId}"]`)?.value || "";
     const monthlyAmountUsd = Number(document.querySelector(`[data-amt="${clientId}"]`)?.value || 0);
-
     if(!nextDueDate){ showToast("Set Next Due date"); return; }
 
     const r = await apiFetch("/billing/clients", {
@@ -434,7 +472,6 @@
     });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Save failed"); return; }
-
     showToast("Saved ✅");
     await refreshClients();
   }
@@ -443,7 +480,6 @@
     const month = billMonth.value;
     const nextDueDate = document.querySelector(`[data-due="${clientId}"]`)?.value || "";
     const amountUsd = Number(document.querySelector(`[data-amt="${clientId}"]`)?.value || 0);
-
     if(!nextDueDate){ showToast("Set Next Due date first"); return; }
     if(!(amountUsd > 0)){ showToast("Set Monthly $ amount"); return; }
 
@@ -475,7 +511,7 @@
     await refreshAll();
   }
 
-  // Expenses
+  // Expenses list tab
   const expensesRows = document.getElementById("expensesRows");
   async function refreshExpenses(){
     const month = billMonth.value;
@@ -492,9 +528,26 @@
         <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
         <td>${escapeHtml(x.vendor || "")}</td>
         <td>${escapeHtml(x.note || "")}</td>
+        <td>
+          <button class="btn btn-danger mini" data-del-exp="${x.id}">Delete</button>
+        </td>
       `;
       expensesRows.appendChild(tr);
     });
+
+    document.querySelectorAll("[data-del-exp]").forEach(b=>{
+      b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp")));
+    });
+  }
+
+  async function deleteExpense(id){
+    const ok = confirm("Delete this expense?");
+    if(!ok) return;
+    const r = await apiFetch("/billing/expenses?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Delete failed"); return; }
+    showToast("Expense deleted ✅");
+    await refreshAll();
   }
 
   document.getElementById("expenseForm").addEventListener("submit", async (e)=>{
@@ -515,11 +568,10 @@
 
     showToast("Expense saved ✅");
     e.target.reset();
-    await refreshExpenses();
-    await refreshReport();
+    await refreshAll();
   });
 
-  // Report
+  // Report summary
   const pillRevenue = document.getElementById("pillRevenue");
   const pillExpenses = document.getElementById("pillExpenses");
   const pillProfit = document.getElementById("pillProfit");
@@ -542,6 +594,68 @@
     pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
   }
 
+  // Report rows: income (payments)
+  async function refreshIncomeRows(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/payments?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Income load failed"); return; }
+
+    incomeRows.innerHTML = "";
+    (d.payments || []).forEach(p=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(p.client_name || "")}</td>
+        <td><span class="mono">$${Number(p.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(p.method || "")}</td>
+        <td>${escapeHtml(p.paid_at || "")}</td>
+        <td>${escapeHtml(p.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-del-pay="${p.id}">Delete</button></td>
+      `;
+      incomeRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-del-pay]").forEach(b=>{
+      b.onclick = ()=> deletePayment(Number(b.getAttribute("data-del-pay")));
+    });
+  }
+
+  async function deletePayment(id){
+    const ok = confirm("Delete this income payment?");
+    if(!ok) return;
+    const r = await apiFetch("/billing/payments?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Delete failed"); return; }
+    showToast("Income deleted ✅");
+    await refreshAll();
+  }
+
+  // Report rows: expenses (same month)
+  async function refreshReportExpensesRows(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ return; }
+
+    reportExpenseRows.innerHTML = "";
+    (d.expenses || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.date || "")}</td>
+        <td>${escapeHtml(x.category || "")}</td>
+        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(x.vendor || "")}</td>
+        <td>${escapeHtml(x.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-del-exp2="${x.id}">Delete</button></td>
+      `;
+      reportExpenseRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-del-exp2]").forEach(b=>{
+      b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp2")));
+    });
+  }
+
   function escapeHtml(s){
     return String(s ?? "")
       .replaceAll("&","&amp;")
@@ -554,7 +668,7 @@
 
   // Auth check + load
   (async function init(){
-    if(!getToken()){
+    if(!localStorage.getItem(TOKEN_KEY)){
       document.getElementById("mainCard").classList.add("hide");
       document.getElementById("needLogin").classList.remove("hide");
       return;
