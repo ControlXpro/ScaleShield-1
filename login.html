@@ -430,48 +430,15 @@ textarea:focus{
 
 <script>
 /*
-IMPORTANT:
-This is front-end login (GitHub Pages).
-It hides data in the UI, but a technical user can still inspect code.
+Client portal now loads data from Cloudflare D1 via your Worker API.
 */
 
-/* ✅ Worker endpoint (Telegram send) */
-const WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
+/* ✅ Worker endpoints */
+const API_URL = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
+const REPLACE_WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
 
-/* ✅ Client data (Titan Ltda + GRUPOD12) */
-const USERS = [
-  {
-    name: "Titan Ltda",
-    login: "Titantda",
-    password: "Titan445566",
-    packageName: "Top Agency Package Dimond",
-    price: "$2250/month",
-    paymentDue: "Every 21st of every month",
-    adAccounts: [
-      { name: "HelpNxt_1711_Aceone_Metal", adId: "1100253422137323", bmId: "1199667670512101" },
-      { name: "HelpNxt_1712_paikori",        adId: "1687346411916980", bmId: "1199667670512101" },
-      { name: "Sonda Sweet 2",              adId: "18852646662376339", bmId: "1199667670512101" },
-      { name: "1",                          adId: "25565742243067148", bmId: "1199667670512101" },
-      { name: "As9",                        adId: "1495797358151854", bmId: "1199667670512101" }
-    ]
-  },
-  {
-    name: "GRUPOD12",
-    login: "Grupod12",
-    password: "Grupod223311",
-    packageName: "Top Agency Package Dimond",
-    price: "$1950/month",
-    paymentDue: "Every 24st of every month",
-    adAccounts: [
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" },
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" },
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" },
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" },
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" },
-      { name: "waiting for payment", adId: "waiting for payment", bmId: "waiting for payment" }
-    ]
-  }
-];
+/* Client token storage (same-tab only) */
+const TOKEN_KEY = "ss_client_token";
 
 const toast = document.getElementById("toast");
 let toastTimer = null;
@@ -563,7 +530,7 @@ async function sendReplacement(){
   sendReplaceBtn.textContent = "Sending...";
 
   try{
-    const resp = await fetch(WORKER_URL, {
+    const resp = await fetch(REPLACE_WORKER_URL, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
@@ -588,7 +555,7 @@ async function sendReplacement(){
 }
 sendReplaceBtn.addEventListener("click", sendReplacement);
 
-/* ----- Table build ----- */
+/* ----- Build UI ----- */
 function buildSummary(client){
   const grid = document.getElementById("summaryGrid");
   grid.innerHTML = "";
@@ -598,10 +565,10 @@ function buildSummary(client){
   a.innerHTML = `
     <div class="title">Subscription</div>
     <div class="small"><b>Client:</b> ${escapeHtml(client.name)}</div>
-    <div class="small"><b>Package:</b> ${escapeHtml(client.packageName)}</div>
+    <div class="small"><b>Package:</b> ${escapeHtml(client.packageName || "—")}</div>
     <div class="pillRow">
-      <div class="pill gold"><strong>Price</strong> ${escapeHtml(client.price)}</div>
-      <div class="pill"><strong>Billing</strong> ${escapeHtml(client.paymentDue)}</div>
+      <div class="pill gold"><strong>Price</strong> ${escapeHtml(client.price || "—")}</div>
+      <div class="pill"><strong>Billing</strong> ${escapeHtml(client.paymentDue || "—")}</div>
       <div class="pill"><strong>Accounts</strong> ${(client.adAccounts||[]).length}</div>
     </div>
   `;
@@ -653,12 +620,10 @@ function buildRows(client){
     tbody.appendChild(tr);
   });
 
-  // Copy handlers
   document.querySelectorAll(".copyBtn[data-copy]").forEach(btn=>{
     btn.addEventListener("click", ()=>copyText(btn.getAttribute("data-copy") || ""));
   });
 
-  // Replace handlers
   document.querySelectorAll(".copyBtn[data-replace]").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       const adId = btn.getAttribute("data-replace") || "";
@@ -666,7 +631,6 @@ function buildRows(client){
     });
   });
 
-  // Copy BM top button
   const bm = (client.adAccounts?.[0]?.bmId) || "";
   const copyBmTop = document.getElementById("copyBmTop");
   copyBmTop.onclick = ()=> bm ? copyText(bm) : showToast("No BM ID");
@@ -696,8 +660,7 @@ function showDashboard(client){
 }
 
 function logout(){
-  sessionStorage.removeItem("ss_login");
-  sessionStorage.removeItem("ss_pass");
+  sessionStorage.removeItem(TOKEN_KEY);
   document.getElementById("dashboard").style.display = "none";
   document.getElementById("authBar").style.display = "none";
   document.getElementById("loginForm").style.display = "grid";
@@ -707,30 +670,70 @@ function logout(){
 }
 document.getElementById("btnLogout").addEventListener("click", logout);
 
-document.getElementById("loginForm").addEventListener("submit", (e)=>{
+/* ----- API ----- */
+async function apiClientLogin(login, password){
+  const resp = await fetch(API_URL + "/client-login", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ login, password })
+  });
+  const data = await resp.json().catch(()=> ({}));
+  if(!resp.ok) return { ok:false, data };
+  return { ok:true, data };
+}
+
+async function apiClientMe(token){
+  const resp = await fetch(API_URL + "/client-me", {
+    method: "GET",
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const data = await resp.json().catch(()=> ({}));
+  if(!resp.ok) return { ok:false, data };
+  return { ok:true, data };
+}
+
+document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
 
   const login = document.getElementById("login").value.trim();
   const pass = document.getElementById("password").value;
 
-  const client = USERS.find(u => u.login === login && u.password === pass);
-  if(!client){
-    document.getElementById("err").style.display = "block";
-    return;
-  }
+  const btn = document.getElementById("btnLogin");
+  btn.disabled = true;
+  btn.textContent = "Logging in...";
 
-  sessionStorage.setItem("ss_login", login);
-  sessionStorage.setItem("ss_pass", pass);
-  showDashboard(client);
+  try{
+    const res = await apiClientLogin(login, pass);
+    if(!res.ok || !res.data?.token){
+      document.getElementById("err").style.display = "block";
+      return;
+    }
+
+    sessionStorage.setItem(TOKEN_KEY, res.data.token);
+
+    const me = await apiClientMe(res.data.token);
+    if(!me.ok || !me.data?.client){
+      document.getElementById("err").style.display = "block";
+      sessionStorage.removeItem(TOKEN_KEY);
+      return;
+    }
+
+    showDashboard(me.data.client);
+  }catch(err){
+    document.getElementById("err").style.display = "block";
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Log In";
+  }
 });
 
 // Auto login (same tab session only)
-(function autoLogin(){
-  const l = sessionStorage.getItem("ss_login") || "";
-  const p = sessionStorage.getItem("ss_pass") || "";
-  if(!l || !p) return;
-  const client = USERS.find(u => u.login === l && u.password === p);
-  if(client) showDashboard(client);
+(async function autoLogin(){
+  const t = sessionStorage.getItem(TOKEN_KEY) || "";
+  if(!t) return;
+  const me = await apiClientMe(t);
+  if(me.ok && me.data?.client) showDashboard(me.data.client);
+  else sessionStorage.removeItem(TOKEN_KEY);
 })();
 </script>
 
