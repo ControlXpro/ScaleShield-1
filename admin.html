@@ -15,6 +15,7 @@
       --muted:rgba(255,255,255,.65);
       --radius:18px;
       --ease:cubic-bezier(.2,.8,.2,1);
+      --danger:#ff6b6b;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
@@ -46,6 +47,12 @@
       background:linear-gradient(135deg,var(--gold),var(--gold2));
       color:#111;border-color:transparent;
     }
+    .btn-danger{
+      border-color:rgba(255,107,107,.35);
+      background:rgba(255,107,107,.12);
+      color:#fff;
+    }
+    .btn-danger:hover{border-color:rgba(255,107,107,.55);box-shadow:0 0 24px rgba(255,107,107,.14)}
     .grid{display:grid;gap:14px}
     @media(min-width:980px){ .grid{grid-template-columns: 1fr 1.2fr} }
     .card{
@@ -77,6 +84,7 @@
       color:rgba(255,255,255,.55);
       font-weight:950;
       border-bottom:1px solid rgba(255,255,255,.10);
+      white-space:nowrap;
     }
     tr{border-bottom:1px solid rgba(255,255,255,.06)}
     td{color:rgba(255,255,255,.88);font-size:13px}
@@ -102,6 +110,9 @@
     }
     .toast.show{opacity:1}
     .hide{display:none !important}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .mini{padding:8px 10px;border-radius:12px;font-size:12px}
+    .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
   </style>
 </head>
 <body>
@@ -141,7 +152,7 @@
     <!-- LEFT: Clients -->
     <div class="card">
       <h1>Clients</h1>
-      <div class="p">List + add clients to D1.</div>
+      <div class="p">List, edit, delete clients.</div>
 
       <div class="hr"></div>
 
@@ -152,22 +163,45 @@
 
       <div class="hr"></div>
 
-      <div>
-        <label>Select client</label>
-        <select id="clientSelect"></select>
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:8%">ID</th>
+              <th style="width:30%">Name</th>
+              <th style="width:20%">Login</th>
+              <th style="width:22%">Package</th>
+              <th style="width:20%">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientsRows"></tbody>
+        </table>
       </div>
 
       <div class="hr"></div>
 
-      <h1 style="font-size:18px">Add Client</h1>
-      <form class="form" id="addClientForm">
+      <h1 style="font-size:18px" id="clientFormTitle">Add Client</h1>
+      <div class="hint" id="clientFormHint">Create a new client, or click “Edit” on a client row.</div>
+
+      <form class="form" id="clientForm">
+        <input id="cId" type="hidden" value="" />
+
         <div><label>Name</label><input id="cName" placeholder="GRUPOD12" required /></div>
         <div><label>Login</label><input id="cLogin" placeholder="Grupod12" required /></div>
-        <div><label>Password</label><input id="cPass" placeholder="ClientPassword" required /></div>
+
+        <div>
+          <label>Password (leave empty to keep unchanged on edit)</label>
+          <input id="cPass" placeholder="ClientPassword" />
+        </div>
+
         <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Dimond" /></div>
         <div><label>Price</label><input id="cPrice" placeholder="$1950/month" /></div>
         <div><label>Billing Date</label><input id="cBill" placeholder="Every 24st of every month" /></div>
-        <button class="btn btn-primary" type="submit">Add client</button>
+
+        <div class="row">
+          <button class="btn btn-primary" type="submit" id="btnSaveClient">Save</button>
+          <button class="btn" type="button" id="btnCancelClientEdit">Cancel</button>
+        </div>
       </form>
 
       <div class="p" id="clientMsg" style="margin-top:10px"></div>
@@ -176,11 +210,16 @@
     <!-- RIGHT: Ad accounts -->
     <div class="card">
       <h1>Ad Accounts</h1>
-      <div class="p">List + add ad accounts for selected client.</div>
+      <div class="p">Select a client, then edit/delete ad accounts.</div>
 
       <div class="hr"></div>
 
-      <div class="row" style="justify-content:space-between">
+      <div>
+        <label>Select client</label>
+        <select id="clientSelect"></select>
+      </div>
+
+      <div class="row" style="justify-content:space-between;margin-top:10px">
         <button class="btn" id="btnRefreshAds" type="button">Refresh</button>
         <div class="p" id="adsFor" style="margin:0">—</div>
       </div>
@@ -189,10 +228,11 @@
         <table>
           <thead>
             <tr>
-              <th style="width:20%">ID</th>
-              <th style="width:30%">Ad Name</th>
-              <th style="width:25%">Ad ID</th>
-              <th style="width:25%">BM ID</th>
+              <th style="width:12%">ID</th>
+              <th style="width:28%">Ad Name</th>
+              <th style="width:30%">Ad ID</th>
+              <th style="width:30%">BM ID</th>
+              <th style="width:18%">Actions</th>
             </tr>
           </thead>
           <tbody id="adsRows"></tbody>
@@ -201,12 +241,19 @@
 
       <div class="hr"></div>
 
-      <h1 style="font-size:18px">Add Ad Account</h1>
-      <form class="form" id="addAdForm">
+      <h1 style="font-size:18px" id="adFormTitle">Add Ad Account</h1>
+      <div class="hint" id="adFormHint">Create new ad account, or click “Edit” on a row.</div>
+
+      <form class="form" id="adForm">
+        <input id="aRowId" type="hidden" value="" />
         <div><label>Ad Account Name</label><input id="aName" placeholder="waiting for payment" /></div>
         <div><label>Ad Account ID</label><input id="aId" placeholder="waiting for payment" /></div>
         <div><label>BM ID</label><input id="aBm" placeholder="waiting for payment" /></div>
-        <button class="btn btn-primary" type="submit">Add ad account</button>
+
+        <div class="row">
+          <button class="btn btn-primary" type="submit" id="btnSaveAd">Save</button>
+          <button class="btn" type="button" id="btnCancelAdEdit">Cancel</button>
+        </div>
       </form>
 
       <div class="p" id="adMsg" style="margin-top:10px"></div>
@@ -217,7 +264,6 @@
 <div class="toast" id="toast">Saved</div>
 
 <script>
-  // ✅ Your Worker API
   const API = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
   const TOKEN_KEY = "ss_admin_token";
 
@@ -256,7 +302,6 @@
     document.getElementById("loginCard").classList.remove("hide");
   }
 
-  // Logout
   document.getElementById("btnLogout").addEventListener("click", ()=>{
     clearToken();
     showLogin();
@@ -286,12 +331,11 @@
       showToast("Logged in ✅");
       showPanel();
       await loadClients();
-    }catch(err){
+    }catch{
       setErr("Network error");
     }
   });
 
-  // Token test button
   document.getElementById("btnTest").addEventListener("click", async ()=>{
     try{
       const r = await apiFetch("/admin-check");
@@ -302,8 +346,11 @@
     }
   });
 
-  // Clients
+  // ===== Clients =====
+  const clientsRows = document.getElementById("clientsRows");
   const clientSelect = document.getElementById("clientSelect");
+
+  let clientsCache = [];
 
   async function loadClients(){
     const r = await apiFetch("/clients");
@@ -314,70 +361,215 @@
       return;
     }
 
-    const clients = d.clients || [];
-    document.getElementById("clientCount").textContent = clients.length + " client(s)";
+    clientsCache = d.clients || [];
+    document.getElementById("clientCount").textContent = clientsCache.length + " client(s)";
 
+    // Table
+    clientsRows.innerHTML = "";
+    clientsCache.forEach(c=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="mono">${c.id}</span></td>
+        <td>${escapeHtml(c.name || "")}</td>
+        <td><span class="mono">${escapeHtml(c.login || "")}</span></td>
+        <td>${escapeHtml(c.package_name || "")}</td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-edit-client="${c.id}">Edit</button>
+            <button class="btn btn-danger mini" data-del-client="${c.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      clientsRows.appendChild(tr);
+    });
+
+    // Dropdown
     clientSelect.innerHTML = "";
-    clients.forEach(c=>{
+    clientsCache.forEach(c=>{
       const opt = document.createElement("option");
       opt.value = c.id;
       opt.textContent = `#${c.id} — ${c.name} (${c.login})`;
       clientSelect.appendChild(opt);
     });
 
-    if(clients.length){
-      clientSelect.value = clients[0].id;
+    if (clientsCache.length) {
+      if (!clientSelect.value) clientSelect.value = String(clientsCache[0].id);
       await loadAdsForSelected();
-    }else{
+    } else {
       document.getElementById("adsRows").innerHTML = "";
       document.getElementById("adsFor").textContent = "No client selected";
     }
+
+    wireClientButtons();
+  }
+
+  function wireClientButtons(){
+    document.querySelectorAll("[data-edit-client]").forEach(btn=>{
+      btn.onclick = () => startEditClient(Number(btn.getAttribute("data-edit-client")));
+    });
+    document.querySelectorAll("[data-del-client]").forEach(btn=>{
+      btn.onclick = () => deleteClient(Number(btn.getAttribute("data-del-client")));
+    });
   }
 
   document.getElementById("btnRefreshClients").addEventListener("click", loadClients);
 
-  clientSelect.addEventListener("change", loadAdsForSelected);
+  // Client form
+  const cId = document.getElementById("cId");
+  const cName = document.getElementById("cName");
+  const cLogin = document.getElementById("cLogin");
+  const cPass = document.getElementById("cPass");
+  const cPkg = document.getElementById("cPkg");
+  const cPrice = document.getElementById("cPrice");
+  const cBill = document.getElementById("cBill");
+  const clientMsg = document.getElementById("clientMsg");
 
-  document.getElementById("addClientForm").addEventListener("submit", async (e)=>{
+  function resetClientForm(){
+    cId.value = "";
+    cName.value = "";
+    cLogin.value = "";
+    cPass.value = "";
+    cPkg.value = "";
+    cPrice.value = "";
+    cBill.value = "";
+    document.getElementById("clientFormTitle").textContent = "Add Client";
+    document.getElementById("clientFormHint").textContent = "Create a new client, or click “Edit” on a client row.";
+    clientMsg.textContent = "";
+  }
+
+  document.getElementById("btnCancelClientEdit").addEventListener("click", resetClientForm);
+
+  function startEditClient(id){
+    const c = clientsCache.find(x=>x.id === id);
+    if(!c) return;
+
+    cId.value = String(c.id);
+    cName.value = c.name || "";
+    cLogin.value = c.login || "";
+    cPass.value = ""; // keep empty to not change
+    cPkg.value = c.package_name || "";
+    cPrice.value = c.price || "";
+    cBill.value = c.billing_date || "";
+
+    document.getElementById("clientFormTitle").textContent = "Edit Client #" + c.id;
+    document.getElementById("clientFormHint").textContent = "Update fields and click Save. Leave password empty to keep current password.";
+    showToast("Editing client #" + c.id);
+  }
+
+  async function deleteClient(id){
+    const c = clientsCache.find(x=>x.id === id);
+    if(!c) return;
+
+    const ok = confirm(`Delete client "${c.name}" (ID ${id})?\nThis will also delete ALL ad accounts for this client.`);
+    if(!ok) return;
+
+    const r = await apiFetch("/clients?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      alert(d.error || "Delete failed");
+      return;
+    }
+
+    showToast("Client deleted ✅");
+    resetClientForm();
+    await loadClients();
+  }
+
+  document.getElementById("clientForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
+    clientMsg.textContent = "";
+
+    const id = cId.value ? Number(cId.value) : 0;
+
     const body = {
-      name: document.getElementById("cName").value.trim(),
-      login: document.getElementById("cLogin").value.trim(),
-      password: document.getElementById("cPass").value.trim(),
-      packageName: document.getElementById("cPkg").value.trim(),
-      price: document.getElementById("cPrice").value.trim(),
-      billingDate: document.getElementById("cBill").value.trim(),
+      id,
+      name: cName.value.trim(),
+      login: cLogin.value.trim(),
+      password: cPass.value.trim(), // optional on edit
+      packageName: cPkg.value.trim(),
+      price: cPrice.value.trim(),
+      billingDate: cBill.value.trim(),
     };
 
-    const msg = document.getElementById("clientMsg");
-    msg.textContent = "";
-
     try{
-      const r = await apiFetch("/clients", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(body)
-      });
-      const d = await r.json().catch(()=> ({}));
-      if(!r.ok){
-        msg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
-        msg.style.color = "#ffb4b4";
-        return;
+      if (!id) {
+        // ADD (password required)
+        if(!body.password){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = "Password is required when creating a client.";
+          return;
+        }
+        const r = await apiFetch("/clients", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(body)
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        clientMsg.style.color = "rgba(255,255,255,.85)";
+        clientMsg.textContent = "Client added ✅ (id " + d.inserted + ")";
+      } else {
+        // UPDATE
+        const r = await apiFetch("/clients", {
+          method:"PUT",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(body)
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = (d.error || "Update failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        clientMsg.style.color = "rgba(255,255,255,.85)";
+        clientMsg.textContent = "Client updated ✅";
       }
-      msg.textContent = "Client added ✅ (id " + d.inserted + ")";
-      msg.style.color = "rgba(255,255,255,.85)";
+
       showToast("Saved ✅");
+      resetClientForm();
       await loadClients();
     }catch{
-      msg.textContent = "Network error";
-      msg.style.color = "#ffb4b4";
+      clientMsg.style.color = "#ffb4b4";
+      clientMsg.textContent = "Network error";
     }
   });
 
-  // Ad Accounts
+  // ===== Ad Accounts =====
+  const adsRows = document.getElementById("adsRows");
+  const adMsg = document.getElementById("adMsg");
+
+  const aRowId = document.getElementById("aRowId");
+  const aName = document.getElementById("aName");
+  const aId = document.getElementById("aId");
+  const aBm = document.getElementById("aBm");
+
+  let adsCache = [];
+
+  clientSelect.addEventListener("change", loadAdsForSelected);
+  document.getElementById("btnRefreshAds").addEventListener("click", loadAdsForSelected);
+
+  function resetAdForm(){
+    aRowId.value = "";
+    aName.value = "";
+    aId.value = "";
+    aBm.value = "";
+    document.getElementById("adFormTitle").textContent = "Add Ad Account";
+    document.getElementById("adFormHint").textContent = "Create new ad account, or click “Edit” on a row.";
+    adMsg.textContent = "";
+  }
+  document.getElementById("btnCancelAdEdit").addEventListener("click", resetAdForm);
+
   async function loadAdsForSelected(){
-    const clientId = clientSelect.value;
-    if(!clientId) return;
+    const clientId = Number(clientSelect.value || 0);
+    if(!clientId){
+      document.getElementById("adsFor").textContent = "No client selected";
+      adsRows.innerHTML = "";
+      return;
+    }
 
     document.getElementById("adsFor").textContent = "Client ID: " + clientId;
 
@@ -388,56 +580,130 @@
       return;
     }
 
-    const rows = d.adAccounts || [];
-    const tbody = document.getElementById("adsRows");
-    tbody.innerHTML = "";
+    adsCache = d.adAccounts || [];
+    adsRows.innerHTML = "";
 
-    rows.forEach(a=>{
+    adsCache.forEach(a=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><span class="mono">${a.id}</span></td>
         <td>${escapeHtml(a.ad_name || "")}</td>
         <td><span class="mono">${escapeHtml(a.ad_id || "")}</span></td>
         <td><span class="mono">${escapeHtml(a.bm_id || "")}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-edit-ad="${a.id}">Edit</button>
+            <button class="btn btn-danger mini" data-del-ad="${a.id}">Delete</button>
+          </div>
+        </td>
       `;
-      tbody.appendChild(tr);
+      adsRows.appendChild(tr);
+    });
+
+    wireAdButtons();
+  }
+
+  function wireAdButtons(){
+    document.querySelectorAll("[data-edit-ad]").forEach(btn=>{
+      btn.onclick = () => startEditAd(Number(btn.getAttribute("data-edit-ad")));
+    });
+    document.querySelectorAll("[data-del-ad]").forEach(btn=>{
+      btn.onclick = () => deleteAd(Number(btn.getAttribute("data-del-ad")));
     });
   }
 
-  document.getElementById("btnRefreshAds").addEventListener("click", loadAdsForSelected);
+  function startEditAd(id){
+    const a = adsCache.find(x=>x.id === id);
+    if(!a) return;
 
-  document.getElementById("addAdForm").addEventListener("submit", async (e)=>{
+    aRowId.value = String(a.id);
+    aName.value = a.ad_name || "";
+    aId.value = a.ad_id || "";
+    aBm.value = a.bm_id || "";
+
+    document.getElementById("adFormTitle").textContent = "Edit Ad Account #" + a.id;
+    document.getElementById("adFormHint").textContent = "Update fields and click Save.";
+    showToast("Editing ad #" + a.id);
+  }
+
+  async function deleteAd(id){
+    const ok = confirm(`Delete ad account row ID ${id}?`);
+    if(!ok) return;
+
+    const r = await apiFetch("/ad-accounts?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      alert(d.error || "Delete failed");
+      return;
+    }
+
+    showToast("Ad deleted ✅");
+    resetAdForm();
+    await loadAdsForSelected();
+  }
+
+  document.getElementById("adForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
-    const clientId = Number(clientSelect.value || 0);
-    const body = {
-      clientId,
-      adName: document.getElementById("aName").value.trim(),
-      adId: document.getElementById("aId").value.trim(),
-      bmId: document.getElementById("aBm").value.trim(),
-    };
+    adMsg.textContent = "";
 
-    const msg = document.getElementById("adMsg");
-    msg.textContent = "";
+    const clientId = Number(clientSelect.value || 0);
+    if(!clientId){
+      adMsg.style.color = "#ffb4b4";
+      adMsg.textContent = "Select a client first.";
+      return;
+    }
+
+    const rowId = aRowId.value ? Number(aRowId.value) : 0;
 
     try{
-      const r = await apiFetch("/ad-accounts", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(body)
-      });
-      const d = await r.json().catch(()=> ({}));
-      if(!r.ok){
-        msg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
-        msg.style.color = "#ffb4b4";
-        return;
+      if(!rowId){
+        // ADD
+        const r = await apiFetch("/ad-accounts", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            clientId,
+            adName: aName.value.trim(),
+            adId: aId.value.trim(),
+            bmId: aBm.value.trim()
+          })
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          adMsg.style.color = "#ffb4b4";
+          adMsg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        adMsg.style.color = "rgba(255,255,255,.85)";
+        adMsg.textContent = "Ad account added ✅ (id " + d.inserted + ")";
+      } else {
+        // UPDATE
+        const r = await apiFetch("/ad-accounts", {
+          method:"PUT",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            id: rowId,
+            adName: aName.value.trim(),
+            adId: aId.value.trim(),
+            bmId: aBm.value.trim()
+          })
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          adMsg.style.color = "#ffb4b4";
+          adMsg.textContent = (d.error || "Update failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        adMsg.style.color = "rgba(255,255,255,.85)";
+        adMsg.textContent = "Ad account updated ✅";
       }
-      msg.textContent = "Ad account added ✅ (id " + d.inserted + ")";
-      msg.style.color = "rgba(255,255,255,.85)";
+
       showToast("Saved ✅");
+      resetAdForm();
       await loadAdsForSelected();
     }catch{
-      msg.textContent = "Network error";
-      msg.style.color = "#ffb4b4";
+      adMsg.style.color = "#ffb4b4";
+      adMsg.textContent = "Network error";
     }
   });
 
