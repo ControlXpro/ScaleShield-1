@@ -1,1 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ScaleShield — Billing</title>
+  <style>
+    :root{
+      --panel:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --gold:#D6B15E;
+      --gold2:#F2D27A;
+      --text:#fff;
+      --muted:rgba(255,255,255,.65);
+      --radius:18px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+      --danger:#ff6b6b;
+      --ok:#22c55e;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
+        radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
+        linear-gradient(135deg,#050507,#0b0d14,#090a10);
+      color:var(--text);
+      padding:28px 16px 90px;
+    }
+    .wrap{max-width:1200px;margin:0 auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{font-weight:950;font-size:20px}
+    .brand span{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
 
+    .btn{
+      padding:10px 14px;border-radius:14px;font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      transition:.25s var(--ease);
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 24px rgba(214,177,94,.12)}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#111;border-color:transparent;
+    }
+    .btn-danger{
+      border-color:rgba(255,107,107,.35);
+      background:rgba(255,107,107,.12);
+      color:#fff;
+    }
+    .btn-ok{
+      border-color:rgba(34,197,94,.35);
+      background:rgba(34,197,94,.12);
+      color:#fff;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+    }
+    h1{font-size:26px;font-weight:950;letter-spacing:-.02em}
+    .p{margin-top:8px;color:var(--muted);line-height:1.6}
+    .hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.25);
+      color:#fff;
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
+    .inlineInput{width:160px;padding:8px 10px;border-radius:12px;font-size:12px}
+
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 10px;text-align:left;vertical-align:top}
+    th{
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.55);
+      font-weight:950;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      white-space:nowrap;
+    }
+    tr{border-bottom:1px solid rgba(255,255,255,.06)}
+    td{color:rgba(255,255,255,.88);font-size:13px}
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12.5px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      padding:4px 7px;border-radius:10px;
+      display:inline-block;
+      max-width:100%;
+      overflow:hidden;text-overflow:ellipsis;
+    }
+
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .tabBtn{
+      padding:9px 12px;border-radius:999px;font-weight:950;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      cursor:pointer;
+      color:#fff; /* ✅ FIX: TEXT WHITE */
+    }
+    .tabBtn.active{
+      border-color:rgba(214,177,94,.35);
+      box-shadow:0 0 24px rgba(214,177,94,.10);
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      font-size:12px;font-weight:950;
+      color:#fff;
+    }
+    .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
+    .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .mini{padding:8px 10px;border-radius:12px;font-size:12px}
+
+    .toast{
+      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+      background:rgba(0,0,0,.65);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;border-radius:999px;
+      color:rgba(255,255,255,.9);
+      font-weight:950;font-size:12px;
+      opacity:0;pointer-events:none;
+      transition:.25s var(--ease);
+      z-index:99999;
+    }
+    .toast.show{opacity:1}
+    .hide{display:none !important}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span>ScaleShield</span> — Billing</div>
+    <div class="row">
+      <a class="btn" href="admin.html">Back to Admin</a>
+      <label style="width:auto">Month</label>
+      <input id="billMonth" type="month" class="inlineInput" />
+      <button class="btn" id="btnRefresh" type="button">Refresh</button>
+    </div>
+  </div>
+
+  <div class="card" id="needLogin" class="hide">
+    <h1>Admin login required</h1>
+    <div class="p">Open <b>admin.html</b>, login, then return here.</div>
+    <div class="hr"></div>
+    <a class="btn btn-primary" href="admin.html">Go to Admin Login</a>
+  </div>
+
+  <div class="card" id="mainCard">
+    <div class="row" style="justify-content:space-between">
+      <div>
+        <h1 style="margin:0">Billing Dashboard</h1>
+        <div class="p">Due soon, mark paid, expenses, monthly report.</div>
+        <div class="tabs">
+          <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
+          <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
+          <button class="tabBtn" id="tabReport" type="button">Report</button>
+        </div>
+      </div>
+      <div class="row" id="topPills"></div>
+    </div>
+
+    <div class="hr"></div>
+
+    <!-- Clients -->
+    <div id="viewClients">
+      <div class="row" style="justify-content:space-between">
+        <div class="row">
+          <button class="btn" id="sortDueSoon" type="button">Sort: Due Soon</button>
+          <button class="btn" id="sortName" type="button">Sort: Name</button>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" id="btnQuickAddClient" type="button">Add Client (opens Admin)</button>
+        </div>
+      </div>
+
+      <div style="overflow:auto;margin-top:12px">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Status</th>
+              <th>Next Due</th>
+              <th>Days</th>
+              <th>Monthly $</th>
+              <th>Invoice (month)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="billingRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Expenses -->
+    <div id="viewExpenses" class="hide">
+      <h1 style="font-size:18px;margin:0">Add Expense</h1>
+      <form id="expenseForm" style="margin-top:12px" class="row">
+        <div style="flex:1;min-width:160px">
+          <label>Date</label>
+          <input id="expDate" type="date" required />
+        </div>
+        <div style="flex:1;min-width:160px">
+          <label>Category</label>
+          <input id="expCategory" placeholder="Tools / Payroll / Ads" required />
+        </div>
+        <div style="flex:1;min-width:160px">
+          <label>Amount USD</label>
+          <input id="expAmount" type="number" step="0.01" placeholder="100" required />
+        </div>
+        <div style="flex:1;min-width:160px">
+          <label>Vendor</label>
+          <input id="expVendor" placeholder="Meta / Zapier" />
+        </div>
+        <div style="flex:2;min-width:220px">
+          <label>Note</label>
+          <input id="expNote" placeholder="Optional note" />
+        </div>
+        <div style="min-width:140px;align-self:end">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </div>
+      </form>
+
+      <div class="hr"></div>
+      <h1 style="font-size:18px;margin:0">Expenses (month)</h1>
+
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="expensesRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Report -->
+    <div id="viewReport" class="hide">
+      <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
+      <div class="p">Revenue from payments, expenses from expenses table.</div>
+
+      <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap">
+        <div class="pill ok" id="pillRevenue">Revenue: $0</div>
+        <div class="pill bad" id="pillExpenses">Expenses: $0</div>
+        <div class="pill" id="pillProfit">Profit: $0</div>
+        <div class="pill" id="pillUnpaid">Unpaid: $0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+  const API = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
+  const TOKEN_KEY = "ss_admin_token";
+
+  const toast = document.getElementById("toast");
+  let toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
+  }
+
+  function getToken(){ return localStorage.getItem(TOKEN_KEY) || ""; }
+
+  async function apiFetch(path, opts = {}){
+    const headers = opts.headers || {};
+    const t = getToken();
+    if (t) headers.Authorization = "Bearer " + t;
+    return fetch(API + path, { ...opts, headers });
+  }
+
+  // Tabs
+  const tabClients = document.getElementById("tabClients");
+  const tabExpenses = document.getElementById("tabExpenses");
+  const tabReport = document.getElementById("tabReport");
+  const viewClients = document.getElementById("viewClients");
+  const viewExpenses = document.getElementById("viewExpenses");
+  const viewReport = document.getElementById("viewReport");
+
+  function setTab(which){
+    [tabClients, tabExpenses, tabReport].forEach(x=>x.classList.remove("active"));
+    viewClients.classList.add("hide");
+    viewExpenses.classList.add("hide");
+    viewReport.classList.add("hide");
+
+    if(which==="clients"){ tabClients.classList.add("active"); viewClients.classList.remove("hide"); }
+    if(which==="expenses"){ tabExpenses.classList.add("active"); viewExpenses.classList.remove("hide"); }
+    if(which==="report"){ tabReport.classList.add("active"); viewReport.classList.remove("hide"); }
+  }
+  tabClients.onclick = ()=>setTab("clients");
+  tabExpenses.onclick = ()=>setTab("expenses");
+  tabReport.onclick = ()=>setTab("report");
+
+  // Month
+  const billMonth = document.getElementById("billMonth");
+  (function initMonth(){
+    const d = new Date();
+    billMonth.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+  })();
+
+  // ✅ Month change auto-refresh
+  billMonth.addEventListener("change", ()=> refreshAll());
+
+  document.getElementById("btnRefresh").onclick = ()=> refreshAll();
+  document.getElementById("btnQuickAddClient").onclick = ()=> window.location.href = "admin.html";
+
+  // Billing
+  const billingRows = document.getElementById("billingRows");
+  const topPills = document.getElementById("topPills");
+  let billingSort = "due_soon";
+  let invoiceMap = new Map();
+
+  document.getElementById("sortDueSoon").onclick = ()=>{ billingSort="due_soon"; refreshClients(); };
+  document.getElementById("sortName").onclick = ()=>{ billingSort="name"; refreshClients(); };
+
+  async function refreshAll(){
+    await Promise.all([
+      refreshInvoices(),
+      refreshClients(),
+      refreshExpenses(),
+      refreshReport()
+    ]);
+    await refreshClients();
+  }
+
+  async function refreshClients(){
+    const r = await apiFetch("/billing/clients?sort=" + encodeURIComponent(billingSort));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Billing load failed"); return; }
+
+    const rows = d.rows || [];
+    const dueSoonCount = rows.filter(x => (x.days_until_due ?? 999999) <= 7).length;
+
+    topPills.innerHTML = `
+      <div class="pill">Clients: ${rows.length}</div>
+      <div class="pill bad">Due ≤7d: ${dueSoonCount}</div>
+    `;
+
+    billingRows.innerHTML = "";
+    rows.forEach(row=>{
+      const inv = invoiceMap.get(row.client_id);
+      const invStatus = inv?.status || "none";
+      const invPill =
+        invStatus === "paid" ? `<span class="pill ok">PAID</span>` :
+        invStatus === "unpaid" ? `<span class="pill bad">UNPAID</span>` :
+        `<span class="pill">NONE</span>`;
+
+      const statusVal = row.status || "active";
+      const dueVal = row.next_due_date || "";
+      const amtVal = (row.monthly_amount_usd ?? 0);
+
+      const days = row.days_until_due;
+      const daysTxt = (days === null || days === undefined) ? "—" : String(days);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <b>${escapeHtml(row.name || "")}</b><br/>
+          <span class="mono">${escapeHtml(row.login || "")}</span>
+        </td>
+        <td>
+          <select class="inlineInput" data-status="${row.client_id}">
+            <option value="active" ${statusVal==="active"?"selected":""}>active</option>
+            <option value="pending_payment" ${statusVal==="pending_payment"?"selected":""}>pending_payment</option>
+            <option value="suspended" ${statusVal==="suspended"?"selected":""}>suspended</option>
+          </select>
+        </td>
+        <td><input class="inlineInput" type="date" value="${escapeAttr(dueVal)}" data-due="${row.client_id}"/></td>
+        <td>${escapeHtml(daysTxt)}</td>
+        <td><input class="inlineInput" type="number" step="0.01" value="${escapeAttr(String(amtVal))}" data-amt="${row.client_id}"/></td>
+        <td>${invPill}</td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-save="${row.client_id}">Save</button>
+            <button class="btn btn-ok mini" data-paid="${row.client_id}">Mark Paid</button>
+          </div>
+        </td>
+      `;
+      billingRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-save]").forEach(b=> b.onclick = ()=> saveClient(Number(b.getAttribute("data-save"))));
+    document.querySelectorAll("[data-paid]").forEach(b=> b.onclick = ()=> markPaid(Number(b.getAttribute("data-paid"))));
+  }
+
+  async function refreshInvoices(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/invoices?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Invoices load failed"); return; }
+
+    invoiceMap = new Map();
+    (d.invoices || []).forEach(inv => invoiceMap.set(inv.client_id, inv));
+  }
+
+  async function saveClient(clientId){
+    const status = document.querySelector(`[data-status="${clientId}"]`)?.value || "active";
+    const nextDueDate = document.querySelector(`[data-due="${clientId}"]`)?.value || "";
+    const monthlyAmountUsd = Number(document.querySelector(`[data-amt="${clientId}"]`)?.value || 0);
+
+    if(!nextDueDate){ showToast("Set Next Due date"); return; }
+
+    const r = await apiFetch("/billing/clients", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ clientId, status, nextDueDate, monthlyAmountUsd, currency:"USD", notes:"" })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Save failed"); return; }
+
+    showToast("Saved ✅");
+    await refreshClients();
+  }
+
+  async function markPaid(clientId){
+    const month = billMonth.value;
+    const nextDueDate = document.querySelector(`[data-due="${clientId}"]`)?.value || "";
+    const amountUsd = Number(document.querySelector(`[data-amt="${clientId}"]`)?.value || 0);
+
+    if(!nextDueDate){ showToast("Set Next Due date first"); return; }
+    if(!(amountUsd > 0)){ showToast("Set Monthly $ amount"); return; }
+
+    await saveClient(clientId);
+
+    const existing = invoiceMap.get(clientId);
+    let invoiceId = existing?.id;
+
+    if(!invoiceId){
+      const create = await apiFetch("/billing/invoices", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ clientId, period: month, dueDate: nextDueDate, amountUsd })
+      });
+      const cd = await create.json().catch(()=>({}));
+      if(!create.ok){ showToast(cd.error || "Invoice create failed"); return; }
+      invoiceId = cd.inserted;
+    }
+
+    const pay = await apiFetch("/billing/invoices/pay", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ invoiceId, amountUsd, method:"manual", txRef:"", note:"Marked paid from billing.html" })
+    });
+    const pd = await pay.json().catch(()=>({}));
+    if(!pay.ok){ showToast(pd.error || "Mark paid failed"); return; }
+
+    showToast("Marked paid ✅");
+    await refreshAll();
+  }
+
+  // Expenses
+  const expensesRows = document.getElementById("expensesRows");
+  async function refreshExpenses(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Expenses load failed"); return; }
+
+    expensesRows.innerHTML = "";
+    (d.expenses || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.date || "")}</td>
+        <td>${escapeHtml(x.category || "")}</td>
+        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(x.vendor || "")}</td>
+        <td>${escapeHtml(x.note || "")}</td>
+      `;
+      expensesRows.appendChild(tr);
+    });
+  }
+
+  document.getElementById("expenseForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const date = document.getElementById("expDate").value;
+    const category = document.getElementById("expCategory").value.trim();
+    const amountUsd = Number(document.getElementById("expAmount").value);
+    const vendor = document.getElementById("expVendor").value.trim();
+    const note = document.getElementById("expNote").value.trim();
+
+    const r = await apiFetch("/billing/expenses", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ date, category, amountUsd, vendor, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Add expense failed"); return; }
+
+    showToast("Expense saved ✅");
+    e.target.reset();
+    await refreshExpenses();
+    await refreshReport();
+  });
+
+  // Report
+  const pillRevenue = document.getElementById("pillRevenue");
+  const pillExpenses = document.getElementById("pillExpenses");
+  const pillProfit = document.getElementById("pillProfit");
+  const pillUnpaid = document.getElementById("pillUnpaid");
+
+  async function refreshReport(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Report load failed"); return; }
+
+    const revenue = Number(d.revenue || 0);
+    const expenses = Number(d.expenses || 0);
+    const profit = Number(d.profit || 0);
+    const unpaid = Number(d.unpaid_total || 0);
+
+    pillRevenue.textContent = `Revenue: $${revenue.toFixed(2)}`;
+    pillExpenses.textContent = `Expenses: $${expenses.toFixed(2)}`;
+    pillProfit.textContent = `Profit: $${profit.toFixed(2)}`;
+    pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
+  }
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function escapeAttr(s){ return escapeHtml(s).replaceAll('"',"&quot;"); }
+
+  // Auth check + load
+  (async function init(){
+    if(!getToken()){
+      document.getElementById("mainCard").classList.add("hide");
+      document.getElementById("needLogin").classList.remove("hide");
+      return;
+    }
+    const chk = await apiFetch("/admin-check");
+    if(!chk.ok){
+      document.getElementById("mainCard").classList.add("hide");
+      document.getElementById("needLogin").classList.remove("hide");
+      return;
+    }
+    await refreshAll();
+  })();
+</script>
+</body>
+</html>
