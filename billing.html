@@ -171,7 +171,7 @@
     <div class="row" style="justify-content:space-between">
       <div>
         <h1 style="margin:0">Billing Dashboard</h1>
-        <div class="p">Due soon, mark paid, expenses, monthly report.</div>
+        <div class="p">Due soon, mark paid/unpaid, expenses, monthly report.</div>
         <div class="tabs">
           <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
           <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
@@ -262,10 +262,10 @@
       <div class="row" style="justify-content:space-between">
         <div>
           <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-          <div class="p">Now shows detailed rows + delete buttons.</div>
+          <div class="p">Income + expenses rows (delete if mistake).</div>
         </div>
         <div class="row">
-          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale</button>
+          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale (next)</button>
         </div>
       </div>
 
@@ -279,7 +279,6 @@
       <div class="hr"></div>
 
       <h1 style="font-size:16px;margin:0">Income (Payments)</h1>
-      <div class="p">These are sales recorded by “Mark Paid”. (Manual Sales comes next step.)</div>
       <div style="overflow:auto;margin-top:10px">
         <table>
           <thead>
@@ -377,9 +376,7 @@
   const incomeRows = document.getElementById("incomeRows");
   const reportExpenseRows = document.getElementById("reportExpenseRows");
 
-  document.getElementById("btnManualSale").onclick = ()=>{
-    showToast("Manual Sale: next step ✅");
-  };
+  document.getElementById("btnManualSale").onclick = ()=> showToast("Manual Sale is next step ✅");
 
   async function refreshAll(){
     await Promise.all([
@@ -418,7 +415,6 @@
       const statusVal = row.status || "active";
       const dueVal = row.next_due_date || "";
       const amtVal = (row.monthly_amount_usd ?? 0);
-
       const days = row.days_until_due;
       const daysTxt = (days === null || days === undefined) ? "—" : String(days);
 
@@ -440,6 +436,7 @@
           <div class="actions">
             <button class="btn mini" data-save="${row.client_id}">Save</button>
             <button class="btn btn-ok mini" data-paid="${row.client_id}">Mark Paid</button>
+            <button class="btn btn-danger mini" data-unpaid="${row.client_id}">Mark Unpaid</button>
           </div>
         </td>
       `;
@@ -448,6 +445,7 @@
 
     document.querySelectorAll("[data-save]").forEach(b=> b.onclick = ()=> saveClient(Number(b.getAttribute("data-save"))));
     document.querySelectorAll("[data-paid]").forEach(b=> b.onclick = ()=> markPaid(Number(b.getAttribute("data-paid"))));
+    document.querySelectorAll("[data-unpaid]").forEach(b=> b.onclick = ()=> markUnpaid(Number(b.getAttribute("data-unpaid"))));
   }
 
   async function refreshInvoices(){
@@ -511,6 +509,27 @@
     await refreshAll();
   }
 
+  async function markUnpaid(clientId){
+    const inv = invoiceMap.get(clientId);
+    if(!inv?.id){
+      showToast("No invoice for this month");
+      return;
+    }
+    const ok = confirm("Mark UNPAID? This will remove the income payment for this invoice.");
+    if(!ok) return;
+
+    const r = await apiFetch("/billing/invoices/unpay", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ invoiceId: inv.id })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Unpaid failed"); return; }
+
+    showToast("Marked unpaid ✅");
+    await refreshAll();
+  }
+
   // Expenses list tab
   const expensesRows = document.getElementById("expensesRows");
   async function refreshExpenses(){
@@ -528,9 +547,7 @@
         <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
         <td>${escapeHtml(x.vendor || "")}</td>
         <td>${escapeHtml(x.note || "")}</td>
-        <td>
-          <button class="btn btn-danger mini" data-del-exp="${x.id}">Delete</button>
-        </td>
+        <td><button class="btn btn-danger mini" data-del-exp="${x.id}">Delete</button></td>
       `;
       expensesRows.appendChild(tr);
     });
@@ -583,15 +600,10 @@
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Report load failed"); return; }
 
-    const revenue = Number(d.revenue || 0);
-    const expenses = Number(d.expenses || 0);
-    const profit = Number(d.profit || 0);
-    const unpaid = Number(d.unpaid_total || 0);
-
-    pillRevenue.textContent = `Revenue: $${revenue.toFixed(2)}`;
-    pillExpenses.textContent = `Expenses: $${expenses.toFixed(2)}`;
-    pillProfit.textContent = `Profit: $${profit.toFixed(2)}`;
-    pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
+    pillRevenue.textContent = `Revenue: $${Number(d.revenue||0).toFixed(2)}`;
+    pillExpenses.textContent = `Expenses: $${Number(d.expenses||0).toFixed(2)}`;
+    pillProfit.textContent = `Profit: $${Number(d.profit||0).toFixed(2)}`;
+    pillUnpaid.textContent = `Unpaid: $${Number(d.unpaid_total||0).toFixed(2)}`;
   }
 
   // Report rows: income (payments)
