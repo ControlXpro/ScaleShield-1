@@ -1,260 +1,731 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ScaleShield — Admin Panel</title>
-
-<style>
-:root{
-  --bg:#07080B;
-  --panel:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.12);
-  --gold:#D6B15E;
-  --gold2:#F2D27A;
-  --text:#fff;
-  --muted:rgba(255,255,255,.65);
-  --radius:18px;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --danger:#ff6b6b;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:
-    radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
-    radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
-    linear-gradient(135deg,#050507,#0b0d14,#090a10);
-  color:var(--text);
-  padding:28px 16px 90px;
-}
-.wrap{max-width:1200px;margin:0 auto}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.brand{font-weight:950;font-size:20px}
-.brand span{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.btn{
-  padding:10px 14px;border-radius:14px;font-weight:900;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  transition:.25s var(--ease);
-  cursor:pointer;
-}
-.btn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35)}
-.btn-primary{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;border-color:transparent;
-}
-.btn-danger{
-  border-color:rgba(255,107,107,.35);
-  background:rgba(255,107,107,.12);
-}
-.grid{display:grid;gap:14px}
-@media(min-width:980px){ .grid{grid-template-columns: 1fr 1.2fr} }
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:16px;
-}
-h1{font-size:24px;font-weight:950}
-.p{margin-top:8px;color:var(--muted);line-height:1.6}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
-input, select{
-  width:100%;
-  padding:12px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.25);
-  color:#fff;
-}
-.form{display:grid;gap:10px;margin-top:12px}
-.hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px;text-align:left}
-th{
-  font-size:12px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.55);
-  border-bottom:1px solid rgba(255,255,255,.10);
-}
-tr{border-bottom:1px solid rgba(255,255,255,.06)}
-.toast{
-  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-  background:rgba(0,0,0,.65);
-  padding:10px 12px;border-radius:999px;
-  font-weight:900;font-size:12px;
-  opacity:0;transition:.25s var(--ease);
-}
-.toast.show{opacity:1}
-.hide{display:none}
-.actions{display:flex;gap:8px}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ScaleShield — Admin Panel</title>
+  <style>
+    :root{
+      --bg:#07080B;
+      --panel:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --gold:#D6B15E;
+      --gold2:#F2D27A;
+      --text:#fff;
+      --muted:rgba(255,255,255,.65);
+      --radius:18px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+      --danger:#ff6b6b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
+        radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
+        linear-gradient(135deg,#050507,#0b0d14,#090a10);
+      color:var(--text);
+      padding:28px 16px 90px;
+    }
+    .wrap{max-width:1200px;margin:0 auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{font-weight:950;font-size:20px}
+    .brand span{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .btn{
+      padding:10px 14px;border-radius:14px;font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      transition:.25s var(--ease);
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 24px rgba(214,177,94,.12)}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#111;border-color:transparent;
+    }
+    .btn-danger{
+      border-color:rgba(255,107,107,.35);
+      background:rgba(255,107,107,.12);
+      color:#fff;
+    }
+    .btn-danger:hover{border-color:rgba(255,107,107,.55);box-shadow:0 0 24px rgba(255,107,107,.14)}
+    .grid{display:grid;gap:14px}
+    @media(min-width:980px){ .grid{grid-template-columns: 1fr 1.2fr} }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+    }
+    h1{font-size:26px;font-weight:950;letter-spacing:-.02em}
+    .p{margin-top:8px;color:var(--muted);line-height:1.6}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+    input, select{
+      width:100%;
+      padding:12px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.25);
+      color:#fff;outline:none;
+    }
+    input:focus, select:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
+    .form{display:grid;gap:10px;margin-top:12px}
+    .hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 10px;text-align:left;vertical-align:top}
+    th{
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.55);
+      font-weight:950;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      white-space:nowrap;
+    }
+    tr{border-bottom:1px solid rgba(255,255,255,.06)}
+    td{color:rgba(255,255,255,.88);font-size:13px}
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12.5px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      padding:4px 7px;border-radius:10px;
+      display:inline-block;
+      max-width:100%;
+      overflow:hidden;text-overflow:ellipsis;
+    }
+    .toast{
+      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+      background:rgba(0,0,0,.65);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;border-radius:999px;
+      color:rgba(255,255,255,.9);
+      font-weight:950;font-size:12px;
+      opacity:0;pointer-events:none;
+      transition:.25s var(--ease);
+    }
+    .toast.show{opacity:1}
+    .hide{display:none !important}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .mini{padding:8px 10px;border-radius:12px;font-size:12px}
+    .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
+  </style>
 </head>
 <body>
-
 <div class="wrap">
-<div class="top">
-<div class="brand"><span>ScaleShield</span> — Admin</div>
-<div class="row">
-<button class="btn" id="btnLogout">Log out</button>
-</div>
-</div>
+  <div class="top">
+    <div class="brand"><span>ScaleShield</span> — Admin</div>
+    <div class="row">
+      <a class="btn" href="index.html">Back to site</a>
+      <button class="btn" id="btnLogout" type="button">Log out</button>
+    </div>
+  </div>
 
-<div class="card" id="loginCard">
-<h1>Admin Login</h1>
-<form class="form" id="loginForm">
-<input id="adminUser" placeholder="Username" required />
-<input id="adminPass" type="password" placeholder="Password" required />
-<button class="btn btn-primary">Log in</button>
-</form>
-<div class="p" id="loginErr" style="color:#ff6b6b;display:none"></div>
-</div>
+  <!-- LOGIN -->
+  <div class="card" id="loginCard">
+    <h1>Admin Login</h1>
+    <div class="p">Log in to manage clients & ad accounts.</div>
 
-<div class="grid hide" id="panel">
+    <form class="form" id="loginForm">
+      <div>
+        <label>Username</label>
+        <input id="adminUser" placeholder="admin" autocomplete="username" required />
+      </div>
+      <div>
+        <label>Password</label>
+        <input id="adminPass" type="password" placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+      <div class="row" style="margin-top:4px">
+        <button class="btn btn-primary" type="submit">Log in</button>
+        <button class="btn" type="button" id="btnTest">Test token</button>
+      </div>
+      <div class="p" id="loginErr" style="color:#ffb4b4;font-weight:900;display:none;margin-top:8px"></div>
+    </form>
+  </div>
 
-<!-- CLIENTS -->
-<div class="card">
-<h1>Clients</h1>
-<div class="hr"></div>
+  <!-- ADMIN PANEL -->
+  <div class="grid hide" id="panel">
+    <!-- LEFT: Clients -->
+    <div class="card">
+      <h1>Clients</h1>
+      <div class="p">List, edit, delete clients.</div>
 
-<table>
-<thead>
-<tr>
-<!-- ID COLUMN REMOVED -->
-<th>Name</th>
-<th>Login</th>
-<th>Package</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="clientsRows"></tbody>
-</table>
+      <div class="hr"></div>
 
-</div>
+      <div class="row" style="justify-content:space-between">
+        <button class="btn" id="btnRefreshClients" type="button">Refresh</button>
+        <div class="p" id="clientCount" style="margin:0">—</div>
+      </div>
 
-<!-- AD ACCOUNTS -->
-<div class="card">
-<h1>Ad Accounts</h1>
-<div class="hr"></div>
+      <div class="hr"></div>
 
-<label>Select Client</label>
-<select id="clientSelect"></select>
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:8%">ID</th>
+              <th style="width:30%">Name</th>
+              <th style="width:20%">Login</th>
+              <th style="width:22%">Package</th>
+              <th style="width:20%">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientsRows"></tbody>
+        </table>
+      </div>
 
-<div class="hr"></div>
+      <div class="hr"></div>
 
-<table>
-<thead>
-<tr>
-<!-- ID COLUMN REMOVED -->
-<th>Ad Name</th>
-<th>Ad ID</th>
-<th>BM ID</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="adsRows"></tbody>
-</table>
+      <h1 style="font-size:18px" id="clientFormTitle">Add Client</h1>
+      <div class="hint" id="clientFormHint">Create a new client, or click “Edit” on a client row.</div>
 
-</div>
+      <form class="form" id="clientForm">
+        <input id="cId" type="hidden" value="" />
 
-</div>
+        <div><label>Name</label><input id="cName" placeholder="GRUPOD12" required /></div>
+        <div><label>Login</label><input id="cLogin" placeholder="Grupod12" required /></div>
+
+        <div>
+          <label>Password (leave empty to keep unchanged on edit)</label>
+          <input id="cPass" placeholder="ClientPassword" />
+        </div>
+
+        <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Dimond" /></div>
+        <div><label>Price</label><input id="cPrice" placeholder="$1950/month" /></div>
+        <div><label>Billing Date</label><input id="cBill" placeholder="Every 24st of every month" /></div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="submit" id="btnSaveClient">Save</button>
+          <button class="btn" type="button" id="btnCancelClientEdit">Cancel</button>
+        </div>
+      </form>
+
+      <div class="p" id="clientMsg" style="margin-top:10px"></div>
+    </div>
+
+    <!-- RIGHT: Ad accounts -->
+    <div class="card">
+      <h1>Ad Accounts</h1>
+      <div class="p">Select a client, then edit/delete ad accounts.</div>
+
+      <div class="hr"></div>
+
+      <div>
+        <label>Select client</label>
+        <select id="clientSelect"></select>
+      </div>
+
+      <div class="row" style="justify-content:space-between;margin-top:10px">
+        <button class="btn" id="btnRefreshAds" type="button">Refresh</button>
+        <div class="p" id="adsFor" style="margin:0">—</div>
+      </div>
+
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <!-- ✅ ID COLUMN REMOVED -->
+              <th style="width:28%">Ad Name</th>
+              <th style="width:30%">Ad ID</th>
+              <th style="width:30%">BM ID</th>
+              <th style="width:18%">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adsRows"></tbody>
+        </table>
+      </div>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:18px" id="adFormTitle">Add Ad Account</h1>
+      <div class="hint" id="adFormHint">Create new ad account, or click “Edit” on a row.</div>
+
+      <form class="form" id="adForm">
+        <input id="aRowId" type="hidden" value="" />
+        <div><label>Ad Account Name</label><input id="aName" placeholder="waiting for payment" /></div>
+        <div><label>Ad Account ID</label><input id="aId" placeholder="waiting for payment" /></div>
+        <div><label>BM ID</label><input id="aBm" placeholder="waiting for payment" /></div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="submit" id="btnSaveAd">Save</button>
+          <button class="btn" type="button" id="btnCancelAdEdit">Cancel</button>
+        </div>
+      </form>
+
+      <div class="p" id="adMsg" style="margin-top:10px"></div>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast">Saved</div>
 
 <script>
-const API="https://scaleshield-api.lively-sunset-0c93.workers.dev";
-const TOKEN_KEY="ss_admin_token";
+  const API = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
+  const TOKEN_KEY = "ss_admin_token";
 
-const toast=document.getElementById("toast");
-function showToast(t){toast.textContent=t;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1200);}
+  const toast = document.getElementById("toast");
+  let toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
+  }
 
-function getToken(){return localStorage.getItem(TOKEN_KEY)||"";}
-function setToken(t){localStorage.setItem(TOKEN_KEY,t);}
-function clearToken(){localStorage.removeItem(TOKEN_KEY);}
+  function setErr(msg){
+    const el = document.getElementById("loginErr");
+    el.textContent = msg || "";
+    el.style.display = msg ? "block" : "none";
+  }
 
-async function api(path,opts={}){
-const headers=opts.headers||{};
-if(getToken()) headers.Authorization="Bearer "+getToken();
-return fetch(API+path,{...opts,headers});
-}
+  function getToken(){ return localStorage.getItem(TOKEN_KEY) || ""; }
+  function setToken(t){ localStorage.setItem(TOKEN_KEY, t); }
+  function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
 
-function showPanel(){document.getElementById("loginCard").classList.add("hide");document.getElementById("panel").classList.remove("hide");}
-function showLogin(){document.getElementById("panel").classList.add("hide");document.getElementById("loginCard").classList.remove("hide");}
+  async function apiFetch(path, opts = {}){
+    const headers = opts.headers || {};
+    const t = getToken();
+    if (t) headers.Authorization = "Bearer " + t;
+    return fetch(API + path, { ...opts, headers });
+  }
 
-document.getElementById("btnLogout").onclick=()=>{clearToken();showLogin();};
+  function showPanel(){
+    document.getElementById("loginCard").classList.add("hide");
+    document.getElementById("panel").classList.remove("hide");
+  }
+  function showLogin(){
+    document.getElementById("panel").classList.add("hide");
+    document.getElementById("loginCard").classList.remove("hide");
+  }
 
-document.getElementById("loginForm").onsubmit=async e=>{
-e.preventDefault();
-const r=await fetch(API+"/admin-login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:adminUser.value,password:adminPass.value})});
-const d=await r.json();
-if(!r.ok){loginErr.textContent=d.error||"Login failed";loginErr.style.display="block";return;}
-setToken(d.token);
-showPanel();
-loadClients();
-};
+  document.getElementById("btnLogout").addEventListener("click", ()=>{
+    clearToken();
+    showLogin();
+    showToast("Logged out");
+  });
 
-async function loadClients(){
-const r=await api("/clients");
-const d=await r.json();
-if(!r.ok)return;
-clientsRows.innerHTML="";
-clientSelect.innerHTML="";
-(d.clients||[]).forEach(c=>{
-clientsRows.innerHTML+=`
-<tr>
-<td>${c.name}</td>
-<td>${c.login}</td>
-<td>${c.package_name||""}</td>
-<td>
-<button class="btn btn-danger" onclick="deleteClient(${c.id})">Delete</button>
-</td>
-</tr>`;
-clientSelect.innerHTML+=`<option value="${c.id}">${c.name}</option>`;
-});
-loadAds();
-}
+  // Login
+  document.getElementById("loginForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    setErr("");
 
-async function deleteClient(id){
-if(!confirm("Delete client?"))return;
-await api("/clients?id="+id,{method:"DELETE"});
-loadClients();
-showToast("Client deleted");
-}
+    const username = document.getElementById("adminUser").value.trim();
+    const password = document.getElementById("adminPass").value;
 
-async function loadAds(){
-const id=clientSelect.value;
-if(!id)return;
-const r=await api("/ad-accounts?client_id="+id);
-const d=await r.json();
-if(!r.ok)return;
-adsRows.innerHTML="";
-(d.adAccounts||[]).forEach(a=>{
-adsRows.innerHTML+=`
-<tr>
-<td>${a.ad_name}</td>
-<td>${a.ad_id}</td>
-<td>${a.bm_id}</td>
-<td>
-<button class="btn btn-danger" onclick="deleteAd(${a.id})">Delete</button>
-</td>
-</tr>`;
-});
-}
+    try{
+      const resp = await fetch(API + "/admin-login", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await resp.json().catch(()=> ({}));
+      if(!resp.ok || !data.token){
+        setErr(data.error || "Login failed");
+        return;
+      }
+      setToken(data.token);
+      showToast("Logged in ✅");
+      showPanel();
+      await loadClients();
+    }catch{
+      setErr("Network error");
+    }
+  });
 
-async function deleteAd(id){
-if(!confirm("Delete ad account?"))return;
-await api("/ad-accounts?id="+id,{method:"DELETE"});
-loadAds();
-showToast("Ad deleted");
-}
+  document.getElementById("btnTest").addEventListener("click", async ()=>{
+    try{
+      const r = await apiFetch("/admin-check");
+      const d = await r.json().catch(()=> ({}));
+      showToast(r.ok ? "Token OK ✅" : (d.error || "Token failed"));
+    }catch{
+      showToast("Network error");
+    }
+  });
 
-clientSelect.onchange=loadAds;
+  // ===== Clients =====
+  const clientsRows = document.getElementById("clientsRows");
+  const clientSelect = document.getElementById("clientSelect");
+
+  let clientsCache = [];
+
+  async function loadClients(){
+    const r = await apiFetch("/clients");
+    const d = await r.json().catch(()=> ({}));
+
+    if(!r.ok){
+      showToast(d.error || "Failed to load clients");
+      return;
+    }
+
+    clientsCache = d.clients || [];
+    document.getElementById("clientCount").textContent = clientsCache.length + " client(s)";
+
+    // Table
+    clientsRows.innerHTML = "";
+    clientsCache.forEach(c=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="mono">${c.id}</span></td>
+        <td>${escapeHtml(c.name || "")}</td>
+        <td><span class="mono">${escapeHtml(c.login || "")}</span></td>
+        <td>${escapeHtml(c.package_name || "")}</td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-edit-client="${c.id}">Edit</button>
+            <button class="btn btn-danger mini" data-del-client="${c.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      clientsRows.appendChild(tr);
+    });
+
+    // Dropdown
+    clientSelect.innerHTML = "";
+    clientsCache.forEach(c=>{
+      const opt = document.createElement("option");
+      opt.value = c.id;
+      opt.textContent = `#${c.id} — ${c.name} (${c.login})`;
+      clientSelect.appendChild(opt);
+    });
+
+    if (clientsCache.length) {
+      if (!clientSelect.value) clientSelect.value = String(clientsCache[0].id);
+      await loadAdsForSelected();
+    } else {
+      document.getElementById("adsRows").innerHTML = "";
+      document.getElementById("adsFor").textContent = "No client selected";
+    }
+
+    wireClientButtons();
+  }
+
+  function wireClientButtons(){
+    document.querySelectorAll("[data-edit-client]").forEach(btn=>{
+      btn.onclick = () => startEditClient(Number(btn.getAttribute("data-edit-client")));
+    });
+    document.querySelectorAll("[data-del-client]").forEach(btn=>{
+      btn.onclick = () => deleteClient(Number(btn.getAttribute("data-del-client")));
+    });
+  }
+
+  document.getElementById("btnRefreshClients").addEventListener("click", loadClients);
+
+  // Client form
+  const cId = document.getElementById("cId");
+  const cName = document.getElementById("cName");
+  const cLogin = document.getElementById("cLogin");
+  const cPass = document.getElementById("cPass");
+  const cPkg = document.getElementById("cPkg");
+  const cPrice = document.getElementById("cPrice");
+  const cBill = document.getElementById("cBill");
+  const clientMsg = document.getElementById("clientMsg");
+
+  function resetClientForm(){
+    cId.value = "";
+    cName.value = "";
+    cLogin.value = "";
+    cPass.value = "";
+    cPkg.value = "";
+    cPrice.value = "";
+    cBill.value = "";
+    document.getElementById("clientFormTitle").textContent = "Add Client";
+    document.getElementById("clientFormHint").textContent = "Create a new client, or click “Edit” on a client row.";
+    clientMsg.textContent = "";
+  }
+
+  document.getElementById("btnCancelClientEdit").addEventListener("click", resetClientForm);
+
+  function startEditClient(id){
+    const c = clientsCache.find(x=>x.id === id);
+    if(!c) return;
+
+    cId.value = String(c.id);
+    cName.value = c.name || "";
+    cLogin.value = c.login || "";
+    cPass.value = ""; // keep empty
+    cPkg.value = c.package_name || "";
+    cPrice.value = c.price || "";
+    cBill.value = c.billing_date || "";
+
+    document.getElementById("clientFormTitle").textContent = "Edit Client #" + c.id;
+    document.getElementById("clientFormHint").textContent = "Update fields and click Save. Leave password empty to keep current password.";
+    showToast("Editing client #" + c.id);
+  }
+
+  async function deleteClient(id){
+    const c = clientsCache.find(x=>x.id === id);
+    if(!c) return;
+
+    const ok = confirm(`Delete client "${c.name}" (ID ${id})?\nThis will also delete ALL ad accounts for this client.`);
+    if(!ok) return;
+
+    const r = await apiFetch("/clients?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      alert(d.error || "Delete failed");
+      return;
+    }
+
+    showToast("Client deleted ✅");
+    resetClientForm();
+    await loadClients();
+  }
+
+  document.getElementById("clientForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    clientMsg.textContent = "";
+
+    const id = cId.value ? Number(cId.value) : 0;
+
+    const body = {
+      id,
+      name: cName.value.trim(),
+      login: cLogin.value.trim(),
+      password: cPass.value.trim(),
+      packageName: cPkg.value.trim(),
+      price: cPrice.value.trim(),
+      billingDate: cBill.value.trim(),
+    };
+
+    try{
+      if (!id) {
+        if(!body.password){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = "Password is required when creating a client.";
+          return;
+        }
+        const r = await apiFetch("/clients", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(body)
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        clientMsg.style.color = "rgba(255,255,255,.85)";
+        clientMsg.textContent = "Client added ✅ (id " + d.inserted + ")";
+      } else {
+        const r = await apiFetch("/clients", {
+          method:"PUT",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(body)
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          clientMsg.style.color = "#ffb4b4";
+          clientMsg.textContent = (d.error || "Update failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        clientMsg.style.color = "rgba(255,255,255,.85)";
+        clientMsg.textContent = "Client updated ✅";
+      }
+
+      showToast("Saved ✅");
+      resetClientForm();
+      await loadClients();
+    }catch{
+      clientMsg.style.color = "#ffb4b4";
+      clientMsg.textContent = "Network error";
+    }
+  });
+
+  // ===== Ad Accounts =====
+  const adsRows = document.getElementById("adsRows");
+  const adMsg = document.getElementById("adMsg");
+
+  const aRowId = document.getElementById("aRowId");
+  const aName = document.getElementById("aName");
+  const aId = document.getElementById("aId");
+  const aBm = document.getElementById("aBm");
+
+  let adsCache = [];
+
+  clientSelect.addEventListener("change", loadAdsForSelected);
+  document.getElementById("btnRefreshAds").addEventListener("click", loadAdsForSelected);
+
+  function resetAdForm(){
+    aRowId.value = "";
+    aName.value = "";
+    aId.value = "";
+    aBm.value = "";
+    document.getElementById("adFormTitle").textContent = "Add Ad Account";
+    document.getElementById("adFormHint").textContent = "Create new ad account, or click “Edit” on a row.";
+    adMsg.textContent = "";
+  }
+  document.getElementById("btnCancelAdEdit").addEventListener("click", resetAdForm);
+
+  async function loadAdsForSelected(){
+    const clientId = Number(clientSelect.value || 0);
+    if(!clientId){
+      document.getElementById("adsFor").textContent = "No client selected";
+      adsRows.innerHTML = "";
+      return;
+    }
+
+    document.getElementById("adsFor").textContent = "Client ID: " + clientId;
+
+    const r = await apiFetch("/ad-accounts?client_id=" + encodeURIComponent(clientId));
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      showToast(d.error || "Failed to load ad accounts");
+      return;
+    }
+
+    adsCache = d.adAccounts || [];
+    adsRows.innerHTML = "";
+
+    adsCache.forEach(a=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <!-- ✅ ID COLUMN REMOVED -->
+        <td>${escapeHtml(a.ad_name || "")}</td>
+        <td><span class="mono">${escapeHtml(a.ad_id || "")}</span></td>
+        <td><span class="mono">${escapeHtml(a.bm_id || "")}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-edit-ad="${a.id}">Edit</button>
+            <button class="btn btn-danger mini" data-del-ad="${a.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      adsRows.appendChild(tr);
+    });
+
+    wireAdButtons();
+  }
+
+  function wireAdButtons(){
+    document.querySelectorAll("[data-edit-ad]").forEach(btn=>{
+      btn.onclick = () => startEditAd(Number(btn.getAttribute("data-edit-ad")));
+    });
+    document.querySelectorAll("[data-del-ad]").forEach(btn=>{
+      btn.onclick = () => deleteAd(Number(btn.getAttribute("data-del-ad")));
+    });
+  }
+
+  function startEditAd(id){
+    const a = adsCache.find(x=>x.id === id);
+    if(!a) return;
+
+    aRowId.value = String(a.id);
+    aName.value = a.ad_name || "";
+    aId.value = a.ad_id || "";
+    aBm.value = a.bm_id || "";
+
+    document.getElementById("adFormTitle").textContent = "Edit Ad Account";
+    document.getElementById("adFormHint").textContent = "Update fields and click Save.";
+    showToast("Editing ad ✅");
+  }
+
+  async function deleteAd(id){
+    const ok = confirm(`Delete ad account?`);
+    if(!ok) return;
+
+    const r = await apiFetch("/ad-accounts?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      alert(d.error || "Delete failed");
+      return;
+    }
+
+    showToast("Ad deleted ✅");
+    resetAdForm();
+    await loadAdsForSelected();
+  }
+
+  document.getElementById("adForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    adMsg.textContent = "";
+
+    const clientId = Number(clientSelect.value || 0);
+    if(!clientId){
+      adMsg.style.color = "#ffb4b4";
+      adMsg.textContent = "Select a client first.";
+      return;
+    }
+
+    const rowId = aRowId.value ? Number(aRowId.value) : 0;
+
+    try{
+      if(!rowId){
+        const r = await apiFetch("/ad-accounts", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            clientId,
+            adName: aName.value.trim(),
+            adId: aId.value.trim(),
+            bmId: aBm.value.trim()
+          })
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          adMsg.style.color = "#ffb4b4";
+          adMsg.textContent = (d.error || "Insert failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        adMsg.style.color = "rgba(255,255,255,.85)";
+        adMsg.textContent = "Ad account added ✅ (id " + d.inserted + ")";
+      } else {
+        const r = await apiFetch("/ad-accounts", {
+          method:"PUT",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            id: rowId,
+            adName: aName.value.trim(),
+            adId: aId.value.trim(),
+            bmId: aBm.value.trim()
+          })
+        });
+        const d = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          adMsg.style.color = "#ffb4b4";
+          adMsg.textContent = (d.error || "Update failed") + (d.details ? " — " + d.details : "");
+          return;
+        }
+        adMsg.style.color = "rgba(255,255,255,.85)";
+        adMsg.textContent = "Ad account updated ✅";
+      }
+
+      showToast("Saved ✅");
+      resetAdForm();
+      await loadAdsForSelected();
+    }catch{
+      adMsg.style.color = "#ffb4b4";
+      adMsg.textContent = "Network error";
+    }
+  });
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // Auto-load if token already saved
+  (async function init(){
+    const t = getToken();
+    if(!t) return;
+    const r = await apiFetch("/admin-check");
+    if(r.ok){
+      showPanel();
+      await loadClients();
+      showToast("Welcome back ✅");
+    }else{
+      clearToken();
+      showLogin();
+    }
+  })();
 </script>
 </body>
 </html>
