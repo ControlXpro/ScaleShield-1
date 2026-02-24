@@ -146,6 +146,26 @@
     }
     .toast.show{opacity:1}
     .hide{display:none !important}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.78);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:18px;
+    }
+    .modal.show{display:flex}
+    .modalCard{
+      width:520px; max-width:100%;
+      background:rgba(15,15,18,.96);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:16px;
+      box-shadow:0 30px 90px rgba(0,0,0,.65);
+    }
   </style>
 </head>
 <body>
@@ -199,13 +219,7 @@
         <table>
           <thead>
             <tr>
-              <th>Client</th>
-              <th>Status</th>
-              <th>Next Due</th>
-              <th>Days</th>
-              <th>Monthly $</th>
-              <th>Invoice (month)</th>
-              <th>Actions</th>
+              <th>Client</th><th>Status</th><th>Next Due</th><th>Days</th><th>Monthly $</th><th>Invoice (month)</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="billingRows"></tbody>
@@ -217,29 +231,12 @@
     <div id="viewExpenses" class="hide">
       <h1 style="font-size:18px;margin:0">Add Expense</h1>
       <form id="expenseForm" style="margin-top:12px" class="row">
-        <div style="flex:1;min-width:160px">
-          <label>Date</label>
-          <input id="expDate" type="date" required />
-        </div>
-        <div style="flex:1;min-width:160px">
-          <label>Category</label>
-          <input id="expCategory" placeholder="Tools / Payroll / Ads" required />
-        </div>
-        <div style="flex:1;min-width:160px">
-          <label>Amount USD</label>
-          <input id="expAmount" type="number" step="0.01" placeholder="100" required />
-        </div>
-        <div style="flex:1;min-width:160px">
-          <label>Vendor</label>
-          <input id="expVendor" placeholder="Meta / Zapier" />
-        </div>
-        <div style="flex:2;min-width:220px">
-          <label>Note</label>
-          <input id="expNote" placeholder="Optional note" />
-        </div>
-        <div style="min-width:140px;align-self:end">
-          <button class="btn btn-primary" type="submit">Add</button>
-        </div>
+        <div style="flex:1;min-width:160px"><label>Date</label><input id="expDate" type="date" required /></div>
+        <div style="flex:1;min-width:160px"><label>Category</label><input id="expCategory" required /></div>
+        <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="expAmount" type="number" step="0.01" required /></div>
+        <div style="flex:1;min-width:160px"><label>Vendor</label><input id="expVendor" /></div>
+        <div style="flex:2;min-width:220px"><label>Note</label><input id="expNote" /></div>
+        <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Add</button></div>
       </form>
 
       <div class="hr"></div>
@@ -248,9 +245,7 @@
       <div style="overflow:auto;margin-top:10px">
         <table>
           <thead>
-            <tr>
-              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th>
-            </tr>
+            <tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr>
           </thead>
           <tbody id="expensesRows"></tbody>
         </table>
@@ -262,10 +257,10 @@
       <div class="row" style="justify-content:space-between">
         <div>
           <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-          <div class="p">Income + expenses rows (delete if mistake).</div>
+          <div class="p">Includes manual sales + client payments.</div>
         </div>
         <div class="row">
-          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale (next)</button>
+          <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale</button>
         </div>
       </div>
 
@@ -278,15 +273,25 @@
 
       <div class="hr"></div>
 
-      <h1 style="font-size:16px;margin:0">Income (Payments)</h1>
+      <h1 style="font-size:16px;margin:0">Income (Client Payments)</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
           <thead>
-            <tr>
-              <th>Client</th><th>Amount</th><th>Method</th><th>Paid At</th><th>Note</th><th>Actions</th>
-            </tr>
+            <tr><th>Client</th><th>Amount</th><th>Method</th><th>Paid At</th><th>Note</th><th>Actions</th></tr>
           </thead>
           <tbody id="incomeRows"></tbody>
+        </table>
+      </div>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:16px;margin:0">Manual Sales</h1>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="manualSalesRows"></tbody>
         </table>
       </div>
 
@@ -296,9 +301,7 @@
       <div style="overflow:auto;margin-top:10px">
         <table>
           <thead>
-            <tr>
-              <th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th>
-            </tr>
+            <tr><th>Date</th><th>Category</th><th>Amount</th><th>Vendor</th><th>Note</th><th>Actions</th></tr>
           </thead>
           <tbody id="reportExpenseRows"></tbody>
         </table>
@@ -308,6 +311,41 @@
 </div>
 
 <div class="toast" id="toast">Saved</div>
+
+<!-- Manual Sale Modal -->
+<div class="modal" id="saleModal">
+  <div class="modalCard">
+    <div class="row" style="justify-content:space-between">
+      <h1 style="font-size:18px;margin:0">Add Manual Sale</h1>
+      <button class="btn" id="closeSale" type="button">Close</button>
+    </div>
+    <div class="p" style="margin-top:6px">This will add revenue to the selected month.</div>
+
+    <form id="saleForm" class="row" style="margin-top:12px">
+      <div style="flex:1;min-width:160px">
+        <label>Date</label>
+        <input id="saleDate" type="date" required />
+      </div>
+      <div style="flex:2;min-width:220px">
+        <label>Title</label>
+        <input id="saleTitle" placeholder="Setup Fee / Extra Accounts" required />
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label>Amount USD</label>
+        <input id="saleAmount" type="number" step="0.01" required />
+      </div>
+      <div style="flex:2;min-width:220px">
+        <label>Note</label>
+        <input id="saleNote" placeholder="Optional" />
+      </div>
+      <div style="min-width:140px;align-self:end">
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </form>
+
+    <div class="p" id="saleMsg" style="margin-top:10px"></div>
+  </div>
+</div>
 
 <script>
   const API = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
@@ -321,9 +359,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
   }
-
   function getToken(){ return localStorage.getItem(TOKEN_KEY) || ""; }
-
   async function apiFetch(path, opts = {}){
     const headers = opts.headers || {};
     const t = getToken();
@@ -338,13 +374,11 @@
   const viewClients = document.getElementById("viewClients");
   const viewExpenses = document.getElementById("viewExpenses");
   const viewReport = document.getElementById("viewReport");
-
   function setTab(which){
     [tabClients, tabExpenses, tabReport].forEach(x=>x.classList.remove("active"));
     viewClients.classList.add("hide");
     viewExpenses.classList.add("hide");
     viewReport.classList.add("hide");
-
     if(which==="clients"){ tabClients.classList.add("active"); viewClients.classList.remove("hide"); }
     if(which==="expenses"){ tabExpenses.classList.add("active"); viewExpenses.classList.remove("hide"); }
     if(which==="report"){ tabReport.classList.add("active"); viewReport.classList.remove("hide"); }
@@ -368,15 +402,54 @@
   const topPills = document.getElementById("topPills");
   let billingSort = "due_soon";
   let invoiceMap = new Map();
-
   document.getElementById("sortDueSoon").onclick = ()=>{ billingSort="due_soon"; refreshClients(); };
   document.getElementById("sortName").onclick = ()=>{ billingSort="name"; refreshClients(); };
 
   // Report rows
   const incomeRows = document.getElementById("incomeRows");
+  const manualSalesRows = document.getElementById("manualSalesRows");
   const reportExpenseRows = document.getElementById("reportExpenseRows");
 
-  document.getElementById("btnManualSale").onclick = ()=> showToast("Manual Sale is next step ✅");
+  // Manual sale modal
+  const saleModal = document.getElementById("saleModal");
+  const saleMsg = document.getElementById("saleMsg");
+  document.getElementById("btnManualSale").onclick = ()=>{
+    saleMsg.textContent = "";
+    const d = new Date();
+    document.getElementById("saleDate").value = d.toISOString().slice(0,10);
+    document.getElementById("saleTitle").value = "";
+    document.getElementById("saleAmount").value = "";
+    document.getElementById("saleNote").value = "";
+    saleModal.classList.add("show");
+  };
+  document.getElementById("closeSale").onclick = ()=> saleModal.classList.remove("show");
+  saleModal.addEventListener("click", (e)=>{ if(e.target === saleModal) saleModal.classList.remove("show"); });
+
+  document.getElementById("saleForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const month = billMonth.value;
+    const date = document.getElementById("saleDate").value;
+    const title = document.getElementById("saleTitle").value.trim();
+    const amountUsd = Number(document.getElementById("saleAmount").value);
+    const note = document.getElementById("saleNote").value.trim();
+
+    const r = await apiFetch("/billing/manual-sales", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period: month, date, title, amountUsd, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      saleMsg.style.color = "#ffb4b4";
+      saleMsg.textContent = d.error || "Save failed";
+      return;
+    }
+    saleMsg.style.color = "rgba(255,255,255,.85)";
+    saleMsg.textContent = "Saved ✅";
+    showToast("Manual sale added ✅");
+    saleModal.classList.remove("show");
+    await refreshAll();
+  });
 
   async function refreshAll(){
     await Promise.all([
@@ -385,6 +458,7 @@
       refreshExpenses(),
       refreshReport(),
       refreshIncomeRows(),
+      refreshManualSalesRows(),
       refreshReportExpensesRows()
     ]);
     await refreshClients();
@@ -511,10 +585,7 @@
 
   async function markUnpaid(clientId){
     const inv = invoiceMap.get(clientId);
-    if(!inv?.id){
-      showToast("No invoice for this month");
-      return;
-    }
+    if(!inv?.id){ showToast("No invoice for this month"); return; }
     const ok = confirm("Mark UNPAID? This will remove the income payment for this invoice.");
     if(!ok) return;
 
@@ -551,10 +622,7 @@
       `;
       expensesRows.appendChild(tr);
     });
-
-    document.querySelectorAll("[data-del-exp]").forEach(b=>{
-      b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp")));
-    });
+    document.querySelectorAll("[data-del-exp]").forEach(b=> b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp"))));
   }
 
   async function deleteExpense(id){
@@ -593,7 +661,6 @@
   const pillExpenses = document.getElementById("pillExpenses");
   const pillProfit = document.getElementById("pillProfit");
   const pillUnpaid = document.getElementById("pillUnpaid");
-
   async function refreshReport(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
@@ -626,10 +693,7 @@
       `;
       incomeRows.appendChild(tr);
     });
-
-    document.querySelectorAll("[data-del-pay]").forEach(b=>{
-      b.onclick = ()=> deletePayment(Number(b.getAttribute("data-del-pay")));
-    });
+    document.querySelectorAll("[data-del-pay]").forEach(b=> b.onclick = ()=> deletePayment(Number(b.getAttribute("data-del-pay"))));
   }
 
   async function deletePayment(id){
@@ -639,6 +703,38 @@
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Delete failed"); return; }
     showToast("Income deleted ✅");
+    await refreshAll();
+  }
+
+  // Manual sales rows
+  async function refreshManualSalesRows(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/manual-sales?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Manual sales load failed"); return; }
+
+    manualSalesRows.innerHTML = "";
+    (d.sales || []).forEach(s=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(s.date || "")}</td>
+        <td>${escapeHtml(s.title || "")}</td>
+        <td><span class="mono">$${Number(s.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(s.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-del-ms="${s.id}">Delete</button></td>
+      `;
+      manualSalesRows.appendChild(tr);
+    });
+    document.querySelectorAll("[data-del-ms]").forEach(b=> b.onclick = ()=> deleteManualSale(Number(b.getAttribute("data-del-ms"))));
+  }
+
+  async function deleteManualSale(id){
+    const ok = confirm("Delete this manual sale?");
+    if(!ok) return;
+    const r = await apiFetch("/billing/manual-sales?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Delete failed"); return; }
+    showToast("Manual sale deleted ✅");
     await refreshAll();
   }
 
@@ -662,10 +758,7 @@
       `;
       reportExpenseRows.appendChild(tr);
     });
-
-    document.querySelectorAll("[data-del-exp2]").forEach(b=>{
-      b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp2")));
-    });
+    document.querySelectorAll("[data-del-exp2]").forEach(b=> b.onclick = ()=> deleteExpense(Number(b.getAttribute("data-del-exp2"))));
   }
 
   function escapeHtml(s){
