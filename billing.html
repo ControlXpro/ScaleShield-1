@@ -34,7 +34,6 @@
       background:linear-gradient(135deg,var(--gold),var(--gold2));
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
-
     .btn{
       padding:10px 14px;border-radius:14px;font-weight:900;
       border:1px solid rgba(255,255,255,.12);
@@ -59,7 +58,6 @@
       background:rgba(34,197,94,.12);
       color:#fff;
     }
-
     .card{
       background:var(--panel);
       border:1px solid var(--border);
@@ -96,7 +94,6 @@
     }
     tr{border-bottom:1px solid rgba(255,255,255,.06)}
     td{color:rgba(255,255,255,.88);font-size:13px}
-
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       font-size:12.5px;
@@ -107,7 +104,6 @@
       max-width:100%;
       overflow:hidden;text-overflow:ellipsis;
     }
-
     .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .tabBtn{
       padding:9px 12px;border-radius:999px;font-weight:950;
@@ -132,7 +128,6 @@
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
-
     .toast{
       position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
       background:rgba(0,0,0,.65);
@@ -191,7 +186,7 @@
     <div class="row" style="justify-content:space-between">
       <div>
         <h1 style="margin:0">Billing Dashboard</h1>
-        <div class="p">Due soon, mark paid/unpaid, expenses, monthly report.</div>
+        <div class="p">Paid/unpaid, manual sales, adjustments, expenses, report.</div>
         <div class="tabs">
           <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
           <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
@@ -257,10 +252,11 @@
       <div class="row" style="justify-content:space-between">
         <div>
           <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-          <div class="p">Includes manual sales + client payments.</div>
+          <div class="p">Manual Sales + Adjustments included in totals.</div>
         </div>
         <div class="row">
           <button class="btn btn-primary" id="btnManualSale" type="button">+ Manual Sale</button>
+          <button class="btn" id="btnAdjustment" type="button">+ Adjustment</button>
         </div>
       </div>
 
@@ -297,6 +293,19 @@
 
       <div class="hr"></div>
 
+      <h1 style="font-size:16px;margin:0">Adjustments</h1>
+      <div class="p">Use adjustments to fix totals: positive or negative.</div>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Title</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="adjustRows"></tbody>
+        </table>
+      </div>
+
+      <div class="hr"></div>
+
       <h1 style="font-size:16px;margin:0">Expenses (Rows)</h1>
       <div style="overflow:auto;margin-top:10px">
         <table>
@@ -319,31 +328,39 @@
       <h1 style="font-size:18px;margin:0">Add Manual Sale</h1>
       <button class="btn" id="closeSale" type="button">Close</button>
     </div>
-    <div class="p" style="margin-top:6px">This will add revenue to the selected month.</div>
-
     <form id="saleForm" class="row" style="margin-top:12px">
-      <div style="flex:1;min-width:160px">
-        <label>Date</label>
-        <input id="saleDate" type="date" required />
-      </div>
-      <div style="flex:2;min-width:220px">
-        <label>Title</label>
-        <input id="saleTitle" placeholder="Setup Fee / Extra Accounts" required />
-      </div>
-      <div style="flex:1;min-width:160px">
-        <label>Amount USD</label>
-        <input id="saleAmount" type="number" step="0.01" required />
-      </div>
-      <div style="flex:2;min-width:220px">
-        <label>Note</label>
-        <input id="saleNote" placeholder="Optional" />
-      </div>
-      <div style="min-width:140px;align-self:end">
-        <button class="btn btn-primary" type="submit">Save</button>
-      </div>
+      <div style="flex:1;min-width:160px"><label>Date</label><input id="saleDate" type="date" required /></div>
+      <div style="flex:2;min-width:220px"><label>Title</label><input id="saleTitle" required /></div>
+      <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="saleAmount" type="number" step="0.01" required /></div>
+      <div style="flex:2;min-width:220px"><label>Note</label><input id="saleNote" /></div>
+      <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Save</button></div>
     </form>
-
     <div class="p" id="saleMsg" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- Adjustment Modal -->
+<div class="modal" id="adjModal">
+  <div class="modalCard">
+    <div class="row" style="justify-content:space-between">
+      <h1 style="font-size:18px;margin:0">Add Adjustment</h1>
+      <button class="btn" id="closeAdj" type="button">Close</button>
+    </div>
+    <div class="p" style="margin-top:6px">Use positive or negative amounts.</div>
+    <form id="adjForm" class="row" style="margin-top:12px">
+      <div style="flex:1;min-width:180px">
+        <label>Type</label>
+        <select id="adjType" required>
+          <option value="revenue">revenue</option>
+          <option value="expense">expense</option>
+        </select>
+      </div>
+      <div style="flex:2;min-width:220px"><label>Title</label><input id="adjTitle" required /></div>
+      <div style="flex:1;min-width:160px"><label>Amount USD</label><input id="adjAmount" type="number" step="0.01" required /></div>
+      <div style="flex:2;min-width:220px"><label>Note</label><input id="adjNote" /></div>
+      <div style="min-width:140px;align-self:end"><button class="btn btn-primary" type="submit">Save</button></div>
+    </form>
+    <div class="p" id="adjMsg" style="margin-top:10px"></div>
   </div>
 </div>
 
@@ -408,6 +425,7 @@
   // Report rows
   const incomeRows = document.getElementById("incomeRows");
   const manualSalesRows = document.getElementById("manualSalesRows");
+  const adjustRows = document.getElementById("adjustRows");
   const reportExpenseRows = document.getElementById("reportExpenseRows");
 
   // Manual sale modal
@@ -415,8 +433,7 @@
   const saleMsg = document.getElementById("saleMsg");
   document.getElementById("btnManualSale").onclick = ()=>{
     saleMsg.textContent = "";
-    const d = new Date();
-    document.getElementById("saleDate").value = d.toISOString().slice(0,10);
+    document.getElementById("saleDate").value = new Date().toISOString().slice(0,10);
     document.getElementById("saleTitle").value = "";
     document.getElementById("saleAmount").value = "";
     document.getElementById("saleNote").value = "";
@@ -444,10 +461,46 @@
       saleMsg.textContent = d.error || "Save failed";
       return;
     }
-    saleMsg.style.color = "rgba(255,255,255,.85)";
-    saleMsg.textContent = "Saved ✅";
     showToast("Manual sale added ✅");
     saleModal.classList.remove("show");
+    await refreshAll();
+  });
+
+  // Adjustment modal
+  const adjModal = document.getElementById("adjModal");
+  const adjMsg = document.getElementById("adjMsg");
+  document.getElementById("btnAdjustment").onclick = ()=>{
+    adjMsg.textContent = "";
+    document.getElementById("adjType").value = "revenue";
+    document.getElementById("adjTitle").value = "";
+    document.getElementById("adjAmount").value = "";
+    document.getElementById("adjNote").value = "";
+    adjModal.classList.add("show");
+  };
+  document.getElementById("closeAdj").onclick = ()=> adjModal.classList.remove("show");
+  adjModal.addEventListener("click", (e)=>{ if(e.target === adjModal) adjModal.classList.remove("show"); });
+
+  document.getElementById("adjForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const month = billMonth.value;
+    const type = document.getElementById("adjType").value;
+    const title = document.getElementById("adjTitle").value.trim();
+    const amountUsd = Number(document.getElementById("adjAmount").value);
+    const note = document.getElementById("adjNote").value.trim();
+
+    const r = await apiFetch("/billing/adjustments", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period: month, type, title, amountUsd, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      adjMsg.style.color = "#ffb4b4";
+      adjMsg.textContent = d.error || "Save failed";
+      return;
+    }
+    showToast("Adjustment added ✅");
+    adjModal.classList.remove("show");
     await refreshAll();
   });
 
@@ -459,6 +512,7 @@
       refreshReport(),
       refreshIncomeRows(),
       refreshManualSalesRows(),
+      refreshAdjustments(),
       refreshReportExpensesRows()
     ]);
     await refreshClients();
@@ -471,11 +525,7 @@
 
     const rows = d.rows || [];
     const dueSoonCount = rows.filter(x => (x.days_until_due ?? 999999) <= 7).length;
-
-    topPills.innerHTML = `
-      <div class="pill">Clients: ${rows.length}</div>
-      <div class="pill bad">Due ≤7d: ${dueSoonCount}</div>
-    `;
+    topPills.innerHTML = `<div class="pill">Clients: ${rows.length}</div><div class="pill bad">Due ≤7d: ${dueSoonCount}</div>`;
 
     billingRows.innerHTML = "";
     rows.forEach(row=>{
@@ -545,7 +595,6 @@
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Save failed"); return; }
     showToast("Saved ✅");
-    await refreshClients();
   }
 
   async function markPaid(clientId){
@@ -574,7 +623,7 @@
     const pay = await apiFetch("/billing/invoices/pay", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ invoiceId, amountUsd, method:"manual", txRef:"", note:"Marked paid from billing.html" })
+      body: JSON.stringify({ invoiceId, amountUsd, method:"manual", txRef:"", note:"Marked paid" })
     });
     const pd = await pay.json().catch(()=>({}));
     if(!pay.ok){ showToast(pd.error || "Mark paid failed"); return; }
@@ -586,7 +635,7 @@
   async function markUnpaid(clientId){
     const inv = invoiceMap.get(clientId);
     if(!inv?.id){ showToast("No invoice for this month"); return; }
-    const ok = confirm("Mark UNPAID? This will remove the income payment for this invoice.");
+    const ok = confirm("Mark UNPAID? This will remove payments for that invoice.");
     if(!ok) return;
 
     const r = await apiFetch("/billing/invoices/unpay", {
@@ -650,7 +699,6 @@
     });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Add expense failed"); return; }
-
     showToast("Expense saved ✅");
     e.target.reset();
     await refreshAll();
@@ -666,20 +714,18 @@
     const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Report load failed"); return; }
-
     pillRevenue.textContent = `Revenue: $${Number(d.revenue||0).toFixed(2)}`;
     pillExpenses.textContent = `Expenses: $${Number(d.expenses||0).toFixed(2)}`;
     pillProfit.textContent = `Profit: $${Number(d.profit||0).toFixed(2)}`;
     pillUnpaid.textContent = `Unpaid: $${Number(d.unpaid_total||0).toFixed(2)}`;
   }
 
-  // Report rows: income (payments)
+  // Income payments
   async function refreshIncomeRows(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/payments?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Income load failed"); return; }
-
     incomeRows.innerHTML = "";
     (d.payments || []).forEach(p=>{
       const tr = document.createElement("tr");
@@ -695,7 +741,6 @@
     });
     document.querySelectorAll("[data-del-pay]").forEach(b=> b.onclick = ()=> deletePayment(Number(b.getAttribute("data-del-pay"))));
   }
-
   async function deletePayment(id){
     const ok = confirm("Delete this income payment?");
     if(!ok) return;
@@ -706,13 +751,12 @@
     await refreshAll();
   }
 
-  // Manual sales rows
+  // Manual sales
   async function refreshManualSalesRows(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/manual-sales?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Manual sales load failed"); return; }
-
     manualSalesRows.innerHTML = "";
     (d.sales || []).forEach(s=>{
       const tr = document.createElement("tr");
@@ -727,7 +771,6 @@
     });
     document.querySelectorAll("[data-del-ms]").forEach(b=> b.onclick = ()=> deleteManualSale(Number(b.getAttribute("data-del-ms"))));
   }
-
   async function deleteManualSale(id){
     const ok = confirm("Delete this manual sale?");
     if(!ok) return;
@@ -738,13 +781,42 @@
     await refreshAll();
   }
 
-  // Report rows: expenses (same month)
+  // Adjustments
+  async function refreshAdjustments(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/adjustments?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Adjustments load failed"); return; }
+    adjustRows.innerHTML = "";
+    (d.adjustments || []).forEach(a=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="mono">${escapeHtml(a.type)}</span></td>
+        <td>${escapeHtml(a.title || "")}</td>
+        <td><span class="mono">$${Number(a.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(a.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-del-adj="${a.id}">Delete</button></td>
+      `;
+      adjustRows.appendChild(tr);
+    });
+    document.querySelectorAll("[data-del-adj]").forEach(b=> b.onclick = ()=> deleteAdjustment(Number(b.getAttribute("data-del-adj"))));
+  }
+  async function deleteAdjustment(id){
+    const ok = confirm("Delete this adjustment?");
+    if(!ok) return;
+    const r = await apiFetch("/billing/adjustments?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Delete failed"); return; }
+    showToast("Adjustment deleted ✅");
+    await refreshAll();
+  }
+
+  // Report expenses rows
   async function refreshReportExpensesRows(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){ return; }
-
+    if(!r.ok) return;
     reportExpenseRows.innerHTML = "";
     (d.expenses || []).forEach(x=>{
       const tr = document.createElement("tr");
