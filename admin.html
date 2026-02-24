@@ -16,6 +16,7 @@
       --radius:18px;
       --ease:cubic-bezier(.2,.8,.2,1);
       --danger:#ff6b6b;
+      --ok:#22c55e;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
@@ -41,6 +42,7 @@
       color:#fff;
       transition:.25s var(--ease);
       cursor:pointer;
+      user-select:none;
     }
     .btn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 24px rgba(214,177,94,.12)}
     .btn-primary{
@@ -53,6 +55,12 @@
       color:#fff;
     }
     .btn-danger:hover{border-color:rgba(255,107,107,.55);box-shadow:0 0 24px rgba(255,107,107,.14)}
+    .btn-ok{
+      border-color:rgba(34,197,94,.35);
+      background:rgba(34,197,94,.12);
+      color:#fff;
+    }
+    .btn-ok:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 24px rgba(34,197,94,.14)}
     .grid{display:grid;gap:14px}
     @media(min-width:980px){ .grid{grid-template-columns: 1fr 1.2fr} }
     .card{
@@ -65,14 +73,14 @@
     .p{margin-top:8px;color:var(--muted);line-height:1.6}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
-    input, select{
+    input, select, textarea{
       width:100%;
       padding:12px 12px;border-radius:14px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.25);
       color:#fff;outline:none;
     }
-    input:focus, select:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
+    input:focus, select:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
     .form{display:grid;gap:10px;margin-top:12px}
     .hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
     table{width:100%;border-collapse:collapse}
@@ -107,12 +115,66 @@
       font-weight:950;font-size:12px;
       opacity:0;pointer-events:none;
       transition:.25s var(--ease);
+      z-index:99999;
     }
     .toast.show{opacity:1}
     .hide{display:none !important}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
     .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
+
+    /* ===== Billing Modal ===== */
+    .modal{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.78);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:16px;
+    }
+    .modal.show{display:flex}
+    .modalCard{
+      width:min(1200px, 100%);
+      max-height:92vh;
+      overflow:auto;
+      background:rgba(15,15,18,.96);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      box-shadow:0 30px 90px rgba(0,0,0,.65);
+      padding:16px;
+    }
+    .modalTop{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
+    }
+    .tabs{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;
+    }
+    .tabBtn{
+      padding:9px 12px;border-radius:999px;font-weight:950;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      cursor:pointer;
+    }
+    .tabBtn.active{
+      border-color:rgba(214,177,94,.35);
+      box-shadow:0 0 24px rgba(214,177,94,.10);
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      font-size:12px;font-weight:950;
+    }
+    .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
+    .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
+    .inlineInput{
+      width: 150px;
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:12px;
+    }
   </style>
 </head>
 <body>
@@ -121,6 +183,7 @@
     <div class="brand"><span>ScaleShield</span> — Admin</div>
     <div class="row">
       <a class="btn" href="index.html">Back to site</a>
+      <button class="btn" id="btnBilling" type="button">Billing</button>
       <button class="btn" id="btnLogout" type="button">Log out</button>
     </div>
   </div>
@@ -228,7 +291,6 @@
         <table>
           <thead>
             <tr>
-              <!-- ✅ ID COLUMN REMOVED -->
               <th style="width:28%">Ad Name</th>
               <th style="width:30%">Ad ID</th>
               <th style="width:30%">BM ID</th>
@@ -262,6 +324,138 @@
 </div>
 
 <div class="toast" id="toast">Saved</div>
+
+<!-- ===== BILLING MODAL ===== -->
+<div class="modal" id="billingModal" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true">
+    <div class="modalTop">
+      <div>
+        <h1 style="margin:0">Billing</h1>
+        <div class="p" style="margin-top:6px">Due soon, paid/unpaid tracking, expenses, monthly report.</div>
+        <div class="tabs">
+          <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
+          <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
+          <button class="tabBtn" id="tabReport" type="button">Report</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label style="width:auto">Month</label>
+        <input id="billMonth" type="month" class="inlineInput" />
+        <button class="btn" id="btnBillingRefresh" type="button">Refresh</button>
+        <button class="btn" id="btnBillingClose" type="button">Close</button>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <!-- Clients Billing -->
+    <div id="billingClientsView">
+      <div class="row" style="justify-content:space-between">
+        <div class="row">
+          <button class="btn" id="sortDueSoon" type="button">Sort: Due Soon</button>
+          <button class="btn" id="sortName" type="button">Sort: Name</button>
+        </div>
+        <div class="row" id="billingTotals"></div>
+      </div>
+
+      <div style="overflow:auto;margin-top:12px">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Status</th>
+              <th>Next Due</th>
+              <th>Days</th>
+              <th>Monthly $</th>
+              <th>Invoice (this month)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="billingRows"></tbody>
+        </table>
+      </div>
+
+      <div class="hint" style="margin-top:10px">
+        Tip: Set next due date + monthly amount per client. “Mark Paid” will create an invoice (if missing) and mark it paid.
+      </div>
+    </div>
+
+    <!-- Expenses -->
+    <div id="billingExpensesView" class="hide">
+      <div class="row" style="justify-content:space-between">
+        <h1 style="font-size:18px;margin:0">Add Expense</h1>
+      </div>
+
+      <form class="form" id="expenseForm" style="max-width:620px">
+        <div class="row">
+          <div style="flex:1">
+            <label>Date</label>
+            <input id="expDate" type="date" required />
+          </div>
+          <div style="flex:1">
+            <label>Category</label>
+            <input id="expCategory" placeholder="Tools / Payroll / Ads" required />
+          </div>
+        </div>
+        <div class="row">
+          <div style="flex:1">
+            <label>Amount USD</label>
+            <input id="expAmount" type="number" step="0.01" placeholder="100" required />
+          </div>
+          <div style="flex:1">
+            <label>Vendor</label>
+            <input id="expVendor" placeholder="Meta / Zapier / Freelancer" />
+          </div>
+        </div>
+        <div>
+          <label>Note</label>
+          <textarea id="expNote" placeholder="Optional note"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Expense</button>
+        <div class="p" id="expMsg" style="margin-top:6px"></div>
+      </form>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:18px;margin:0">Expenses (month)</h1>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Vendor</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="expensesRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Report -->
+    <div id="billingReportView" class="hide">
+      <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
+      <div class="p">Revenue is calculated from payments. Expenses from your expenses table.</div>
+
+      <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap">
+        <div class="pill ok" id="pillRevenue">Revenue: $0</div>
+        <div class="pill bad" id="pillExpenses">Expenses: $0</div>
+        <div class="pill" id="pillProfit">Profit: $0</div>
+        <div class="pill" id="pillUnpaid">Unpaid: $0</div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="hint">
+        If Revenue is 0, you haven’t used “Mark Paid” yet (or recorded payments). After you mark invoices paid, revenue will show here.
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
   const API = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
@@ -346,25 +540,19 @@
     }
   });
 
-  // ===== Clients =====
+  // ===== Clients (existing) =====
   const clientsRows = document.getElementById("clientsRows");
   const clientSelect = document.getElementById("clientSelect");
-
   let clientsCache = [];
 
   async function loadClients(){
     const r = await apiFetch("/clients");
     const d = await r.json().catch(()=> ({}));
-
-    if(!r.ok){
-      showToast(d.error || "Failed to load clients");
-      return;
-    }
+    if(!r.ok){ showToast(d.error || "Failed to load clients"); return; }
 
     clientsCache = d.clients || [];
     document.getElementById("clientCount").textContent = clientsCache.length + " client(s)";
 
-    // Table
     clientsRows.innerHTML = "";
     clientsCache.forEach(c=>{
       const tr = document.createElement("tr");
@@ -383,7 +571,6 @@
       clientsRows.appendChild(tr);
     });
 
-    // Dropdown
     clientSelect.innerHTML = "";
     clientsCache.forEach(c=>{
       const opt = document.createElement("option");
@@ -414,7 +601,6 @@
 
   document.getElementById("btnRefreshClients").addEventListener("click", loadClients);
 
-  // Client form
   const cId = document.getElementById("cId");
   const cName = document.getElementById("cName");
   const cLogin = document.getElementById("cLogin");
@@ -436,21 +622,18 @@
     document.getElementById("clientFormHint").textContent = "Create a new client, or click “Edit” on a client row.";
     clientMsg.textContent = "";
   }
-
   document.getElementById("btnCancelClientEdit").addEventListener("click", resetClientForm);
 
   function startEditClient(id){
     const c = clientsCache.find(x=>x.id === id);
     if(!c) return;
-
     cId.value = String(c.id);
     cName.value = c.name || "";
     cLogin.value = c.login || "";
-    cPass.value = ""; // keep empty
+    cPass.value = "";
     cPkg.value = c.package_name || "";
     cPrice.value = c.price || "";
     cBill.value = c.billing_date || "";
-
     document.getElementById("clientFormTitle").textContent = "Edit Client #" + c.id;
     document.getElementById("clientFormHint").textContent = "Update fields and click Save. Leave password empty to keep current password.";
     showToast("Editing client #" + c.id);
@@ -459,16 +642,12 @@
   async function deleteClient(id){
     const c = clientsCache.find(x=>x.id === id);
     if(!c) return;
-
     const ok = confirm(`Delete client "${c.name}" (ID ${id})?\nThis will also delete ALL ad accounts for this client.`);
     if(!ok) return;
 
     const r = await apiFetch("/clients?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=> ({}));
-    if(!r.ok){
-      alert(d.error || "Delete failed");
-      return;
-    }
+    if(!r.ok){ alert(d.error || "Delete failed"); return; }
 
     showToast("Client deleted ✅");
     resetClientForm();
@@ -478,7 +657,6 @@
   document.getElementById("clientForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
     clientMsg.textContent = "";
-
     const id = cId.value ? Number(cId.value) : 0;
 
     const body = {
@@ -536,15 +714,13 @@
     }
   });
 
-  // ===== Ad Accounts =====
+  // ===== Ad Accounts (existing) =====
   const adsRows = document.getElementById("adsRows");
   const adMsg = document.getElementById("adMsg");
-
   const aRowId = document.getElementById("aRowId");
   const aName = document.getElementById("aName");
   const aId = document.getElementById("aId");
   const aBm = document.getElementById("aBm");
-
   let adsCache = [];
 
   clientSelect.addEventListener("change", loadAdsForSelected);
@@ -568,15 +744,11 @@
       adsRows.innerHTML = "";
       return;
     }
-
     document.getElementById("adsFor").textContent = "Client ID: " + clientId;
 
     const r = await apiFetch("/ad-accounts?client_id=" + encodeURIComponent(clientId));
     const d = await r.json().catch(()=> ({}));
-    if(!r.ok){
-      showToast(d.error || "Failed to load ad accounts");
-      return;
-    }
+    if(!r.ok){ showToast(d.error || "Failed to load ad accounts"); return; }
 
     adsCache = d.adAccounts || [];
     adsRows.innerHTML = "";
@@ -584,7 +756,6 @@
     adsCache.forEach(a=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <!-- ✅ ID COLUMN REMOVED -->
         <td>${escapeHtml(a.ad_name || "")}</td>
         <td><span class="mono">${escapeHtml(a.ad_id || "")}</span></td>
         <td><span class="mono">${escapeHtml(a.bm_id || "")}</span></td>
@@ -630,10 +801,7 @@
 
     const r = await apiFetch("/ad-accounts?id=" + encodeURIComponent(id), { method:"DELETE" });
     const d = await r.json().catch(()=> ({}));
-    if(!r.ok){
-      alert(d.error || "Delete failed");
-      return;
-    }
+    if(!r.ok){ alert(d.error || "Delete failed"); return; }
 
     showToast("Ad deleted ✅");
     resetAdForm();
@@ -710,6 +878,337 @@
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
+  }
+
+  // ===== BILLING MODAL LOGIC =====
+  const billingModal = document.getElementById("billingModal");
+  const billingRows = document.getElementById("billingRows");
+  const billingTotals = document.getElementById("billingTotals");
+  const billMonth = document.getElementById("billMonth");
+
+  const tabClients = document.getElementById("tabClients");
+  const tabExpenses = document.getElementById("tabExpenses");
+  const tabReport = document.getElementById("tabReport");
+  const billingClientsView = document.getElementById("billingClientsView");
+  const billingExpensesView = document.getElementById("billingExpensesView");
+  const billingReportView = document.getElementById("billingReportView");
+
+  const pillRevenue = document.getElementById("pillRevenue");
+  const pillExpenses = document.getElementById("pillExpenses");
+  const pillProfit = document.getElementById("pillProfit");
+  const pillUnpaid = document.getElementById("pillUnpaid");
+
+  const expensesRows = document.getElementById("expensesRows");
+  const expenseForm = document.getElementById("expenseForm");
+  const expMsg = document.getElementById("expMsg");
+
+  let billingSort = "due_soon"; // due_soon | name
+  let invoiceMap = new Map(); // client_id -> invoice for selected month
+
+  function setTab(which){
+    [tabClients, tabExpenses, tabReport].forEach(x=>x.classList.remove("active"));
+    billingClientsView.classList.add("hide");
+    billingExpensesView.classList.add("hide");
+    billingReportView.classList.add("hide");
+
+    if(which === "clients"){ tabClients.classList.add("active"); billingClientsView.classList.remove("hide"); }
+    if(which === "expenses"){ tabExpenses.classList.add("active"); billingExpensesView.classList.remove("hide"); }
+    if(which === "report"){ tabReport.classList.add("active"); billingReportView.classList.remove("hide"); }
+  }
+  tabClients.onclick = ()=>setTab("clients");
+  tabExpenses.onclick = ()=>setTab("expenses");
+  tabReport.onclick = ()=>setTab("report");
+
+  function openBilling(){
+    if(!getToken()){
+      showToast("Login first");
+      return;
+    }
+    billingModal.classList.add("show");
+    billingModal.setAttribute("aria-hidden","false");
+    setTab("clients");
+    refreshBillingAll();
+  }
+  function closeBilling(){
+    billingModal.classList.remove("show");
+    billingModal.setAttribute("aria-hidden","true");
+  }
+  document.getElementById("btnBilling").onclick = openBilling;
+  document.getElementById("btnBillingClose").onclick = closeBilling;
+  billingModal.addEventListener("click", (e)=>{ if(e.target === billingModal) closeBilling(); });
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && billingModal.classList.contains("show")) closeBilling(); });
+
+  // default month = current month
+  (function initMonth(){
+    const d = new Date();
+    const ym = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    billMonth.value = ym;
+  })();
+
+  document.getElementById("btnBillingRefresh").onclick = refreshBillingAll;
+  document.getElementById("sortDueSoon").onclick = ()=>{ billingSort="due_soon"; refreshBillingClients(); };
+  document.getElementById("sortName").onclick = ()=>{ billingSort="name"; refreshBillingClients(); };
+
+  async function refreshBillingAll(){
+    await Promise.all([
+      refreshBillingClients(),
+      refreshBillingInvoices(),
+      refreshBillingExpenses(),
+      refreshBillingReport()
+    ]);
+    // rebuild rows after invoice map ready
+    await refreshBillingClients();
+  }
+
+  async function refreshBillingClients(){
+    billingRows.innerHTML = "";
+    billingTotals.innerHTML = "";
+    invoiceMap = invoiceMap || new Map();
+
+    const r = await apiFetch("/billing/clients?sort=" + encodeURIComponent(billingSort));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Billing load failed"); return; }
+
+    const rows = d.rows || [];
+    const dueSoonCount = rows.filter(x => (x.days_until_due ?? 999999) <= 7).length;
+
+    billingTotals.innerHTML = `
+      <div class="pill">Clients: ${rows.length}</div>
+      <div class="pill bad">Due ≤7d: ${dueSoonCount}</div>
+    `;
+
+    rows.forEach(row=>{
+      const inv = invoiceMap.get(row.client_id);
+      const invStatus = inv?.status || "none";
+      const invPill =
+        invStatus === "paid" ? `<span class="pill ok">PAID</span>` :
+        invStatus === "unpaid" ? `<span class="pill bad">UNPAID</span>` :
+        `<span class="pill">NONE</span>`;
+
+      const statusVal = row.status || "active";
+      const dueVal = row.next_due_date || "";
+      const amtVal = (row.monthly_amount_usd ?? 0);
+
+      const days = row.days_until_due;
+      const daysTxt = (days === null || days === undefined) ? "—" : String(days);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <b>${escapeHtml(row.name || "")}</b><br/>
+          <span class="mono">${escapeHtml(row.login || "")}</span>
+        </td>
+
+        <td>
+          <select class="inlineInput" data-bill-status="${row.client_id}">
+            <option value="active" ${statusVal==="active"?"selected":""}>active</option>
+            <option value="pending_payment" ${statusVal==="pending_payment"?"selected":""}>pending_payment</option>
+            <option value="suspended" ${statusVal==="suspended"?"selected":""}>suspended</option>
+          </select>
+        </td>
+
+        <td>
+          <input class="inlineInput" type="date" value="${escapeAttr(dueVal)}" data-bill-due="${row.client_id}" />
+        </td>
+
+        <td>${escapeHtml(daysTxt)}</td>
+
+        <td>
+          <input class="inlineInput" type="number" step="0.01" value="${escapeAttr(String(amtVal))}" data-bill-amt="${row.client_id}" />
+        </td>
+
+        <td>${invPill}</td>
+
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-bill-save="${row.client_id}">Save</button>
+            <button class="btn btn-ok mini" data-bill-paid="${row.client_id}">Mark Paid</button>
+          </div>
+        </td>
+      `;
+      billingRows.appendChild(tr);
+    });
+
+    // wire buttons
+    document.querySelectorAll("[data-bill-save]").forEach(btn=>{
+      btn.onclick = ()=> saveBillingClient(Number(btn.getAttribute("data-bill-save")));
+    });
+    document.querySelectorAll("[data-bill-paid]").forEach(btn=>{
+      btn.onclick = ()=> markClientPaid(Number(btn.getAttribute("data-bill-paid")));
+    });
+  }
+
+  async function refreshBillingInvoices(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/invoices?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Invoices load failed"); return; }
+
+    invoiceMap = new Map();
+    (d.invoices || []).forEach(inv=>{
+      invoiceMap.set(inv.client_id, inv);
+    });
+  }
+
+  async function saveBillingClient(clientId){
+    const status = document.querySelector(`[data-bill-status="${clientId}"]`)?.value || "active";
+    const nextDueDate = document.querySelector(`[data-bill-due="${clientId}"]`)?.value || "";
+    const monthlyAmountUsd = Number(document.querySelector(`[data-bill-amt="${clientId}"]`)?.value || 0);
+
+    if(!nextDueDate){
+      showToast("Set Next Due date");
+      return;
+    }
+
+    const r = await apiFetch("/billing/clients", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        clientId,
+        status,
+        nextDueDate,
+        monthlyAmountUsd,
+        currency: "USD",
+        notes: ""
+      })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Save failed"); return; }
+
+    showToast("Saved ✅");
+    await refreshBillingClients();
+  }
+
+  async function markClientPaid(clientId){
+    const month = billMonth.value; // YYYY-MM
+    // Need due date + amount
+    const nextDueDate = document.querySelector(`[data-bill-due="${clientId}"]`)?.value || "";
+    const amountUsd = Number(document.querySelector(`[data-bill-amt="${clientId}"]`)?.value || 0);
+
+    if(!nextDueDate){
+      showToast("Set Next Due date first");
+      return;
+    }
+    if(!(amountUsd > 0)){
+      showToast("Set Monthly $ amount");
+      return;
+    }
+
+    // Ensure billing settings saved (helps keep dashboard accurate)
+    await saveBillingClient(clientId);
+
+    // If invoice exists, pay it. If not, create then pay.
+    const existing = invoiceMap.get(clientId);
+    let invoiceId = existing?.id;
+
+    if(!invoiceId){
+      const create = await apiFetch("/billing/invoices", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+          clientId,
+          period: month,
+          dueDate: nextDueDate,
+          amountUsd
+        })
+      });
+      const cd = await create.json().catch(()=>({}));
+      if(!create.ok){
+        showToast(cd.error || "Invoice create failed");
+        return;
+      }
+      invoiceId = cd.inserted;
+    }
+
+    const pay = await apiFetch("/billing/invoices/pay", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        invoiceId,
+        amountUsd,
+        method: "manual",
+        txRef: "",
+        note: "Marked paid from admin"
+      })
+    });
+    const pd = await pay.json().catch(()=>({}));
+    if(!pay.ok){
+      showToast(pd.error || "Mark paid failed");
+      return;
+    }
+
+    showToast("Marked paid ✅");
+    await refreshBillingAll();
+  }
+
+  // ===== Expenses =====
+  async function refreshBillingExpenses(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Expenses load failed"); return; }
+
+    expensesRows.innerHTML = "";
+    (d.expenses || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.date || "")}</td>
+        <td>${escapeHtml(x.category || "")}</td>
+        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td>${escapeHtml(x.vendor || "")}</td>
+        <td>${escapeHtml(x.note || "")}</td>
+      `;
+      expensesRows.appendChild(tr);
+    });
+  }
+
+  expenseForm.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    expMsg.textContent = "";
+
+    const date = document.getElementById("expDate").value;
+    const category = document.getElementById("expCategory").value.trim();
+    const amountUsd = Number(document.getElementById("expAmount").value);
+    const vendor = document.getElementById("expVendor").value.trim();
+    const note = document.getElementById("expNote").value.trim();
+
+    const r = await apiFetch("/billing/expenses", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ date, category, amountUsd, vendor, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      expMsg.style.color = "#ffb4b4";
+      expMsg.textContent = d.error || "Add expense failed";
+      return;
+    }
+
+    expMsg.style.color = "rgba(255,255,255,.85)";
+    expMsg.textContent = "Expense added ✅";
+    showToast("Saved ✅");
+
+    expenseForm.reset();
+    await refreshBillingExpenses();
+    await refreshBillingReport();
+  });
+
+  // ===== Report =====
+  async function refreshBillingReport(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Report load failed"); return; }
+
+    const revenue = Number(d.revenue || 0);
+    const expenses = Number(d.expenses || 0);
+    const profit = Number(d.profit || 0);
+    const unpaid = Number(d.unpaid_total || 0);
+
+    pillRevenue.textContent = `Revenue: $${revenue.toFixed(2)}`;
+    pillExpenses.textContent = `Expenses: $${expenses.toFixed(2)}`;
+    pillProfit.textContent = `Profit: $${profit.toFixed(2)}`;
+    pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
   }
 
   // Auto-load if token already saved
