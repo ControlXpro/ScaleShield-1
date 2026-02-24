@@ -228,7 +228,7 @@
         <table>
           <thead>
             <tr>
-              <th style="width:12%">ID</th>
+              <!-- ✅ ID COLUMN REMOVED -->
               <th style="width:28%">Ad Name</th>
               <th style="width:30%">Ad ID</th>
               <th style="width:30%">BM ID</th>
@@ -446,7 +446,7 @@
     cId.value = String(c.id);
     cName.value = c.name || "";
     cLogin.value = c.login || "";
-    cPass.value = ""; // keep empty to not change
+    cPass.value = ""; // keep empty
     cPkg.value = c.package_name || "";
     cPrice.value = c.price || "";
     cBill.value = c.billing_date || "";
@@ -485,7 +485,7 @@
       id,
       name: cName.value.trim(),
       login: cLogin.value.trim(),
-      password: cPass.value.trim(), // optional on edit
+      password: cPass.value.trim(),
       packageName: cPkg.value.trim(),
       price: cPrice.value.trim(),
       billingDate: cBill.value.trim(),
@@ -493,7 +493,6 @@
 
     try{
       if (!id) {
-        // ADD (password required)
         if(!body.password){
           clientMsg.style.color = "#ffb4b4";
           clientMsg.textContent = "Password is required when creating a client.";
@@ -513,7 +512,6 @@
         clientMsg.style.color = "rgba(255,255,255,.85)";
         clientMsg.textContent = "Client added ✅ (id " + d.inserted + ")";
       } else {
-        // UPDATE
         const r = await apiFetch("/clients", {
           method:"PUT",
           headers:{ "Content-Type":"application/json" },
@@ -586,7 +584,7 @@
     adsCache.forEach(a=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><span class="mono">${a.id}</span></td>
+        <!-- ✅ ID COLUMN REMOVED -->
         <td>${escapeHtml(a.ad_name || "")}</td>
         <td><span class="mono">${escapeHtml(a.ad_id || "")}</span></td>
         <td><span class="mono">${escapeHtml(a.bm_id || "")}</span></td>
@@ -621,13 +619,13 @@
     aId.value = a.ad_id || "";
     aBm.value = a.bm_id || "";
 
-    document.getElementById("adFormTitle").textContent = "Edit Ad Account #" + a.id;
+    document.getElementById("adFormTitle").textContent = "Edit Ad Account";
     document.getElementById("adFormHint").textContent = "Update fields and click Save.";
-    showToast("Editing ad #" + a.id);
+    showToast("Editing ad ✅");
   }
 
   async function deleteAd(id){
-    const ok = confirm(`Delete ad account row ID ${id}?`);
+    const ok = confirm(`Delete ad account?`);
     if(!ok) return;
 
     const r = await apiFetch("/ad-accounts?id=" + encodeURIComponent(id), { method:"DELETE" });
@@ -657,7 +655,6 @@
 
     try{
       if(!rowId){
-        // ADD
         const r = await apiFetch("/ad-accounts", {
           method:"POST",
           headers:{ "Content-Type":"application/json" },
@@ -677,7 +674,6 @@
         adMsg.style.color = "rgba(255,255,255,.85)";
         adMsg.textContent = "Ad account added ✅ (id " + d.inserted + ")";
       } else {
-        // UPDATE
         const r = await apiFetch("/ad-accounts", {
           method:"PUT",
           headers:{ "Content-Type":"application/json" },
