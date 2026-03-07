@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ScaleShield — Agency Infrastructure</title>
 
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="shortcut icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
 <style>
 :root{
   --bg:#07080B;
@@ -539,7 +543,7 @@ footer{
 .reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
 .reveal.active{opacity:1;transform:none}
 
-/* Floating CTA */
+/* REMOVE FLOATING BUTTONS ON ALL DEVICES */
 .float{display:none !important}
 
 /* Mobile 3-dot menu */
@@ -610,7 +614,7 @@ footer{
     <a href="#verticals" class="mnav">Verticals <small>→</small></a>
     <a href="#graph" class="mnav">Graph <small>→</small></a>
     <a href="#pricing" class="mnav">Pricing <small>→</small></a>
-    <a href="#reviews" class="mnav">Reviews <small>→</small></a>
+    <a href="#social" class="mnav">Social <small>→</small></a>
     <a href="#faq" class="mnav">FAQ <small>→</small></a>
     <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
     <a href="login.html" target="_blank" rel="noopener">Log in <small>↗</small></a>
@@ -1063,7 +1067,7 @@ document.querySelectorAll('.count').forEach(el=>{
   io.observe(el);
 });
 
-/* Animated Chart (Neutral vs iGaming) */
+/* ===== Animated Chart (Neutral vs iGaming) ===== */
 const canvas = document.getElementById("verticalChart");
 const ctx = canvas.getContext("2d");
 
