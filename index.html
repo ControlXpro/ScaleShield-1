@@ -118,14 +118,15 @@ p{
   gap:14px;
 }
 .logo{
-  font-weight:950;
-  font-size:20px;
+  display:flex;
+  align-items:center;
+  flex:0 0 auto;
 }
-.logo span{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+.logo img{
+  height:34px;
+  width:auto;
+  display:block;
+  object-fit:contain;
 }
 .nav-links{
   display:none;
@@ -538,10 +539,10 @@ footer{
 .reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
 .reveal.active{opacity:1;transform:none}
 
-/* ✅ REMOVE FLOATING BUTTONS ON ALL DEVICES */
+/* Floating CTA */
 .float{display:none !important}
 
-/* ✅ Mobile 3-dot menu */
+/* Mobile 3-dot menu */
 .mobile-menu{
   display:none;
   position:fixed;
@@ -589,16 +590,16 @@ footer{
 .menu-panel small{font-weight:800;color:rgba(255,255,255,.45)}
 
 @media(max-width:979px){
-  .nav{display:none;}            /* ✅ delete header on mobile only */
-  .mobile-menu{display:block;}  /* ✅ show 3 dots menu */
-  .hero{padding-top:110px;}     /* ✅ reduce extra top space */
+  .nav{display:none;}
+  .mobile-menu{display:block;}
+  .hero{padding-top:110px;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ✅ Mobile 3-dot menu (mobile only) -->
+<!-- Mobile 3-dot menu -->
 <div class="mobile-menu" aria-label="Mobile menu">
   <div class="kebab" id="kebabBtn" aria-label="Open menu" role="button" tabindex="0">
     <div class="dots"><span></span><span></span><span></span></div>
@@ -609,7 +610,7 @@ footer{
     <a href="#verticals" class="mnav">Verticals <small>→</small></a>
     <a href="#graph" class="mnav">Graph <small>→</small></a>
     <a href="#pricing" class="mnav">Pricing <small>→</small></a>
-    <a href="#social" class="mnav">Social <small>→</small></a>
+    <a href="#reviews" class="mnav">Reviews <small>→</small></a>
     <a href="#faq" class="mnav">FAQ <small>→</small></a>
     <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
     <a href="login.html" target="_blank" rel="noopener">Log in <small>↗</small></a>
@@ -623,13 +624,14 @@ footer{
 <div class="nav">
   <div class="nav-inner">
     <div style="display:flex;align-items:center;gap:16px;">
-      <div class="logo"><span>ScaleShield</span></div>
+      <div class="logo">
+        <img src="logo.png" alt="ScaleShield Logo">
+      </div>
       <div class="nav-links">
         <a href="#stats">Stats</a>
         <a href="#verticals">Verticals</a>
         <a href="#graph">Graph</a>
         <a href="#pricing">Pricing</a>
-        <!-- ✅ removed Social from header nav -->
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
         <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
@@ -638,7 +640,6 @@ footer{
       </div>
     </div>
 
-    <!-- header buttons: Telegram + WhatsApp only (brand hover) -->
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
       <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1062,7 +1063,7 @@ document.querySelectorAll('.count').forEach(el=>{
   io.observe(el);
 });
 
-/* ===== Animated Chart (Neutral vs iGaming) ===== */
+/* Animated Chart (Neutral vs iGaming) */
 const canvas = document.getElementById("verticalChart");
 const ctx = canvas.getContext("2d");
 
@@ -1187,32 +1188,30 @@ const chartObserver = new IntersectionObserver((entries)=>{
 
 chartObserver.observe(document.getElementById("graph"));
 drawChart(0);
-</script>
 
-<!-- ✅ Mobile menu JS -->
-<script>
-  const kebabBtn = document.getElementById("kebabBtn");
-  const menuPanel = document.getElementById("menuPanel");
+/* Mobile menu */
+const kebabBtn = document.getElementById("kebabBtn");
+const menuPanel = document.getElementById("menuPanel");
 
-  function toggleMenu(){ menuPanel.classList.toggle("open"); }
-  function closeMenu(){ menuPanel.classList.remove("open"); }
+function toggleMenu(){ menuPanel.classList.toggle("open"); }
+function closeMenu(){ menuPanel.classList.remove("open"); }
 
-  kebabBtn.addEventListener("click", toggleMenu);
-  kebabBtn.addEventListener("keydown", (e)=>{
-    if(e.key === "Enter" || e.key === " "){
-      e.preventDefault();
-      toggleMenu();
-    }
-  });
+kebabBtn.addEventListener("click", toggleMenu);
+kebabBtn.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter" || e.key === " "){
+    e.preventDefault();
+    toggleMenu();
+  }
+});
 
-  document.addEventListener("click", (e)=>{
-    if(!menuPanel.classList.contains("open")) return;
-    if(!e.target.closest(".mobile-menu")) closeMenu();
-  });
+document.addEventListener("click", (e)=>{
+  if(!menuPanel.classList.contains("open")) return;
+  if(!e.target.closest(".mobile-menu")) closeMenu();
+});
 
-  document.querySelectorAll(".mnav").forEach(a=>{
-    a.addEventListener("click", ()=>closeMenu());
-  });
+document.querySelectorAll(".mnav").forEach(a=>{
+  a.addEventListener("click", ()=>closeMenu());
+});
 </script>
 
 </body>
