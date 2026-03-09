@@ -3,334 +3,1088 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ScaleShield Blog | Performance Marketing Guides</title>
-  <meta name="description" content="ScaleShield blog with 35 SEO-ready guides on Meta ads, TikTok, tracking, creative testing, conversion rate optimization, and paid social operations.">
-  <meta name="keywords" content="Meta ads blog, TikTok pixel guide, paid social blog, conversion rate optimization, creative testing, ScaleShield blog">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <link rel="canonical" href="https://scaleshield.pro/blog.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ScaleShield">
-  <meta property="og:title" content="ScaleShield Blog | Performance Marketing Guides">
-  <meta property="og:description" content="35 practical articles on Meta, TikTok, tracking, creative systems, and paid social operations.">
-  <meta property="og:url" content="https://scaleshield.pro/blog.html">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ScaleShield Blog | Performance Marketing Guides">
-  <meta name="twitter:description" content="35 practical articles on Meta, TikTok, tracking, creative systems, and paid social operations.">
+  <title>ScaleShield Blog — Articles, Guides & Updates</title>
+  <meta name="description" content="Read all ScaleShield blog articles, Meta advertising guides, TikTok strategy posts, optimization frameworks, and scaling updates." />
+  <meta name="robots" content="index,follow" />
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="shortcut icon" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="canonical" href="https://scaleshield.pro/blog.html" />
+
+  <meta property="og:title" content="ScaleShield Blog — Articles, Guides & Updates" />
+  <meta property="og:description" content="Browse all ScaleShield blog posts, growth guides, Meta ad strategies, and paid social insights." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://scaleshield.pro/blog.html" />
+  <meta property="og:image" content="https://scaleshield.pro/favicon.png" />
+
   <style>
-    :root {
-      --bg:#07080B; --panel:rgba(255,255,255,.05); --border:rgba(255,255,255,.08);
-      --gold:#D6B15E; --gold2:#F2D27A; --text:#ffffff; --muted:rgba(255,255,255,.68);
-      --radius:22px; --max:1220px;
+    :root{
+      --bg:#07080B;
+      --bg2:#0D0F18;
+      --panel:rgba(255,255,255,.05);
+      --panel2:rgba(255,255,255,.03);
+      --border:rgba(255,255,255,.08);
+      --border2:rgba(255,255,255,.12);
+      --gold:#D6B15E;
+      --gold2:#F2D27A;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.65);
+      --muted2:rgba(255,255,255,.45);
+      --radius:22px;
+      --ease:cubic-bezier(.2,.8,.2,1);
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+
     body{
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
-        radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
-        radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
-        radial-gradient(800px circle at 10% 30%, rgba(168,85,247,.07), transparent 60%),
+        radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.14), transparent 55%),
+        radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.06), transparent 60%),
+        radial-gradient(800px circle at 10% 30%, rgba(168,85,247,.05), transparent 60%),
         linear-gradient(135deg,#050507,#0b0d14,#090a10);
+      color:var(--text);
+      overflow-x:hidden;
     }
+
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max);margin:0 auto;padding:28px 22px 90px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:6px 0 24px}
-    .brand{font-weight:950;font-size:22px}
-    .brand span{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .back{padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);font-weight:800}
-    .hero{padding:28px 0 16px}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.22em;color:rgba(255,255,255,.45);text-transform:uppercase}
-    .dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--gold2))}
-    h1{font-size:52px;line-height:1.04;letter-spacing:-.03em;margin-top:14px;max-width:900px}
-    .sub{max-width:800px;color:var(--muted);font-size:18px;line-height:1.75;margin-top:16px}
-    .stats{display:grid;gap:18px;margin-top:28px;grid-template-columns:repeat(3,1fr)}
-    .stat{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:20px}
-    .stat strong{display:block;font-size:30px;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .stat span{display:block;margin-top:6px;color:var(--muted);font-size:14px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
-    .post{display:block;background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:22px;transition:.25s ease;min-height:230px}
-    .post:hover{transform:translateY(-4px);border-color:rgba(214,177,94,.35);box-shadow:0 0 34px rgba(214,177,94,.10)}
-    .pill{display:inline-flex;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;font-weight:900;color:rgba(255,255,255,.75)}
-    .post h3{font-size:22px;line-height:1.18;margin-top:16px}
-    .post p{color:var(--muted);margin-top:12px;line-height:1.7}
-    .read{margin-top:18px;font-weight:900;color:rgba(255,255,255,.88)}
-    .footer{margin-top:42px;color:rgba(255,255,255,.45);font-size:14px}
-    @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)} .stats{grid-template-columns:1fr} h1{font-size:42px}}
-    @media(max-width:680px){.grid{grid-template-columns:1fr} h1{font-size:34px} .sub{font-size:16px} .topbar{flex-direction:column;align-items:flex-start}}
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(14px);
+      background:rgba(5,5,7,.72);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .nav-inner{
+      max-width:1240px;
+      margin:auto;
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:950;
+      font-size:20px;
+    }
+
+    .logo img{
+      height:34px;
+      width:auto;
+      object-fit:contain;
+      display:block;
+    }
+
+    .logo-text{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:900;
+      transition:.25s var(--ease);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid transparent;
+      white-space:nowrap;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#111;
+      box-shadow:0 0 34px rgba(214,177,94,.18);
+    }
+
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.02)}
+
+    .btn-ghost{
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.12);
+      color:#fff;
+    }
+
+    .btn-ghost:hover{
+      transform:translateY(-2px);
+      border-color:rgba(214,177,94,.35);
+      box-shadow:0 0 26px rgba(214,177,94,.10);
+    }
+
+    .wrap{
+      max-width:1240px;
+      margin:auto;
+      padding:40px 24px 90px;
+    }
+
+    .hero{
+      text-align:center;
+      padding:34px 0 24px;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted2);
+      font-size:12px;
+      letter-spacing:.22em;
+      font-weight:950;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .kdot{
+      width:8px;height:8px;border-radius:999px;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      box-shadow:0 0 18px rgba(214,177,94,.22);
+    }
+
+    h1{
+      font-size:48px;
+      font-weight:950;
+      letter-spacing:-.03em;
+      line-height:1.05;
+    }
+
+    .grad{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      max-width:860px;
+      margin:16px auto 0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:16px;
+    }
+
+    .search-wrap{
+      margin:34px auto 18px;
+      max-width:860px;
+      display:grid;
+      gap:14px;
+    }
+
+    .search-box{
+      position:relative;
+    }
+
+    .search-input{
+      width:100%;
+      min-height:62px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      padding:0 20px 0 56px;
+      font-size:15px;
+      outline:none;
+      transition:.22s var(--ease);
+      box-shadow:0 0 0 rgba(214,177,94,0);
+    }
+
+    .search-input:focus{
+      border-color:rgba(214,177,94,.35);
+      box-shadow:0 0 0 4px rgba(214,177,94,.08), 0 0 28px rgba(214,177,94,.10);
+    }
+
+    .search-input::placeholder{
+      color:rgba(255,255,255,.42);
+    }
+
+    .search-icon{
+      position:absolute;
+      left:18px;
+      top:50%;
+      transform:translateY(-50%);
+      width:22px;
+      height:22px;
+      opacity:.6;
+    }
+
+    .meta-bar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      color:var(--muted2);
+      font-size:13px;
+      padding:2px 4px 8px;
+    }
+
+    .blog-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-top:16px;
+    }
+
+    .card{
+      position:relative;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:22px;
+      overflow:hidden;
+      transition:.28s var(--ease);
+      min-height:178px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:radial-gradient(800px circle at 50% 0%, rgba(214,177,94,.15), transparent 55%);
+      opacity:0;
+      transition:opacity .25s var(--ease);
+      pointer-events:none;
+    }
+
+    .card:hover::before{opacity:1}
+
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(214,177,94,.38);
+      box-shadow:0 0 48px rgba(214,177,94,.10);
+    }
+
+    .tag{
+      width:max-content;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      color:rgba(255,255,255,.78);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .card h3{
+      font-size:20px;
+      line-height:1.3;
+      font-weight:900;
+      letter-spacing:-.02em;
+      color:#fff;
+    }
+
+    .card p{
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+
+    .card-footer{
+      margin-top:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      color:var(--muted2);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .arrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      transition:.22s var(--ease);
+      flex:0 0 auto;
+    }
+
+    .card:hover .arrow{
+      transform:translateX(2px);
+      border-color:rgba(214,177,94,.34);
+      box-shadow:0 0 22px rgba(214,177,94,.10);
+    }
+
+    .empty-state{
+      display:none;
+      margin-top:22px;
+      padding:24px;
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      text-align:center;
+      line-height:1.7;
+    }
+
+    footer{
+      max-width:1240px;
+      margin:0 auto;
+      padding:0 24px 50px;
+      color:var(--muted2);
+      text-align:center;
+      font-size:14px;
+    }
+
+    @media(max-width:1100px){
+      .blog-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:720px){
+      h1{font-size:34px}
+      .blog-grid{grid-template-columns:1fr}
+      .nav-inner{padding:14px 18px}
+      .wrap{padding:28px 18px 70px}
+      .hero{padding-top:10px}
+      .logo img{height:30px}
+      .logo-text{font-size:18px}
+      .search-input{min-height:56px}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand"><span>ScaleShield</span> Blog</div>
-      <a class="back" href="index.html">← Back to Main Site</a>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="ScaleShield Logo">
+        <span class="logo-text">ScaleShield</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-ghost">Main Site</a>
+        <a href="login.html" target="_blank" rel="noopener" class="btn btn-ghost">Log in</a>
+        <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-primary">Payment Details</a>
+      </div>
     </div>
+  </div>
 
+  <main class="wrap">
     <section class="hero">
-      <div class="eyebrow"><span class="dot"></span> SEO Library</div>
-      <h1>Performance marketing guides for Meta, TikTok, tracking, creative, and conversion.</h1>
-      <p class="sub">This blog now includes 35 separate SEO-ready articles. Each page is optimized with title tags, descriptions, canonicals, robots directives, and social preview tags so you can publish them directly on your site.</p>
+      <div class="kicker"><span class="kdot"></span> SCALESHIELD BLOG</div>
+      <h1>All <span class="grad">Blog Articles</span> In One Place</h1>
+      <p>
+        Browse all ScaleShield blog posts, paid social guides, Meta strategy breakdowns, TikTok resources,
+        optimization frameworks, and growth articles. Use the search below to instantly find any article.
+      </p>
 
-      <div class="stats">
-        <div class="stat"><strong>35</strong><span>Total articles</span></div>
-        <div class="stat"><strong>20</strong><span>New pages added</span></div>
-        <div class="stat"><strong>2026</strong><span>Freshly optimized</span></div>
+      <div class="search-wrap">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3.5-3.5"></path>
+          </svg>
+          <input
+            id="blogSearch"
+            class="search-input"
+            type="text"
+            placeholder="Search blog pages by title, keyword, Meta, TikTok, CPR, Pixel, creative, lead gen..."
+          />
+        </div>
+        <div class="meta-bar">
+          <div id="resultsCount">85 articles</div>
+          <div>All pages open in a new tab</div>
+        </div>
       </div>
     </section>
 
-    <section class="grid">
+    <section class="blog-grid" id="blogGrid">
 
-      <a class="post" href="meta-andromeda-update-explained-2026.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Andromeda Update Explained (2026)</h3>
-        <p>A practical breakdown of Meta Andromeda, how AI-driven ad ranking changes campaign behavior, and what buyers should change in testing, signals, and creative strategy.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="ad-comment-moderation-guide.html" target="_blank" rel="noopener" data-title="Ad Comment Moderation Guide">
+        <div class="tag">Meta Ads</div>
+        <h3>Ad Comment Moderation Guide</h3>
+        <p>How to manage ad comments, protect brand perception, and improve campaign quality with better moderation workflows.</p>
+        <div class="card-footer"><span>ad-comment-moderation-guide</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="facebook-disabled-account-appeal-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Facebook Disabled Account Appeal: How to Recover a Suspended or Disabled Facebook Account</h3>
-        <p>A clean step-by-step guide to preparing an appeal, documenting business legitimacy, and improving your chances of restoring access.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="audience-fatigue-vs-creative-fatigue.html" target="_blank" rel="noopener" data-title="Audience Fatigue vs Creative Fatigue">
+        <div class="tag">Optimization</div>
+        <h3>Audience Fatigue vs Creative Fatigue</h3>
+        <p>Learn the difference between audience fatigue and creative fatigue so you can fix the real performance bottleneck faster.</p>
+        <div class="card-footer"><span>audience-fatigue-vs-creative-fatigue</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="ultimate-guide-to-tiktok-pixel.html">
-        <div class="pill">Guide</div>
-        <h3>The Ultimate Guide to TikTok Pixel: Setup, Cost Per Result, and Optimization</h3>
-        <p>How to install TikTok Pixel correctly, verify events, improve data quality, and use signals to lower acquisition costs.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_36.html" target="_blank" rel="noopener" data-title="Blog 36">
+        <div class="tag">Growth</div>
+        <h3>Blog 36</h3>
+        <p>ScaleShield growth article and paid social strategy breakdown from your extended blog collection.</p>
+        <div class="card-footer"><span>blog_36</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="cost-per-result-formula-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Cost Per Result Formula: How to Calculate, Analyze, and Lower Your CPR</h3>
-        <p>The exact formula for CPR, what causes it to rise, and the fastest levers to bring it down without killing volume.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_37.html" target="_blank" rel="noopener" data-title="Blog 37">
+        <div class="tag">Growth</div>
+        <h3>Blog 37</h3>
+        <p>Advanced paid social insights, testing ideas, and strategic optimization notes from your blog library.</p>
+        <div class="card-footer"><span>blog_37</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-creative-testing-framework.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Creative Testing Framework: A Simple System for Winning Ads</h3>
-        <p>A repeatable creative testing framework for Meta buyers who want clearer learnings, faster iteration, and fewer wasted tests.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_38.html" target="_blank" rel="noopener" data-title="Blog 38">
+        <div class="tag">Growth</div>
+        <h3>Blog 38</h3>
+        <p>Frameworks and practical ideas for marketers scaling performance campaigns more efficiently.</p>
+        <div class="card-footer"><span>blog_38</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-campaign-structure-2026.html">
-        <div class="pill">Guide</div>
-        <h3>How to Structure Meta Campaigns in 2026</h3>
-        <p>A clean campaign structure for prospecting, retargeting, and scaling on Meta without creating reporting chaos.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_39.html" target="_blank" rel="noopener" data-title="Blog 39">
+        <div class="tag">Growth</div>
+        <h3>Blog 39</h3>
+        <p>Read another performance marketing article from your uploaded blog series.</p>
+        <div class="card-footer"><span>blog_39</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="landing-page-conversion-rate-checklist.html">
-        <div class="pill">Guide</div>
-        <h3>Landing Page Conversion Rate Checklist: 25 Fixes That Usually Lift CVR</h3>
-        <p>A practical checklist for landing pages covering speed, message match, trust, friction, and form quality.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_40.html" target="_blank" rel="noopener" data-title="Blog 40">
+        <div class="tag">Growth</div>
+        <h3>Blog 40</h3>
+        <p>Additional strategy content focused on growth, optimization, and scaling ideas.</p>
+        <div class="card-footer"><span>blog_40</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="why-broad-targeting-works.html">
-        <div class="pill">Guide</div>
-        <h3>Why Broad Targeting Works on Meta</h3>
-        <p>Why broad audiences often outperform overbuilt targeting stacks, and when you should still use narrower segments.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_41.html" target="_blank" rel="noopener" data-title="Blog 41">
+        <div class="tag">Growth</div>
+        <h3>Blog 41</h3>
+        <p>Performance marketing guide from the extended blog archive.</p>
+        <div class="card-footer"><span>blog_41</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="retargeting-funnel-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Retargeting Funnel Guide: Warm Traffic That Converts</h3>
-        <p>How to build a simple retargeting funnel using engagement, site activity, intent buckets, and offer sequencing.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_42.html" target="_blank" rel="noopener" data-title="Blog 42">
+        <div class="tag">Growth</div>
+        <h3>Blog 42</h3>
+        <p>Tactical ideas for improving campaign efficiency, structure, and scaling logic.</p>
+        <div class="card-footer"><span>blog_42</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="how-to-lower-cpa.html">
-        <div class="pill">Guide</div>
-        <h3>How to Lower CPA Without Killing Scale</h3>
-        <p>A prioritization guide for lowering CPA through offer clarity, creative angle changes, signal quality, and landing page fixes.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_43.html" target="_blank" rel="noopener" data-title="Blog 43">
+        <div class="tag">Growth</div>
+        <h3>Blog 43</h3>
+        <p>Extended blog content covering paid social execution and conversion-focused marketing.</p>
+        <div class="card-footer"><span>blog_43</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="utm-tracking-guide.html">
-        <div class="pill">Guide</div>
-        <h3>UTM Tracking Guide for Paid Social</h3>
-        <p>A straightforward naming framework for UTMs so you can attribute performance cleanly across ads, campaigns, and landing pages.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_44.html" target="_blank" rel="noopener" data-title="Blog 44">
+        <div class="tag">Growth</div>
+        <h3>Blog 44</h3>
+        <p>Useful guidance for media buyers and advertisers looking to scale more cleanly.</p>
+        <div class="card-footer"><span>blog_44</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="creative-fatigue-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Creative Fatigue Guide: Spot It Early and Fix It Fast</h3>
-        <p>How to detect fatigue before performance collapses, plus a refresh process for angles, formats, hooks, and pacing.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_45.html" target="_blank" rel="noopener" data-title="Blog 45">
+        <div class="tag">Growth</div>
+        <h3>Blog 45</h3>
+        <p>Another uploaded article from your long-form blog collection.</p>
+        <div class="card-footer"><span>blog_45</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-conversion-api-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Conversion API Guide: Why It Matters and How to Implement It</h3>
-        <p>What CAPI improves, how to think about deduplication, and what implementation details matter most for data quality.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_46.html" target="_blank" rel="noopener" data-title="Blog 46">
+        <div class="tag">Growth</div>
+        <h3>Blog 46</h3>
+        <p>Marketing, scaling, and ad performance concepts from your blog archive.</p>
+        <div class="card-footer"><span>blog_46</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="whatsapp-lead-follow-up-playbook.html">
-        <div class="pill">Guide</div>
-        <h3>WhatsApp Lead Follow-Up Playbook</h3>
-        <p>A simple follow-up framework for lead response speed, qualification, scripted handoff, and closing discipline on WhatsApp.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_47.html" target="_blank" rel="noopener" data-title="Blog 47">
+        <div class="tag">Growth</div>
+        <h3>Blog 47</h3>
+        <p>Strategic article built to support advertisers and performance teams.</p>
+        <div class="card-footer"><span>blog_47</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="instagram-reels-ads-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Instagram Reels Ads Guide: Creative Rules That Matter</h3>
-        <p>How to build Reels ads that fit the feed, hold attention, and convert with stronger hooks, pacing, and CTA timing.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_48.html" target="_blank" rel="noopener" data-title="Blog 48">
+        <div class="tag">Growth</div>
+        <h3>Blog 48</h3>
+        <p>Explore more insights about growth systems, execution frameworks, and optimization flow.</p>
+        <div class="card-footer"><span>blog_48</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-ads-learning-phase-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Ads Learning Phase Guide: What It Really Means</h3>
-        <p>What the learning phase does, why it gets blamed too often, and how to stabilize delivery without over-editing campaigns.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_49.html" target="_blank" rel="noopener" data-title="Blog 49">
+        <div class="tag">Growth</div>
+        <h3>Blog 49</h3>
+        <p>Another uploaded article designed for performance marketers and scaling teams.</p>
+        <div class="card-footer"><span>blog_49</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="how-to-read-meta-breakdowns.html">
-        <div class="pill">Guide</div>
-        <h3>How to Read Meta Breakdowns Without Fooling Yourself</h3>
-        <p>A practical way to use age, placement, region, and creative breakdowns without chasing noisy data.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_50.html" target="_blank" rel="noopener" data-title="Blog 50">
+        <div class="tag">Growth</div>
+        <h3>Blog 50</h3>
+        <p>Useful reference article from your extended content collection.</p>
+        <div class="card-footer"><span>blog_50</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="facebook-bm-verification-checklist.html">
-        <div class="pill">Guide</div>
-        <h3>Facebook Business Manager Verification Checklist</h3>
-        <p>A clear business verification checklist covering docs, consistency, domain hygiene, and common rejection points.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_51.html" target="_blank" rel="noopener" data-title="Blog 51">
+        <div class="tag">Growth</div>
+        <h3>Blog 51</h3>
+        <p>Optimization concepts and practical workflows for campaign improvement.</p>
+        <div class="card-footer"><span>blog_51</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="high-converting-ad-hooks-guide.html">
-        <div class="pill">Guide</div>
-        <h3>High-Converting Ad Hooks Guide: 30 Hook Patterns for Paid Social</h3>
-        <p>Thirty hook styles buyers can adapt for ecom, lead gen, apps, and service offers without sounding recycled.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_52.html" target="_blank" rel="noopener" data-title="Blog 52">
+        <div class="tag">Growth</div>
+        <h3>Blog 52</h3>
+        <p>Additional strategy page from your uploaded articles list.</p>
+        <div class="card-footer"><span>blog_52</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="creative-brief-template-paid-social.html">
-        <div class="pill">Guide</div>
-        <h3>Creative Brief Template for Paid Social Teams</h3>
-        <p>A simple brief format that gives designers and editors the context they need to produce stronger ad variations.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_53.html" target="_blank" rel="noopener" data-title="Blog 53">
+        <div class="tag">Growth</div>
+        <h3>Blog 53</h3>
+        <p>Read more about performance strategy, media buying ideas, and ad growth systems.</p>
+        <div class="card-footer"><span>blog_53</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="offer-testing-framework.html">
-        <div class="pill">Guide</div>
-        <h3>Offer Testing Framework: How to Find a Better Angle Before Scaling</h3>
-        <p>How to test offer framing, urgency, bonuses, and positioning before you spend weeks blaming the platform.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_54.html" target="_blank" rel="noopener" data-title="Blog 54">
+        <div class="tag">Growth</div>
+        <h3>Blog 54</h3>
+        <p>Another uploaded blog post from your long list of articles.</p>
+        <div class="card-footer"><span>blog_54</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-ads-reporting-dashboard-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Ads Reporting Dashboard Guide</h3>
-        <p>What a good reporting dashboard should include, which metrics matter most, and how to reduce noise in weekly reviews.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_55.html" target="_blank" rel="noopener" data-title="Blog 55">
+        <div class="tag">Growth</div>
+        <h3>Blog 55</h3>
+        <p>Performance marketing content aimed at scaling, structure, and optimization.</p>
+        <div class="card-footer"><span>blog_55</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="how-to-improve-lead-quality.html">
-        <div class="pill">Guide</div>
-        <h3>How to Improve Lead Quality From Paid Ads</h3>
-        <p>How to tighten lead quality with message match, intent filters, CRM feedback loops, and qualification design.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_56.html" target="_blank" rel="noopener" data-title="Blog 56">
+        <div class="tag">Growth</div>
+        <h3>Blog 56</h3>
+        <p>Extended content page from the uploaded blog collection.</p>
+        <div class="card-footer"><span>blog_56</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="thank-you-page-optimization-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Thank-You Page Optimization Guide</h3>
-        <p>Why the thank-you page matters more than most teams think, and how to use it for trust, upsells, and measurement.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_57.html" target="_blank" rel="noopener" data-title="Blog 57">
+        <div class="tag">Growth</div>
+        <h3>Blog 57</h3>
+        <p>More marketing guidance designed for advertisers and performance teams.</p>
+        <div class="card-footer"><span>blog_57</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="paid-social-kpi-benchmarks-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Paid Social KPI Benchmarks Guide: Which Numbers Actually Matter</h3>
-        <p>A framework for evaluating CTR, CPC, CPM, CVR, CPR, AOV, and MER without using fake universal benchmarks.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_58.html" target="_blank" rel="noopener" data-title="Blog 58">
+        <div class="tag">Growth</div>
+        <h3>Blog 58</h3>
+        <p>Further reading from your uploaded blog files and strategic article library.</p>
+        <div class="card-footer"><span>blog_58</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="ecommerce-creative-angles-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Ecommerce Creative Angles Guide</h3>
-        <p>A library of creative angles for ecommerce brands covering problem, outcome, proof, comparison, founder, and UGC styles.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_59.html" target="_blank" rel="noopener" data-title="Blog 59">
+        <div class="tag">Growth</div>
+        <h3>Blog 59</h3>
+        <p>Paid social and growth content from the second batch of article pages.</p>
+        <div class="card-footer"><span>blog_59</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="lead-gen-form-optimization-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Lead Gen Form Optimization Guide</h3>
-        <p>How to reduce abandonment and improve downstream lead quality by redesigning fields, steps, copy, and expectations.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_60.html" target="_blank" rel="noopener" data-title="Blog 60">
+        <div class="tag">Growth</div>
+        <h3>Blog 60</h3>
+        <p>Uploaded article page from your content expansion project.</p>
+        <div class="card-footer"><span>blog_60</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="ad-comment-moderation-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Ad Comment Moderation Guide for Paid Campaigns</h3>
-        <p>Why comment sections influence conversion, what to hide or answer, and how moderation supports paid performance.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_61.html" target="_blank" rel="noopener" data-title="Blog 61">
+        <div class="tag">Growth</div>
+        <h3>Blog 61</h3>
+        <p>Performance-driven article content ready to browse from your blog archive.</p>
+        <div class="card-footer"><span>blog_61</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="geo-scaling-paid-social-guide.html">
-        <div class="pill">Guide</div>
-        <h3>GEO Scaling Guide for Paid Social</h3>
-        <p>How to expand into new geos with fewer surprises by checking pricing, localized creative, landing pages, and support flow.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_62.html" target="_blank" rel="noopener" data-title="Blog 62">
+        <div class="tag">Growth</div>
+        <h3>Blog 62</h3>
+        <p>Another indexed article from your uploaded blog pages.</p>
+        <div class="card-footer"><span>blog_62</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-advantage-plus-guide.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Advantage+ Guide: Where It Helps and Where to Be Careful</h3>
-        <p>How to think about Advantage+ features, what to test first, and how to keep control of core decisions.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="blog_63.html" target="_blank" rel="noopener" data-title="Blog 63">
+        <div class="tag">Growth</div>
+        <h3>Blog 63</h3>
+        <p>Review more strategy content and marketing frameworks from your library.</p>
+        <div class="card-footer"><span>blog_63</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="cold-traffic-warming-strategy.html">
-        <div class="pill">Guide</div>
+      <a class="card blog-card" href="blog_64.html" target="_blank" rel="noopener" data-title="Blog 64">
+        <div class="tag">Growth</div>
+        <h3>Blog 64</h3>
+        <p>Article page included in your extended set of 50 additional posts.</p>
+        <div class="card-footer"><span>blog_64</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_65.html" target="_blank" rel="noopener" data-title="Blog 65">
+        <div class="tag">Growth</div>
+        <h3>Blog 65</h3>
+        <p>Performance marketing content and practical advertiser insights.</p>
+        <div class="card-footer"><span>blog_65</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_66.html" target="_blank" rel="noopener" data-title="Blog 66">
+        <div class="tag">Growth</div>
+        <h3>Blog 66</h3>
+        <p>Additional strategy notes and growth ideas from the blog archive.</p>
+        <div class="card-footer"><span>blog_66</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_67.html" target="_blank" rel="noopener" data-title="Blog 67">
+        <div class="tag">Growth</div>
+        <h3>Blog 67</h3>
+        <p>Explore more uploaded article content on scaling and optimization.</p>
+        <div class="card-footer"><span>blog_67</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_68.html" target="_blank" rel="noopener" data-title="Blog 68">
+        <div class="tag">Growth</div>
+        <h3>Blog 68</h3>
+        <p>Marketing article from your expanded blog set.</p>
+        <div class="card-footer"><span>blog_68</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_69.html" target="_blank" rel="noopener" data-title="Blog 69">
+        <div class="tag">Growth</div>
+        <h3>Blog 69</h3>
+        <p>Read more performance marketing material from the ScaleShield article collection.</p>
+        <div class="card-footer"><span>blog_69</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_70.html" target="_blank" rel="noopener" data-title="Blog 70">
+        <div class="tag">Growth</div>
+        <h3>Blog 70</h3>
+        <p>Uploaded content page from your larger SEO blog rollout.</p>
+        <div class="card-footer"><span>blog_70</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_71.html" target="_blank" rel="noopener" data-title="Blog 71">
+        <div class="tag">Growth</div>
+        <h3>Blog 71</h3>
+        <p>Advertising and growth strategy content from your uploaded files.</p>
+        <div class="card-footer"><span>blog_71</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_72.html" target="_blank" rel="noopener" data-title="Blog 72">
+        <div class="tag">Growth</div>
+        <h3>Blog 72</h3>
+        <p>Article page supporting your long-form content expansion.</p>
+        <div class="card-footer"><span>blog_72</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_73.html" target="_blank" rel="noopener" data-title="Blog 73">
+        <div class="tag">Growth</div>
+        <h3>Blog 73</h3>
+        <p>Further growth and media-buying content from your archive.</p>
+        <div class="card-footer"><span>blog_73</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_74.html" target="_blank" rel="noopener" data-title="Blog 74">
+        <div class="tag">Growth</div>
+        <h3>Blog 74</h3>
+        <p>Uploaded article page from the large batch of blog content.</p>
+        <div class="card-footer"><span>blog_74</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_75.html" target="_blank" rel="noopener" data-title="Blog 75">
+        <div class="tag">Growth</div>
+        <h3>Blog 75</h3>
+        <p>Explore more strategic growth content and advertiser ideas.</p>
+        <div class="card-footer"><span>blog_75</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_76.html" target="_blank" rel="noopener" data-title="Blog 76">
+        <div class="tag">Growth</div>
+        <h3>Blog 76</h3>
+        <p>Extended article page from your uploaded SEO blog set.</p>
+        <div class="card-footer"><span>blog_76</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_77.html" target="_blank" rel="noopener" data-title="Blog 77">
+        <div class="tag">Growth</div>
+        <h3>Blog 77</h3>
+        <p>More content on scaling systems, optimization, and campaign strategy.</p>
+        <div class="card-footer"><span>blog_77</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_78.html" target="_blank" rel="noopener" data-title="Blog 78">
+        <div class="tag">Growth</div>
+        <h3>Blog 78</h3>
+        <p>Read another article from your uploaded performance marketing collection.</p>
+        <div class="card-footer"><span>blog_78</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_79.html" target="_blank" rel="noopener" data-title="Blog 79">
+        <div class="tag">Growth</div>
+        <h3>Blog 79</h3>
+        <p>Additional article page from the extended blog expansion.</p>
+        <div class="card-footer"><span>blog_79</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_80.html" target="_blank" rel="noopener" data-title="Blog 80">
+        <div class="tag">Growth</div>
+        <h3>Blog 80</h3>
+        <p>Performance-focused marketing content from your uploaded pages.</p>
+        <div class="card-footer"><span>blog_80</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_81.html" target="_blank" rel="noopener" data-title="Blog 81">
+        <div class="tag">Growth</div>
+        <h3>Blog 81</h3>
+        <p>Explore more strategy content and practical optimization insights.</p>
+        <div class="card-footer"><span>blog_81</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_82.html" target="_blank" rel="noopener" data-title="Blog 82">
+        <div class="tag">Growth</div>
+        <h3>Blog 82</h3>
+        <p>Uploaded blog content from the later batch of article pages.</p>
+        <div class="card-footer"><span>blog_82</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_83.html" target="_blank" rel="noopener" data-title="Blog 83">
+        <div class="tag">Growth</div>
+        <h3>Blog 83</h3>
+        <p>Read further growth and marketing content from your uploaded archive.</p>
+        <div class="card-footer"><span>blog_83</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_84.html" target="_blank" rel="noopener" data-title="Blog 84">
+        <div class="tag">Growth</div>
+        <h3>Blog 84</h3>
+        <p>Extended blog article from the most recent batch of uploads.</p>
+        <div class="card-footer"><span>blog_84</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="blog_85.html" target="_blank" rel="noopener" data-title="Blog 85">
+        <div class="tag">Growth</div>
+        <h3>Blog 85</h3>
+        <p>The latest page in your extended set of uploaded strategy articles.</p>
+        <div class="card-footer"><span>blog_85</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="cold-traffic-warming-strategy.html" target="_blank" rel="noopener" data-title="Cold Traffic Warming Strategy">
+        <div class="tag">Funnel</div>
         <h3>Cold Traffic Warming Strategy</h3>
-        <p>How to warm cold audiences with sequencing, content ladders, and proof-based messaging before pushing hard CTAs.</p>
-        <div class="read">Read article →</div>
+        <p>How to warm up cold audiences before pushing harder conversion-focused offers and retargeting sequences.</p>
+        <div class="card-footer"><span>cold-traffic-warming-strategy</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="crm-feedback-loop-guide.html">
-        <div class="pill">Guide</div>
-        <h3>CRM Feedback Loop Guide for Media Buyers</h3>
-        <p>How to send sales outcomes back into your optimization process so ad performance reflects revenue, not just cheap leads.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="conversion-api-guide.html" target="_blank" rel="noopener" data-title="Conversion API Guide">
+        <div class="tag">Tracking</div>
+        <h3>Conversion API Guide</h3>
+        <p>Understand server-side tracking setup, data quality, and why Conversion API matters in modern ad performance.</p>
+        <div class="card-footer"><span>conversion-api-guide</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="audience-fatigue-vs-creative-fatigue.html">
-        <div class="pill">Guide</div>
-        <h3>Audience Fatigue vs Creative Fatigue: How to Tell the Difference</h3>
-        <p>A diagnostic guide to separating creative saturation from audience exhaustion so you make the right fix.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="cost-per-result-formula.html" target="_blank" rel="noopener" data-title="Cost Per Result Formula">
+        <div class="tag">Metrics</div>
+        <h3>Cost Per Result Formula</h3>
+        <p>Learn how to calculate CPR, analyze campaign efficiency, and improve results without guessing.</p>
+        <div class="card-footer"><span>cost-per-result-formula</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="seasonality-planning-paid-social.html">
-        <div class="pill">Guide</div>
-        <h3>Seasonality Planning for Paid Social</h3>
-        <p>How to plan budgets, creative volumes, promotional calendars, and landing page changes around seasonal demand.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="creative-brief-template-paid-social.html" target="_blank" rel="noopener" data-title="Creative Brief Template Paid Social">
+        <div class="tag">Creative</div>
+        <h3>Creative Brief Template For Paid Social</h3>
+        <p>A practical creative brief structure to align media buyers, editors, designers, and content teams.</p>
+        <div class="card-footer"><span>creative-brief-template-paid-social</span><span class="arrow">↗</span></div>
       </a>
 
-      <a class="post" href="meta-ads-prelaunch-checklist.html">
-        <div class="pill">Guide</div>
-        <h3>Meta Ads Pre-Launch Checklist</h3>
-        <p>A pre-launch checklist for tracking, domains, UTMs, offers, creative QA, compliance, and internal handoff before spend starts.</p>
-        <div class="read">Read article →</div>
+      <a class="card blog-card" href="creative-fatigue-guide.html" target="_blank" rel="noopener" data-title="Creative Fatigue Guide">
+        <div class="tag">Creative</div>
+        <h3>Creative Fatigue Guide</h3>
+        <p>Spot creative fatigue early, refresh angles faster, and prevent wasted budget from stale ads.</p>
+        <div class="card-footer"><span>creative-fatigue-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="crm-feedback-loop-guideecommerce-creative-angles-guide.html" target="_blank" rel="noopener" data-title="CRM Feedback Loop Guide Ecommerce Creative Angles Guide">
+        <div class="tag">Ecommerce</div>
+        <h3>CRM Feedback Loop Guide + Ecommerce Creative Angles Guide</h3>
+        <p>Use CRM insights to improve ad messaging, customer journeys, and ecommerce creative direction.</p>
+        <div class="card-footer"><span>crm-feedback-loop-guideecommerce-creative-angles-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="facebook-bm-verification-checklist.html" target="_blank" rel="noopener" data-title="Facebook BM Verification Checklist">
+        <div class="tag">Meta</div>
+        <h3>Facebook BM Verification Checklist</h3>
+        <p>A clean checklist to prepare Business Manager verification properly and reduce operational issues.</p>
+        <div class="card-footer"><span>facebook-bm-verification-checklist</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="facebook-disabled-account-appeal.html" target="_blank" rel="noopener" data-title="Facebook Disabled Account Appeal">
+        <div class="tag">Recovery</div>
+        <h3>Facebook Disabled Account Appeal</h3>
+        <p>What to do when a Facebook account gets suspended or disabled, and how to prepare a stronger appeal process.</p>
+        <div class="card-footer"><span>facebook-disabled-account-appeal</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="geo-scaling-paid-social-guide.html" target="_blank" rel="noopener" data-title="Geo Scaling Paid Social Guide">
+        <div class="tag">Scaling</div>
+        <h3>Geo Scaling Paid Social Guide</h3>
+        <p>How to expand into new geos methodically while keeping performance tracking and offer-market fit in control.</p>
+        <div class="card-footer"><span>geo-scaling-paid-social-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="high-converting-ad-hooks-guide.html" target="_blank" rel="noopener" data-title="High Converting Ad Hooks Guide">
+        <div class="tag">Creative</div>
+        <h3>High-Converting Ad Hooks Guide</h3>
+        <p>Use stronger hooks to stop the scroll, improve CTR, and create better first-impression creative.</p>
+        <div class="card-footer"><span>high-converting-ad-hooks-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="how-to-improve-lead-quality.html" target="_blank" rel="noopener" data-title="How to Improve Lead Quality">
+        <div class="tag">Lead Gen</div>
+        <h3>How To Improve Lead Quality</h3>
+        <p>Practical steps to reduce junk leads and improve downstream conversion value from paid traffic.</p>
+        <div class="card-footer"><span>how-to-improve-lead-quality</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="how-to-lower-cpa.html" target="_blank" rel="noopener" data-title="How to Lower CPA">
+        <div class="tag">Optimization</div>
+        <h3>How To Lower CPA</h3>
+        <p>Reduce acquisition costs through better creative, cleaner funnel structure, and smarter campaign diagnostics.</p>
+        <div class="card-footer"><span>how-to-lower-cpa</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="how-to-read-meta-breakdowns.html" target="_blank" rel="noopener" data-title="How to Read Meta Breakdowns">
+        <div class="tag">Meta Ads</div>
+        <h3>How To Read Meta Breakdowns</h3>
+        <p>Understand demographic, placement, region, and delivery breakdowns to make better optimization calls.</p>
+        <div class="card-footer"><span>how-to-read-meta-breakdowns</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="how-to-structure-meta-campaigns-2026.html" target="_blank" rel="noopener" data-title="How to Structure Meta Campaigns 2026">
+        <div class="tag">Meta Ads</div>
+        <h3>How To Structure Meta Campaigns In 2026</h3>
+        <p>A practical structure guide for modern Meta campaigns, from testing flow to scaling logic.</p>
+        <div class="card-footer"><span>how-to-structure-meta-campaigns-2026</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="instagram-reels-ad-guide.html" target="_blank" rel="noopener" data-title="Instagram Reels Ad Guide">
+        <div class="tag">Instagram</div>
+        <h3>Instagram Reels Ad Guide</h3>
+        <p>How to build better Reels creatives, improve retention, and make short-form ads work harder.</p>
+        <div class="card-footer"><span>instagram-reels-ad-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="instagram-reels-ads-guide.html" target="_blank" rel="noopener" data-title="Instagram Reels Ads Guide">
+        <div class="tag">Instagram</div>
+        <h3>Instagram Reels Ads Guide</h3>
+        <p>A separate uploaded guide focused on Reels ads, creative formats, and platform-native ad execution.</p>
+        <div class="card-footer"><span>instagram-reels-ads-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="landing-page-conversion-rate-checklist.html" target="_blank" rel="noopener" data-title="Landing Page Conversion Rate Checklist">
+        <div class="tag">Conversion</div>
+        <h3>Landing Page Conversion Rate Checklist</h3>
+        <p>Improve conversion rate by tightening page clarity, offer flow, load speed, and trust elements.</p>
+        <div class="card-footer"><span>landing-page-conversion-rate-checklist</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="lead-gen-form-optimization-guide.html" target="_blank" rel="noopener" data-title="Lead Gen Form Optimization Guide">
+        <div class="tag">Lead Gen</div>
+        <h3>Lead Gen Form Optimization Guide</h3>
+        <p>Optimize your lead forms for higher intent, better qualification, and stronger downstream close rates.</p>
+        <div class="card-footer"><span>lead-gen-form-optimization-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-ads-learning-phase-guide.html" target="_blank" rel="noopener" data-title="Meta Ads Learning Phase Guide">
+        <div class="tag">Meta Ads</div>
+        <h3>Meta Ads Learning Phase Guide</h3>
+        <p>Understand what the learning phase means, how to avoid resetting it, and how to stabilize delivery.</p>
+        <div class="card-footer"><span>meta-ads-learning-phase-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-ads-prelaunch-checklist.html" target="_blank" rel="noopener" data-title="Meta Ads Prelaunch Checklist">
+        <div class="tag">Meta Ads</div>
+        <h3>Meta Ads Prelaunch Checklist</h3>
+        <p>A practical checklist to review before campaigns go live so you reduce wasted spend and setup issues.</p>
+        <div class="card-footer"><span>meta-ads-prelaunch-checklist</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-ads-reporting-dashboard-guide.html" target="_blank" rel="noopener" data-title="Meta Ads Reporting Dashboard Guide">
+        <div class="tag">Reporting</div>
+        <h3>Meta Ads Reporting Dashboard Guide</h3>
+        <p>Build cleaner dashboards to track budget, CPA, ROAS, CTR, creative fatigue, and scaling signals.</p>
+        <div class="card-footer"><span>meta-ads-reporting-dashboard-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-advantage-plus-guide.html" target="_blank" rel="noopener" data-title="Meta Advantage Plus Guide">
+        <div class="tag">Meta Ads</div>
+        <h3>Meta Advantage+ Guide</h3>
+        <p>How Advantage+ works, when to test it, and how to judge if automation helps or hurts your setup.</p>
+        <div class="card-footer"><span>meta-advantage-plus-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-andromeda-update-explained-2026.html" target="_blank" rel="noopener" data-title="Meta Andromeda Update Explained 2026">
+        <div class="tag">Meta Update</div>
+        <h3>Meta Andromeda Update Explained (2026)</h3>
+        <p>A breakdown of Andromeda and what it means for ad delivery, creative selection, and strategy shifts.</p>
+        <div class="card-footer"><span>meta-andromeda-update-explained-2026</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-campaign-structure-2026.html" target="_blank" rel="noopener" data-title="Meta Campaign Structure 2026">
+        <div class="tag">Meta Ads</div>
+        <h3>Meta Campaign Structure 2026</h3>
+        <p>A separate campaign structure guide focused on organizing modern Meta media buying workflows.</p>
+        <div class="card-footer"><span>meta-campaign-structure-2026</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-conversion-api-guide.html" target="_blank" rel="noopener" data-title="Meta Conversion API Guide">
+        <div class="tag">Tracking</div>
+        <h3>Meta Conversion API Guide</h3>
+        <p>A Meta-specific Conversion API article focused on improving data quality and attribution resilience.</p>
+        <div class="card-footer"><span>meta-conversion-api-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="meta-creative-testing-framework.html" target="_blank" rel="noopener" data-title="Meta Creative Testing Framework">
+        <div class="tag">Creative</div>
+        <h3>Meta Creative Testing Framework</h3>
+        <p>Use a structured creative testing system to isolate winners and scale more efficiently.</p>
+        <div class="card-footer"><span>meta-creative-testing-framework</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="offer-testing-framework.html" target="_blank" rel="noopener" data-title="Offer Testing Framework">
+        <div class="tag">Testing</div>
+        <h3>Offer Testing Framework</h3>
+        <p>Test offers more systematically so you know whether the problem is the ad, page, or actual offer.</p>
+        <div class="card-footer"><span>offer-testing-framework</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="paid-social-kpi-benchmarks-guide.html" target="_blank" rel="noopener" data-title="Paid Social KPI Benchmarks Guide">
+        <div class="tag">Metrics</div>
+        <h3>Paid Social KPI Benchmarks Guide</h3>
+        <p>Which KPIs matter most, what to benchmark, and how to interpret numbers in context.</p>
+        <div class="card-footer"><span>paid-social-kpi-benchmarks-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="performance-marketing-dashboard-kpis.html" target="_blank" rel="noopener" data-title="Performance Marketing Dashboard KPIs">
+        <div class="tag">Reporting</div>
+        <h3>Performance Marketing Dashboard KPIs</h3>
+        <p>The KPI structure you need to monitor campaigns more clearly and make faster optimization decisions.</p>
+        <div class="card-footer"><span>performance-marketing-dashboard-kpis</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="retargeting-funnel-guide.html" target="_blank" rel="noopener" data-title="Retargeting Funnel Guide">
+        <div class="tag">Retargeting</div>
+        <h3>Retargeting Funnel Guide</h3>
+        <p>Build retargeting stages that match user intent, improve conversion efficiency, and reduce wasted spend.</p>
+        <div class="card-footer"><span>retargeting-funnel-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="ultimate-guide-tiktok-pixel.html" target="_blank" rel="noopener" data-title="Ultimate Guide TikTok Pixel">
+        <div class="tag">TikTok</div>
+        <h3>The Ultimate Guide To TikTok Pixel</h3>
+        <p>Understand TikTok Pixel setup, data flow, event tracking, and how to use it for stronger ad performance.</p>
+        <div class="card-footer"><span>ultimate-guide-tiktok-pixel</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="utm-tracking-guide.html" target="_blank" rel="noopener" data-title="UTM Tracking Guide">
+        <div class="tag">Tracking</div>
+        <h3>UTM Tracking Guide</h3>
+        <p>Use UTMs the right way so reporting stays cleaner across campaigns, channels, and landing pages.</p>
+        <div class="card-footer"><span>utm-tracking-guide</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="whatsapp-lead-followup-playbook.html" target="_blank" rel="noopener" data-title="WhatsApp Lead Followup Playbook">
+        <div class="tag">WhatsApp</div>
+        <h3>WhatsApp Lead Follow-Up Playbook</h3>
+        <p>A practical playbook for faster response times, better handoff quality, and improved lead conversion.</p>
+        <div class="card-footer"><span>whatsapp-lead-followup-playbook</span><span class="arrow">↗</span></div>
+      </a>
+
+      <a class="card blog-card" href="why-broad-targeting-works.html" target="_blank" rel="noopener" data-title="Why Broad Targeting Works">
+        <div class="tag">Meta Ads</div>
+        <h3>Why Broad Targeting Works</h3>
+        <p>Understand when broad targeting helps delivery, when it fails, and how to test it properly.</p>
+        <div class="card-footer"><span>why-broad-targeting-works</span><span class="arrow">↗</span></div>
       </a>
 
     </section>
 
-    <div class="footer">© 2026 ScaleShield. Blog resources for education and operational guidance.</div>
-  </div>
+    <div class="empty-state" id="emptyState">
+      No blog pages matched your search. Try a different keyword like <b>Meta</b>, <b>TikTok</b>, <b>Pixel</b>, <b>CPR</b>, <b>creative</b>, or <b>lead gen</b>.
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> ScaleShield — All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const input = document.getElementById("blogSearch");
+    const cards = Array.from(document.querySelectorAll(".blog-card"));
+    const count = document.getElementById("resultsCount");
+    const emptyState = document.getElementById("emptyState");
+
+    function updateSearch(){
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach(card=>{
+        const text = (
+          card.getAttribute("data-title") + " " +
+          card.textContent
+        ).toLowerCase();
+
+        const match = text.includes(q);
+        card.style.display = match ? "" : "none";
+        if(match) visible++;
+      });
+
+      count.textContent = visible + (visible === 1 ? " article" : " articles");
+      emptyState.style.display = visible === 0 ? "block" : "none";
+    }
+
+    input.addEventListener("input", updateSearch);
+
+    const kebabBtn = document.getElementById("kebabBtn");
+    const menuPanel = document.getElementById("menuPanel");
+
+    function toggleMenu(){ menuPanel.classList.toggle("open"); }
+    function closeMenu(){ menuPanel.classList.remove("open"); }
+
+    kebabBtn.addEventListener("click", toggleMenu);
+    kebabBtn.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(!menuPanel.classList.contains("open")) return;
+      if(!e.target.closest(".mobile-menu")) closeMenu();
+    });
+
+    document.querySelectorAll(".mnav").forEach(a=>{
+      a.addEventListener("click", ()=>closeMenu());
+    });
+  </script>
+
 </body>
 </html>
