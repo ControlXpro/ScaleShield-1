@@ -503,6 +503,46 @@ p{
   font-size:12px;
 }
 
+/* Reviews */
+.review-card{
+  min-height:220px;
+}
+.review-stars{
+  display:flex;
+  gap:4px;
+  margin-bottom:12px;
+  color:var(--gold2);
+  font-size:16px;
+}
+.review-text{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+.review-person{
+  margin-top:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.review-avatar{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 24px rgba(214,177,94,.16);
+}
+.review-meta small{
+  display:block;
+  color:var(--muted2);
+  margin-top:3px;
+  font-size:12px;
+}
+
 /* FAQ */
 .faq{display:grid;gap:14px}
 .faq-btn{
@@ -615,7 +655,7 @@ footer{
     <a href="#graph" class="mnav">Graph <small>→</small></a>
     <a href="#pricing" class="mnav">Pricing <small>→</small></a>
     <a href="#social" class="mnav">Social <small>→</small></a>
-    <a href="blog.html" target="_blank" rel="noopener">Blog <small>↗</small></a>
+    <a href="#reviews" class="mnav">Reviews <small>→</small></a>
     <a href="#faq" class="mnav">FAQ <small>→</small></a>
     <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
     <a href="login.html" target="_blank" rel="noopener">Log in <small>↗</small></a>
@@ -638,7 +678,6 @@ footer{
         <a href="#graph">Graph</a>
         <a href="#pricing">Pricing</a>
         <a href="#reviews">Reviews</a>
-        <a href="blog.html" target="_blank" rel="noopener">Blog</a>
         <a href="#faq">FAQ</a>
         <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
         <a href="login.html" target="_blank" rel="noopener">Log in</a>
@@ -951,6 +990,106 @@ footer{
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> REVIEWS</div>
+    <h2>What clients say</h2>
+    <p>Generated testimonials styled to match your current website design.</p>
+  </div>
+
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“We moved over because we needed stability, not promises. Setup was smooth, replacements were actually fast, and support answered when it mattered.”</div>
+      <div class="review-person">
+        <div class="review-avatar">AK</div>
+        <div class="review-meta"><strong>Artem K.</strong><small>Ecom Buyer • EU</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“The structure feels premium. Everything is more organized, response time is good, and we don’t lose momentum every time something needs to be swapped.”</div>
+      <div class="review-person">
+        <div class="review-avatar">NS</div>
+        <div class="review-meta"><strong>Nadia S.</strong><small>Lead Gen Agency</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“For us the biggest value is not having downtime. That alone pays for itself. Support stays active and doesn’t disappear after onboarding.”</div>
+      <div class="review-person">
+        <div class="review-avatar">RM</div>
+        <div class="review-meta"><strong>Rafael M.</strong><small>Performance Buyer</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“We run high-volume offers, so speed matters. ScaleShield is one of the few setups where the operational side feels built for real media buying.”</div>
+      <div class="review-person">
+        <div class="review-avatar">DL</div>
+        <div class="review-meta"><strong>Daria L.</strong><small>iGaming Ops</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“BM3 was perfect for testing. Easy to start, controlled spend, and we had a much cleaner launch than with other providers we used before.”</div>
+      <div class="review-person">
+        <div class="review-avatar">ML</div>
+        <div class="review-meta"><strong>Mark L.</strong><small>App Marketing</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“We needed something predictable. Clear steps, fast answers, clean handoff. It feels more like infrastructure than just another service.”</div>
+      <div class="review-person">
+        <div class="review-avatar">SR</div>
+        <div class="review-meta"><strong>Sami R.</strong><small>Agency Owner</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“What stood out to me is how organized the process was. We didn’t waste time explaining the same thing ten times. Everything moved much faster.”</div>
+      <div class="review-person">
+        <div class="review-avatar">TK</div>
+        <div class="review-meta"><strong>Tomas K.</strong><small>Media Buyer</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“Support availability is real. We had late-hour issues and still got a response. That matters a lot when campaigns are live and spend is active.”</div>
+      <div class="review-person">
+        <div class="review-avatar">AL</div>
+        <div class="review-meta"><strong>Alex L.</strong><small>Performance Team Lead</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“We’ve tested multiple setups and this one feels the most stable operationally. Less friction, less waiting, more focus on scaling.”</div>
+      <div class="review-person">
+        <div class="review-avatar">VG</div>
+        <div class="review-meta"><strong>Viktor G.</strong><small>Ecom Scaling Team</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">“Good communication, solid structure, and a cleaner overall experience than most providers in this space. We stayed because it actually works.”</div>
+      <div class="review-person">
+        <div class="review-avatar">IP</div>
+        <div class="review-meta"><strong>Ivan P.</strong><small>Agency Operator</small></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- BLOG -->
 <section id="blog-preview">
@@ -998,9 +1137,50 @@ footer{
       <div class="faq-q">Do all monthly packages include unlimited replacements?</div>
       <div class="faq-a">Yes — monthly packages include 24/7 support and unlimited replacements.</div>
     </button>
+
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">How fast can we start?</div>
       <div class="faq-a">Onboarding is designed to be quick. Message support and we’ll guide you through setup steps.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do you work with iGaming and sensitive verticals?</div>
+      <div class="faq-a">We support operators across neutral, gambling/iGaming, and policy-sensitive verticals with a strong focus on structure, reliability, and fast operational response.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What do you need from us before onboarding?</div>
+      <div class="faq-a">Usually your vertical, GEOs, spend expectations, and what type of setup you need. Once we understand your case, we can recommend the cleanest option.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Is support really available 24/7?</div>
+      <div class="faq-a">Yes, support coverage is one of the core parts of the service. Fast response matters when campaigns are active, so support availability is built into the workflow.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Can I contact you through WhatsApp instead of Telegram?</div>
+      <div class="faq-a">Yes. You can reach ScaleShield through both Telegram and WhatsApp, depending on what is easier for you and your team.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Which package is best for testing?</div>
+      <div class="faq-a">BM3 is usually the cleanest option for controlled testing because of the lower spend structure and easier ramp-up process.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Which package is best for more aggressive scaling?</div>
+      <div class="faq-a">Dual Agency Ad Accounts and Top Agency Package are better suited for teams running larger volumes, multiple offers, or more aggressive scaling operations.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do you guarantee unbans or approvals?</div>
+      <div class="faq-a">No. No legitimate service can guarantee outcomes for approvals or unbans. What we provide is structured help, review, and a clear operational workflow.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Can we start with one account and scale later?</div>
+      <div class="faq-a">Yes. Many clients begin with a smaller setup first, test stability and workflow, and then upgrade into a larger package once they are ready to scale more aggressively.</div>
     </button>
   </div>
 </section>
