@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOOST — Engagement Engine</title>
+
+<style>
+:root{
+--bg:#050506;
+--panel:rgba(255,255,255,.06);
+--line:rgba(255,255,255,.1);
+--text:#f5f1e6;
+--muted:rgba(245,241,230,.7);
+--gold:#cda85b;
+--gold2:#f0d79a;
+--radius:26px;
+--shadow:0 30px 80px rgba(0,0,0,.45);
+--max:1200px;
+}
+
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Inter,system-ui,Arial;
+background:linear-gradient(180deg,#040405,#070708);
+color:var(--text);
+}
+
+.container{
+width:min(calc(100% - 40px),var(--max));
+margin:auto;
+}
+
+.hero{
+min-height:90vh;
+display:flex;
+align-items:center;
+padding:40px 0;
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center;
+}
+
+h1{
+font-size:clamp(60px,10vw,120px);
+line-height:.9;
+margin:0 0 20px;
+letter-spacing:-.06em;
+}
+
+.gold{
+background:linear-gradient(135deg,#fff,var(--gold2),var(--gold));
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.sub{
+color:var(--muted);
+font-size:18px;
+line-height:1.7;
+max-width:600px;
+margin-bottom:28px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-top:10px;
+}
+
+.stat{
+padding:18px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:var(--radius);
+box-shadow:var(--shadow);
+}
+
+.stat strong{
+font-size:30px;
+display:block;
+letter-spacing:-.04em;
+margin-bottom:4px;
+}
+
+.stat span{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.12em;
+color:var(--muted);
+}
+
+.stage{
+position:relative;
+min-height:520px;
+perspective:1200px;
+}
+
+.card{
+position:absolute;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:28px;
+padding:22px;
+box-shadow:var(--shadow);
+}
+
+.main{
+inset:60px 0 0 40px;
+}
+
+.metric{
+width:210px;
+}
+
+.metric1{top:0;left:-20px}
+.metric2{top:120px;right:-20px}
+
+.metric strong{
+font-size:36px;
+letter-spacing:-.04em;
+}
+
+.metric p{
+margin:6px 0 0;
+font-size:14px;
+color:var(--muted);
+}
+
+.panel-title{
+font-weight:800;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.panel-sub{
+color:var(--muted);
+font-size:14px;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.box{
+padding:14px;
+background:rgba(255,255,255,.04);
+border-radius:16px;
+border:1px solid var(--line);
+}
+
+.box strong{
+font-size:20px;
+display:block;
+}
+
+.box span{
+font-size:12px;
+color:var(--muted);
+}
+
+section{
+padding:70px 0;
+}
+
+h2{
+font-size:clamp(40px,5vw,64px);
+margin:0 0 10px;
+letter-spacing:-.04em;
+}
+
+.desc{
+color:var(--muted);
+max-width:700px;
+line-height:1.7;
+margin-bottom:40px;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.feature{
+padding:26px;
+background:var(--panel);
+border-radius:var(--radius);
+border:1px solid var(--line);
+}
+
+.feature h3{
+margin:0 0 10px;
+font-size:22px;
+}
+
+.feature p{
+margin:0;
+color:var(--muted);
+line-height:1.6;
+}
+
+.result{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:24px;
+}
+
+.quote{
+font-size:clamp(30px,4vw,52px);
+font-weight:900;
+letter-spacing:-.05em;
+line-height:1.05;
+margin:20px 0;
+}
+
+.pills{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.pill{
+padding:10px 14px;
+font-size:12px;
+letter-spacing:.12em;
+text-transform:uppercase;
+background:rgba(255,255,255,.05);
+border:1px solid var(--line);
+border-radius:999px;
+color:var(--muted);
+}
+
+footer{
+padding:40px 0;
+text-transform:uppercase;
+letter-spacing:.14em;
+font-size:12px;
+color:var(--muted);
+}
+
+@media(max-width:900px){
+.hero-grid,
+.result,
+.features{
+grid-template-columns:1fr
+}
+.stats{grid-template-columns:1fr 1fr}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+<div class="container hero-grid">
+
+<div>
+<h1><span class="gold">BOOST</span><br>Engagement Engine</h1>
+
+<p class="sub">
+BOOST allows media buying teams to add targeted comments, reactions and replies to Facebook ads within minutes. 
+This creates instant social proof, increases trust and helps campaigns perform better during launch.
+</p>
+
+<div class="stats">
+<div class="stat">
+<strong>+34%</strong>
+<span>Higher CTR</span>
+</div>
+
+<div class="stat">
+<strong>-18%</strong>
+<span>Lower CPM</span>
+</div>
+
+<div class="stat">
+<strong>+27%</strong>
+<span>Higher CR</span>
+</div>
+
+<div class="stat">
+<strong>25%+</strong>
+<span>ROI Improvement</span>
+</div>
+</div>
+</div>
+
+<div class="stage">
+
+<div class="card main">
+<div class="panel-title">BOOST Dashboard</div>
+<div class="panel-sub">Deploy comments, reactions and replies to strengthen social proof and increase engagement on new ads.</div>
+
+<div class="grid">
+
+<div class="box">
+<strong>148</strong>
+<span>Comments Added</span>
+</div>
+
+<div class="box">
+<strong>913</strong>
+<span>Reactions Generated</span>
+</div>
+
+<div class="box">
+<strong>62</strong>
+<span>Replies Posted</span>
+</div>
+
+<div class="box">
+<strong>A+</strong>
+<span>Traffic Quality</span>
+</div>
+
+</div>
+</div>
+
+<div class="card metric metric1">
+<strong>CTR ↑</strong>
+<p>Higher click‑through rate thanks to visible social proof.</p>
+</div>
+
+<div class="card metric metric2">
+<strong>CPM ↓</strong>
+<p>Better engagement signals reduce cost pressure.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<section>
+<div class="container">
+
+<h2>Why media buyers use BOOST</h2>
+<p class="desc">
+BOOST helps ads launch with stronger credibility and engagement signals. Instead of waiting for organic comments, campaigns start with visible activity and realistic discussion.
+</p>
+
+<div class="features">
+
+<div class="feature">
+<h3>Instant Social Proof</h3>
+<p>Make new ads look trusted and active immediately after launch.</p>
+</div>
+
+<div class="feature">
+<h3>Better Performance</h3>
+<p>Higher engagement improves CTR, lowers CPM and helps campaigns optimize faster.</p>
+</div>
+
+<div class="feature">
+<h3>Realistic Discussions</h3>
+<p>Create testimonial style comments and natural discussion threads.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="container result">
+
+<div>
+<h2>Result</h2>
+<div class="quote">BOOST turns cold ads into high‑trust, high‑engagement campaigns.</div>
+
+<p class="desc">
+Campaigns launch with credibility, stronger engagement signals and better early momentum — helping media buyers scale faster.
+</p>
+
+<div class="pills">
+<span class="pill">Higher CTR</span>
+<span class="pill">Lower CPM</span>
+<span class="pill">Higher CR</span>
+<span class="pill">Better ROI</span>
+</div>
+
+</div>
+
+<div class="feature">
+<h3>Best for</h3>
+<p>Nutra, sweeps, finance, ecom and lead generation campaigns where social proof heavily impacts conversion rate.</p>
+</div>
+
+</div>
+</section>
+
+<footer class="container">
+BOOST • ScaleShield Feature Presentation
+</footer>
+
+</body>
+</html>
