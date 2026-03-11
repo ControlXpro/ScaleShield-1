@@ -399,7 +399,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
         <div class="boostWrap">
           <div class="boostBox">
             <div class="boostTitle">Boost</div>
-            <div class="boostSub">Send your boost settings to our team directly from your panel.</div>
+            <div class="boostSub">Send your targeting settings to our team directly from your client panel.</div>
 
             <div class="notice">
               Fixed request price: <b>$10</b><br>
@@ -455,10 +455,10 @@ td{color:rgba(255,255,255,.88);font-size:13px}
                 </div>
 
                 <div class="boostField full">
-                  <label>Page Review</label>
+                  <label>Page Reviews</label>
                   <div class="checkline">
                     <input id="boostPageReview" type="checkbox">
-                    <span>Include Page Review</span>
+                    <span>Enable Page Reviews</span>
                   </div>
                 </div>
               </div>
@@ -615,7 +615,6 @@ function updateBalanceUI(){
   if(inline) inline.textContent = formatMoney(bal);
 }
 
-/* Replace modal */
 let currentClientName = "";
 let currentAdId = "";
 
@@ -669,11 +668,13 @@ async function sendReplacement(){
       })
     });
 
+    const data = await resp.json().catch(()=>({}));
+
     if(resp.ok){
       showToast("Request sent ✅");
       closeReplaceModal();
     }else{
-      showToast("Send failed ❌");
+      showToast(data.error || "Send failed ❌");
     }
   }catch(e){
     showToast("Network error ❌");
@@ -684,7 +685,6 @@ async function sendReplacement(){
 }
 sendReplaceBtn.addEventListener("click", sendReplacement);
 
-/* Top up modal */
 const topUpModal = document.getElementById("topUpModal");
 const closeTopUpBtn = document.getElementById("closeTopUpBtn");
 
@@ -699,7 +699,6 @@ function closeTopUpModal(){
 closeTopUpBtn.addEventListener("click", closeTopUpModal);
 topUpModal.addEventListener("click", (e)=>{ if(e.target === topUpModal) closeTopUpModal(); });
 
-/* Build UI */
 function buildSummary(client){
   const grid = document.getElementById("summaryGrid");
   grid.innerHTML = "";
@@ -802,7 +801,6 @@ function filterRows(q){
   });
 }
 
-/* Tabs */
 function setupTabs(){
   const buttons = document.querySelectorAll(".tabBtn");
   const sections = document.querySelectorAll(".panelSection");
@@ -819,7 +817,6 @@ function setupTabs(){
 }
 setupTabs();
 
-/* Login state */
 function showDashboard(client){
   currentClientData = client;
   document.getElementById("err").style.display = "none";
@@ -853,7 +850,6 @@ function logout(){
 }
 document.getElementById("btnLogout").addEventListener("click", logout);
 
-/* API */
 async function apiClientLogin(login, password){
   const resp = await fetch(API_URL + "/client-login", {
     method: "POST",
@@ -917,7 +913,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   }
 });
 
-/* Auto login */
 (async function autoLogin(){
   const t = sessionStorage.getItem(TOKEN_KEY) || "";
   if(!t) return;
@@ -926,7 +921,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   else sessionStorage.removeItem(TOKEN_KEY);
 })();
 
-/* Boost form */
 document.getElementById("clearBoostBtn").addEventListener("click", ()=>{
   document.getElementById("boostForm").reset();
   const defaultGender = document.querySelector('input[name="boostGender"][value="All"]');
@@ -959,7 +953,7 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
   const gender = document.querySelector('input[name="boostGender"]:checked')?.value || "All";
   const geos = [...document.querySelectorAll('input[name="boostGeo"]:checked')].map(el => el.value);
   const ages = [...document.querySelectorAll('input[name="boostAge"]:checked')].map(el => el.value);
-  const pageReview = document.getElementById("boostPageReview").checked;
+  const pageReviews = document.getElementById("boostPageReview").checked;
 
   if(!taskName || !postUrl){
     showBoostError("Please fill all required fields.");
@@ -977,7 +971,7 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
       gender,
       geos,
       ages,
-      pageReview
+      pageReviews
     });
 
     if(!res.ok){
@@ -991,12 +985,7 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
       buildRows(currentClientData);
       updateBalanceUI();
       const search = document.getElementById("search");
-      if(search){
-        search.oninput = ()=>filterRows(search.value);
-      }
-    }else{
-      currentClientData.walletBalance = Math.max(0, getWalletBalance(currentClientData) - BOOST_PRICE);
-      updateBalanceUI();
+      if(search) search.oninput = ()=>filterRows(search.value);
     }
 
     showBoostSuccess("Boost request sent successfully ✅");
