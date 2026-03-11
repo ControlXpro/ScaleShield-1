@@ -313,6 +313,123 @@ textarea:focus{
 
 /* Hide sensitive content until login */
 #dashboard, #authBar { display:none; }
+
+/* Dashboard nav */
+.sectionTabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.tabBtn{
+  padding:11px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s var(--ease);
+}
+.tabBtn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(214,177,94,.35);
+}
+.tabBtn.active{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;
+  border-color:transparent;
+  box-shadow:0 0 30px rgba(214,177,94,.18);
+}
+
+.panelSection{display:none;margin-top:18px}
+.panelSection.active{display:block}
+
+/* Boost form */
+.boostWrap{
+  display:grid;
+  gap:14px;
+}
+.boostBox{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  border-radius:18px;
+  padding:16px;
+}
+.boostTitle{
+  font-weight:950;
+  font-size:15px;
+}
+.boostSub{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+.boostGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+.boostField{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.boostField.full{
+  grid-column:1 / -1;
+}
+@media(max-width:760px){
+  .boostGrid{grid-template-columns:1fr}
+}
+.choiceRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:4px;
+}
+.choice{
+  position:relative;
+}
+.choice input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.choice span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s var(--ease);
+}
+.choice input:checked + span{
+  border-color:rgba(214,177,94,.28);
+  background:rgba(214,177,94,.12);
+  color:var(--gold2);
+  box-shadow:0 0 20px rgba(214,177,94,.10);
+}
+.helper{
+  margin-top:8px;
+  color:rgba(255,255,255,.45);
+  font-size:12px;
+  line-height:1.55;
+}
+.boostActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
 </style>
 </head>
 
@@ -321,7 +438,6 @@ textarea:focus{
   <div class="top">
     <div class="brand"><span>ScaleShield</span></div>
 
-    <!-- Only visible AFTER login -->
     <div style="display:flex;gap:10px;flex-wrap:wrap;" id="authBar">
       <a class="btn" href="index.html">Back to site</a>
       <a class="btn" href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
@@ -335,7 +451,6 @@ textarea:focus{
     <div class="h1">Client Log In</div>
     <div class="p">Enter the login and password you received from support.</div>
 
-    <!-- LOGIN FORM -->
     <form class="form" id="loginForm" autocomplete="off">
       <div>
         <label for="login">Login</label>
@@ -357,54 +472,132 @@ textarea:focus{
 
     <div class="hr"></div>
 
-    <!-- DASHBOARD (hidden until login) -->
     <div class="dashboard" id="dashboard">
       <div class="kicker"><span class="kdot"></span> CLIENT DASHBOARD</div>
       <div class="p" style="margin-top:10px;">Subscription + account mapping (organized view).</div>
 
-      <div class="grid" id="summaryGrid"></div>
+      <div class="sectionTabs">
+        <button class="tabBtn active" type="button" data-tab="overviewSection">Overview</button>
+        <button class="tabBtn" type="button" data-tab="boostSection">Boost</button>
+      </div>
 
-      <div class="tableWrap" style="margin-top:14px;">
-        <div class="tblHead">
-          <div class="left">
-            <b>Ad Accounts</b>
-            <span>Copy IDs or request replacement.</span>
-          </div>
+      <!-- OVERVIEW -->
+      <div class="panelSection active" id="overviewSection">
+        <div class="grid" id="summaryGrid"></div>
 
-          <div class="tblControls">
-            <div class="search" title="Search by name / Ad ID / BM ID">
-              <span style="opacity:.7">🔎</span>
-              <input id="search" placeholder="Search accounts…" />
+        <div class="tableWrap" style="margin-top:14px;">
+          <div class="tblHead">
+            <div class="left">
+              <b>Ad Accounts</b>
+              <span>Copy IDs or request replacement.</span>
             </div>
-            <button class="copyBtn gold" id="copyBmTop" type="button">Copy BM ID</button>
+
+            <div class="tblControls">
+              <div class="search" title="Search by name / Ad ID / BM ID">
+                <span style="opacity:.7">🔎</span>
+                <input id="search" placeholder="Search accounts…" />
+              </div>
+              <button class="copyBtn gold" id="copyBmTop" type="button">Copy BM ID</button>
+            </div>
           </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th style="width:32%">Ad Account Name</th>
+                <th style="width:24%">Ad Account ID</th>
+                <th style="width:24%">Shared To BM ID</th>
+                <th style="width:20%">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th style="width:32%">Ad Account Name</th>
-              <th style="width:24%">Ad Account ID</th>
-              <th style="width:24%">Shared To BM ID</th>
-              <th style="width:20%">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
+        <div class="p" style="margin-top:18px;">Need help? Contact support:</div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram Support</a>
+          <a class="btn btn-whatsapp" href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp Support</a>
+        </div>
       </div>
 
-      <div class="p" style="margin-top:18px;">Need help? Contact support:</div>
-      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-        <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram Support</a>
-        <a class="btn btn-whatsapp" href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp Support</a>
+      <!-- BOOST -->
+      <div class="panelSection" id="boostSection">
+        <div class="boostWrap">
+          <div class="boostBox">
+            <div class="boostTitle">Boost Request</div>
+            <div class="boostSub">Fill out the form below to submit a boost request from your client panel.</div>
+
+            <form id="boostForm">
+              <div class="boostGrid">
+                <div class="boostField">
+                  <label for="boostTaskName">Task Name</label>
+                  <input id="boostTaskName" name="taskName" type="text" placeholder="Enter task name" required />
+                </div>
+
+                <div class="boostField">
+                  <label for="boostPostUrl">Post URL</label>
+                  <input id="boostPostUrl" name="postUrl" type="url" placeholder="https://facebook.com/..." required />
+                </div>
+
+                <div class="boostField full">
+                  <label>Gender</label>
+                  <div class="choiceRow">
+                    <label class="choice">
+                      <input type="radio" name="gender" value="All" checked>
+                      <span>All</span>
+                    </label>
+                    <label class="choice">
+                      <input type="radio" name="gender" value="Male">
+                      <span>Male</span>
+                    </label>
+                    <label class="choice">
+                      <input type="radio" name="gender" value="Female">
+                      <span>Female</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="boostField full">
+                  <label>GEOs</label>
+                  <div class="choiceRow">
+                    <label class="choice"><input type="checkbox" name="geos" value="BR"><span>BR</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="DE"><span>DE</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="ES"><span>ES</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="FR"><span>FR</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="IT"><span>IT</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="TR"><span>TR</span></label>
+                    <label class="choice"><input type="checkbox" name="geos" value="US"><span>US</span></label>
+                  </div>
+                  <div class="helper">You can choose multiple GEOs.</div>
+                </div>
+
+                <div class="boostField full">
+                  <label>Ages</label>
+                  <div class="choiceRow">
+                    <label class="choice"><input type="checkbox" name="ages" value="30-35"><span>30–35</span></label>
+                    <label class="choice"><input type="checkbox" name="ages" value="35-40"><span>35–40</span></label>
+                    <label class="choice"><input type="checkbox" name="ages" value="40-45"><span>40–45</span></label>
+                  </div>
+                  <div class="helper">You can choose multiple age groups.</div>
+                </div>
+              </div>
+
+              <div class="boostActions">
+                <button class="btn" type="button" id="clearBoostBtn">Clear</button>
+                <button class="btn btn-primary" type="submit" id="submitBoostBtn">Submit Request</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast">Copied</div>
 
-<!-- REPLACE MODAL -->
 <div class="modal" id="replaceModal" aria-hidden="true">
   <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modalTop">
@@ -429,25 +622,20 @@ textarea:focus{
 </div>
 
 <script>
-/*
-Client portal now loads data from Cloudflare D1 via your Worker API.
-*/
-
-/* ✅ Worker endpoints */
 const API_URL = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
 const REPLACE_WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
 
-/* Client token storage (same-tab only) */
 const TOKEN_KEY = "ss_client_token";
 
 const toast = document.getElementById("toast");
 let toastTimer = null;
+let currentClientData = null;
 
 function showToast(msg){
   toast.textContent = msg;
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
+  toastTimer = setTimeout(()=>toast.classList.remove("show"), 1400);
 }
 
 async function copyText(text){
@@ -461,7 +649,8 @@ async function copyText(text){
   ta.style.position = "fixed";
   ta.style.top = "-9999px";
   document.body.appendChild(ta);
-  ta.focus(); ta.select();
+  ta.focus();
+  ta.select();
   try{
     document.execCommand("copy");
     showToast("Copied ✅");
@@ -479,9 +668,11 @@ function escapeHtml(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
-function escapeAttr(s){ return escapeHtml(s).replaceAll('"',"&quot;"); }
+function escapeAttr(s){
+  return escapeHtml(s).replaceAll('"',"&quot;");
+}
 
-/* ----- Replace modal state ----- */
+/* Replace modal state */
 let currentClientName = "";
 let currentAdId = "";
 
@@ -555,7 +746,7 @@ async function sendReplacement(){
 }
 sendReplaceBtn.addEventListener("click", sendReplacement);
 
-/* ----- Build UI ----- */
+/* Build overview UI */
 function buildSummary(client){
   const grid = document.getElementById("summaryGrid");
   grid.innerHTML = "";
@@ -643,8 +834,28 @@ function filterRows(q){
   });
 }
 
-/* ----- Login state ----- */
+/* Tabs */
+function setupTabs(){
+  const buttons = document.querySelectorAll(".tabBtn");
+  const sections = document.querySelectorAll(".panelSection");
+
+  buttons.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      buttons.forEach(b=>b.classList.remove("active"));
+      sections.forEach(s=>s.classList.remove("active"));
+
+      btn.classList.add("active");
+      const target = document.getElementById(btn.dataset.tab);
+      if(target) target.classList.add("active");
+    });
+  });
+}
+setupTabs();
+
+/* Dashboard state */
 function showDashboard(client){
+  currentClientData = client;
+
   document.getElementById("err").style.display = "none";
   document.getElementById("loginForm").style.display = "none";
 
@@ -661,16 +872,24 @@ function showDashboard(client){
 
 function logout(){
   sessionStorage.removeItem(TOKEN_KEY);
+  currentClientData = null;
   document.getElementById("dashboard").style.display = "none";
   document.getElementById("authBar").style.display = "none";
   document.getElementById("loginForm").style.display = "grid";
   document.getElementById("err").style.display = "none";
   document.getElementById("login").value = "";
   document.getElementById("password").value = "";
+
+  document.querySelectorAll(".tabBtn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".panelSection").forEach(s=>s.classList.remove("active"));
+  document.querySelector('.tabBtn[data-tab="overviewSection"]').classList.add("active");
+  document.getElementById("overviewSection").classList.add("active");
+
+  document.getElementById("boostForm").reset();
 }
 document.getElementById("btnLogout").addEventListener("click", logout);
 
-/* ----- API ----- */
+/* API */
 async function apiClientLogin(login, password){
   const resp = await fetch(API_URL + "/client-login", {
     method: "POST",
@@ -727,7 +946,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   }
 });
 
-// Auto login (same tab session only)
+/* Auto login */
 (async function autoLogin(){
   const t = sessionStorage.getItem(TOKEN_KEY) || "";
   if(!t) return;
@@ -735,6 +954,51 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   if(me.ok && me.data?.client) showDashboard(me.data.client);
   else sessionStorage.removeItem(TOKEN_KEY);
 })();
+
+/* Boost form */
+document.getElementById("clearBoostBtn").addEventListener("click", ()=>{
+  document.getElementById("boostForm").reset();
+  const defaultGender = document.querySelector('input[name="gender"][value="All"]');
+  if(defaultGender) defaultGender.checked = true;
+  showToast("Form cleared");
+});
+
+document.getElementById("boostForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  const btn = document.getElementById("submitBoostBtn");
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+
+  try{
+    const taskName = document.getElementById("boostTaskName").value.trim();
+    const postUrl = document.getElementById("boostPostUrl").value.trim();
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || "All";
+    const geos = [...document.querySelectorAll('input[name="geos"]:checked')].map(el => el.value);
+    const ages = [...document.querySelectorAll('input[name="ages"]:checked')].map(el => el.value);
+
+    const payload = {
+      clientName: currentClientData?.name || "",
+      taskName,
+      postUrl,
+      gender,
+      geos,
+      ages
+    };
+
+    console.log("Boost request payload:", payload);
+
+    showToast("Boost request submitted ✅");
+    document.getElementById("boostForm").reset();
+    const defaultGender = document.querySelector('input[name="gender"][value="All"]');
+    if(defaultGender) defaultGender.checked = true;
+  }catch(err){
+    showToast("Submit failed ❌");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Submit Request";
+  }
+});
 </script>
 
 </body>
