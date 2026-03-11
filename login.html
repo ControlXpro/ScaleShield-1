@@ -879,7 +879,7 @@ async function apiSendBoostRequest(token, payload){
     body: JSON.stringify(payload)
   });
   const data = await resp.json().catch(()=> ({}));
-  return { ok: resp.ok, data };
+  return { ok: resp.ok, status: resp.status, data };
 }
 
 document.getElementById("loginForm").addEventListener("submit", async (e)=>{
@@ -974,8 +974,15 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
       pageReviews
     });
 
+    console.log("BOOST RESPONSE:", res);
+
     if(!res.ok){
-      showBoostError(res.data?.error || "Boost request failed.");
+      const msg =
+        res.data?.telegram_response?.description ||
+        res.data?.details ||
+        res.data?.error ||
+        "Boost request failed.";
+      showBoostError(msg);
       return;
     }
 
