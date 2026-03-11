@@ -28,7 +28,7 @@
       color:var(--text);
       padding:28px 16px 90px;
     }
-    .wrap{max-width:1200px;margin:0 auto}
+    .wrap{max-width:1280px;margin:0 auto}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
     .brand{font-weight:950;font-size:20px}
     .brand span{
@@ -62,7 +62,7 @@
     }
     .btn-ok:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 24px rgba(34,197,94,.14)}
     .grid{display:grid;gap:14px}
-    @media(min-width:980px){ .grid{grid-template-columns: 1fr 1.2fr} }
+    @media(min-width:980px){ .grid{grid-template-columns: 1.05fr 1.1fr} }
     .card{
       background:var(--panel);
       border:1px solid var(--border);
@@ -123,7 +123,13 @@
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
     .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
 
-    /* ===== Billing Modal ===== */
+    .walletInput{
+      width:110px;
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:12px;
+    }
+
     .modal{
       position:fixed; inset:0;
       background:rgba(0,0,0,.78);
@@ -170,7 +176,7 @@
     .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
     .inlineInput{
-      width: 150px;
+      width:150px;
       padding:8px 10px;
       border-radius:12px;
       font-size:12px;
@@ -183,15 +189,14 @@
     <div class="brand"><span>ScaleShield</span> — Admin</div>
     <div class="row">
       <a class="btn" href="index.html">Back to site</a>
-      <a class="btn" href="billing.html" target="_blank" rel="noopener">Billing</a>
+      <button class="btn" id="btnBilling" type="button">Billing</button>
       <button class="btn" id="btnLogout" type="button">Log out</button>
     </div>
   </div>
 
-  <!-- LOGIN -->
   <div class="card" id="loginCard">
     <h1>Admin Login</h1>
-    <div class="p">Log in to manage clients & ad accounts.</div>
+    <div class="p">Log in to manage clients, wallet balances, and ad accounts.</div>
 
     <form class="form" id="loginForm">
       <div>
@@ -210,12 +215,10 @@
     </form>
   </div>
 
-  <!-- ADMIN PANEL -->
   <div class="grid hide" id="panel">
-    <!-- LEFT: Clients -->
     <div class="card">
       <h1>Clients</h1>
-      <div class="p">List, edit, delete clients.</div>
+      <div class="p">List, edit, delete clients, and manage wallet balance.</div>
 
       <div class="hr"></div>
 
@@ -230,11 +233,12 @@
         <table>
           <thead>
             <tr>
-              <th style="width:8%">ID</th>
-              <th style="width:30%">Name</th>
-              <th style="width:20%">Login</th>
-              <th style="width:22%">Package</th>
-              <th style="width:20%">Actions</th>
+              <th style="width:7%">ID</th>
+              <th style="width:20%">Name</th>
+              <th style="width:16%">Login</th>
+              <th style="width:18%">Package</th>
+              <th style="width:17%">Wallet</th>
+              <th style="width:22%">Actions</th>
             </tr>
           </thead>
           <tbody id="clientsRows"></tbody>
@@ -257,9 +261,10 @@
           <input id="cPass" placeholder="ClientPassword" />
         </div>
 
-        <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Dimond" /></div>
+        <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Diamond" /></div>
         <div><label>Price</label><input id="cPrice" placeholder="$1950/month" /></div>
-        <div><label>Billing Date</label><input id="cBill" placeholder="Every 24st of every month" /></div>
+        <div><label>Billing Date</label><input id="cBill" placeholder="Every 24th of every month" /></div>
+        <div><label>Wallet Balance (USD)</label><input id="cWallet" type="number" step="0.01" min="0" placeholder="0.00" /></div>
 
         <div class="row">
           <button class="btn btn-primary" type="submit" id="btnSaveClient">Save</button>
@@ -270,7 +275,6 @@
       <div class="p" id="clientMsg" style="margin-top:10px"></div>
     </div>
 
-    <!-- RIGHT: Ad accounts -->
     <div class="card">
       <h1>Ad Accounts</h1>
       <div class="p">Select a client, then edit/delete ad accounts.</div>
@@ -325,7 +329,6 @@
 
 <div class="toast" id="toast">Saved</div>
 
-<!-- ===== BILLING MODAL ===== -->
 <div class="modal" id="billingModal" aria-hidden="true">
   <div class="modalCard" role="dialog" aria-modal="true">
     <div class="modalTop">
@@ -349,7 +352,6 @@
 
     <div class="hr"></div>
 
-    <!-- Clients Billing -->
     <div id="billingClientsView">
       <div class="row" style="justify-content:space-between">
         <div class="row">
@@ -381,7 +383,6 @@
       </div>
     </div>
 
-    <!-- Expenses -->
     <div id="billingExpensesView" class="hide">
       <div class="row" style="justify-content:space-between">
         <h1 style="font-size:18px;margin:0">Add Expense</h1>
@@ -435,7 +436,6 @@
       </div>
     </div>
 
-    <!-- Report -->
     <div id="billingReportView" class="hide">
       <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
       <div class="p">Revenue is calculated from payments. Expenses from your expenses table.</div>
@@ -453,7 +453,6 @@
         If Revenue is 0, you haven’t used “Mark Paid” yet (or recorded payments). After you mark invoices paid, revenue will show here.
       </div>
     </div>
-
   </div>
 </div>
 
@@ -502,7 +501,6 @@
     showToast("Logged out");
   });
 
-  // Login
   document.getElementById("loginForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
     setErr("");
@@ -540,7 +538,6 @@
     }
   });
 
-  // ===== Clients (existing) =====
   const clientsRows = document.getElementById("clientsRows");
   const clientSelect = document.getElementById("clientSelect");
   let clientsCache = [];
@@ -561,6 +558,12 @@
         <td>${escapeHtml(c.name || "")}</td>
         <td><span class="mono">${escapeHtml(c.login || "")}</span></td>
         <td>${escapeHtml(c.package_name || "")}</td>
+        <td>
+          <div class="row" style="gap:6px;align-items:center">
+            <input class="walletInput" type="number" min="0" step="0.01" value="${escapeAttr(String(Number(c.wallet_balance || 0).toFixed(2)))}" data-wallet-input="${c.id}">
+            <button class="btn mini btn-ok" data-wallet-save="${c.id}">Save</button>
+          </div>
+        </td>
         <td>
           <div class="actions">
             <button class="btn mini" data-edit-client="${c.id}">Edit</button>
@@ -597,6 +600,34 @@
     document.querySelectorAll("[data-del-client]").forEach(btn=>{
       btn.onclick = () => deleteClient(Number(btn.getAttribute("data-del-client")));
     });
+    document.querySelectorAll("[data-wallet-save]").forEach(btn=>{
+      btn.onclick = () => saveWalletRow(Number(btn.getAttribute("data-wallet-save")));
+    });
+  }
+
+  async function saveWalletRow(id){
+    const input = document.querySelector(`[data-wallet-input="${id}"]`);
+    if(!input) return;
+
+    const walletBalance = Number(input.value || 0);
+    if(!Number.isFinite(walletBalance) || walletBalance < 0){
+      showToast("Invalid wallet amount");
+      return;
+    }
+
+    const r = await apiFetch("/clients/wallet", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ id, walletBalance })
+    });
+    const d = await r.json().catch(()=> ({}));
+    if(!r.ok){
+      showToast(d.error || "Wallet save failed");
+      return;
+    }
+
+    showToast("Wallet updated ✅");
+    await loadClients();
   }
 
   document.getElementById("btnRefreshClients").addEventListener("click", loadClients);
@@ -608,6 +639,7 @@
   const cPkg = document.getElementById("cPkg");
   const cPrice = document.getElementById("cPrice");
   const cBill = document.getElementById("cBill");
+  const cWallet = document.getElementById("cWallet");
   const clientMsg = document.getElementById("clientMsg");
 
   function resetClientForm(){
@@ -618,6 +650,7 @@
     cPkg.value = "";
     cPrice.value = "";
     cBill.value = "";
+    cWallet.value = "0.00";
     document.getElementById("clientFormTitle").textContent = "Add Client";
     document.getElementById("clientFormHint").textContent = "Create a new client, or click “Edit” on a client row.";
     clientMsg.textContent = "";
@@ -634,6 +667,7 @@
     cPkg.value = c.package_name || "";
     cPrice.value = c.price || "";
     cBill.value = c.billing_date || "";
+    cWallet.value = Number(c.wallet_balance || 0).toFixed(2);
     document.getElementById("clientFormTitle").textContent = "Edit Client #" + c.id;
     document.getElementById("clientFormHint").textContent = "Update fields and click Save. Leave password empty to keep current password.";
     showToast("Editing client #" + c.id);
@@ -658,6 +692,13 @@
     e.preventDefault();
     clientMsg.textContent = "";
     const id = cId.value ? Number(cId.value) : 0;
+    const walletBalance = Number(cWallet.value || 0);
+
+    if(!Number.isFinite(walletBalance) || walletBalance < 0){
+      clientMsg.style.color = "#ffb4b4";
+      clientMsg.textContent = "Wallet balance must be 0 or more.";
+      return;
+    }
 
     const body = {
       id,
@@ -667,6 +708,7 @@
       packageName: cPkg.value.trim(),
       price: cPrice.value.trim(),
       billingDate: cBill.value.trim(),
+      walletBalance
     };
 
     try{
@@ -714,7 +756,6 @@
     }
   });
 
-  // ===== Ad Accounts (existing) =====
   const adsRows = document.getElementById("adsRows");
   const adMsg = document.getElementById("adMsg");
   const aRowId = document.getElementById("aRowId");
@@ -879,8 +920,14 @@
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
+  function escapeAttr(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
 
-  // ===== BILLING MODAL LOGIC =====
   const billingModal = document.getElementById("billingModal");
   const billingRows = document.getElementById("billingRows");
   const billingTotals = document.getElementById("billingTotals");
@@ -902,8 +949,8 @@
   const expenseForm = document.getElementById("expenseForm");
   const expMsg = document.getElementById("expMsg");
 
-  let billingSort = "due_soon"; // due_soon | name
-  let invoiceMap = new Map(); // client_id -> invoice for selected month
+  let billingSort = "due_soon";
+  let invoiceMap = new Map();
 
   function setTab(which){
     [tabClients, tabExpenses, tabReport].forEach(x=>x.classList.remove("active"));
@@ -938,7 +985,6 @@
   billingModal.addEventListener("click", (e)=>{ if(e.target === billingModal) closeBilling(); });
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && billingModal.classList.contains("show")) closeBilling(); });
 
-  // default month = current month
   (function initMonth(){
     const d = new Date();
     const ym = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
@@ -956,7 +1002,6 @@
       refreshBillingExpenses(),
       refreshBillingReport()
     ]);
-    // rebuild rows after invoice map ready
     await refreshBillingClients();
   }
 
@@ -1029,7 +1074,6 @@
       billingRows.appendChild(tr);
     });
 
-    // wire buttons
     document.querySelectorAll("[data-bill-save]").forEach(btn=>{
       btn.onclick = ()=> saveBillingClient(Number(btn.getAttribute("data-bill-save")));
     });
@@ -1080,8 +1124,7 @@
   }
 
   async function markClientPaid(clientId){
-    const month = billMonth.value; // YYYY-MM
-    // Need due date + amount
+    const month = billMonth.value;
     const nextDueDate = document.querySelector(`[data-bill-due="${clientId}"]`)?.value || "";
     const amountUsd = Number(document.querySelector(`[data-bill-amt="${clientId}"]`)?.value || 0);
 
@@ -1094,10 +1137,8 @@
       return;
     }
 
-    // Ensure billing settings saved (helps keep dashboard accurate)
     await saveBillingClient(clientId);
 
-    // If invoice exists, pay it. If not, create then pay.
     const existing = invoiceMap.get(clientId);
     let invoiceId = existing?.id;
 
@@ -1141,7 +1182,6 @@
     await refreshBillingAll();
   }
 
-  // ===== Expenses =====
   async function refreshBillingExpenses(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
@@ -1193,7 +1233,6 @@
     await refreshBillingReport();
   });
 
-  // ===== Report =====
   async function refreshBillingReport(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
@@ -1211,7 +1250,6 @@
     pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
   }
 
-  // Auto-load if token already saved
   (async function init(){
     const t = getToken();
     if(!t) return;
