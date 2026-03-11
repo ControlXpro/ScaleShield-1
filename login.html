@@ -85,7 +85,9 @@ a{color:inherit;text-decoration:none}
   display:grid;gap:12px;margin-top:16px;
   max-width:520px;
 }
-label{font-weight:900;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
+label{
+  font-weight:900;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)
+}
 input, textarea{
   width:100%;
   padding:14px 14px;
@@ -95,7 +97,10 @@ input, textarea{
   color:#fff;
   outline:none;
 }
-input:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,94,.10)}
+input:focus, textarea:focus{
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 22px rgba(214,177,94,.10)
+}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .err{margin-top:10px;color:#ffb4b4;font-weight:900;display:none}
 .kicker{
@@ -250,23 +255,23 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 .panelSection{display:none;margin-top:18px}
 .panelSection.active{display:block}
 
-.requestWrap{display:grid;gap:14px}
-.requestBox{
+.boostWrap{display:grid;gap:14px}
+.boostBox{
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.03);
   border-radius:18px;padding:16px;
 }
-.requestTitle{font-weight:950;font-size:15px}
-.requestSub{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
-.requestGrid{
+.boostTitle{font-weight:950;font-size:15px}
+.boostSub{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
+.boostGrid{
   display:grid;grid-template-columns:1fr 1fr;
   gap:14px;margin-top:14px;
 }
-.requestField{display:flex;flex-direction:column;gap:8px}
-.requestField.full{grid-column:1 / -1}
-@media(max-width:760px){ .requestGrid{grid-template-columns:1fr} }
+.boostField{display:flex;flex-direction:column;gap:8px}
+.boostField.full{grid-column:1 / -1}
+@media(max-width:760px){ .boostGrid{grid-template-columns:1fr} }
 .helper{margin-top:8px;color:rgba(255,255,255,.45);font-size:12px;line-height:1.55}
-.requestActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.boostActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .notice{
   margin-top:14px;
   padding:12px 14px;border-radius:16px;
@@ -285,6 +290,21 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 .alert.success{
   color:#dcffe7;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.22);
 }
+.choiceRow{display:flex;gap:10px;flex-wrap:wrap}
+.choice{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 14px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+}
+.choice input{width:auto}
+.checkline{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 14px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+}
+.checkline input{width:auto}
 </style>
 </head>
 
@@ -333,7 +353,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 
       <div class="sectionTabs">
         <button class="tabBtn active" type="button" data-tab="overviewSection">Overview</button>
-        <button class="tabBtn" type="button" data-tab="requestSection">Paid Request</button>
+        <button class="tabBtn" type="button" data-tab="boostSection">Boost</button>
       </div>
 
       <div class="panelSection active" id="overviewSection">
@@ -375,43 +395,78 @@ td{color:rgba(255,255,255,.88);font-size:13px}
         </div>
       </div>
 
-      <div class="panelSection" id="requestSection">
-        <div class="requestWrap">
-          <div class="requestBox">
-            <div class="requestTitle">Paid Request</div>
-            <div class="requestSub">Create a paid request from your client panel.</div>
+      <div class="panelSection" id="boostSection">
+        <div class="boostWrap">
+          <div class="boostBox">
+            <div class="boostTitle">Boost</div>
+            <div class="boostSub">Send your boost settings to our team directly from your panel.</div>
 
             <div class="notice">
-              Estimated request price: <b>$10</b>.
-              Current wallet balance: <b id="requestBalanceInline">$0.00</b>
+              Fixed request price: <b>$10</b><br>
+              Current wallet balance: <b id="boostBalanceInline">$0.00</b>
             </div>
 
-            <div class="alert error" id="requestError"></div>
-            <div class="alert success" id="requestSuccess"></div>
+            <div class="alert error" id="boostError"></div>
+            <div class="alert success" id="boostSuccess"></div>
 
-            <form id="requestForm">
-              <div class="requestGrid">
-                <div class="requestField">
-                  <label for="requestTitleInput">Request Title</label>
-                  <input id="requestTitleInput" type="text" placeholder="Enter request title" required />
+            <form id="boostForm">
+              <div class="boostGrid">
+                <div class="boostField">
+                  <label for="boostTaskName">Task Name</label>
+                  <input id="boostTaskName" type="text" placeholder="Enter task name" required />
                 </div>
 
-                <div class="requestField">
-                  <label for="requestCostInput">Estimated Cost (USD)</label>
-                  <input id="requestCostInput" type="number" step="0.01" min="0" value="10" required />
+                <div class="boostField">
+                  <label for="boostPostUrl">Post URL</label>
+                  <input id="boostPostUrl" type="url" placeholder="https://facebook.com/..." required />
                 </div>
 
-                <div class="requestField full">
-                  <label for="requestDetailsInput">Request Details</label>
-                  <textarea id="requestDetailsInput" placeholder="Describe what you need..." rows="8" required></textarea>
-                  <div class="helper">This sends a notification to ScaleShield support with your client name and request details.</div>
+                <div class="boostField full">
+                  <label>Gender</label>
+                  <div class="choiceRow">
+                    <label class="choice"><input type="radio" name="boostGender" value="All" checked> <span>All</span></label>
+                    <label class="choice"><input type="radio" name="boostGender" value="Male"> <span>Male</span></label>
+                    <label class="choice"><input type="radio" name="boostGender" value="Female"> <span>Female</span></label>
+                  </div>
+                </div>
+
+                <div class="boostField full">
+                  <label>GEO</label>
+                  <div class="choiceRow">
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="BR"> <span>BR</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="DE"> <span>DE</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="ES"> <span>ES</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="FR"> <span>FR</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="IT"> <span>IT</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="TR"> <span>TR</span></label>
+                    <label class="choice"><input type="checkbox" name="boostGeo" value="US"> <span>US</span></label>
+                  </div>
+                  <div class="helper">You can choose multiple GEOs.</div>
+                </div>
+
+                <div class="boostField full">
+                  <label>Ages</label>
+                  <div class="choiceRow">
+                    <label class="choice"><input type="checkbox" name="boostAge" value="30-35"> <span>30-35</span></label>
+                    <label class="choice"><input type="checkbox" name="boostAge" value="35-40"> <span>35-40</span></label>
+                    <label class="choice"><input type="checkbox" name="boostAge" value="40-45"> <span>40-45</span></label>
+                  </div>
+                  <div class="helper">You can choose multiple age ranges.</div>
+                </div>
+
+                <div class="boostField full">
+                  <label>Page Review</label>
+                  <div class="checkline">
+                    <input id="boostPageReview" type="checkbox">
+                    <span>Include Page Review</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="requestActions">
-                <button class="btn" type="button" id="clearRequestBtn">Clear</button>
-                <button class="btn" type="button" id="topUpFromRequestBtn">Top Up</button>
-                <button class="btn btn-primary" type="submit" id="submitRequestBtn">Submit Request</button>
+              <div class="boostActions">
+                <button class="btn" type="button" id="clearBoostBtn">Clear</button>
+                <button class="btn" type="button" id="topUpFromBoostBtn">Top Up</button>
+                <button class="btn btn-primary" type="submit" id="submitBoostBtn">Boost</button>
               </div>
             </form>
           </div>
@@ -478,6 +533,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 const API_URL = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
 const REPLACE_WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
 const TOKEN_KEY = "ss_client_token";
+const BOOST_PRICE = 10;
 
 const toast = document.getElementById("toast");
 let toastTimer = null;
@@ -490,23 +546,23 @@ function showToast(msg){
   toastTimer = setTimeout(()=>toast.classList.remove("show"), 1400);
 }
 
-function showRequestError(msg){
-  const el = document.getElementById("requestError");
-  const ok = document.getElementById("requestSuccess");
+function showBoostError(msg){
+  const el = document.getElementById("boostError");
+  const ok = document.getElementById("boostSuccess");
   ok.style.display = "none";
   el.textContent = msg;
   el.style.display = "block";
 }
-function showRequestSuccess(msg){
-  const el = document.getElementById("requestSuccess");
-  const err = document.getElementById("requestError");
+function showBoostSuccess(msg){
+  const el = document.getElementById("boostSuccess");
+  const err = document.getElementById("boostError");
   err.style.display = "none";
   el.textContent = msg;
   el.style.display = "block";
 }
-function clearRequestMessages(){
-  document.getElementById("requestError").style.display = "none";
-  document.getElementById("requestSuccess").style.display = "none";
+function clearBoostMessages(){
+  document.getElementById("boostError").style.display = "none";
+  document.getElementById("boostSuccess").style.display = "none";
 }
 
 async function copyText(text){
@@ -520,7 +576,8 @@ async function copyText(text){
   ta.style.position = "fixed";
   ta.style.top = "-9999px";
   document.body.appendChild(ta);
-  ta.focus(); ta.select();
+  ta.focus();
+  ta.select();
   try{
     document.execCommand("copy");
     showToast("Copied ✅");
@@ -538,7 +595,9 @@ function escapeHtml(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
-function escapeAttr(s){ return escapeHtml(s).replaceAll('"',"&quot;"); }
+function escapeAttr(s){
+  return escapeHtml(s).replaceAll('"',"&quot;");
+}
 
 function getWalletBalance(client){
   const raw = client?.walletBalance ?? 0;
@@ -551,7 +610,7 @@ function formatMoney(v){
 function updateBalanceUI(){
   const bal = getWalletBalance(currentClientData);
   const main = document.getElementById("walletBalanceMain");
-  const inline = document.getElementById("requestBalanceInline");
+  const inline = document.getElementById("boostBalanceInline");
   if(main) main.textContent = formatMoney(bal);
   if(inline) inline.textContent = formatMoney(bal);
 }
@@ -594,19 +653,22 @@ async function sendReplacement(){
     replaceReason.focus();
     return;
   }
+
   sendReplaceBtn.disabled = true;
   sendReplaceBtn.textContent = "Sending...";
+
   try{
     const resp = await fetch(REPLACE_WORKER_URL, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
-  type: "replace",
-  clientName: currentClientName,
-  adAccountId: currentAdId,
-  reason
-})
+        type: "replace",
+        clientName: currentClientName,
+        adAccountId: currentAdId,
+        reason
+      })
     });
+
     if(resp.ok){
       showToast("Request sent ✅");
       closeReplaceModal();
@@ -662,7 +724,7 @@ function buildSummary(client){
   b.innerHTML = `
     <div class="title">Wallet Balance</div>
     <div class="balanceAmount" id="walletBalanceMain">${formatMoney(walletBalance)}</div>
-    <div class="balanceMeta">Use your wallet balance for paid client requests.</div>
+    <div class="balanceMeta">Use your wallet balance for boost requests.</div>
     <div class="balanceActions">
       <button class="copyBtn gold" type="button" id="topUpBtn">Top Up</button>
       <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
@@ -786,8 +848,8 @@ function logout(){
   document.querySelectorAll(".panelSection").forEach(s=>s.classList.remove("active"));
   document.querySelector('.tabBtn[data-tab="overviewSection"]').classList.add("active");
   document.getElementById("overviewSection").classList.add("active");
-  document.getElementById("requestForm").reset();
-  clearRequestMessages();
+  document.getElementById("boostForm").reset();
+  clearBoostMessages();
 }
 document.getElementById("btnLogout").addEventListener("click", logout);
 
@@ -811,8 +873,8 @@ async function apiClientMe(token){
   if(!resp.ok) return { ok:false, data };
   return { ok:true, data };
 }
-async function apiSendPaidRequest(token, payload){
-  const resp = await fetch(API_URL + "/client-requests/quote", {
+async function apiSendBoostRequest(token, payload){
+  const resp = await fetch(API_URL + "/client-boost-request", {
     method: "POST",
     headers: {
       "Content-Type":"application/json",
@@ -864,71 +926,88 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   else sessionStorage.removeItem(TOKEN_KEY);
 })();
 
-/* Request form */
-document.getElementById("clearRequestBtn").addEventListener("click", ()=>{
-  document.getElementById("requestForm").reset();
-  document.getElementById("requestCostInput").value = "10";
-  clearRequestMessages();
+/* Boost form */
+document.getElementById("clearBoostBtn").addEventListener("click", ()=>{
+  document.getElementById("boostForm").reset();
+  const defaultGender = document.querySelector('input[name="boostGender"][value="All"]');
+  if(defaultGender) defaultGender.checked = true;
+  clearBoostMessages();
   showToast("Form cleared");
 });
 
-document.getElementById("topUpFromRequestBtn").addEventListener("click", openTopUpModal);
+document.getElementById("topUpFromBoostBtn").addEventListener("click", openTopUpModal);
 
-document.getElementById("requestForm").addEventListener("submit", async (e)=>{
+document.getElementById("boostForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
-  clearRequestMessages();
+  clearBoostMessages();
 
   const token = sessionStorage.getItem(TOKEN_KEY) || "";
   if(!token){
-    showRequestError("Please log in again.");
-    return;
-  }
-
-  const requestTitle = document.getElementById("requestTitleInput").value.trim();
-  const requestDetails = document.getElementById("requestDetailsInput").value.trim();
-  const estimatedCost = Number(document.getElementById("requestCostInput").value || 0);
-
-  if(!requestTitle || !requestDetails){
-    showRequestError("Please fill all required fields.");
-    return;
-  }
-
-  if(!Number.isFinite(estimatedCost) || estimatedCost < 0){
-    showRequestError("Invalid estimated cost.");
+    showBoostError("Please log in again.");
     return;
   }
 
   const balance = getWalletBalance(currentClientData);
-  if(balance < estimatedCost){
-    showRequestError("Insufficient balance. Please top up your wallet before submitting this request.");
+  if(balance < BOOST_PRICE){
+    showBoostError("Insufficient balance. Please top up your wallet before submitting this request.");
     openTopUpModal();
     return;
   }
 
-  const btn = document.getElementById("submitRequestBtn");
+  const taskName = document.getElementById("boostTaskName").value.trim();
+  const postUrl = document.getElementById("boostPostUrl").value.trim();
+  const gender = document.querySelector('input[name="boostGender"]:checked')?.value || "All";
+  const geos = [...document.querySelectorAll('input[name="boostGeo"]:checked')].map(el => el.value);
+  const ages = [...document.querySelectorAll('input[name="boostAge"]:checked')].map(el => el.value);
+  const pageReview = document.getElementById("boostPageReview").checked;
+
+  if(!taskName || !postUrl){
+    showBoostError("Please fill all required fields.");
+    return;
+  }
+
+  const btn = document.getElementById("submitBoostBtn");
   btn.disabled = true;
-  btn.textContent = "Submitting...";
+  btn.textContent = "Sending...";
 
   try{
-    const res = await apiSendPaidRequest(token, {
-      requestTitle,
-      requestDetails,
-      estimatedCost
+    const res = await apiSendBoostRequest(token, {
+      taskName,
+      postUrl,
+      gender,
+      geos,
+      ages,
+      pageReview
     });
 
     if(!res.ok){
-      showRequestError(res.data?.error || "Request failed.");
+      showBoostError(res.data?.error || "Boost request failed.");
       return;
     }
 
-    showRequestSuccess("Request sent successfully ✅");
-    document.getElementById("requestForm").reset();
-    document.getElementById("requestCostInput").value = "10";
+    if(res.data?.client){
+      currentClientData = res.data.client;
+      buildSummary(currentClientData);
+      buildRows(currentClientData);
+      updateBalanceUI();
+      const search = document.getElementById("search");
+      if(search){
+        search.oninput = ()=>filterRows(search.value);
+      }
+    }else{
+      currentClientData.walletBalance = Math.max(0, getWalletBalance(currentClientData) - BOOST_PRICE);
+      updateBalanceUI();
+    }
+
+    showBoostSuccess("Boost request sent successfully ✅");
+    document.getElementById("boostForm").reset();
+    const defaultGender = document.querySelector('input[name="boostGender"][value="All"]');
+    if(defaultGender) defaultGender.checked = true;
   }catch(err){
-    showRequestError("Network error.");
+    showBoostError("Network error.");
   }finally{
     btn.disabled = false;
-    btn.textContent = "Submit Request";
+    btn.textContent = "Boost";
   }
 });
 </script>
