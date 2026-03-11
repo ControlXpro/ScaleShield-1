@@ -15,6 +15,9 @@
   --text:#fff;
   --muted:rgba(255,255,255,.65);
   --muted2:rgba(255,255,255,.45);
+  --danger:#ff8d8d;
+  --dangerBg:rgba(255,77,77,.12);
+  --success:#7ef0a5;
   --radius:22px;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
@@ -28,7 +31,6 @@ body{
   color:var(--text);
 }
 a{color:inherit;text-decoration:none}
-
 .wrap{max-width:1100px;margin:auto;padding:36px 18px 90px}
 .top{
   display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
@@ -39,21 +41,18 @@ a{color:inherit;text-decoration:none}
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
 .btn{
   padding:12px 16px;border-radius:16px;font-weight:900;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.05);
   transition:.25s var(--ease);
   display:inline-flex;align-items:center;gap:10px;
-  user-select:none;
-  cursor:pointer;
+  user-select:none;cursor:pointer;
 }
 .btn:hover{transform:translateY(-2px);border-color:rgba(214,177,94,.35);box-shadow:0 0 28px rgba(214,177,94,.12)}
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;border-color:transparent;
-  box-shadow:0 0 40px rgba(214,177,94,.18);
+  color:#111;border-color:transparent;box-shadow:0 0 40px rgba(214,177,94,.18);
 }
 .btn-primary:hover{filter:brightness(1.02)}
 .btn-whatsapp{
@@ -62,7 +61,6 @@ a{color:inherit;text-decoration:none}
   color:#fff;
 }
 .btn-whatsapp:hover{border-color:rgba(34,197,94,.45);box-shadow:0 0 26px rgba(34,197,94,.18)}
-
 .card{
   background:var(--panel);
   border:1px solid var(--border);
@@ -80,11 +78,9 @@ a{color:inherit;text-decoration:none}
   mask-image: radial-gradient(900px circle at 50% 30%, #000 45%, transparent 80%);
 }
 .card > *{position:relative}
-
 .h1{font-size:36px;font-weight:950;letter-spacing:-.02em;line-height:1.1}
 .p{margin-top:10px;color:var(--muted);line-height:1.7}
 .hr{height:1px;background:rgba(255,255,255,.08);margin:18px 0}
-
 .form{
   display:grid;gap:12px;margin-top:16px;
   max-width:520px;
@@ -102,36 +98,23 @@ input{
 input:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,94,.10)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .err{margin-top:10px;color:#ffb4b4;font-weight:900;display:none}
-
 .kicker{
   display:flex;align-items:center;gap:10px;
   color:var(--muted2);
-  font-size:12px;
-  letter-spacing:.22em;
-  font-weight:950;
-  text-transform:uppercase;
+  font-size:12px;letter-spacing:.22em;font-weight:950;text-transform:uppercase;
 }
 .kdot{
   width:8px;height:8px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   box-shadow:0 0 18px rgba(214,177,94,.22);
 }
-
 .dashboard{display:none;margin-top:14px}
-
-/* Summary */
-.grid{
-  margin-top:14px;
-  display:grid;
-  gap:14px;
-}
+.grid{margin-top:14px;display:grid;gap:14px}
 @media(min-width:980px){ .grid{grid-template-columns:1fr 1.2fr} }
-
 .box{
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.03);
-  border-radius:18px;
-  padding:16px;
+  border-radius:18px;padding:16px;
 }
 .title{font-weight:950;font-size:14px}
 .small{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
@@ -145,18 +128,28 @@ input:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,9
   font-size:12px;font-weight:900;
 }
 .pill strong{color:#fff}
-.pill.gold{
-  border-color:rgba(214,177,94,.22);
-  background:rgba(214,177,94,.10);
+.pill.gold{border-color:rgba(214,177,94,.22);background:rgba(214,177,94,.10)}
+.pill.green{border-color:rgba(34,197,94,.22);background:rgba(34,197,94,.10);color:#d8ffe7}
+.balanceCard{
+  border:1px solid rgba(214,177,94,.18);
+  background:linear-gradient(180deg, rgba(214,177,94,.10), rgba(255,255,255,.03));
 }
-
-/* Table */
+.balanceAmount{
+  margin-top:10px;
+  font-size:34px;font-weight:950;letter-spacing:-.03em;
+  color:var(--gold2);
+}
+.balanceMeta{
+  margin-top:8px;color:var(--muted);font-size:13px;
+}
+.balanceActions{
+  margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;
+}
 .tableWrap{
   margin-top:12px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.03);
-  border-radius:18px;
-  overflow:hidden;
+  border-radius:18px;overflow:hidden;
 }
 .tblHead{
   padding:12px 14px;
@@ -172,23 +165,18 @@ input:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,9
   display:flex;align-items:center;gap:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(0,0,0,.22);
-  border-radius:14px;
-  padding:10px 12px;
+  border-radius:14px;padding:10px 12px;
 }
 .search input{
   border:none;background:transparent;padding:0;
   outline:none;color:#fff;width:220px;
 }
 .search input::placeholder{color:rgba(255,255,255,.38)}
-
 table{width:100%;border-collapse:collapse}
 th, td{padding:12px 14px;text-align:left;vertical-align:middle}
 th{
-  font-size:12px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.55);
-  font-weight:950;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);font-weight:950;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 tr{border-bottom:1px solid rgba(255,255,255,.06)}
@@ -199,10 +187,8 @@ td{color:rgba(255,255,255,.88);font-size:13px}
   font-size:12.5px;color:rgba(255,255,255,.92);
   background:rgba(0,0,0,.18);
   border:1px solid rgba(255,255,255,.10);
-  padding:6px 8px;border-radius:12px;
-  display:inline-block;
-  max-width:100%;
-  overflow:hidden;text-overflow:ellipsis;
+  padding:6px 8px;border-radius:12px;display:inline-block;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;
 }
 .rowActions{display:flex;gap:8px;flex-wrap:wrap}
 .copyBtn{
@@ -210,225 +196,127 @@ td{color:rgba(255,255,255,.88);font-size:13px}
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
   font-weight:950;color:#fff;
-  cursor:pointer;
-  transition:.2s var(--ease);
-  user-select:none;
-  white-space:nowrap;
+  cursor:pointer;transition:.2s var(--ease);
+  user-select:none;white-space:nowrap;
 }
 .copyBtn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 20px rgba(214,177,94,.10)}
-.copyBtn.gold{
-  border-color:rgba(214,177,94,.22);
-  background:rgba(214,177,94,.10);
-}
-
-/* Mobile table -> cards */
+.copyBtn.gold{border-color:rgba(214,177,94,.22);background:rgba(214,177,94,.10)}
 @media(max-width:760px){
   table, thead, tbody, th, td, tr{display:block;width:100%}
   thead{display:none}
-  tr{
-    border-bottom:1px solid rgba(255,255,255,.08);
-    padding:14px 14px;
-  }
+  tr{border-bottom:1px solid rgba(255,255,255,.08);padding:14px 14px}
   td{padding:8px 0}
   td::before{
-    content:attr(data-label);
-    display:block;
-    color:rgba(255,255,255,.55);
-    font-weight:950;
-    font-size:12px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    margin-bottom:6px;
+    content:attr(data-label);display:block;
+    color:rgba(255,255,255,.55);font-weight:950;font-size:12px;
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;
   }
 }
-
-/* Toast */
 .toast{
   position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-  background:rgba(0,0,0,.65);
-  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.14);
   padding:10px 12px;border-radius:999px;
-  color:rgba(255,255,255,.9);
-  font-weight:950;font-size:12px;
-  opacity:0;pointer-events:none;
-  transition:.25s var(--ease);
+  color:rgba(255,255,255,.9);font-weight:950;font-size:12px;
+  opacity:0;pointer-events:none;transition:.25s var(--ease);z-index:10000;
 }
 .toast.show{opacity:1}
-
-/* Modal */
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.78);
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  padding:18px;
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);
+  align-items:center;justify-content:center;z-index:9999;padding:18px;
 }
 .modalCard{
-  width:520px;
-  max-width:100%;
+  width:560px;max-width:100%;
   background:rgba(15,15,18,.96);
   border:1px solid rgba(255,255,255,.12);
-  border-radius:22px;
-  padding:18px;
+  border-radius:22px;padding:18px;
   box-shadow:0 30px 90px rgba(0,0,0,.65);
 }
-.modalTop{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-}
-.modalTitle{
-  font-size:18px;font-weight:950;
-}
-.modalMeta{
-  margin-top:6px;color:rgba(255,255,255,.70);font-size:13px;line-height:1.55;
-}
+.modalTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modalTitle{font-size:18px;font-weight:950}
+.modalMeta{margin-top:6px;color:rgba(255,255,255,.70);font-size:13px;line-height:1.55}
 textarea{
-  width:100%;
-  margin-top:14px;
-  border-radius:16px;
+  width:100%;margin-top:14px;border-radius:16px;
   border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  color:#fff;
-  padding:12px 12px;
-  min-height:110px;
-  outline:none;
-  resize:vertical;
+  background:rgba(0,0,0,.22);color:#fff;padding:12px 12px;
+  min-height:110px;outline:none;resize:vertical;
 }
-textarea:focus{
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 22px rgba(214,177,94,.10);
-}
-.modalActions{
-  margin-top:14px;
-  display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
-}
-.modalHint{
-  margin-top:10px;
-  color:rgba(255,255,255,.45);
-  font-size:12px;
-  line-height:1.55;
-}
-
-/* Hide sensitive content until login */
+textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 22px rgba(214,177,94,.10)}
+.modalActions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.modalHint{margin-top:10px;color:rgba(255,255,255,.45);font-size:12px;line-height:1.55}
 #dashboard, #authBar { display:none; }
 
-/* Dashboard nav */
-.sectionTabs{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:18px;
-}
+.sectionTabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .tabBtn{
-  padding:11px 14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-  transition:.25s var(--ease);
+  padding:11px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:#fff;font-weight:900;cursor:pointer;transition:.25s var(--ease);
 }
-.tabBtn:hover{
-  transform:translateY(-1px);
-  border-color:rgba(214,177,94,.35);
-}
+.tabBtn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35)}
 .tabBtn.active{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;
-  border-color:transparent;
-  box-shadow:0 0 30px rgba(214,177,94,.18);
+  color:#111;border-color:transparent;box-shadow:0 0 30px rgba(214,177,94,.18);
 }
-
 .panelSection{display:none;margin-top:18px}
 .panelSection.active{display:block}
 
-/* Boost form */
-.boostWrap{
-  display:grid;
-  gap:14px;
-}
+.boostWrap{display:grid;gap:14px}
 .boostBox{
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.03);
-  border-radius:18px;
-  padding:16px;
+  border-radius:18px;padding:16px;
 }
-.boostTitle{
-  font-weight:950;
-  font-size:15px;
-}
-.boostSub{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-}
+.boostTitle{font-weight:950;font-size:15px}
+.boostSub{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
 .boostGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:14px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;margin-top:14px;
 }
-.boostField{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.boostField.full{
-  grid-column:1 / -1;
-}
-@media(max-width:760px){
-  .boostGrid{grid-template-columns:1fr}
-}
-.choiceRow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:4px;
-}
-.choice{
-  position:relative;
-}
+.boostField{display:flex;flex-direction:column;gap:8px}
+.boostField.full{grid-column:1 / -1}
+@media(max-width:760px){ .boostGrid{grid-template-columns:1fr} }
+.choiceRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.choice{position:relative}
 .choice input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
+  position:absolute;opacity:0;pointer-events:none;
+  width:1px;height:1px;
 }
 .choice span{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:42px;
-  padding:0 14px;
-  border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:42px;padding:0 14px;border-radius:999px;
   border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  color:#fff;
-  font-size:13px;
-  font-weight:900;
-  cursor:pointer;
-  transition:.2s var(--ease);
+  background:rgba(255,255,255,.04);color:#fff;
+  font-size:13px;font-weight:900;cursor:pointer;transition:.2s var(--ease);
 }
 .choice input:checked + span{
   border-color:rgba(214,177,94,.28);
-  background:rgba(214,177,94,.12);
-  color:var(--gold2);
+  background:rgba(214,177,94,.12);color:var(--gold2);
   box-shadow:0 0 20px rgba(214,177,94,.10);
 }
-.helper{
-  margin-top:8px;
-  color:rgba(255,255,255,.45);
-  font-size:12px;
-  line-height:1.55;
+.checkline{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  padding:12px 14px;border-radius:16px;
 }
-.boostActions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+.checkline input{width:18px;height:18px;accent-color:#d6b15e}
+.helper{margin-top:8px;color:rgba(255,255,255,.45);font-size:12px;line-height:1.55}
+.boostActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.notice{
   margin-top:14px;
+  padding:12px 14px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.03);
+  color:rgba(255,255,255,.78);
+  font-size:13px;line-height:1.6;
+}
+.alert{
+  margin-top:14px;padding:12px 14px;border-radius:16px;
+  font-size:13px;font-weight:900;display:none;
+}
+.alert.error{
+  display:none;color:#ffd0d0;background:var(--dangerBg);border:1px solid rgba(255,77,77,.22);
+}
+.alert.success{
+  display:none;color:#dcffe7;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.22);
 }
 </style>
 </head>
@@ -474,14 +362,13 @@ textarea:focus{
 
     <div class="dashboard" id="dashboard">
       <div class="kicker"><span class="kdot"></span> CLIENT DASHBOARD</div>
-      <div class="p" style="margin-top:10px;">Subscription + account mapping (organized view).</div>
+      <div class="p" style="margin-top:10px;">Subscription + account mapping + wallet overview.</div>
 
       <div class="sectionTabs">
         <button class="tabBtn active" type="button" data-tab="overviewSection">Overview</button>
         <button class="tabBtn" type="button" data-tab="boostSection">Boost</button>
       </div>
 
-      <!-- OVERVIEW -->
       <div class="panelSection active" id="overviewSection">
         <div class="grid" id="summaryGrid"></div>
 
@@ -521,12 +408,19 @@ textarea:focus{
         </div>
       </div>
 
-      <!-- BOOST -->
       <div class="panelSection" id="boostSection">
         <div class="boostWrap">
           <div class="boostBox">
             <div class="boostTitle">Boost Request</div>
-            <div class="boostSub">Fill out the form below to submit a boost request from your client panel.</div>
+            <div class="boostSub">Fill out the form below to create a request from your panel.</div>
+
+            <div class="notice">
+              Task price: <b>$10</b> per request.
+              Current wallet balance: <b id="boostBalanceInline">$0.00</b>
+            </div>
+
+            <div class="alert error" id="boostError"></div>
+            <div class="alert success" id="boostSuccess"></div>
 
             <form id="boostForm">
               <div class="boostGrid">
@@ -581,10 +475,21 @@ textarea:focus{
                   </div>
                   <div class="helper">You can choose multiple age groups.</div>
                 </div>
+
+                <div class="boostField full">
+                  <label>Extra Option</label>
+                  <div class="checkline">
+                    <input type="checkbox" id="pageReviews" name="pageReviews">
+                    <label for="pageReviews" style="margin:0;letter-spacing:0;text-transform:none;font-size:14px;color:#fff;font-weight:800;cursor:pointer;">
+                      Include Page Reviews
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div class="boostActions">
                 <button class="btn" type="button" id="clearBoostBtn">Clear</button>
+                <button class="btn" type="button" id="topUpFromBoostBtn">Top Up</button>
                 <button class="btn btn-primary" type="submit" id="submitBoostBtn">Submit Request</button>
               </div>
             </form>
@@ -621,11 +526,38 @@ textarea:focus{
   </div>
 </div>
 
+<div class="modal" id="topUpModal" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="topUpTitle">
+    <div class="modalTop">
+      <div>
+        <div class="modalTitle" id="topUpTitle">Top Up Wallet</div>
+        <div class="modalMeta">
+          Contact support to top up your balance.
+        </div>
+      </div>
+      <button class="copyBtn" type="button" id="closeTopUpBtn">Close</button>
+    </div>
+
+    <div class="notice" style="margin-top:14px;">
+      To add funds to your wallet, please contact our support team using one of the options below.
+    </div>
+
+    <div class="modalActions" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn btn-primary" href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram Support</a>
+      <a class="btn btn-whatsapp" href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp Support</a>
+    </div>
+
+    <div class="modalHint">
+      Once your payment is confirmed, support will update your wallet balance.
+    </div>
+  </div>
+</div>
+
 <script>
 const API_URL = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
 const REPLACE_WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
-
 const TOKEN_KEY = "ss_client_token";
+const BOOST_PRICE = 10;
 
 const toast = document.getElementById("toast");
 let toastTimer = null;
@@ -636,6 +568,25 @@ function showToast(msg){
   toast.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=>toast.classList.remove("show"), 1400);
+}
+
+function showBoostError(msg){
+  const el = document.getElementById("boostError");
+  const ok = document.getElementById("boostSuccess");
+  ok.style.display = "none";
+  el.textContent = msg;
+  el.style.display = "block";
+}
+function showBoostSuccess(msg){
+  const el = document.getElementById("boostSuccess");
+  const err = document.getElementById("boostError");
+  err.style.display = "none";
+  el.textContent = msg;
+  el.style.display = "block";
+}
+function clearBoostMessages(){
+  document.getElementById("boostError").style.display = "none";
+  document.getElementById("boostSuccess").style.display = "none";
 }
 
 async function copyText(text){
@@ -649,8 +600,7 @@ async function copyText(text){
   ta.style.position = "fixed";
   ta.style.top = "-9999px";
   document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
+  ta.focus(); ta.select();
   try{
     document.execCommand("copy");
     showToast("Copied ✅");
@@ -668,11 +618,23 @@ function escapeHtml(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
-function escapeAttr(s){
-  return escapeHtml(s).replaceAll('"',"&quot;");
+function escapeAttr(s){ return escapeHtml(s).replaceAll('"',"&quot;"); }
+
+function getWalletBalance(client){
+  const raw = client?.walletBalance ?? client?.balance ?? client?.wallet ?? 0;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : 0;
+}
+function formatMoney(v){
+  return "$" + Number(v || 0).toFixed(2);
+}
+function updateBalanceUI(){
+  const bal = getWalletBalance(currentClientData);
+  const inline = document.getElementById("boostBalanceInline");
+  if(inline) inline.textContent = formatMoney(bal);
 }
 
-/* Replace modal state */
+/* Replace modal */
 let currentClientName = "";
 let currentAdId = "";
 
@@ -692,22 +654,16 @@ function openReplaceModal(adId, clientName){
   replaceModal.setAttribute("aria-hidden","false");
   setTimeout(()=>replaceReason.focus(), 50);
 }
-
 function closeReplaceModal(){
   replaceModal.style.display = "none";
   replaceModal.setAttribute("aria-hidden","true");
   currentAdId = "";
   currentClientName = "";
 }
-
 closeModalBtn.addEventListener("click", closeReplaceModal);
 cancelReplaceBtn.addEventListener("click", closeReplaceModal);
-replaceModal.addEventListener("click", (e)=>{
-  if(e.target === replaceModal) closeReplaceModal();
-});
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape" && replaceModal.style.display === "flex") closeReplaceModal();
-});
+replaceModal.addEventListener("click", (e)=>{ if(e.target === replaceModal) closeReplaceModal(); });
+document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && replaceModal.style.display === "flex") closeReplaceModal(); });
 
 async function sendReplacement(){
   const reason = replaceReason.value.trim();
@@ -716,10 +672,8 @@ async function sendReplacement(){
     replaceReason.focus();
     return;
   }
-
   sendReplaceBtn.disabled = true;
   sendReplaceBtn.textContent = "Sending...";
-
   try{
     const resp = await fetch(REPLACE_WORKER_URL, {
       method: "POST",
@@ -730,7 +684,6 @@ async function sendReplacement(){
         reason
       })
     });
-
     if(resp.ok){
       showToast("Request sent ✅");
       closeReplaceModal();
@@ -746,10 +699,27 @@ async function sendReplacement(){
 }
 sendReplaceBtn.addEventListener("click", sendReplacement);
 
-/* Build overview UI */
+/* Top up modal */
+const topUpModal = document.getElementById("topUpModal");
+const closeTopUpBtn = document.getElementById("closeTopUpBtn");
+
+function openTopUpModal(){
+  topUpModal.style.display = "flex";
+  topUpModal.setAttribute("aria-hidden","false");
+}
+function closeTopUpModal(){
+  topUpModal.style.display = "none";
+  topUpModal.setAttribute("aria-hidden","true");
+}
+closeTopUpBtn.addEventListener("click", closeTopUpModal);
+topUpModal.addEventListener("click", (e)=>{ if(e.target === topUpModal) closeTopUpModal(); });
+
+/* Build UI */
 function buildSummary(client){
   const grid = document.getElementById("summaryGrid");
   grid.innerHTML = "";
+
+  const walletBalance = getWalletBalance(client);
 
   const a = document.createElement("div");
   a.className = "box";
@@ -765,14 +735,25 @@ function buildSummary(client){
   `;
 
   const b = document.createElement("div");
-  b.className = "box";
-  const bm = (client.adAccounts?.[0]?.bmId) || "";
+  b.className = "box balanceCard";
   b.innerHTML = `
+    <div class="title">Wallet Balance</div>
+    <div class="balanceAmount" id="walletBalanceMain">${formatMoney(walletBalance)}</div>
+    <div class="balanceMeta">Use your wallet balance for client-side service requests.</div>
+    <div class="balanceActions">
+      <button class="copyBtn gold" type="button" id="topUpBtn">Top Up</button>
+      <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
+    </div>
+  `;
+
+  const c = document.createElement("div");
+  c.className = "box";
+  const bm = (client.adAccounts?.[0]?.bmId) || "";
+  c.innerHTML = `
     <div class="title">Quick Actions</div>
     <div class="small">Copy the BM ID or search accounts.</div>
     <div class="pillRow">
       <button class="copyBtn gold" type="button" id="quickCopyBm">Copy BM ID</button>
-      <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
     </div>
     <div class="small" style="margin-top:12px;color:rgba(255,255,255,.75)">
       Default BM ID: <span class="mono" title="${escapeAttr(bm)}">${escapeHtml(bm || "—")}</span>
@@ -781,6 +762,7 @@ function buildSummary(client){
 
   grid.appendChild(a);
   grid.appendChild(b);
+  grid.appendChild(c);
 
   document.getElementById("quickCopyBm").addEventListener("click", ()=> bm ? copyText(bm) : showToast("No BM ID"));
   document.getElementById("quickCopyAllAd").addEventListener("click", ()=>{
@@ -788,6 +770,7 @@ function buildSummary(client){
     if(!ids) return showToast("No Ad IDs");
     copyText(ids);
   });
+  document.getElementById("topUpBtn").addEventListener("click", openTopUpModal);
 }
 
 function buildRows(client){
@@ -843,7 +826,6 @@ function setupTabs(){
     btn.addEventListener("click", ()=>{
       buttons.forEach(b=>b.classList.remove("active"));
       sections.forEach(s=>s.classList.remove("active"));
-
       btn.classList.add("active");
       const target = document.getElementById(btn.dataset.tab);
       if(target) target.classList.add("active");
@@ -852,24 +834,22 @@ function setupTabs(){
 }
 setupTabs();
 
-/* Dashboard state */
+/* Login state */
 function showDashboard(client){
   currentClientData = client;
-
   document.getElementById("err").style.display = "none";
   document.getElementById("loginForm").style.display = "none";
-
   document.getElementById("authBar").style.display = "flex";
   document.getElementById("dashboard").style.display = "block";
 
   buildSummary(client);
   buildRows(client);
+  updateBalanceUI();
 
   const search = document.getElementById("search");
   search.value = "";
   search.oninput = ()=>filterRows(search.value);
 }
-
 function logout(){
   sessionStorage.removeItem(TOKEN_KEY);
   currentClientData = null;
@@ -879,13 +859,12 @@ function logout(){
   document.getElementById("err").style.display = "none";
   document.getElementById("login").value = "";
   document.getElementById("password").value = "";
-
   document.querySelectorAll(".tabBtn").forEach(b=>b.classList.remove("active"));
   document.querySelectorAll(".panelSection").forEach(s=>s.classList.remove("active"));
   document.querySelector('.tabBtn[data-tab="overviewSection"]').classList.add("active");
   document.getElementById("overviewSection").classList.add("active");
-
   document.getElementById("boostForm").reset();
+  clearBoostMessages();
 }
 document.getElementById("btnLogout").addEventListener("click", logout);
 
@@ -900,7 +879,6 @@ async function apiClientLogin(login, password){
   if(!resp.ok) return { ok:false, data };
   return { ok:true, data };
 }
-
 async function apiClientMe(token){
   const resp = await fetch(API_URL + "/client-me", {
     method: "GET",
@@ -913,10 +891,8 @@ async function apiClientMe(token){
 
 document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
-
   const login = document.getElementById("login").value.trim();
   const pass = document.getElementById("password").value;
-
   const btn = document.getElementById("btnLogin");
   btn.disabled = true;
   btn.textContent = "Logging in...";
@@ -927,7 +903,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
       document.getElementById("err").style.display = "block";
       return;
     }
-
     sessionStorage.setItem(TOKEN_KEY, res.data.token);
 
     const me = await apiClientMe(res.data.token);
@@ -936,7 +911,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
       sessionStorage.removeItem(TOKEN_KEY);
       return;
     }
-
     showDashboard(me.data.client);
   }catch(err){
     document.getElementById("err").style.display = "block";
@@ -955,16 +929,27 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   else sessionStorage.removeItem(TOKEN_KEY);
 })();
 
-/* Boost form */
+/* Boost form UI only */
 document.getElementById("clearBoostBtn").addEventListener("click", ()=>{
   document.getElementById("boostForm").reset();
   const defaultGender = document.querySelector('input[name="gender"][value="All"]');
   if(defaultGender) defaultGender.checked = true;
+  clearBoostMessages();
   showToast("Form cleared");
 });
 
+document.getElementById("topUpFromBoostBtn").addEventListener("click", openTopUpModal);
+
 document.getElementById("boostForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
+  clearBoostMessages();
+
+  const balance = getWalletBalance(currentClientData);
+  if(balance < BOOST_PRICE){
+    showBoostError("Insufficient balance. Please top up your wallet before submitting this request.");
+    openTopUpModal();
+    return;
+  }
 
   const btn = document.getElementById("submitBoostBtn");
   btn.disabled = true;
@@ -976,6 +961,7 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
     const gender = document.querySelector('input[name="gender"]:checked')?.value || "All";
     const geos = [...document.querySelectorAll('input[name="geos"]:checked')].map(el => el.value);
     const ages = [...document.querySelectorAll('input[name="ages"]:checked')].map(el => el.value);
+    const pageReviews = document.getElementById("pageReviews").checked;
 
     const payload = {
       clientName: currentClientData?.name || "",
@@ -983,23 +969,20 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
       postUrl,
       gender,
       geos,
-      ages
+      ages,
+      pageReviews
     };
 
-    console.log("Boost request payload:", payload);
+    console.log("Request payload:", payload);
 
-    showToast("Boost request submitted ✅");
-    document.getElementById("boostForm").reset();
-    const defaultGender = document.querySelector('input[name="gender"][value="All"]');
-    if(defaultGender) defaultGender.checked = true;
+    showBoostSuccess("Request form passed balance validation.");
   }catch(err){
-    showToast("Submit failed ❌");
+    showBoostError("Something went wrong while preparing the request.");
   }finally{
     btn.disabled = false;
     btn.textContent = "Submit Request";
   }
 });
 </script>
-
 </body>
 </html>
