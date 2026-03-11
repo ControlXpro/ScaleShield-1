@@ -601,10 +601,11 @@ async function sendReplacement(){
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
-        clientName: currentClientName,
-        adAccountId: currentAdId,
-        reason
-      })
+  type: "replace",
+  clientName: currentClientName,
+  adAccountId: currentAdId,
+  reason
+})
     });
     if(resp.ok){
       showToast("Request sent ✅");
