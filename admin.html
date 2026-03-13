@@ -17,8 +17,11 @@
       --ease:cubic-bezier(.2,.8,.2,1);
       --danger:#ff6b6b;
       --ok:#22c55e;
+      --blue:#60a5fa;
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
+
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:
@@ -28,6 +31,7 @@
       color:var(--text);
       padding:28px 16px 90px;
     }
+
     .wrap{max-width:1280px;margin:0 auto}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
     .brand{font-weight:950;font-size:20px}
@@ -35,6 +39,7 @@
       background:linear-gradient(135deg,var(--gold),var(--gold2));
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
+
     .btn{
       padding:10px 14px;border-radius:14px;font-weight:900;
       border:1px solid rgba(255,255,255,.12);
@@ -61,18 +66,26 @@
       color:#fff;
     }
     .btn-ok:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 24px rgba(34,197,94,.14)}
+
     .grid{display:grid;gap:14px}
-    @media(min-width:980px){ .grid{grid-template-columns: 1.05fr 1.1fr} }
+    @media(min-width:980px){ .grid{grid-template-columns:1.05fr 1.1fr} }
+
     .card{
       background:var(--panel);
       border:1px solid var(--border);
       border-radius:var(--radius);
       padding:16px;
     }
+
     h1{font-size:26px;font-weight:950;letter-spacing:-.02em}
     .p{margin-top:8px;color:var(--muted);line-height:1.6}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+    label{
+      font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(255,255,255,.55)
+    }
+
     input, select, textarea{
       width:100%;
       padding:12px 12px;border-radius:14px;
@@ -80,24 +93,25 @@
       background:rgba(0,0,0,.25);
       color:#fff;outline:none;
     }
-    input:focus, select:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(214,177,94,.35);
+      box-shadow:0 0 18px rgba(214,177,94,.10)
+    }
+
     .form{display:grid;gap:10px;margin-top:12px}
     .hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
     table{width:100%;border-collapse:collapse}
     th,td{padding:10px 10px;text-align:left;vertical-align:top}
     th{
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.55);
-      font-weight:950;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      white-space:nowrap;
+      font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(255,255,255,.55);font-weight:950;
+      border-bottom:1px solid rgba(255,255,255,.10);white-space:nowrap;
     }
     tr{border-bottom:1px solid rgba(255,255,255,.06)}
     td{color:rgba(255,255,255,.88);font-size:13px}
+
     .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       font-size:12.5px;
       background:rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
@@ -106,6 +120,7 @@
       max-width:100%;
       overflow:hidden;text-overflow:ellipsis;
     }
+
     .toast{
       position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
       background:rgba(0,0,0,.65);
@@ -118,16 +133,19 @@
       z-index:99999;
     }
     .toast.show{opacity:1}
+
     .hide{display:none !important}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
     .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
+
     .walletInput{
       width:110px;
       padding:8px 10px;
       border-radius:12px;
       font-size:12px;
     }
+
     .modal{
       position:fixed; inset:0;
       background:rgba(0,0,0,.78);
@@ -138,8 +156,9 @@
       padding:16px;
     }
     .modal.show{display:flex}
+
     .modalCard{
-      width:min(1200px, 100%);
+      width:min(1280px, 100%);
       max-height:92vh;
       overflow:auto;
       background:rgba(15,15,18,.96);
@@ -148,22 +167,28 @@
       box-shadow:0 30px 90px rgba(0,0,0,.65);
       padding:16px;
     }
+
     .modalTop{
       display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
     }
+
     .tabs{
       display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;
     }
+
     .tabBtn{
       padding:9px 12px;border-radius:999px;font-weight:950;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.05);
       cursor:pointer;
+      color:#fff;
     }
     .tabBtn.active{
       border-color:rgba(214,177,94,.35);
       box-shadow:0 0 24px rgba(214,177,94,.10);
+      background:rgba(214,177,94,.10);
     }
+
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 10px;border-radius:999px;
@@ -173,11 +198,51 @@
     }
     .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
+    .pill.blue{border-color:rgba(96,165,250,.35); background:rgba(96,165,250,.10)}
+
     .inlineInput{
       width:150px;
       padding:8px 10px;
       border-radius:12px;
       font-size:12px;
+    }
+
+    .statsGrid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(180px,1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+    @media(max-width:980px){
+      .statsGrid{grid-template-columns:repeat(2,minmax(180px,1fr))}
+    }
+    @media(max-width:620px){
+      .statsGrid{grid-template-columns:1fr}
+    }
+
+    .statCard{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:18px;
+      padding:14px;
+    }
+    .statLabel{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:rgba(255,255,255,.55);
+      font-weight:900;
+    }
+    .statValue{
+      margin-top:10px;
+      font-size:28px;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+    .statSub{
+      margin-top:6px;
+      font-size:12px;
+      color:rgba(255,255,255,.55);
     }
   </style>
 </head>
@@ -332,10 +397,11 @@
     <div class="modalTop">
       <div>
         <h1 style="margin:0">Billing</h1>
-        <div class="p" style="margin-top:6px">Due soon, paid/unpaid tracking, expenses, monthly report.</div>
+        <div class="p" style="margin-top:6px">Clients, invoices, expenses, paychecks and monthly report.</div>
         <div class="tabs">
           <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
           <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
+          <button class="tabBtn" id="tabPaychecks" type="button">Paychecks</button>
           <button class="tabBtn" id="tabReport" type="button">Report</button>
         </div>
       </div>
@@ -377,7 +443,7 @@
       </div>
 
       <div class="hint" style="margin-top:10px">
-        Tip: Set next due date + monthly amount per client. “Mark Paid” will create an invoice (if missing) and mark it paid.
+        Tip: Set next due date + monthly amount per client. “Mark Paid” will create an invoice if missing and mark it paid.
       </div>
     </div>
 
@@ -427,6 +493,7 @@
               <th>Amount</th>
               <th>Vendor</th>
               <th>Note</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="expensesRows"></tbody>
@@ -434,22 +501,131 @@
       </div>
     </div>
 
+    <div id="billingPaychecksView" class="hide">
+      <div class="row" style="justify-content:space-between">
+        <h1 style="font-size:18px;margin:0">Add Paycheck</h1>
+      </div>
+
+      <form class="form" id="paycheckForm" style="max-width:700px">
+        <div class="row">
+          <div style="flex:1">
+            <label>Date</label>
+            <input id="payDate" type="date" required />
+          </div>
+          <div style="flex:1">
+            <label>Employee Name</label>
+            <input id="payEmployee" placeholder="John Doe" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1">
+            <label>Amount USD</label>
+            <input id="payAmount" type="number" step="0.01" placeholder="500" required />
+          </div>
+          <div style="flex:1">
+            <label>Status</label>
+            <select id="payStatus">
+              <option value="unpaid">unpaid</option>
+              <option value="paid">paid</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label>Note</label>
+          <textarea id="payNote" placeholder="Optional note"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add Paycheck</button>
+        <div class="p" id="payMsg" style="margin-top:6px"></div>
+      </form>
+
+      <div class="hr"></div>
+
+      <h1 style="font-size:18px;margin:0">Paychecks (month)</h1>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Employee</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="paychecksRows"></tbody>
+        </table>
+      </div>
+    </div>
+
     <div id="billingReportView" class="hide">
       <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-      <div class="p">Revenue is calculated from payments. Expenses from your expenses table.</div>
+      <div class="p">Full monthly overview based on invoices, payments, expenses and paychecks.</div>
 
-      <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap">
-        <div class="pill ok" id="pillRevenue">Revenue: $0</div>
-        <div class="pill bad" id="pillExpenses">Expenses: $0</div>
-        <div class="pill" id="pillProfit">Profit: $0</div>
-        <div class="pill" id="pillUnpaid">Unpaid: $0</div>
+      <div class="statsGrid">
+        <div class="statCard">
+          <div class="statLabel">Revenue</div>
+          <div class="statValue" id="statRevenue">$0.00</div>
+          <div class="statSub">Paid invoices / sales</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Expenses</div>
+          <div class="statValue" id="statExpenses">$0.00</div>
+          <div class="statSub">Monthly expenses</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Profit</div>
+          <div class="statValue" id="statProfit">$0.00</div>
+          <div class="statSub">Revenue minus expenses</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Unpaid</div>
+          <div class="statValue" id="statUnpaid">$0.00</div>
+          <div class="statSub">Outstanding invoices</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Starting Balance</div>
+          <div class="statValue" id="statStarting">$0.00</div>
+          <div class="statSub">Bank balance start</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Paid Paychecks</div>
+          <div class="statValue" id="statPaychecks">$0.00</div>
+          <div class="statSub">Payroll paid this month</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Ending Balance</div>
+          <div class="statValue" id="statEnding">$0.00</div>
+          <div class="statSub">Projected month end</div>
+        </div>
+
+        <div class="statCard">
+          <div class="statLabel">Current Bank Balance</div>
+          <div class="statValue" id="statBankNow">$0.00</div>
+          <div class="statSub">Live bank balance row</div>
+        </div>
       </div>
 
       <div class="hr"></div>
 
-      <div class="hint">
-        If Revenue is 0, you haven’t used “Mark Paid” yet (or recorded payments). After you mark invoices paid, revenue will show here.
+      <div class="row" style="align-items:flex-end;max-width:520px">
+        <div style="flex:1">
+          <label>Current Bank Balance</label>
+          <input id="bankBalanceInput" type="number" step="0.01" placeholder="0.00" />
+        </div>
+        <button class="btn btn-primary" id="btnSaveBankBalance" type="button">Save Bank Balance</button>
       </div>
+
+      <div class="p" id="bankMsg" style="margin-top:10px"></div>
     </div>
   </div>
 </div>
@@ -465,6 +641,10 @@
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
+  }
+
+  function money(v){
+    return "$" + Number(v || 0).toFixed(2);
   }
 
   function setErr(msg){
@@ -933,35 +1113,41 @@
 
   const tabClients = document.getElementById("tabClients");
   const tabExpenses = document.getElementById("tabExpenses");
+  const tabPaychecks = document.getElementById("tabPaychecks");
   const tabReport = document.getElementById("tabReport");
+
   const billingClientsView = document.getElementById("billingClientsView");
   const billingExpensesView = document.getElementById("billingExpensesView");
+  const billingPaychecksView = document.getElementById("billingPaychecksView");
   const billingReportView = document.getElementById("billingReportView");
-
-  const pillRevenue = document.getElementById("pillRevenue");
-  const pillExpenses = document.getElementById("pillExpenses");
-  const pillProfit = document.getElementById("pillProfit");
-  const pillUnpaid = document.getElementById("pillUnpaid");
 
   const expensesRows = document.getElementById("expensesRows");
   const expenseForm = document.getElementById("expenseForm");
   const expMsg = document.getElementById("expMsg");
 
+  const paychecksRows = document.getElementById("paychecksRows");
+  const paycheckForm = document.getElementById("paycheckForm");
+  const payMsg = document.getElementById("payMsg");
+
   let billingSort = "due_soon";
   let invoiceMap = new Map();
 
   function setTab(which){
-    [tabClients, tabExpenses, tabReport].forEach(x=>x.classList.remove("active"));
+    [tabClients, tabExpenses, tabPaychecks, tabReport].forEach(x=>x.classList.remove("active"));
     billingClientsView.classList.add("hide");
     billingExpensesView.classList.add("hide");
+    billingPaychecksView.classList.add("hide");
     billingReportView.classList.add("hide");
 
     if(which === "clients"){ tabClients.classList.add("active"); billingClientsView.classList.remove("hide"); }
     if(which === "expenses"){ tabExpenses.classList.add("active"); billingExpensesView.classList.remove("hide"); }
+    if(which === "paychecks"){ tabPaychecks.classList.add("active"); billingPaychecksView.classList.remove("hide"); }
     if(which === "report"){ tabReport.classList.add("active"); billingReportView.classList.remove("hide"); }
   }
+
   tabClients.onclick = ()=>setTab("clients");
   tabExpenses.onclick = ()=>setTab("expenses");
+  tabPaychecks.onclick = ()=>setTab("paychecks");
   tabReport.onclick = ()=>setTab("report");
 
   function openBilling(){
@@ -974,10 +1160,12 @@
     setTab("clients");
     refreshBillingAll();
   }
+
   function closeBilling(){
     billingModal.classList.remove("show");
     billingModal.setAttribute("aria-hidden","true");
   }
+
   document.getElementById("btnBilling").onclick = openBilling;
   document.getElementById("btnBillingClose").onclick = closeBilling;
   billingModal.addEventListener("click", (e)=>{ if(e.target === billingModal) closeBilling(); });
@@ -995,10 +1183,12 @@
 
   async function refreshBillingAll(){
     await Promise.all([
-      refreshBillingClients(),
       refreshBillingInvoices(),
+      refreshBillingClients(),
       refreshBillingExpenses(),
-      refreshBillingReport()
+      refreshPaychecks(),
+      refreshBillingReport(),
+      refreshBankBalance()
     ]);
     await refreshBillingClients();
   }
@@ -1006,7 +1196,6 @@
   async function refreshBillingClients(){
     billingRows.innerHTML = "";
     billingTotals.innerHTML = "";
-    invoiceMap = invoiceMap || new Map();
 
     const r = await apiFetch("/billing/clients?sort=" + encodeURIComponent(billingSort));
     const d = await r.json().catch(()=>({}));
@@ -1109,9 +1298,7 @@
         clientId,
         status,
         nextDueDate,
-        monthlyAmountUsd,
-        currency: "USD",
-        notes: ""
+        monthlyAmountUsd
       })
     });
     const d = await r.json().catch(()=>({}));
@@ -1195,9 +1382,32 @@
         <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
         <td>${escapeHtml(x.vendor || "")}</td>
         <td>${escapeHtml(x.note || "")}</td>
+        <td>
+          <button class="btn btn-danger mini" data-exp-del="${x.id}">Delete</button>
+        </td>
       `;
       expensesRows.appendChild(tr);
     });
+
+    document.querySelectorAll("[data-exp-del]").forEach(btn=>{
+      btn.onclick = ()=> deleteExpense(Number(btn.getAttribute("data-exp-del")));
+    });
+  }
+
+  async function deleteExpense(id){
+    const ok = confirm("Delete expense?");
+    if(!ok) return;
+
+    const r = await apiFetch("/billing/expenses?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Delete expense failed");
+      return;
+    }
+
+    showToast("Expense deleted ✅");
+    await refreshBillingExpenses();
+    await refreshBillingReport();
   }
 
   expenseForm.addEventListener("submit", async (e)=>{
@@ -1231,22 +1441,170 @@
     await refreshBillingReport();
   });
 
+  async function refreshPaychecks(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/paychecks?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ showToast(d.error || "Paychecks load failed"); return; }
+
+    paychecksRows.innerHTML = "";
+    (d.paychecks || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.date || "")}</td>
+        <td>${escapeHtml(x.employee_name || "")}</td>
+        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td>
+          <select class="inlineInput" data-pay-status="${x.id}">
+            <option value="unpaid" ${x.status==="unpaid"?"selected":""}>unpaid</option>
+            <option value="paid" ${x.status==="paid"?"selected":""}>paid</option>
+          </select>
+        </td>
+        <td>${escapeHtml(x.note || "")}</td>
+        <td>
+          <div class="actions">
+            <button class="btn mini btn-ok" data-pay-save="${x.id}">Save</button>
+            <button class="btn btn-danger mini" data-pay-del="${x.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      paychecksRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-pay-save]").forEach(btn=>{
+      btn.onclick = ()=> savePaycheckStatus(Number(btn.getAttribute("data-pay-save")));
+    });
+    document.querySelectorAll("[data-pay-del]").forEach(btn=>{
+      btn.onclick = ()=> deletePaycheck(Number(btn.getAttribute("data-pay-del")));
+    });
+  }
+
+  paycheckForm.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    payMsg.textContent = "";
+
+    const month = billMonth.value;
+    const date = document.getElementById("payDate").value;
+    const employeeName = document.getElementById("payEmployee").value.trim();
+    const amountUsd = Number(document.getElementById("payAmount").value);
+    const status = document.getElementById("payStatus").value;
+    const note = document.getElementById("payNote").value.trim();
+
+    const r = await apiFetch("/billing/paychecks", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        period: month,
+        date,
+        employeeName,
+        amountUsd,
+        status,
+        note
+      })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      payMsg.style.color = "#ffb4b4";
+      payMsg.textContent = d.error || "Add paycheck failed";
+      return;
+    }
+
+    payMsg.style.color = "rgba(255,255,255,.85)";
+    payMsg.textContent = "Paycheck added ✅";
+    showToast("Saved ✅");
+
+    paycheckForm.reset();
+    document.getElementById("payStatus").value = "unpaid";
+    await refreshPaychecks();
+    await refreshBillingReport();
+  });
+
+  async function savePaycheckStatus(id){
+    const status = document.querySelector(`[data-pay-status="${id}"]`)?.value || "unpaid";
+    const r = await apiFetch("/billing/paychecks/status", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ id, status })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Save paycheck failed");
+      return;
+    }
+    showToast("Paycheck updated ✅");
+    await refreshPaychecks();
+    await refreshBillingReport();
+  }
+
+  async function deletePaycheck(id){
+    const ok = confirm("Delete paycheck?");
+    if(!ok) return;
+
+    const r = await apiFetch("/billing/paychecks?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Delete paycheck failed");
+      return;
+    }
+
+    showToast("Paycheck deleted ✅");
+    await refreshPaychecks();
+    await refreshBillingReport();
+  }
+
   async function refreshBillingReport(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/report?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Report load failed"); return; }
 
-    const revenue = Number(d.revenue || 0);
-    const expenses = Number(d.expenses || 0);
-    const profit = Number(d.profit || 0);
-    const unpaid = Number(d.unpaid_total || 0);
-
-    pillRevenue.textContent = `Revenue: $${revenue.toFixed(2)}`;
-    pillExpenses.textContent = `Expenses: $${expenses.toFixed(2)}`;
-    pillProfit.textContent = `Profit: $${profit.toFixed(2)}`;
-    pillUnpaid.textContent = `Unpaid: $${unpaid.toFixed(2)}`;
+    document.getElementById("statRevenue").textContent = money(d.revenue || 0);
+    document.getElementById("statExpenses").textContent = money(d.expenses || 0);
+    document.getElementById("statProfit").textContent = money(d.profit || 0);
+    document.getElementById("statUnpaid").textContent = money(d.unpaid_total || 0);
+    document.getElementById("statStarting").textContent = money(d.starting_balance || 0);
+    document.getElementById("statPaychecks").textContent = money(d.paychecks_paid || 0);
+    document.getElementById("statEnding").textContent = money(d.bank_balance_end || 0);
   }
+
+  async function refreshBankBalance(){
+    const r = await apiFetch("/billing/bank-balance");
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Bank balance load failed");
+      return;
+    }
+
+    document.getElementById("bankBalanceInput").value = Number(d.balance_usd || 0).toFixed(2);
+    document.getElementById("statBankNow").textContent = money(d.balance_usd || 0);
+  }
+
+  document.getElementById("btnSaveBankBalance").addEventListener("click", async ()=>{
+    const bankMsg = document.getElementById("bankMsg");
+    bankMsg.textContent = "";
+
+    const balanceUsd = Number(document.getElementById("bankBalanceInput").value || 0);
+
+    const r = await apiFetch("/billing/bank-balance", {
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ balanceUsd })
+    });
+    const d = await r.json().catch(()=>({}));
+
+    if(!r.ok){
+      bankMsg.style.color = "#ffb4b4";
+      bankMsg.textContent = d.error || "Save bank balance failed";
+      return;
+    }
+
+    bankMsg.style.color = "rgba(255,255,255,.85)";
+    bankMsg.textContent = "Bank balance saved ✅";
+    showToast("Saved ✅");
+
+    await refreshBankBalance();
+    await refreshBillingReport();
+  });
 
   (async function init(){
     const t = getToken();
