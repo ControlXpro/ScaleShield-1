@@ -205,6 +205,8 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 }
 .copyBtn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 20px rgba(214,177,94,.10)}
 .copyBtn.gold{border-color:rgba(214,177,94,.22);background:rgba(214,177,94,.10)}
+.copyBtn.red{border-color:rgba(255,107,107,.28);background:rgba(255,107,107,.12)}
+.copyBtn.red:hover{border-color:rgba(255,107,107,.45);box-shadow:0 0 20px rgba(255,107,107,.12)}
 @media(max-width:760px){
   table, thead, tbody, th, td, tr{display:block;width:100%}
   thead{display:none}
@@ -534,6 +536,7 @@ const API_URL = "https://scaleshield-api.lively-sunset-0c93.workers.dev";
 const REPLACE_WORKER_URL = "https://scaleshield-replace.lively-sunset-0c93.workers.dev";
 const TOKEN_KEY = "ss_client_token";
 const BOOST_PRICE = 10;
+const BM10_PRICE = 500;
 
 const toast = document.getElementById("toast");
 let toastTimer = null;
@@ -723,9 +726,10 @@ function buildSummary(client){
   b.innerHTML = `
     <div class="title">Wallet Balance</div>
     <div class="balanceAmount" id="walletBalanceMain">${formatMoney(walletBalance)}</div>
-    <div class="balanceMeta">Use your wallet balance for boost requests.</div>
+    <div class="balanceMeta">Use your wallet balance for boost requests and BM10 orders.</div>
     <div class="balanceActions">
       <button class="copyBtn gold" type="button" id="topUpBtn">Top Up</button>
+      <button class="copyBtn red" type="button" id="orderBm10Btn">Order BM10 — $500</button>
       <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
     </div>
   `;
@@ -755,6 +759,7 @@ function buildSummary(client){
     copyText(ids);
   });
   document.getElementById("topUpBtn").addEventListener("click", openTopUpModal);
+  document.getElementById("orderBm10Btn").addEventListener("click", orderBm10);
 }
 
 function buildRows(client){
@@ -879,7 +884,18 @@ async function apiSendBoostRequest(token, payload){
     body: JSON.stringify(payload)
   });
   const data = await resp.json().catch(()=> ({}));
-  return { ok: resp.ok, status: resp.status, data };
+  return { ok: resp.ok, data };
+}
+async function apiOrderBm10(token){
+  const resp = await fetch(API_URL + "/client-order-bm10", {
+    method: "POST",
+    headers: {
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token
+    }
+  });
+  const data = await resp.json().catch(()=> ({}));
+  return { ok: resp.ok, data };
 }
 
 document.getElementById("loginForm").addEventListener("submit", async (e)=>{
@@ -974,15 +990,8 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
       pageReviews
     });
 
-    console.log("BOOST RESPONSE:", res);
-
     if(!res.ok){
-      const msg =
-        res.data?.telegram_response?.description ||
-        res.data?.details ||
-        res.data?.error ||
-        "Boost request failed.";
-      showBoostError(msg);
+      showBoostError(res.data?.error || "Boost request failed.");
       return;
     }
 
@@ -1006,6 +1015,58 @@ document.getElementById("boostForm").addEventListener("submit", async (e)=>{
     btn.textContent = "Boost";
   }
 });
+
+async function orderBm10(){
+  const token = sessionStorage.getItem(TOKEN_KEY) || "";
+  if(!token){
+    showToast("Please log in again");
+    return;
+  }
+
+  const balance = getWalletBalance(currentClientData);
+  if(balance < BM10_PRICE){
+    showToast("You do not have enough money, please top up");
+    openTopUpModal();
+    return;
+  }
+
+  const ok = confirm("Order BM10 for $500?\nThis amount will be deducted from your wallet.");
+  if(!ok) return;
+
+  const btn = document.getElementById("orderBm10Btn");
+  if(btn){
+    btn.disabled = true;
+    btn.textContent = "Ordering...";
+  }
+
+  try{
+    const res = await apiOrderBm10(token);
+
+    if(!res.ok){
+      showToast(res.data?.error || "BM10 order failed");
+      return;
+    }
+
+    if(res.data?.client){
+      currentClientData = res.data.client;
+      buildSummary(currentClientData);
+      buildRows(currentClientData);
+      updateBalanceUI();
+      const search = document.getElementById("search");
+      if(search) search.oninput = ()=>filterRows(search.value);
+    }
+
+    showToast("BM10 ordered ✅");
+  }catch(err){
+    showToast("Network error");
+  }finally{
+    const newBtn = document.getElementById("orderBm10Btn");
+    if(newBtn){
+      newBtn.disabled = false;
+      newBtn.textContent = "Order BM10 — $500";
+    }
+  }
+}
 </script>
 </body>
 </html>
