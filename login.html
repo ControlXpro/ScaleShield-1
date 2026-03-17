@@ -48,6 +48,7 @@ a{color:inherit;text-decoration:none}
   transition:.25s var(--ease);
   display:inline-flex;align-items:center;gap:10px;
   user-select:none;cursor:pointer;
+  color:#fff;
 }
 .btn:hover{transform:translateY(-2px);border-color:rgba(214,177,94,.35);box-shadow:0 0 28px rgba(214,177,94,.12)}
 .btn-primary{
@@ -206,7 +207,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 .copyBtn:hover{transform:translateY(-1px);border-color:rgba(214,177,94,.35);box-shadow:0 0 20px rgba(214,177,94,.10)}
 .copyBtn.gold{border-color:rgba(214,177,94,.22);background:rgba(214,177,94,.10)}
 .copyBtn.red{border-color:rgba(255,107,107,.28);background:rgba(255,107,107,.12)}
-.copyBtn.red:hover{border-color:rgba(255,107,107,.45);box-shadow:0 0 20px rgba(255,107,107,.12)}
+.copyBtn.red:hover{border-color:rgba(255,107,107,.45);box-shadow:0 0 20px rgba(255,107,107,.14)}
 @media(max-width:760px){
   table, thead, tbody, th, td, tr{display:block;width:100%}
   thead{display:none}
@@ -365,7 +366,7 @@ td{color:rgba(255,255,255,.88);font-size:13px}
           <div class="tblHead">
             <div class="left">
               <b>Ad Accounts</b>
-              <span>Copy IDs or request replacement.</span>
+              <span>Copy IDs, request replacement, or bind to new BM.</span>
             </div>
 
             <div class="tblControls">
@@ -380,10 +381,10 @@ td{color:rgba(255,255,255,.88);font-size:13px}
           <table>
             <thead>
               <tr>
-                <th style="width:32%">Ad Account Name</th>
-                <th style="width:24%">Ad Account ID</th>
-                <th style="width:24%">Shared To BM ID</th>
-                <th style="width:20%">Actions</th>
+                <th style="width:24%">Ad Account Name</th>
+                <th style="width:20%">Ad Account ID</th>
+                <th style="width:20%">Shared To BM ID</th>
+                <th style="width:36%">Actions</th>
               </tr>
             </thead>
             <tbody id="rows"></tbody>
@@ -500,6 +501,37 @@ td{color:rgba(255,255,255,.88);font-size:13px}
 
     <div class="modalHint">
       This will send a request to ScaleShield support with your client name, ad account ID and reason.
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="bindBmModal" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="bindBmTitle">
+    <div class="modalTop">
+      <div>
+        <div class="modalTitle" id="bindBmTitle">Bind to New BM ID</div>
+        <div class="modalMeta" id="bindBmMeta">Ad Account ID: —</div>
+      </div>
+      <button class="copyBtn" type="button" id="closeBindBmBtn">Close</button>
+    </div>
+
+    <div style="margin-top:14px;">
+      <label for="bindFullAccessBm">Full Access BM</label>
+      <input id="bindFullAccessBm" placeholder="Enter Full Access BM ID" />
+    </div>
+
+    <div style="margin-top:14px;">
+      <label for="bindPartialAccessBm">Partial Access BM</label>
+      <input id="bindPartialAccessBm" placeholder="Enter Partial Access BM ID (optional)" />
+    </div>
+
+    <div class="modalActions">
+      <button class="copyBtn" type="button" id="cancelBindBmBtn">Cancel</button>
+      <button class="copyBtn gold" type="button" id="sendBindBmBtn">Send</button>
+    </div>
+
+    <div class="modalHint">
+      This will send a bind request to ScaleShield support with full access BM and optional partial access BM.
     </div>
   </div>
 </div>
@@ -646,7 +678,6 @@ function closeReplaceModal(){
 closeModalBtn.addEventListener("click", closeReplaceModal);
 cancelReplaceBtn.addEventListener("click", closeReplaceModal);
 replaceModal.addEventListener("click", (e)=>{ if(e.target === replaceModal) closeReplaceModal(); });
-document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && replaceModal.style.display === "flex") closeReplaceModal(); });
 
 async function sendReplacement(){
   const reason = replaceReason.value.trim();
@@ -687,6 +718,80 @@ async function sendReplacement(){
   }
 }
 sendReplaceBtn.addEventListener("click", sendReplacement);
+
+let currentBindClientName = "";
+let currentBindAdId = "";
+
+const bindBmModal = document.getElementById("bindBmModal");
+const bindBmMeta = document.getElementById("bindBmMeta");
+const bindFullAccessBm = document.getElementById("bindFullAccessBm");
+const bindPartialAccessBm = document.getElementById("bindPartialAccessBm");
+const closeBindBmBtn = document.getElementById("closeBindBmBtn");
+const cancelBindBmBtn = document.getElementById("cancelBindBmBtn");
+const sendBindBmBtn = document.getElementById("sendBindBmBtn");
+
+function openBindBmModal(adId, clientName){
+  currentBindAdId = adId;
+  currentBindClientName = clientName;
+  bindBmMeta.textContent = "Ad Account ID: " + adId;
+  bindFullAccessBm.value = "";
+  bindPartialAccessBm.value = "";
+  bindBmModal.style.display = "flex";
+  bindBmModal.setAttribute("aria-hidden","false");
+  setTimeout(()=>bindFullAccessBm.focus(), 50);
+}
+function closeBindBmModal(){
+  bindBmModal.style.display = "none";
+  bindBmModal.setAttribute("aria-hidden","true");
+  currentBindAdId = "";
+  currentBindClientName = "";
+}
+closeBindBmBtn.addEventListener("click", closeBindBmModal);
+cancelBindBmBtn.addEventListener("click", closeBindBmModal);
+bindBmModal.addEventListener("click", (e)=>{ if(e.target === bindBmModal) closeBindBmModal(); });
+
+async function sendBindBm(){
+  const fullAccessBm = bindFullAccessBm.value.trim();
+  const partialAccessBm = bindPartialAccessBm.value.trim();
+
+  if(!fullAccessBm){
+    showToast("Enter Full Access BM");
+    bindFullAccessBm.focus();
+    return;
+  }
+
+  sendBindBmBtn.disabled = true;
+  sendBindBmBtn.textContent = "Sending...";
+
+  try{
+    const resp = await fetch(REPLACE_WORKER_URL, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        type: "bind_bm",
+        clientName: currentBindClientName,
+        adAccountId: currentBindAdId,
+        fullAccessBm,
+        partialAccessBm
+      })
+    });
+
+    const data = await resp.json().catch(()=>({}));
+
+    if(resp.ok){
+      showToast("Bind request sent ✅");
+      closeBindBmModal();
+    }else{
+      showToast(data.error || "Send failed ❌");
+    }
+  }catch(e){
+    showToast("Network error ❌");
+  }finally{
+    sendBindBmBtn.disabled = false;
+    sendBindBmBtn.textContent = "Send";
+  }
+}
+sendBindBmBtn.addEventListener("click", sendBindBm);
 
 const topUpModal = document.getElementById("topUpModal");
 const closeTopUpBtn = document.getElementById("closeTopUpBtn");
@@ -729,7 +834,7 @@ function buildSummary(client){
     <div class="balanceMeta">Use your wallet balance for boost requests and BM10 orders.</div>
     <div class="balanceActions">
       <button class="copyBtn gold" type="button" id="topUpBtn">Top Up</button>
-      <button class="copyBtn red" type="button" id="orderBm10Btn">Order BM10 Agency $500</button>
+      <button class="copyBtn red" type="button" id="orderBm10Btn">Order BM10 — $500</button>
       <button class="copyBtn" type="button" id="quickCopyAllAd">Copy All Ad IDs</button>
     </div>
   `;
@@ -777,6 +882,7 @@ function buildRows(client){
           <button class="copyBtn" data-copy="${escapeAttr(a.adId)}" type="button">Copy Ad ID</button>
           <button class="copyBtn" data-copy="${escapeAttr(a.bmId)}" type="button">Copy BM</button>
           <button class="copyBtn gold" data-replace="${escapeAttr(a.adId)}" type="button">Replace</button>
+          <button class="copyBtn" data-bind-bm="${escapeAttr(a.adId)}" type="button">Bind to new BM ID</button>
         </div>
       </td>
     `;
@@ -791,6 +897,13 @@ function buildRows(client){
     btn.addEventListener("click", ()=>{
       const adId = btn.getAttribute("data-replace") || "";
       openReplaceModal(adId, client.name);
+    });
+  });
+
+  document.querySelectorAll(".copyBtn[data-bind-bm]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const adId = btn.getAttribute("data-bind-bm") || "";
+      openBindBmModal(adId, client.name);
     });
   });
 
@@ -1025,12 +1138,12 @@ async function orderBm10(){
 
   const balance = getWalletBalance(currentClientData);
   if(balance < BM10_PRICE){
-    showToast("You do not have enough money, please top up");
+    showToast("No money for BM10, please top up");
     openTopUpModal();
     return;
   }
 
-  const ok = confirm("Order BM10 for $500?\nThis amount will be deducted from your wallet.");
+  const ok = confirm("Order BM10 for $500?");
   if(!ok) return;
 
   const btn = document.getElementById("orderBm10Btn");
@@ -1057,7 +1170,7 @@ async function orderBm10(){
     }
 
     showToast("BM10 ordered ✅");
-  }catch(err){
+  }catch(e){
     showToast("Network error");
   }finally{
     const newBtn = document.getElementById("orderBm10Btn");
@@ -1067,6 +1180,12 @@ async function orderBm10(){
     }
   }
 }
+
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape" && replaceModal.style.display === "flex") closeReplaceModal();
+  if(e.key === "Escape" && bindBmModal.style.display === "flex") closeBindBmModal();
+  if(e.key === "Escape" && topUpModal.style.display === "flex") closeTopUpModal();
+});
 </script>
 </body>
 </html>
