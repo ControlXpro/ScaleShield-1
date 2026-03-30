@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+        <p>The BM10 product removes hesitation. Buyers can fund wallet, purchase instantly, and receive access without sales friction or ongoing obligation.</p>
+        <div class="score-list">
+          <div>Ease of purchase<div class="bar"><span style="width:95%"></span></div></div>
+          <div>Fast monetization<div class="bar"><span style="width:91%"></span></div></div>
+          <div>Operational simplicity<div class="bar"><span style="width:89%"></span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="heading reveal">
+      <h2>CRM-driven selling advantage</h2>
+      <p>The CRM is not just a dashboard. It is the commercial engine that increases trust, reduces support delays, and opens multiple monetization paths inside one client environment.</p>
+    </div>
+    <div class="cards-3">
+      <div class="feature reveal">
+        <div class="icon">🔁</div>
+        <h3>Instant replacement requests</h3>
+        <p>Subscribers can request account replacements through CRM without friction, making support feel immediate and premium.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="icon">🏦</div>
+        <h3>Wallet top-up system</h3>
+        <p>Funds can be loaded directly into CRM, unlocking a seamless path for BM10 self-service purchases.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="icon">📊</div>
+        <h3>Cross-sell opportunities</h3>
+        <p>Once inside the portal, clients can move from one-time product buyers into recurring subscribers or custom package buyers.</p>
+      </div>
+    </div>
+    <div class="quote-card reveal" style="margin-top:20px">
+      <strong>Key sales message</strong>
+      <p>Subscription model = long-term stability + unlimited replacements. BM10 model = fast one-time entry with no commitment. Both happen inside one ScaleShield CRM and both let the client use their own cards for ad spend.</p>
+    </div>
+  </section>
+
+  <footer class="footer reveal">
+    ScaleShield.pro • HTML pricing presentation • Built for sales, onboarding, and investor-style explanation.
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){ entry.target.classList.add('show'); }
+      });
+    }, {threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+    const heroCard = document.querySelector('.hero-card');
+    if(heroCard){
+      heroCard.addEventListener('mousemove', (e)=>{
+        const r = heroCard.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const rx = ((y / r.height) - .5) * -8;
+        const ry = ((x / r.width) - .5) * 10;
+        heroCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      heroCard.addEventListener('mouseleave', ()=>{
+        heroCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  </script>
+</body>
+</html>
