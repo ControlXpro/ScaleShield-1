@@ -17,11 +17,8 @@
       --ease:cubic-bezier(.2,.8,.2,1);
       --danger:#ff6b6b;
       --ok:#22c55e;
-      --blue:#60a5fa;
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
-
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:
@@ -31,7 +28,6 @@
       color:var(--text);
       padding:28px 16px 90px;
     }
-
     .wrap{max-width:1280px;margin:0 auto}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
     .brand{font-weight:950;font-size:20px}
@@ -39,7 +35,6 @@
       background:linear-gradient(135deg,var(--gold),var(--gold2));
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
-
     .btn{
       padding:10px 14px;border-radius:14px;font-weight:900;
       border:1px solid rgba(255,255,255,.12);
@@ -66,26 +61,18 @@
       color:#fff;
     }
     .btn-ok:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 24px rgba(34,197,94,.14)}
-
     .grid{display:grid;gap:14px}
-    @media(min-width:980px){ .grid{grid-template-columns:1.05fr 1.1fr} }
-
+    @media(min-width:980px){ .grid{grid-template-columns: 1.05fr 1.1fr} }
     .card{
       background:var(--panel);
       border:1px solid var(--border);
       border-radius:var(--radius);
       padding:16px;
     }
-
     h1{font-size:26px;font-weight:950;letter-spacing:-.02em}
     .p{margin-top:8px;color:var(--muted);line-height:1.6}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-
-    label{
-      font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;
-      color:rgba(255,255,255,.55)
-    }
-
+    label{font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
     input, select, textarea{
       width:100%;
       padding:12px 12px;border-radius:14px;
@@ -93,25 +80,24 @@
       background:rgba(0,0,0,.25);
       color:#fff;outline:none;
     }
-    input:focus, select:focus, textarea:focus{
-      border-color:rgba(214,177,94,.35);
-      box-shadow:0 0 18px rgba(214,177,94,.10)
-    }
-
+    input:focus, select:focus, textarea:focus{border-color:rgba(214,177,94,.35);box-shadow:0 0 18px rgba(214,177,94,.10)}
     .form{display:grid;gap:10px;margin-top:12px}
     .hr{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
     table{width:100%;border-collapse:collapse}
     th,td{padding:10px 10px;text-align:left;vertical-align:top}
     th{
-      font-size:12px;letter-spacing:.16em;text-transform:uppercase;
-      color:rgba(255,255,255,.55);font-weight:950;
-      border-bottom:1px solid rgba(255,255,255,.10);white-space:nowrap;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.55);
+      font-weight:950;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      white-space:nowrap;
     }
     tr{border-bottom:1px solid rgba(255,255,255,.06)}
     td{color:rgba(255,255,255,.88);font-size:13px}
-
     .mono{
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       font-size:12.5px;
       background:rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
@@ -120,7 +106,6 @@
       max-width:100%;
       overflow:hidden;text-overflow:ellipsis;
     }
-
     .toast{
       position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
       background:rgba(0,0,0,.65);
@@ -133,19 +118,16 @@
       z-index:99999;
     }
     .toast.show{opacity:1}
-
     .hide{display:none !important}
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .mini{padding:8px 10px;border-radius:12px;font-size:12px}
     .hint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:6px}
-
     .walletInput{
       width:110px;
       padding:8px 10px;
       border-radius:12px;
       font-size:12px;
     }
-
     .modal{
       position:fixed; inset:0;
       background:rgba(0,0,0,.78);
@@ -156,9 +138,8 @@
       padding:16px;
     }
     .modal.show{display:flex}
-
     .modalCard{
-      width:min(1280px, 100%);
+      width:min(1220px, 100%);
       max-height:92vh;
       overflow:auto;
       background:rgba(15,15,18,.96);
@@ -167,15 +148,12 @@
       box-shadow:0 30px 90px rgba(0,0,0,.65);
       padding:16px;
     }
-
     .modalTop{
       display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
     }
-
     .tabs{
       display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;
     }
-
     .tabBtn{
       padding:9px 12px;border-radius:999px;font-weight:950;
       border:1px solid rgba(255,255,255,.12);
@@ -186,9 +164,7 @@
     .tabBtn.active{
       border-color:rgba(214,177,94,.35);
       box-shadow:0 0 24px rgba(214,177,94,.10);
-      background:rgba(214,177,94,.10);
     }
-
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 10px;border-radius:999px;
@@ -198,28 +174,18 @@
     }
     .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
-    .pill.blue{border-color:rgba(96,165,250,.35); background:rgba(96,165,250,.10)}
-
     .inlineInput{
       width:150px;
       padding:8px 10px;
       border-radius:12px;
       font-size:12px;
     }
-
     .statsGrid{
       display:grid;
-      grid-template-columns:repeat(4,minmax(180px,1fr));
       gap:12px;
-      margin-top:14px;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      margin-top:12px;
     }
-    @media(max-width:980px){
-      .statsGrid{grid-template-columns:repeat(2,minmax(180px,1fr))}
-    }
-    @media(max-width:620px){
-      .statsGrid{grid-template-columns:1fr}
-    }
-
     .statCard{
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.03);
@@ -228,21 +194,23 @@
     }
     .statLabel{
       font-size:12px;
+      color:rgba(255,255,255,.55);
+      font-weight:950;
       text-transform:uppercase;
       letter-spacing:.14em;
-      color:rgba(255,255,255,.55);
-      font-weight:900;
     }
     .statValue{
-      margin-top:10px;
-      font-size:28px;
+      margin-top:8px;
+      font-size:26px;
       font-weight:950;
-      letter-spacing:-.03em;
+      letter-spacing:-.02em;
     }
-    .statSub{
-      margin-top:6px;
-      font-size:12px;
-      color:rgba(255,255,255,.55);
+    .twoCol{
+      display:grid;
+      gap:14px;
+    }
+    @media(min-width:980px){
+      .twoCol{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -252,6 +220,7 @@
     <div class="brand"><span>ScaleShield</span> — Admin</div>
     <div class="row">
       <a class="btn" href="index.html">Back to site</a>
+      <button class="btn" id="btnOwnedBms" type="button">BM’s</button>
       <button class="btn" id="btnBilling" type="button">Billing</button>
       <button class="btn" id="btnLogout" type="button">Log out</button>
     </div>
@@ -259,7 +228,7 @@
 
   <div class="card" id="loginCard">
     <h1>Admin Login</h1>
-    <div class="p">Log in to manage clients, wallet balances, and ad accounts.</div>
+    <div class="p">Log in to manage clients, wallet balances, ad accounts, owned BM’s, billing, and reports.</div>
 
     <form class="form" id="loginForm">
       <div>
@@ -392,15 +361,160 @@
 
 <div class="toast" id="toast">Saved</div>
 
+<!-- OWNED BMS MODAL -->
+<div class="modal" id="ownedBmsModal" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true">
+    <div class="modalTop">
+      <div>
+        <h1 style="margin:0">Owned BM’s</h1>
+        <div class="p" style="margin-top:6px">Store your own BM’s, manage accounts inside them, link accounts to clients, and track shared BM IDs.</div>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="btnOwnedBmsRefresh" type="button">Refresh</button>
+        <button class="btn" id="btnOwnedBmsClose" type="button">Close</button>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="twoCol">
+      <div class="card">
+        <h1 style="font-size:18px">Your BM’s</h1>
+        <div class="p">Add, edit, delete BM’s and see how many accounts are inside each BM.</div>
+
+        <div class="hr"></div>
+
+        <div class="row" style="justify-content:space-between">
+          <input id="ownedBmSearch" placeholder="Search BM name or BM ID" style="max-width:260px" />
+          <div class="p" id="ownedBmCount" style="margin:0">—</div>
+        </div>
+
+        <div style="overflow:auto;margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>BM ID</th>
+                <th>Accounts</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ownedBmRows"></tbody>
+          </table>
+        </div>
+
+        <div class="hr"></div>
+
+        <h1 style="font-size:18px" id="ownedBmFormTitle">Add BM</h1>
+        <form class="form" id="ownedBmForm">
+          <input id="ownedBmId" type="hidden" />
+          <div>
+            <label>BM Name</label>
+            <input id="ownedBmName" placeholder="Main BM 01" required />
+          </div>
+          <div>
+            <label>BM ID</label>
+            <input id="ownedBmCode" placeholder="123456789012345" required />
+          </div>
+          <div>
+            <label>Notes</label>
+            <textarea id="ownedBmNotes" placeholder="Optional notes"></textarea>
+          </div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit">Save BM</button>
+            <button class="btn" type="button" id="btnOwnedBmCancel">Cancel</button>
+          </div>
+        </form>
+        <div class="p" id="ownedBmMsg" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <h1 style="font-size:18px">Accounts Inside Selected BM</h1>
+        <div class="p">Search, assign client, assign shared BM ID, edit names/IDs, and delete accounts.</div>
+
+        <div class="hr"></div>
+
+        <div class="row" style="justify-content:space-between">
+          <div class="p" id="ownedBmSelectedLabel" style="margin:0">No BM selected</div>
+          <input id="ownedBmAccountSearch" placeholder="Search account / client / shared BM ID" style="max-width:280px" />
+        </div>
+
+        <div style="overflow:auto;margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Account Name</th>
+                <th>Account ID</th>
+                <th>Client</th>
+                <th>Shared BM ID</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ownedBmAccountRows"></tbody>
+          </table>
+        </div>
+
+        <div class="hr"></div>
+
+        <h1 style="font-size:18px" id="ownedBmAccountFormTitle">Add Account To BM</h1>
+        <form class="form" id="ownedBmAccountForm">
+          <input id="ownedBmAccountId" type="hidden" />
+
+          <div>
+            <label>BM</label>
+            <select id="ownedBmAccountBmSelect"></select>
+          </div>
+
+          <div>
+            <label>Account Name</label>
+            <input id="ownedBmAccountName" placeholder="Agency Ad Account 1" required />
+          </div>
+
+          <div>
+            <label>Account ID</label>
+            <input id="ownedBmAccountCode" placeholder="act_123456789" required />
+          </div>
+
+          <div>
+            <label>Shared To Client</label>
+            <select id="ownedBmAccountClient"></select>
+          </div>
+
+          <div>
+            <label>Shared BM ID</label>
+            <input id="ownedBmAccountSharedBm" placeholder="Optional shared BM ID" />
+          </div>
+
+          <div>
+            <label>Notes</label>
+            <textarea id="ownedBmAccountNotes" placeholder="Optional notes"></textarea>
+          </div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit">Save Account</button>
+            <button class="btn" type="button" id="btnOwnedBmAccountCancel">Cancel</button>
+          </div>
+        </form>
+        <div class="p" id="ownedBmAccountMsg" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BILLING MODAL -->
 <div class="modal" id="billingModal" aria-hidden="true">
   <div class="modalCard" role="dialog" aria-modal="true">
     <div class="modalTop">
       <div>
         <h1 style="margin:0">Billing</h1>
-        <div class="p" style="margin-top:6px">Clients, invoices, expenses, paychecks and monthly report.</div>
+        <div class="p" style="margin-top:6px">Due soon, invoices, payments, expenses, manual sales, adjustments, paychecks, and full monthly report.</div>
         <div class="tabs">
           <button class="tabBtn active" id="tabClients" type="button">Clients Billing</button>
           <button class="tabBtn" id="tabExpenses" type="button">Expenses</button>
+          <button class="tabBtn" id="tabManualSales" type="button">Manual Sales</button>
+          <button class="tabBtn" id="tabAdjustments" type="button">Adjustments</button>
           <button class="tabBtn" id="tabPaychecks" type="button">Paychecks</button>
           <button class="tabBtn" id="tabReport" type="button">Report</button>
         </div>
@@ -434,7 +548,7 @@
               <th>Next Due</th>
               <th>Days</th>
               <th>Monthly $</th>
-              <th>Invoice (this month)</th>
+              <th>Invoice</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -442,8 +556,23 @@
         </table>
       </div>
 
-      <div class="hint" style="margin-top:10px">
-        Tip: Set next due date + monthly amount per client. “Mark Paid” will create an invoice if missing and mark it paid.
+      <div class="hr"></div>
+
+      <h1 style="font-size:18px;margin:0">Payments (month)</h1>
+      <div style="overflow:auto;margin-top:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Paid At</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsRows"></tbody>
+        </table>
       </div>
     </div>
 
@@ -501,50 +630,135 @@
       </div>
     </div>
 
-    <div id="billingPaychecksView" class="hide">
-      <div class="row" style="justify-content:space-between">
-        <h1 style="font-size:18px;margin:0">Add Paycheck</h1>
-      </div>
+    <div id="billingManualSalesView" class="hide">
+      <h1 style="font-size:18px;margin:0">Manual Sales</h1>
 
-      <form class="form" id="paycheckForm" style="max-width:700px">
+      <form class="form" id="manualSaleForm" style="max-width:620px;margin-top:14px">
         <div class="row">
           <div style="flex:1">
             <label>Date</label>
-            <input id="payDate" type="date" required />
+            <input id="msDate" type="date" required />
+          </div>
+          <div style="flex:1">
+            <label>Title</label>
+            <input id="msTitle" placeholder="Custom sale" required />
+          </div>
+        </div>
+        <div>
+          <label>Amount USD</label>
+          <input id="msAmount" type="number" step="0.01" placeholder="1000" required />
+        </div>
+        <div>
+          <label>Note</label>
+          <textarea id="msNote" placeholder="Optional note"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Manual Sale</button>
+        <div class="p" id="msMsg" style="margin-top:6px"></div>
+      </form>
+
+      <div class="hr"></div>
+
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Title</th>
+              <th>Amount</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="manualSalesRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="billingAdjustmentsView" class="hide">
+      <h1 style="font-size:18px;margin:0">Adjustments</h1>
+
+      <form class="form" id="adjustmentForm" style="max-width:620px;margin-top:14px">
+        <div class="row">
+          <div style="flex:1">
+            <label>Type</label>
+            <select id="adjType">
+              <option value="revenue">Revenue</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+          <div style="flex:1">
+            <label>Amount USD</label>
+            <input id="adjAmount" type="number" step="0.01" placeholder="250" required />
+          </div>
+        </div>
+        <div>
+          <label>Title</label>
+          <input id="adjTitle" placeholder="Adjustment title" required />
+        </div>
+        <div>
+          <label>Note</label>
+          <textarea id="adjNote" placeholder="Optional note"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Adjustment</button>
+        <div class="p" id="adjMsg" style="margin-top:6px"></div>
+      </form>
+
+      <div class="hr"></div>
+
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Title</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adjustmentsRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="billingPaychecksView" class="hide">
+      <h1 style="font-size:18px;margin:0">Paychecks</h1>
+
+      <form class="form" id="paycheckForm" style="max-width:620px;margin-top:14px">
+        <div class="row">
+          <div style="flex:1">
+            <label>Date</label>
+            <input id="pcDate" type="date" required />
           </div>
           <div style="flex:1">
             <label>Employee Name</label>
-            <input id="payEmployee" placeholder="John Doe" required />
+            <input id="pcEmployee" placeholder="Employee name" required />
           </div>
         </div>
-
         <div class="row">
           <div style="flex:1">
             <label>Amount USD</label>
-            <input id="payAmount" type="number" step="0.01" placeholder="500" required />
+            <input id="pcAmount" type="number" step="0.01" placeholder="500" required />
           </div>
           <div style="flex:1">
             <label>Status</label>
-            <select id="payStatus">
+            <select id="pcStatus">
               <option value="unpaid">unpaid</option>
               <option value="paid">paid</option>
             </select>
           </div>
         </div>
-
         <div>
           <label>Note</label>
-          <textarea id="payNote" placeholder="Optional note"></textarea>
+          <textarea id="pcNote" placeholder="Optional note"></textarea>
         </div>
-
         <button class="btn btn-primary" type="submit">Add Paycheck</button>
-        <div class="p" id="payMsg" style="margin-top:6px"></div>
+        <div class="p" id="pcMsg" style="margin-top:6px"></div>
       </form>
 
       <div class="hr"></div>
 
-      <h1 style="font-size:18px;margin:0">Paychecks (month)</h1>
-      <div style="overflow:auto;margin-top:10px">
+      <div style="overflow:auto">
         <table>
           <thead>
             <tr>
@@ -563,69 +777,52 @@
 
     <div id="billingReportView" class="hide">
       <h1 style="font-size:18px;margin:0">Monthly Financial Report</h1>
-      <div class="p">Full monthly overview based on invoices, payments, expenses and paychecks.</div>
+      <div class="p">Revenue includes payments, manual sales, and revenue adjustments. Expenses include expenses and expense adjustments.</div>
 
       <div class="statsGrid">
         <div class="statCard">
           <div class="statLabel">Revenue</div>
-          <div class="statValue" id="statRevenue">$0.00</div>
-          <div class="statSub">Paid invoices / sales</div>
+          <div class="statValue" id="reportRevenue">$0.00</div>
         </div>
-
         <div class="statCard">
           <div class="statLabel">Expenses</div>
-          <div class="statValue" id="statExpenses">$0.00</div>
-          <div class="statSub">Monthly expenses</div>
+          <div class="statValue" id="reportExpenses">$0.00</div>
         </div>
-
         <div class="statCard">
           <div class="statLabel">Profit</div>
-          <div class="statValue" id="statProfit">$0.00</div>
-          <div class="statSub">Revenue minus expenses</div>
+          <div class="statValue" id="reportProfit">$0.00</div>
         </div>
-
         <div class="statCard">
-          <div class="statLabel">Unpaid</div>
-          <div class="statValue" id="statUnpaid">$0.00</div>
-          <div class="statSub">Outstanding invoices</div>
+          <div class="statLabel">Unpaid Invoices</div>
+          <div class="statValue" id="reportUnpaid">$0.00</div>
         </div>
-
         <div class="statCard">
-          <div class="statLabel">Starting Balance</div>
-          <div class="statValue" id="statStarting">$0.00</div>
-          <div class="statSub">Bank balance start</div>
+          <div class="statLabel">Starting Bank Balance</div>
+          <div class="statValue" id="reportStartBank">$0.00</div>
         </div>
-
         <div class="statCard">
           <div class="statLabel">Paid Paychecks</div>
-          <div class="statValue" id="statPaychecks">$0.00</div>
-          <div class="statSub">Payroll paid this month</div>
+          <div class="statValue" id="reportPaidPaychecks">$0.00</div>
         </div>
-
         <div class="statCard">
-          <div class="statLabel">Ending Balance</div>
-          <div class="statValue" id="statEnding">$0.00</div>
-          <div class="statSub">Projected month end</div>
-        </div>
-
-        <div class="statCard">
-          <div class="statLabel">Current Bank Balance</div>
-          <div class="statValue" id="statBankNow">$0.00</div>
-          <div class="statSub">Live bank balance row</div>
+          <div class="statLabel">Bank Balance End</div>
+          <div class="statValue" id="reportEndBank">$0.00</div>
         </div>
       </div>
 
       <div class="hr"></div>
 
-      <div class="row" style="align-items:flex-end;max-width:520px">
-        <div style="flex:1">
-          <label>Current Bank Balance</label>
+      <h1 style="font-size:18px;margin:0">Bank Balance</h1>
+      <form class="form" id="bankBalanceForm" style="max-width:420px;margin-top:12px">
+        <div>
+          <label>Current / Starting Balance USD</label>
           <input id="bankBalanceInput" type="number" step="0.01" placeholder="0.00" />
         </div>
-        <button class="btn btn-primary" id="btnSaveBankBalance" type="button">Save Bank Balance</button>
-      </div>
-
-      <div class="p" id="bankMsg" style="margin-top:10px"></div>
+        <div class="row">
+          <button class="btn btn-primary" type="submit">Save Bank Balance</button>
+        </div>
+        <div class="p" id="bankBalanceMsg" style="margin-top:6px"></div>
+      </form>
     </div>
   </div>
 </div>
@@ -641,10 +838,6 @@
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
-  }
-
-  function money(v){
-    return "$" + Number(v || 0).toFixed(2);
   }
 
   function setErr(msg){
@@ -716,6 +909,9 @@
     }
   });
 
+  /* =========================
+     CLIENTS
+  ========================= */
   const clientsRows = document.getElementById("clientsRows");
   const clientSelect = document.getElementById("clientSelect");
   let clientsCache = [];
@@ -769,6 +965,7 @@
     }
 
     wireClientButtons();
+    fillClientSelectForOwnedAccounts?.();
   }
 
   function wireClientButtons(){
@@ -934,6 +1131,9 @@
     }
   });
 
+  /* =========================
+     AD ACCOUNTS
+  ========================= */
   const adsRows = document.getElementById("adsRows");
   const adMsg = document.getElementById("adMsg");
   const aRowId = document.getElementById("aRowId");
@@ -1090,6 +1290,9 @@
     }
   });
 
+  /* =========================
+     HELPERS
+  ========================= */
   function escapeHtml(s){
     return String(s ?? "")
       .replaceAll("&","&amp;")
@@ -1105,7 +1308,359 @@
       .replaceAll("<","&lt;")
       .replaceAll(">","&gt;");
   }
+  function fmtMoney(v){
+    return "$" + Number(v || 0).toFixed(2);
+  }
 
+  /* =========================
+     OWNED BMS
+  ========================= */
+  const ownedBmsModal = document.getElementById("ownedBmsModal");
+  const ownedBmRows = document.getElementById("ownedBmRows");
+  const ownedBmAccountRows = document.getElementById("ownedBmAccountRows");
+  const ownedBmCount = document.getElementById("ownedBmCount");
+  const ownedBmSelectedLabel = document.getElementById("ownedBmSelectedLabel");
+
+  const ownedBmId = document.getElementById("ownedBmId");
+  const ownedBmName = document.getElementById("ownedBmName");
+  const ownedBmCode = document.getElementById("ownedBmCode");
+  const ownedBmNotes = document.getElementById("ownedBmNotes");
+  const ownedBmMsg = document.getElementById("ownedBmMsg");
+
+  const ownedBmAccountId = document.getElementById("ownedBmAccountId");
+  const ownedBmAccountBmSelect = document.getElementById("ownedBmAccountBmSelect");
+  const ownedBmAccountName = document.getElementById("ownedBmAccountName");
+  const ownedBmAccountCode = document.getElementById("ownedBmAccountCode");
+  const ownedBmAccountClient = document.getElementById("ownedBmAccountClient");
+  const ownedBmAccountSharedBm = document.getElementById("ownedBmAccountSharedBm");
+  const ownedBmAccountNotes = document.getElementById("ownedBmAccountNotes");
+  const ownedBmAccountMsg = document.getElementById("ownedBmAccountMsg");
+
+  let ownedBmsCache = [];
+  let ownedBmAccountsCache = [];
+  let selectedOwnedBmId = 0;
+
+  document.getElementById("btnOwnedBms").addEventListener("click", openOwnedBmsModal);
+  document.getElementById("btnOwnedBmsClose").addEventListener("click", closeOwnedBmsModal);
+  document.getElementById("btnOwnedBmsRefresh").addEventListener("click", refreshOwnedBmsAll);
+  document.getElementById("btnOwnedBmCancel").addEventListener("click", resetOwnedBmForm);
+  document.getElementById("btnOwnedBmAccountCancel").addEventListener("click", resetOwnedBmAccountForm);
+  document.getElementById("ownedBmSearch").addEventListener("input", loadOwnedBms);
+  document.getElementById("ownedBmAccountSearch").addEventListener("input", ()=>{
+    if(selectedOwnedBmId) loadOwnedBmAccounts(selectedOwnedBmId);
+  });
+
+  ownedBmsModal.addEventListener("click", (e)=>{ if(e.target === ownedBmsModal) closeOwnedBmsModal(); });
+
+  function openOwnedBmsModal(){
+    ownedBmsModal.classList.add("show");
+    ownedBmsModal.setAttribute("aria-hidden","false");
+    refreshOwnedBmsAll();
+  }
+  function closeOwnedBmsModal(){
+    ownedBmsModal.classList.remove("show");
+    ownedBmsModal.setAttribute("aria-hidden","true");
+  }
+
+  async function refreshOwnedBmsAll(){
+    await loadOwnedBms();
+    fillOwnedBmSelect();
+    fillClientSelectForOwnedAccounts();
+    if(selectedOwnedBmId){
+      await loadOwnedBmAccounts(selectedOwnedBmId);
+    } else if (ownedBmsCache.length){
+      selectedOwnedBmId = Number(ownedBmsCache[0].id);
+      fillOwnedBmSelect();
+      await loadOwnedBmAccounts(selectedOwnedBmId);
+    } else {
+      ownedBmAccountRows.innerHTML = "";
+      ownedBmSelectedLabel.textContent = "No BM selected";
+    }
+  }
+
+  async function loadOwnedBms(){
+    const q = document.getElementById("ownedBmSearch").value.trim();
+    const r = await apiFetch("/owned-bms?q=" + encodeURIComponent(q));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Failed to load BM’s");
+      return;
+    }
+    ownedBmsCache = d.bms || [];
+    renderOwnedBms();
+  }
+
+  function renderOwnedBms(){
+    ownedBmCount.textContent = ownedBmsCache.length + " BM(s)";
+    ownedBmRows.innerHTML = "";
+
+    ownedBmsCache.forEach(b=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(b.name || "")}</td>
+        <td><span class="mono">${escapeHtml(b.bm_id || "")}</span></td>
+        <td><span class="mono">${Number(b.accounts_count || 0)}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-owned-bm-open="${b.id}">Open</button>
+            <button class="btn mini" data-owned-bm-edit="${b.id}">Edit</button>
+            <button class="btn btn-danger mini" data-owned-bm-del="${b.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      ownedBmRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-owned-bm-open]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        selectedOwnedBmId = Number(btn.getAttribute("data-owned-bm-open"));
+        fillOwnedBmSelect();
+        await loadOwnedBmAccounts(selectedOwnedBmId);
+      };
+    });
+
+    document.querySelectorAll("[data-owned-bm-edit]").forEach(btn=>{
+      btn.onclick = ()=> startEditOwnedBm(Number(btn.getAttribute("data-owned-bm-edit")));
+    });
+
+    document.querySelectorAll("[data-owned-bm-del]").forEach(btn=>{
+      btn.onclick = ()=> deleteOwnedBm(Number(btn.getAttribute("data-owned-bm-del")));
+    });
+  }
+
+  function resetOwnedBmForm(){
+    ownedBmId.value = "";
+    ownedBmName.value = "";
+    ownedBmCode.value = "";
+    ownedBmNotes.value = "";
+    document.getElementById("ownedBmFormTitle").textContent = "Add BM";
+    ownedBmMsg.textContent = "";
+  }
+
+  function startEditOwnedBm(id){
+    const bm = ownedBmsCache.find(x=>Number(x.id)===id);
+    if(!bm) return;
+    ownedBmId.value = bm.id;
+    ownedBmName.value = bm.name || "";
+    ownedBmCode.value = bm.bm_id || "";
+    ownedBmNotes.value = bm.notes || "";
+    document.getElementById("ownedBmFormTitle").textContent = "Edit BM #" + bm.id;
+  }
+
+  async function deleteOwnedBm(id){
+    const bm = ownedBmsCache.find(x=>Number(x.id)===id);
+    if(!bm) return;
+    const ok = confirm(`Delete BM "${bm.name}" and all accounts inside it?`);
+    if(!ok) return;
+
+    const r = await apiFetch("/owned-bms?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Delete failed");
+      return;
+    }
+
+    if(selectedOwnedBmId === id) selectedOwnedBmId = 0;
+    showToast("BM deleted ✅");
+    resetOwnedBmForm();
+    await refreshOwnedBmsAll();
+  }
+
+  document.getElementById("ownedBmForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+
+    const id = Number(ownedBmId.value || 0);
+    const body = {
+      id,
+      name: ownedBmName.value.trim(),
+      bmId: ownedBmCode.value.trim(),
+      notes: ownedBmNotes.value.trim()
+    };
+
+    const method = id ? "PUT" : "POST";
+
+    const r = await apiFetch("/owned-bms", {
+      method,
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json().catch(()=>({}));
+
+    if(!r.ok){
+      ownedBmMsg.style.color = "#ffb4b4";
+      ownedBmMsg.textContent = d.error || "Save failed";
+      return;
+    }
+
+    ownedBmMsg.style.color = "rgba(255,255,255,.85)";
+    ownedBmMsg.textContent = id ? "BM updated ✅" : "BM added ✅";
+    showToast("Saved ✅");
+    resetOwnedBmForm();
+    await refreshOwnedBmsAll();
+  });
+
+  function fillOwnedBmSelect(){
+    ownedBmAccountBmSelect.innerHTML = "";
+    ownedBmsCache.forEach(bm=>{
+      const opt = document.createElement("option");
+      opt.value = bm.id;
+      opt.textContent = `${bm.name} (${bm.bm_id})`;
+      if(Number(bm.id) === Number(selectedOwnedBmId)) opt.selected = true;
+      ownedBmAccountBmSelect.appendChild(opt);
+    });
+  }
+
+  function fillClientSelectForOwnedAccounts(){
+    if(!ownedBmAccountClient) return;
+    ownedBmAccountClient.innerHTML = `<option value="">— Not linked to a client —</option>`;
+    clientsCache.forEach(c=>{
+      const opt = document.createElement("option");
+      opt.value = c.id;
+      opt.textContent = `#${c.id} — ${c.name} (${c.login})`;
+      ownedBmAccountClient.appendChild(opt);
+    });
+  }
+
+  async function loadOwnedBmAccounts(ownedBmId){
+    if(!ownedBmId){
+      ownedBmAccountRows.innerHTML = "";
+      ownedBmSelectedLabel.textContent = "No BM selected";
+      return;
+    }
+
+    const q = document.getElementById("ownedBmAccountSearch").value.trim();
+    const r = await apiFetch(`/owned-bm-accounts?owned_bm_id=${encodeURIComponent(ownedBmId)}&q=${encodeURIComponent(q)}`);
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Failed to load BM accounts");
+      return;
+    }
+
+    ownedBmAccountsCache = d.accounts || [];
+
+    const bm = ownedBmsCache.find(x=>Number(x.id)===Number(ownedBmId));
+    ownedBmSelectedLabel.textContent = bm ? `Selected BM: ${bm.name} (${bm.bm_id})` : "Selected BM";
+
+    renderOwnedBmAccounts();
+  }
+
+  function renderOwnedBmAccounts(){
+    ownedBmAccountRows.innerHTML = "";
+
+    ownedBmAccountsCache.forEach(a=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(a.account_name || "")}</td>
+        <td><span class="mono">${escapeHtml(a.account_id || "")}</span></td>
+        <td>${escapeHtml(a.client_name || "—")}</td>
+        <td><span class="mono">${escapeHtml(a.shared_bm_id || "—")}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn mini" data-owned-account-edit="${a.id}">Edit</button>
+            <button class="btn btn-danger mini" data-owned-account-del="${a.id}">Delete</button>
+          </div>
+        </td>
+      `;
+      ownedBmAccountRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-owned-account-edit]").forEach(btn=>{
+      btn.onclick = ()=> startEditOwnedBmAccount(Number(btn.getAttribute("data-owned-account-edit")));
+    });
+
+    document.querySelectorAll("[data-owned-account-del]").forEach(btn=>{
+      btn.onclick = ()=> deleteOwnedBmAccount(Number(btn.getAttribute("data-owned-account-del")));
+    });
+  }
+
+  function resetOwnedBmAccountForm(){
+    ownedBmAccountId.value = "";
+    ownedBmAccountName.value = "";
+    ownedBmAccountCode.value = "";
+    ownedBmAccountSharedBm.value = "";
+    ownedBmAccountNotes.value = "";
+    ownedBmAccountMsg.textContent = "";
+    fillOwnedBmSelect();
+    ownedBmAccountClient.value = "";
+    document.getElementById("ownedBmAccountFormTitle").textContent = "Add Account To BM";
+  }
+
+  function startEditOwnedBmAccount(id){
+    const acc = ownedBmAccountsCache.find(x=>Number(x.id)===id);
+    if(!acc) return;
+
+    ownedBmAccountId.value = acc.id;
+    ownedBmAccountBmSelect.value = acc.owned_bm_id;
+    ownedBmAccountName.value = acc.account_name || "";
+    ownedBmAccountCode.value = acc.account_id || "";
+    ownedBmAccountClient.value = acc.client_id || "";
+    ownedBmAccountSharedBm.value = acc.shared_bm_id || "";
+    ownedBmAccountNotes.value = acc.notes || "";
+    document.getElementById("ownedBmAccountFormTitle").textContent = "Edit BM Account #" + acc.id;
+  }
+
+  async function deleteOwnedBmAccount(id){
+    const acc = ownedBmAccountsCache.find(x=>Number(x.id)===id);
+    if(!acc) return;
+    const ok = confirm(`Delete account "${acc.account_name}"?`);
+    if(!ok) return;
+
+    const r = await apiFetch("/owned-bm-accounts?id=" + encodeURIComponent(id), { method:"DELETE" });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      showToast(d.error || "Delete failed");
+      return;
+    }
+
+    showToast("Account deleted ✅");
+    resetOwnedBmAccountForm();
+    await loadOwnedBmAccounts(selectedOwnedBmId);
+    await loadOwnedBms();
+  }
+
+  document.getElementById("ownedBmAccountForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+
+    const id = Number(ownedBmAccountId.value || 0);
+
+    const body = {
+      id,
+      ownedBmId: Number(ownedBmAccountBmSelect.value || 0),
+      accountName: ownedBmAccountName.value.trim(),
+      accountId: ownedBmAccountCode.value.trim(),
+      clientId: ownedBmAccountClient.value || null,
+      sharedBmId: ownedBmAccountSharedBm.value.trim(),
+      notes: ownedBmAccountNotes.value.trim()
+    };
+
+    const method = id ? "PUT" : "POST";
+
+    const r = await apiFetch("/owned-bm-accounts", {
+      method,
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json().catch(()=>({}));
+
+    if(!r.ok){
+      ownedBmAccountMsg.style.color = "#ffb4b4";
+      ownedBmAccountMsg.textContent = d.error || "Save failed";
+      return;
+    }
+
+    selectedOwnedBmId = Number(body.ownedBmId || selectedOwnedBmId);
+    ownedBmAccountMsg.style.color = "rgba(255,255,255,.85)";
+    ownedBmAccountMsg.textContent = id ? "BM account updated ✅" : "BM account added ✅";
+    showToast("Saved ✅");
+
+    resetOwnedBmAccountForm();
+    await loadOwnedBmAccounts(selectedOwnedBmId);
+    await loadOwnedBms();
+  });
+
+  /* =========================
+     BILLING
+  ========================= */
   const billingModal = document.getElementById("billingModal");
   const billingRows = document.getElementById("billingRows");
   const billingTotals = document.getElementById("billingTotals");
@@ -1113,11 +1668,15 @@
 
   const tabClients = document.getElementById("tabClients");
   const tabExpenses = document.getElementById("tabExpenses");
+  const tabManualSales = document.getElementById("tabManualSales");
+  const tabAdjustments = document.getElementById("tabAdjustments");
   const tabPaychecks = document.getElementById("tabPaychecks");
   const tabReport = document.getElementById("tabReport");
 
   const billingClientsView = document.getElementById("billingClientsView");
   const billingExpensesView = document.getElementById("billingExpensesView");
+  const billingManualSalesView = document.getElementById("billingManualSalesView");
+  const billingAdjustmentsView = document.getElementById("billingAdjustmentsView");
   const billingPaychecksView = document.getElementById("billingPaychecksView");
   const billingReportView = document.getElementById("billingReportView");
 
@@ -1125,28 +1684,40 @@
   const expenseForm = document.getElementById("expenseForm");
   const expMsg = document.getElementById("expMsg");
 
+  const paymentsRows = document.getElementById("paymentsRows");
+
+  const manualSalesRows = document.getElementById("manualSalesRows");
+  const msMsg = document.getElementById("msMsg");
+
+  const adjustmentsRows = document.getElementById("adjustmentsRows");
+  const adjMsg = document.getElementById("adjMsg");
+
   const paychecksRows = document.getElementById("paychecksRows");
-  const paycheckForm = document.getElementById("paycheckForm");
-  const payMsg = document.getElementById("payMsg");
+  const pcMsg = document.getElementById("pcMsg");
 
   let billingSort = "due_soon";
   let invoiceMap = new Map();
 
   function setTab(which){
-    [tabClients, tabExpenses, tabPaychecks, tabReport].forEach(x=>x.classList.remove("active"));
+    [tabClients, tabExpenses, tabManualSales, tabAdjustments, tabPaychecks, tabReport].forEach(x=>x.classList.remove("active"));
     billingClientsView.classList.add("hide");
     billingExpensesView.classList.add("hide");
+    billingManualSalesView.classList.add("hide");
+    billingAdjustmentsView.classList.add("hide");
     billingPaychecksView.classList.add("hide");
     billingReportView.classList.add("hide");
 
     if(which === "clients"){ tabClients.classList.add("active"); billingClientsView.classList.remove("hide"); }
     if(which === "expenses"){ tabExpenses.classList.add("active"); billingExpensesView.classList.remove("hide"); }
+    if(which === "manual-sales"){ tabManualSales.classList.add("active"); billingManualSalesView.classList.remove("hide"); }
+    if(which === "adjustments"){ tabAdjustments.classList.add("active"); billingAdjustmentsView.classList.remove("hide"); }
     if(which === "paychecks"){ tabPaychecks.classList.add("active"); billingPaychecksView.classList.remove("hide"); }
     if(which === "report"){ tabReport.classList.add("active"); billingReportView.classList.remove("hide"); }
   }
-
   tabClients.onclick = ()=>setTab("clients");
   tabExpenses.onclick = ()=>setTab("expenses");
+  tabManualSales.onclick = ()=>setTab("manual-sales");
+  tabAdjustments.onclick = ()=>setTab("adjustments");
   tabPaychecks.onclick = ()=>setTab("paychecks");
   tabReport.onclick = ()=>setTab("report");
 
@@ -1160,16 +1731,19 @@
     setTab("clients");
     refreshBillingAll();
   }
-
   function closeBilling(){
     billingModal.classList.remove("show");
     billingModal.setAttribute("aria-hidden","true");
   }
-
   document.getElementById("btnBilling").onclick = openBilling;
   document.getElementById("btnBillingClose").onclick = closeBilling;
   billingModal.addEventListener("click", (e)=>{ if(e.target === billingModal) closeBilling(); });
-  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && billingModal.classList.contains("show")) closeBilling(); });
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape"){
+      if(billingModal.classList.contains("show")) closeBilling();
+      if(ownedBmsModal.classList.contains("show")) closeOwnedBmsModal();
+    }
+  });
 
   (function initMonth(){
     const d = new Date();
@@ -1185,12 +1759,14 @@
     await Promise.all([
       refreshBillingInvoices(),
       refreshBillingClients(),
+      refreshPayments(),
       refreshBillingExpenses(),
+      refreshManualSales(),
+      refreshAdjustments(),
       refreshPaychecks(),
       refreshBillingReport(),
       refreshBankBalance()
     ]);
-    await refreshBillingClients();
   }
 
   async function refreshBillingClients(){
@@ -1367,6 +1943,50 @@
     await refreshBillingAll();
   }
 
+  async function refreshPayments(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/payments?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      paymentsRows.innerHTML = "";
+      return;
+    }
+
+    paymentsRows.innerHTML = "";
+    (d.payments || []).forEach(p=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(p.client_name || "")}</td>
+        <td><span class="mono">${fmtMoney(p.amount_usd || 0)}</span></td>
+        <td>${escapeHtml(p.method || "")}</td>
+        <td>${escapeHtml(p.paid_at || "")}</td>
+        <td>${escapeHtml(p.note || "")}</td>
+        <td>
+          <button class="btn btn-danger mini" data-payment-del="${p.id}">Delete</button>
+        </td>
+      `;
+      paymentsRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-payment-del]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-payment-del"));
+        const ok = confirm("Delete this payment?");
+        if(!ok) return;
+
+        const r = await apiFetch("/billing/payments?id=" + encodeURIComponent(id), { method:"DELETE" });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Delete failed");
+          return;
+        }
+        showToast("Payment deleted ✅");
+        await refreshPayments();
+        await refreshBillingReport();
+      };
+    });
+  }
+
   async function refreshBillingExpenses(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/expenses?month=" + encodeURIComponent(month));
@@ -1379,35 +1999,31 @@
       tr.innerHTML = `
         <td>${escapeHtml(x.date || "")}</td>
         <td>${escapeHtml(x.category || "")}</td>
-        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td><span class="mono">${fmtMoney(x.amount_usd || 0)}</span></td>
         <td>${escapeHtml(x.vendor || "")}</td>
         <td>${escapeHtml(x.note || "")}</td>
-        <td>
-          <button class="btn btn-danger mini" data-exp-del="${x.id}">Delete</button>
-        </td>
+        <td><button class="btn btn-danger mini" data-exp-del="${x.id}">Delete</button></td>
       `;
       expensesRows.appendChild(tr);
     });
 
     document.querySelectorAll("[data-exp-del]").forEach(btn=>{
-      btn.onclick = ()=> deleteExpense(Number(btn.getAttribute("data-exp-del")));
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-exp-del"));
+        const ok = confirm("Delete this expense?");
+        if(!ok) return;
+
+        const r = await apiFetch("/billing/expenses?id=" + encodeURIComponent(id), { method:"DELETE" });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Delete failed");
+          return;
+        }
+        showToast("Expense deleted ✅");
+        await refreshBillingExpenses();
+        await refreshBillingReport();
+      };
     });
-  }
-
-  async function deleteExpense(id){
-    const ok = confirm("Delete expense?");
-    if(!ok) return;
-
-    const r = await apiFetch("/billing/expenses?id=" + encodeURIComponent(id), { method:"DELETE" });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){
-      showToast(d.error || "Delete expense failed");
-      return;
-    }
-
-    showToast("Expense deleted ✅");
-    await refreshBillingExpenses();
-    await refreshBillingReport();
   }
 
   expenseForm.addEventListener("submit", async (e)=>{
@@ -1441,11 +2057,145 @@
     await refreshBillingReport();
   });
 
+  async function refreshManualSales(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/manual-sales?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ return; }
+
+    manualSalesRows.innerHTML = "";
+    (d.sales || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.date || "")}</td>
+        <td>${escapeHtml(x.title || "")}</td>
+        <td><span class="mono">${fmtMoney(x.amount_usd || 0)}</span></td>
+        <td>${escapeHtml(x.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-ms-del="${x.id}">Delete</button></td>
+      `;
+      manualSalesRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-ms-del]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-ms-del"));
+        const ok = confirm("Delete this manual sale?");
+        if(!ok) return;
+        const r = await apiFetch("/billing/manual-sales?id=" + encodeURIComponent(id), { method:"DELETE" });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Delete failed");
+          return;
+        }
+        showToast("Manual sale deleted ✅");
+        await refreshManualSales();
+        await refreshBillingReport();
+      };
+    });
+  }
+
+  document.getElementById("manualSaleForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    msMsg.textContent = "";
+
+    const period = billMonth.value;
+    const date = document.getElementById("msDate").value;
+    const title = document.getElementById("msTitle").value.trim();
+    const amountUsd = Number(document.getElementById("msAmount").value);
+    const note = document.getElementById("msNote").value.trim();
+
+    const r = await apiFetch("/billing/manual-sales", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period, date, title, amountUsd, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      msMsg.style.color = "#ffb4b4";
+      msMsg.textContent = d.error || "Add manual sale failed";
+      return;
+    }
+
+    msMsg.style.color = "rgba(255,255,255,.85)";
+    msMsg.textContent = "Manual sale added ✅";
+    showToast("Saved ✅");
+    document.getElementById("manualSaleForm").reset();
+    await refreshManualSales();
+    await refreshBillingReport();
+  });
+
+  async function refreshAdjustments(){
+    const month = billMonth.value;
+    const r = await apiFetch("/billing/adjustments?month=" + encodeURIComponent(month));
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){ return; }
+
+    adjustmentsRows.innerHTML = "";
+    (d.adjustments || []).forEach(x=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(x.type || "")}</td>
+        <td><span class="mono">${fmtMoney(x.amount_usd || 0)}</span></td>
+        <td>${escapeHtml(x.title || "")}</td>
+        <td>${escapeHtml(x.note || "")}</td>
+        <td><button class="btn btn-danger mini" data-adj-del="${x.id}">Delete</button></td>
+      `;
+      adjustmentsRows.appendChild(tr);
+    });
+
+    document.querySelectorAll("[data-adj-del]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-adj-del"));
+        const ok = confirm("Delete this adjustment?");
+        if(!ok) return;
+        const r = await apiFetch("/billing/adjustments?id=" + encodeURIComponent(id), { method:"DELETE" });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Delete failed");
+          return;
+        }
+        showToast("Adjustment deleted ✅");
+        await refreshAdjustments();
+        await refreshBillingReport();
+      };
+    });
+  }
+
+  document.getElementById("adjustmentForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    adjMsg.textContent = "";
+
+    const period = billMonth.value;
+    const type = document.getElementById("adjType").value;
+    const amountUsd = Number(document.getElementById("adjAmount").value);
+    const title = document.getElementById("adjTitle").value.trim();
+    const note = document.getElementById("adjNote").value.trim();
+
+    const r = await apiFetch("/billing/adjustments", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ period, type, amountUsd, title, note })
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok){
+      adjMsg.style.color = "#ffb4b4";
+      adjMsg.textContent = d.error || "Add adjustment failed";
+      return;
+    }
+
+    adjMsg.style.color = "rgba(255,255,255,.85)";
+    adjMsg.textContent = "Adjustment added ✅";
+    showToast("Saved ✅");
+    document.getElementById("adjustmentForm").reset();
+    await refreshAdjustments();
+    await refreshBillingReport();
+  });
+
   async function refreshPaychecks(){
     const month = billMonth.value;
     const r = await apiFetch("/billing/paychecks?month=" + encodeURIComponent(month));
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){ showToast(d.error || "Paychecks load failed"); return; }
+    if(!r.ok){ return; }
 
     paychecksRows.innerHTML = "";
     (d.paychecks || []).forEach(x=>{
@@ -1453,9 +2203,9 @@
       tr.innerHTML = `
         <td>${escapeHtml(x.date || "")}</td>
         <td>${escapeHtml(x.employee_name || "")}</td>
-        <td><span class="mono">$${Number(x.amount_usd || 0).toFixed(2)}</span></td>
+        <td><span class="mono">${fmtMoney(x.amount_usd || 0)}</span></td>
         <td>
-          <select class="inlineInput" data-pay-status="${x.id}">
+          <select class="inlineInput" data-pc-status="${x.id}">
             <option value="unpaid" ${x.status==="unpaid"?"selected":""}>unpaid</option>
             <option value="paid" ${x.status==="paid"?"selected":""}>paid</option>
           </select>
@@ -1463,94 +2213,82 @@
         <td>${escapeHtml(x.note || "")}</td>
         <td>
           <div class="actions">
-            <button class="btn mini btn-ok" data-pay-save="${x.id}">Save</button>
-            <button class="btn btn-danger mini" data-pay-del="${x.id}">Delete</button>
+            <button class="btn mini btn-ok" data-pc-save="${x.id}">Save</button>
+            <button class="btn btn-danger mini" data-pc-del="${x.id}">Delete</button>
           </div>
         </td>
       `;
       paychecksRows.appendChild(tr);
     });
 
-    document.querySelectorAll("[data-pay-save]").forEach(btn=>{
-      btn.onclick = ()=> savePaycheckStatus(Number(btn.getAttribute("data-pay-save")));
+    document.querySelectorAll("[data-pc-save]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-pc-save"));
+        const status = document.querySelector(`[data-pc-status="${id}"]`)?.value || "unpaid";
+        const r = await apiFetch("/billing/paychecks/status", {
+          method:"PUT",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({ id, status })
+        });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Save failed");
+          return;
+        }
+        showToast("Paycheck updated ✅");
+        await refreshPaychecks();
+        await refreshBillingReport();
+      };
     });
-    document.querySelectorAll("[data-pay-del]").forEach(btn=>{
-      btn.onclick = ()=> deletePaycheck(Number(btn.getAttribute("data-pay-del")));
+
+    document.querySelectorAll("[data-pc-del]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = Number(btn.getAttribute("data-pc-del"));
+        const ok = confirm("Delete this paycheck?");
+        if(!ok) return;
+        const r = await apiFetch("/billing/paychecks?id=" + encodeURIComponent(id), { method:"DELETE" });
+        const d = await r.json().catch(()=>({}));
+        if(!r.ok){
+          showToast(d.error || "Delete failed");
+          return;
+        }
+        showToast("Paycheck deleted ✅");
+        await refreshPaychecks();
+        await refreshBillingReport();
+      };
     });
   }
 
-  paycheckForm.addEventListener("submit", async (e)=>{
+  document.getElementById("paycheckForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
-    payMsg.textContent = "";
+    pcMsg.textContent = "";
 
-    const month = billMonth.value;
-    const date = document.getElementById("payDate").value;
-    const employeeName = document.getElementById("payEmployee").value.trim();
-    const amountUsd = Number(document.getElementById("payAmount").value);
-    const status = document.getElementById("payStatus").value;
-    const note = document.getElementById("payNote").value.trim();
+    const period = billMonth.value;
+    const date = document.getElementById("pcDate").value;
+    const employeeName = document.getElementById("pcEmployee").value.trim();
+    const amountUsd = Number(document.getElementById("pcAmount").value);
+    const status = document.getElementById("pcStatus").value;
+    const note = document.getElementById("pcNote").value.trim();
 
     const r = await apiFetch("/billing/paychecks", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        period: month,
-        date,
-        employeeName,
-        amountUsd,
-        status,
-        note
-      })
+      body: JSON.stringify({ period, date, employeeName, amountUsd, status, note })
     });
     const d = await r.json().catch(()=>({}));
     if(!r.ok){
-      payMsg.style.color = "#ffb4b4";
-      payMsg.textContent = d.error || "Add paycheck failed";
+      pcMsg.style.color = "#ffb4b4";
+      pcMsg.textContent = d.error || "Add paycheck failed";
       return;
     }
 
-    payMsg.style.color = "rgba(255,255,255,.85)";
-    payMsg.textContent = "Paycheck added ✅";
+    pcMsg.style.color = "rgba(255,255,255,.85)";
+    pcMsg.textContent = "Paycheck added ✅";
     showToast("Saved ✅");
-
-    paycheckForm.reset();
-    document.getElementById("payStatus").value = "unpaid";
+    document.getElementById("paycheckForm").reset();
     await refreshPaychecks();
     await refreshBillingReport();
   });
-
-  async function savePaycheckStatus(id){
-    const status = document.querySelector(`[data-pay-status="${id}"]`)?.value || "unpaid";
-    const r = await apiFetch("/billing/paychecks/status", {
-      method:"PUT",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ id, status })
-    });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){
-      showToast(d.error || "Save paycheck failed");
-      return;
-    }
-    showToast("Paycheck updated ✅");
-    await refreshPaychecks();
-    await refreshBillingReport();
-  }
-
-  async function deletePaycheck(id){
-    const ok = confirm("Delete paycheck?");
-    if(!ok) return;
-
-    const r = await apiFetch("/billing/paychecks?id=" + encodeURIComponent(id), { method:"DELETE" });
-    const d = await r.json().catch(()=>({}));
-    if(!r.ok){
-      showToast(d.error || "Delete paycheck failed");
-      return;
-    }
-
-    showToast("Paycheck deleted ✅");
-    await refreshPaychecks();
-    await refreshBillingReport();
-  }
 
   async function refreshBillingReport(){
     const month = billMonth.value;
@@ -1558,54 +2296,49 @@
     const d = await r.json().catch(()=>({}));
     if(!r.ok){ showToast(d.error || "Report load failed"); return; }
 
-    document.getElementById("statRevenue").textContent = money(d.revenue || 0);
-    document.getElementById("statExpenses").textContent = money(d.expenses || 0);
-    document.getElementById("statProfit").textContent = money(d.profit || 0);
-    document.getElementById("statUnpaid").textContent = money(d.unpaid_total || 0);
-    document.getElementById("statStarting").textContent = money(d.starting_balance || 0);
-    document.getElementById("statPaychecks").textContent = money(d.paychecks_paid || 0);
-    document.getElementById("statEnding").textContent = money(d.bank_balance_end || 0);
+    document.getElementById("reportRevenue").textContent = fmtMoney(d.revenue || 0);
+    document.getElementById("reportExpenses").textContent = fmtMoney(d.expenses || 0);
+    document.getElementById("reportProfit").textContent = fmtMoney(d.profit || 0);
+    document.getElementById("reportUnpaid").textContent = fmtMoney(d.unpaid_total || 0);
+    document.getElementById("reportStartBank").textContent = fmtMoney(d.starting_balance || 0);
+    document.getElementById("reportPaidPaychecks").textContent = fmtMoney(d.paychecks_paid || 0);
+    document.getElementById("reportEndBank").textContent = fmtMoney(d.bank_balance_end || 0);
   }
 
   async function refreshBankBalance(){
     const r = await apiFetch("/billing/bank-balance");
     const d = await r.json().catch(()=>({}));
-    if(!r.ok){
-      showToast(d.error || "Bank balance load failed");
-      return;
-    }
-
+    if(!r.ok) return;
     document.getElementById("bankBalanceInput").value = Number(d.balance_usd || 0).toFixed(2);
-    document.getElementById("statBankNow").textContent = money(d.balance_usd || 0);
   }
 
-  document.getElementById("btnSaveBankBalance").addEventListener("click", async ()=>{
-    const bankMsg = document.getElementById("bankMsg");
-    bankMsg.textContent = "";
+  document.getElementById("bankBalanceForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById("bankBalanceMsg");
+    msg.textContent = "";
 
     const balanceUsd = Number(document.getElementById("bankBalanceInput").value || 0);
-
     const r = await apiFetch("/billing/bank-balance", {
       method:"PUT",
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ balanceUsd })
     });
     const d = await r.json().catch(()=>({}));
-
     if(!r.ok){
-      bankMsg.style.color = "#ffb4b4";
-      bankMsg.textContent = d.error || "Save bank balance failed";
+      msg.style.color = "#ffb4b4";
+      msg.textContent = d.error || "Save failed";
       return;
     }
 
-    bankMsg.style.color = "rgba(255,255,255,.85)";
-    bankMsg.textContent = "Bank balance saved ✅";
+    msg.style.color = "rgba(255,255,255,.85)";
+    msg.textContent = "Bank balance saved ✅";
     showToast("Saved ✅");
-
-    await refreshBankBalance();
     await refreshBillingReport();
   });
 
+  /* =========================
+     INIT
+  ========================= */
   (async function init(){
     const t = getToken();
     if(!t) return;
