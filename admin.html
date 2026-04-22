@@ -17,6 +17,8 @@
       --ease:cubic-bezier(.2,.8,.2,1);
       --danger:#ff6b6b;
       --ok:#22c55e;
+      --blue:#4c7dff;
+      --chip:#10131b;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
@@ -28,7 +30,7 @@
       color:var(--text);
       padding:28px 16px 90px;
     }
-    .wrap{max-width:1280px;margin:0 auto}
+    .wrap{max-width:1400px;margin:0 auto}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
     .brand{font-weight:950;font-size:20px}
     .brand span{
@@ -61,8 +63,14 @@
       color:#fff;
     }
     .btn-ok:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 24px rgba(34,197,94,.14)}
+    .btn-blue{
+      border-color:rgba(76,125,255,.35);
+      background:rgba(76,125,255,.14);
+      color:#fff;
+    }
+    .btn-blue:hover{border-color:rgba(76,125,255,.55);box-shadow:0 0 24px rgba(76,125,255,.16)}
     .grid{display:grid;gap:14px}
-    @media(min-width:980px){ .grid{grid-template-columns: 1.05fr 1.1fr} }
+    @media(min-width:1180px){ .grid{grid-template-columns: 1.15fr 1fr} }
     .card{
       background:var(--panel);
       border:1px solid var(--border);
@@ -174,6 +182,8 @@
     }
     .pill.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.10)}
     .pill.bad{border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.10)}
+    .pill.blue{border-color:rgba(76,125,255,.35); background:rgba(76,125,255,.10)}
+    .pill.gold{border-color:rgba(214,177,94,.35); background:rgba(214,177,94,.10)}
     .inlineInput{
       width:150px;
       padding:8px 10px;
@@ -183,7 +193,7 @@
     .statsGrid{
       display:grid;
       gap:12px;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
       margin-top:12px;
     }
     .statCard{
@@ -211,6 +221,56 @@
     }
     @media(min-width:980px){
       .twoCol{grid-template-columns:1fr 1fr}
+    }
+    .summaryGrid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      margin-bottom:14px;
+    }
+    .summaryCard{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    .summaryTitle{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:rgba(255,255,255,.55);
+      font-weight:950;
+    }
+    .summaryValue{
+      font-size:28px;
+      font-weight:950;
+      margin-top:8px;
+    }
+    .clientStatStack{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    .clientStatChip{
+      background:var(--chip);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:11px;
+      font-weight:900;
+      color:#fff;
+      white-space:nowrap;
+    }
+    .clientStatChip.active{border-color:rgba(34,197,94,.30);color:#c6ffd9}
+    .clientStatChip.disabled{border-color:rgba(255,107,107,.30);color:#ffd1d1}
+    .clientStatChip.spend{border-color:rgba(214,177,94,.30);color:#ffe9ad}
+    .sectionTitle{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
     }
   </style>
 </head>
@@ -247,121 +307,154 @@
     </form>
   </div>
 
-  <div class="grid hide" id="panel">
-    <div class="card">
-      <h1>Clients</h1>
-      <div class="p">List, edit, delete clients, and manage wallet balance.</div>
-
-      <div class="hr"></div>
-
-      <div class="row" style="justify-content:space-between">
-        <button class="btn" id="btnRefreshClients" type="button">Refresh</button>
-        <div class="p" id="clientCount" style="margin:0">—</div>
+  <div class="hide" id="panel">
+    <div class="summaryGrid" id="adminSummary">
+      <div class="summaryCard">
+        <div class="summaryTitle">Total Clients</div>
+        <div class="summaryValue" id="sumClients">0</div>
       </div>
-
-      <div class="hr"></div>
-
-      <div style="overflow:auto">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:7%">ID</th>
-              <th style="width:20%">Name</th>
-              <th style="width:16%">Login</th>
-              <th style="width:18%">Package</th>
-              <th style="width:17%">Wallet</th>
-              <th style="width:22%">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="clientsRows"></tbody>
-        </table>
+      <div class="summaryCard">
+        <div class="summaryTitle">Total Ad Accounts</div>
+        <div class="summaryValue" id="sumAccounts">0</div>
       </div>
-
-      <div class="hr"></div>
-
-      <h1 style="font-size:18px" id="clientFormTitle">Add Client</h1>
-      <div class="hint" id="clientFormHint">Create a new client, or click “Edit” on a client row.</div>
-
-      <form class="form" id="clientForm">
-        <input id="cId" type="hidden" value="" />
-
-        <div><label>Name</label><input id="cName" placeholder="GRUPOD12" required /></div>
-        <div><label>Login</label><input id="cLogin" placeholder="Grupod12" required /></div>
-
-        <div>
-          <label>Password (leave empty to keep unchanged on edit)</label>
-          <input id="cPass" placeholder="ClientPassword" />
-        </div>
-
-        <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Diamond" /></div>
-        <div><label>Price</label><input id="cPrice" placeholder="$1950/month" /></div>
-        <div><label>Billing Date</label><input id="cBill" placeholder="Every 24th of every month" /></div>
-        <div><label>Wallet Balance (USD)</label><input id="cWallet" type="number" step="0.01" min="0" placeholder="0.00" /></div>
-
-        <div class="row">
-          <button class="btn btn-primary" type="submit" id="btnSaveClient">Save</button>
-          <button class="btn" type="button" id="btnCancelClientEdit">Cancel</button>
-        </div>
-      </form>
-
-      <div class="p" id="clientMsg" style="margin-top:10px"></div>
+      <div class="summaryCard">
+        <div class="summaryTitle">Active Accounts</div>
+        <div class="summaryValue" id="sumActive">0</div>
+      </div>
+      <div class="summaryCard">
+        <div class="summaryTitle">Disabled Accounts</div>
+        <div class="summaryValue" id="sumDisabled">0</div>
+      </div>
+      <div class="summaryCard">
+        <div class="summaryTitle">Assigned</div>
+        <div class="summaryValue" id="sumAssigned">0</div>
+      </div>
+      <div class="summaryCard">
+        <div class="summaryTitle">Unassigned</div>
+        <div class="summaryValue" id="sumUnassigned">0</div>
+      </div>
     </div>
 
-    <div class="card">
-      <h1>Ad Accounts</h1>
-      <div class="p">Select a client, then edit/delete ad accounts.</div>
-
-      <div class="hr"></div>
-
-      <div>
-        <label>Select client</label>
-        <select id="clientSelect"></select>
-      </div>
-
-      <div class="row" style="justify-content:space-between;margin-top:10px">
-        <button class="btn" id="btnRefreshAds" type="button">Refresh</button>
-        <div class="p" id="adsFor" style="margin:0">—</div>
-      </div>
-
-      <div style="overflow:auto;margin-top:10px">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:28%">Ad Name</th>
-              <th style="width:30%">Ad ID</th>
-              <th style="width:30%">BM ID</th>
-              <th style="width:18%">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="adsRows"></tbody>
-        </table>
-      </div>
-
-      <div class="hr"></div>
-
-      <h1 style="font-size:18px" id="adFormTitle">Add Ad Account</h1>
-      <div class="hint" id="adFormHint">Create new ad account, or click “Edit” on a row.</div>
-
-      <form class="form" id="adForm">
-        <input id="aRowId" type="hidden" value="" />
-        <div><label>Ad Account Name</label><input id="aName" placeholder="waiting for payment" /></div>
-        <div><label>Ad Account ID</label><input id="aId" placeholder="waiting for payment" /></div>
-        <div><label>BM ID</label><input id="aBm" placeholder="waiting for payment" /></div>
-
-        <div class="row">
-          <button class="btn btn-primary" type="submit" id="btnSaveAd">Save</button>
-          <button class="btn" type="button" id="btnCancelAdEdit">Cancel</button>
+    <div class="grid">
+      <div class="card">
+        <div class="sectionTitle">
+          <div>
+            <h1>Clients</h1>
+            <div class="p">List, edit, delete clients, manage wallet balance, and see per-client account summary.</div>
+          </div>
+          <div class="row">
+            <button class="btn" id="btnRefreshClients" type="button">Refresh</button>
+            <div class="p" id="clientCount" style="margin:0">—</div>
+          </div>
         </div>
-      </form>
 
-      <div class="p" id="adMsg" style="margin-top:10px"></div>
+        <div style="overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:6%">ID</th>
+                <th style="width:15%">Name</th>
+                <th style="width:13%">Login</th>
+                <th style="width:14%">Package</th>
+                <th style="width:16%">Wallet</th>
+                <th style="width:18%">Client Stats</th>
+                <th style="width:18%">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clientsRows"></tbody>
+          </table>
+        </div>
+
+        <div class="hr"></div>
+
+        <h1 style="font-size:18px" id="clientFormTitle">Add Client</h1>
+        <div class="hint" id="clientFormHint">Create a new client, or click “Edit” on a client row.</div>
+
+        <form class="form" id="clientForm">
+          <input id="cId" type="hidden" value="" />
+
+          <div><label>Name</label><input id="cName" placeholder="GRUPOD12" required /></div>
+          <div><label>Login</label><input id="cLogin" placeholder="Grupod12" required /></div>
+
+          <div>
+            <label>Password (leave empty to keep unchanged on edit)</label>
+            <input id="cPass" placeholder="ClientPassword" />
+          </div>
+
+          <div><label>Package</label><input id="cPkg" placeholder="Top Agency Package Diamond" /></div>
+          <div><label>Price</label><input id="cPrice" placeholder="$1950/month" /></div>
+          <div><label>Billing Date</label><input id="cBill" placeholder="Every 24th of every month" /></div>
+          <div><label>Wallet Balance (USD)</label><input id="cWallet" type="number" step="0.01" min="0" placeholder="0.00" /></div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit" id="btnSaveClient">Save</button>
+            <button class="btn" type="button" id="btnCancelClientEdit">Cancel</button>
+          </div>
+        </form>
+
+        <div class="p" id="clientMsg" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">
+          <div>
+            <h1>Ad Accounts</h1>
+            <div class="p">Select a client, then edit or delete ad accounts assigned to that client.</div>
+          </div>
+          <button class="btn" id="btnRefreshAds" type="button">Refresh</button>
+        </div>
+
+        <div>
+          <label>Select client</label>
+          <select id="clientSelect"></select>
+        </div>
+
+        <div class="row" style="justify-content:space-between;margin-top:10px">
+          <div class="p" id="adsFor" style="margin:0">—</div>
+          <div class="clientStatStack" id="adsForStats"></div>
+        </div>
+
+        <div style="overflow:auto;margin-top:10px">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">Ad Name</th>
+                <th style="width:22%">Ad ID</th>
+                <th style="width:18%">BM ID</th>
+                <th style="width:12%">Status</th>
+                <th style="width:12%">Spend</th>
+                <th style="width:14%">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adsRows"></tbody>
+          </table>
+        </div>
+
+        <div class="hr"></div>
+
+        <h1 style="font-size:18px" id="adFormTitle">Add Ad Account</h1>
+        <div class="hint" id="adFormHint">Create new ad account, or click “Edit” on a row.</div>
+
+        <form class="form" id="adForm">
+          <input id="aRowId" type="hidden" value="" />
+          <div><label>Ad Account Name</label><input id="aName" placeholder="waiting for payment" /></div>
+          <div><label>Ad Account ID</label><input id="aId" placeholder="waiting for payment" /></div>
+          <div><label>BM ID</label><input id="aBm" placeholder="waiting for payment" /></div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit" id="btnSaveAd">Save</button>
+            <button class="btn" type="button" id="btnCancelAdEdit">Cancel</button>
+          </div>
+        </form>
+
+        <div class="p" id="adMsg" style="margin-top:10px"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast">Saved</div>
 
-<!-- OWNED BMS MODAL -->
 <div class="modal" id="ownedBmsModal" aria-hidden="true">
   <div class="modalCard" role="dialog" aria-modal="true">
     <div class="modalTop">
@@ -503,7 +596,6 @@
   </div>
 </div>
 
-<!-- BILLING MODAL -->
 <div class="modal" id="billingModal" aria-hidden="true">
   <div class="modalCard" role="dialog" aria-modal="true">
     <div class="modalTop">
@@ -837,7 +929,7 @@
     toast.textContent = msg;
     toast.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>toast.classList.remove("show"), 1200);
+    toastTimer = setTimeout(()=>toast.classList.remove("show"), 1400);
   }
 
   function setErr(msg){
@@ -864,6 +956,32 @@
   function showLogin(){
     document.getElementById("panel").classList.add("hide");
     document.getElementById("loginCard").classList.remove("hide");
+  }
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function escapeAttr(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
+  function fmtMoney(v){
+    return "$" + Number(v || 0).toFixed(2);
+  }
+  function isDisabledStatus(status){
+    const s = String(status || "").toLowerCase();
+    return s.includes("disabled") || s.includes("closed") || s.includes("pending closure");
+  }
+  function isActiveStatus(status){
+    return String(status || "").toLowerCase() === "active";
   }
 
   document.getElementById("btnLogout").addEventListener("click", ()=>{
@@ -909,12 +1027,53 @@
     }
   });
 
-  /* =========================
-     CLIENTS
-  ========================= */
   const clientsRows = document.getElementById("clientsRows");
   const clientSelect = document.getElementById("clientSelect");
   let clientsCache = [];
+  let allAccountsCache = [];
+  let adsCache = [];
+
+  async function loadAllAccountsSummary(){
+    try{
+      const r = await apiFetch("/all-ad-accounts");
+      const d = await r.json().catch(()=> ({}));
+      if(!r.ok){
+        allAccountsCache = [];
+        updateSummaryCards();
+        return;
+      }
+      allAccountsCache = d.accounts || d.adAccounts || [];
+      updateSummaryCards();
+    }catch{
+      allAccountsCache = [];
+      updateSummaryCards();
+    }
+  }
+
+  function getClientAccountStats(clientId){
+    const rows = allAccountsCache.filter(x => Number(x.client_id) === Number(clientId));
+    const total = rows.length;
+    const active = rows.filter(x => isActiveStatus(x.status)).length;
+    const disabled = rows.filter(x => isDisabledStatus(x.status)).length;
+    const spend = rows.reduce((sum, x) => sum + Number(x.spend || x.amount_spent || 0), 0);
+    return { total, active, disabled, spend };
+  }
+
+  function updateSummaryCards(){
+    document.getElementById("sumClients").textContent = String(clientsCache.length || 0);
+
+    const totalAccounts = allAccountsCache.length;
+    const activeAccounts = allAccountsCache.filter(x => isActiveStatus(x.status)).length;
+    const disabledAccounts = allAccountsCache.filter(x => isDisabledStatus(x.status)).length;
+    const assignedAccounts = allAccountsCache.filter(x => Number(x.client_id) > 0).length;
+    const unassignedAccounts = totalAccounts - assignedAccounts;
+
+    document.getElementById("sumAccounts").textContent = String(totalAccounts);
+    document.getElementById("sumActive").textContent = String(activeAccounts);
+    document.getElementById("sumDisabled").textContent = String(disabledAccounts);
+    document.getElementById("sumAssigned").textContent = String(assignedAccounts);
+    document.getElementById("sumUnassigned").textContent = String(unassignedAccounts);
+  }
 
   async function loadClients(){
     const r = await apiFetch("/clients");
@@ -922,10 +1081,13 @@
     if(!r.ok){ showToast(d.error || "Failed to load clients"); return; }
 
     clientsCache = d.clients || [];
-    document.getElementById("clientCount").textContent = clientsCache.length + " client(s)";
+    await loadAllAccountsSummary();
 
+    document.getElementById("clientCount").textContent = clientsCache.length + " client(s)";
     clientsRows.innerHTML = "";
+
     clientsCache.forEach(c=>{
+      const stats = getClientAccountStats(c.id);
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><span class="mono">${c.id}</span></td>
@@ -939,8 +1101,16 @@
           </div>
         </td>
         <td>
+          <div class="clientStatStack">
+            <span class="clientStatChip">Total ${stats.total}</span>
+            <span class="clientStatChip active">Active ${stats.active}</span>
+            <span class="clientStatChip disabled">Disabled ${stats.disabled}</span>
+            <span class="clientStatChip spend">${fmtMoney(stats.spend)}</span>
+          </div>
+        </td>
+        <td>
           <div class="actions">
-            <button class="btn mini" data-edit-client="${c.id}">Edit</button>
+            <button class="btn mini btn-blue" data-edit-client="${c.id}">Edit</button>
             <button class="btn btn-danger mini" data-del-client="${c.id}">Delete</button>
           </div>
         </td>
@@ -962,6 +1132,7 @@
     } else {
       document.getElementById("adsRows").innerHTML = "";
       document.getElementById("adsFor").textContent = "No client selected";
+      document.getElementById("adsForStats").innerHTML = "";
     }
 
     wireClientButtons();
@@ -1131,16 +1302,12 @@
     }
   });
 
-  /* =========================
-     AD ACCOUNTS
-  ========================= */
   const adsRows = document.getElementById("adsRows");
   const adMsg = document.getElementById("adMsg");
   const aRowId = document.getElementById("aRowId");
   const aName = document.getElementById("aName");
   const aId = document.getElementById("aId");
   const aBm = document.getElementById("aBm");
-  let adsCache = [];
 
   clientSelect.addEventListener("change", loadAdsForSelected);
   document.getElementById("btnRefreshAds").addEventListener("click", loadAdsForSelected);
@@ -1160,6 +1327,7 @@
     const clientId = Number(clientSelect.value || 0);
     if(!clientId){
       document.getElementById("adsFor").textContent = "No client selected";
+      document.getElementById("adsForStats").innerHTML = "";
       adsRows.innerHTML = "";
       return;
     }
@@ -1172,15 +1340,29 @@
     adsCache = d.adAccounts || [];
     adsRows.innerHTML = "";
 
+    const active = adsCache.filter(x => isActiveStatus(x.status)).length;
+    const disabled = adsCache.filter(x => isDisabledStatus(x.status)).length;
+    const totalSpend = adsCache.reduce((sum, x) => sum + Number(x.spend || x.amount_spent || 0), 0);
+    document.getElementById("adsForStats").innerHTML = `
+      <span class="clientStatChip">Total ${adsCache.length}</span>
+      <span class="clientStatChip active">Active ${active}</span>
+      <span class="clientStatChip disabled">Disabled ${disabled}</span>
+      <span class="clientStatChip spend">${fmtMoney(totalSpend)}</span>
+    `;
+
     adsCache.forEach(a=>{
+      const status = a.status || "—";
+      const spend = Number(a.spend || a.amount_spent || 0);
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${escapeHtml(a.ad_name || "")}</td>
         <td><span class="mono">${escapeHtml(a.ad_id || "")}</span></td>
         <td><span class="mono">${escapeHtml(a.bm_id || "")}</span></td>
+        <td>${escapeHtml(status)}</td>
+        <td><span class="mono">${fmtMoney(spend)}</span></td>
         <td>
           <div class="actions">
-            <button class="btn mini" data-edit-ad="${a.id}">Edit</button>
+            <button class="btn mini btn-blue" data-edit-ad="${a.id}">Edit</button>
             <button class="btn btn-danger mini" data-del-ad="${a.id}">Delete</button>
           </div>
         </td>
@@ -1225,6 +1407,7 @@
     showToast("Ad deleted ✅");
     resetAdForm();
     await loadAdsForSelected();
+    await loadAllAccountsSummary();
   }
 
   document.getElementById("adForm").addEventListener("submit", async (e)=>{
@@ -1284,37 +1467,13 @@
       showToast("Saved ✅");
       resetAdForm();
       await loadAdsForSelected();
+      await loadAllAccountsSummary();
     }catch{
       adMsg.style.color = "#ffb4b4";
       adMsg.textContent = "Network error";
     }
   });
 
-  /* =========================
-     HELPERS
-  ========================= */
-  function escapeHtml(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-  function escapeAttr(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
-  }
-  function fmtMoney(v){
-    return "$" + Number(v || 0).toFixed(2);
-  }
-
-  /* =========================
-     OWNED BMS
-  ========================= */
   const ownedBmsModal = document.getElementById("ownedBmsModal");
   const ownedBmRows = document.getElementById("ownedBmRows");
   const ownedBmAccountRows = document.getElementById("ownedBmAccountRows");
@@ -1403,7 +1562,7 @@
         <td>
           <div class="actions">
             <button class="btn mini" data-owned-bm-open="${b.id}">Open</button>
-            <button class="btn mini" data-owned-bm-edit="${b.id}">Edit</button>
+            <button class="btn mini btn-blue" data-owned-bm-edit="${b.id}">Edit</button>
             <button class="btn btn-danger mini" data-owned-bm-del="${b.id}">Delete</button>
           </div>
         </td>
@@ -1556,7 +1715,7 @@
         <td><span class="mono">${escapeHtml(a.shared_bm_id || "—")}</span></td>
         <td>
           <div class="actions">
-            <button class="btn mini" data-owned-account-edit="${a.id}">Edit</button>
+            <button class="btn mini btn-blue" data-owned-account-edit="${a.id}">Edit</button>
             <button class="btn btn-danger mini" data-owned-account-del="${a.id}">Delete</button>
           </div>
         </td>
@@ -1658,9 +1817,6 @@
     await loadOwnedBms();
   });
 
-  /* =========================
-     BILLING
-  ========================= */
   const billingModal = document.getElementById("billingModal");
   const billingRows = document.getElementById("billingRows");
   const billingTotals = document.getElementById("billingTotals");
@@ -2336,9 +2492,6 @@
     await refreshBillingReport();
   });
 
-  /* =========================
-     INIT
-  ========================= */
   (async function init(){
     const t = getToken();
     if(!t) return;
