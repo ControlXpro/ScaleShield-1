@@ -18,6 +18,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ScaleShield — Agency Infrastructure</title>
@@ -31,6 +32,7 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
   --bg:#07080B;
   --bg2:#0D0F18;
   --panel:rgba(255,255,255,.05);
+  --panel2:rgba(255,255,255,.035);
   --border:rgba(255,255,255,.08);
   --border2:rgba(255,255,255,.12);
 
@@ -41,10 +43,14 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
   --muted:rgba(255,255,255,.65);
   --muted2:rgba(255,255,255,.45);
 
+  --green:#2cd67c;
+  --red:#ff646e;
+  --blue:#49b2ff;
+  --amber:#ffcb6b;
+
   --radius:22px;
   --ease:cubic-bezier(.2,.8,.2,1);
 
-  /* brand colors */
   --tg:#2AABEE;
   --wa:#25D366;
   --ig1:#F58529;
@@ -55,6 +61,8 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 
 *{box-sizing:border-box;margin:0;padding:0}
 
+html{scroll-behavior:smooth}
+
 body{
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   background:
@@ -64,6 +72,24 @@ body{
     linear-gradient(135deg,#050507,#0b0d14,#090a10);
   color:var(--text);
   overflow-x:hidden;
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(600px circle at 15% 10%, rgba(214,177,94,.07), transparent 60%),
+    radial-gradient(800px circle at 85% 20%, rgba(73,178,255,.06), transparent 60%);
+  mix-blend-mode:screen;
+  animation:bgShift 12s ease-in-out infinite alternate;
+  z-index:0;
+}
+@keyframes bgShift{
+  from{transform:translateY(0) scale(1)}
+  to{transform:translateY(-20px) scale(1.03)}
 }
 
 a{color:inherit;text-decoration:none}
@@ -73,6 +99,8 @@ section{
   max-width:1200px;
   margin:auto;
   padding:88px 24px;
+  position:relative;
+  z-index:1;
 }
 
 h1{
@@ -112,7 +140,6 @@ p{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   box-shadow:0 0 18px rgba(214,177,94,.22);
 }
-
 .grad{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   -webkit-background-clip:text;
@@ -176,6 +203,7 @@ p{
   user-select:none;
   white-space:nowrap;
   line-height:1;
+  cursor:pointer;
 }
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
@@ -193,13 +221,20 @@ p{
   border-color:rgba(214,177,94,.35);
   box-shadow:0 0 30px rgba(214,177,94,.12);
 }
-
+.btn-dark{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;
+}
+.btn-dark:hover{
+  transform:translateY(-2px);
+  border-color:rgba(73,178,255,.35);
+  box-shadow:0 0 28px rgba(73,178,255,.12);
+}
 .btn-icon{
   width:18px;height:18px;display:inline-block;flex:0 0 auto;
   opacity:.95;
 }
-
-/* Brand hover animations */
 .btn-tg:hover{
   color:var(--tg);
   border-color:rgba(42,171,238,.55);
@@ -270,15 +305,6 @@ p{
 }
 .badge strong{color:#fff}
 
-.icon{
-  width:36px;height:36px;border-radius:14px;
-  display:grid;place-items:center;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(0,0,0,.22);
-  box-shadow:0 0 24px rgba(214,177,94,.06);
-}
-.icon svg{width:18px;height:18px;opacity:.95}
-
 /* Hero */
 .hero{
   padding-top:170px;
@@ -303,8 +329,6 @@ p{
   flex-wrap:wrap;
   gap:10px;
 }
-
-/* Mini feature chips */
 .chip{
   display:inline-flex;
   align-items:center;
@@ -328,8 +352,16 @@ p{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   box-shadow:0 0 16px rgba(214,177,94,.18);
 }
+.hero-surface{
+  margin-top:34px;
+  display:grid;
+  gap:24px;
+}
+@media(min-width:980px){
+  .hero-surface{grid-template-columns:1.15fr .85fr;align-items:stretch}
+}
 
-/* Stats */
+/* stats */
 .stat{
   font-size:44px;
   font-weight:950;
@@ -340,7 +372,7 @@ p{
   color:transparent;
 }
 
-/* Pricing */
+/* pricing */
 .price{
   font-size:40px;
   font-weight:950;
@@ -359,31 +391,8 @@ p{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   box-shadow:0 0 30px rgba(214,177,94,.20);
 }
-.ul{
-  margin-top:14px;
-  display:grid;
-  gap:10px;
-}
-.li{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.55;
-}
-.check{
-  width:20px;height:20px;border-radius:999px;
-  display:grid;place-items:center;
-  background:rgba(214,177,94,.10);
-  border:1px solid rgba(214,177,94,.18);
-  box-shadow:0 0 18px rgba(214,177,94,.10);
-  flex:0 0 auto;
-  margin-top:1px;
-}
-.check svg{width:14px;height:14px}
 
-/* Verticals */
+/* verticals */
 .vert-card{min-height:210px}
 .pulse{
   position:absolute;
@@ -401,10 +410,9 @@ p{
 .wiggle{display:inline-block;transition:transform .2s var(--ease)}
 .card:hover .wiggle{transform:rotate(-3deg) scale(1.02)}
 
-/* Graph */
+/* graph */
 .graph-wrap{display:grid;gap:24px}
 @media(min-width:980px){ .graph-wrap{grid-template-columns:1.05fr .95fr;align-items:center} }
-
 .canvas-card{padding:18px}
 .canvas-shell{
   border-radius:18px;
@@ -426,7 +434,6 @@ p{
   mask-image: radial-gradient(900px circle at 50% 50%, #000 45%, transparent 72%);
 }
 #verticalChart{width:100%;height:320px;display:block}
-
 .legend{
   display:flex;gap:14px;flex-wrap:wrap;
   margin-top:14px;
@@ -445,7 +452,7 @@ p{
 .s2{background:rgba(56,189,248,.95)}
 .note{margin-top:10px;color:var(--muted2);font-size:12px;line-height:1.5}
 
-/* Instagram preview */
+/* instagram preview */
 .ig-grid{
   margin-top:24px;
   display:grid;
@@ -520,7 +527,7 @@ p{
   font-size:12px;
 }
 
-/* Reviews */
+/* reviews */
 .review-card{
   min-height:220px;
 }
@@ -560,7 +567,7 @@ p{
   font-size:12px;
 }
 
-/* FAQ */
+/* faq */
 .faq{display:grid;gap:14px}
 .faq-btn{
   width:100%;
@@ -588,7 +595,7 @@ p{
 }
 .faq-btn[aria-expanded="true"] .faq-a{display:block}
 
-/* Footer */
+/* footer */
 footer{
   border-top:1px solid rgba(255,255,255,.06);
   padding:42px 24px;
@@ -596,14 +603,14 @@ footer{
   color:var(--muted);
 }
 
-/* Reveal */
+/* reveal */
 .reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
 .reveal.active{opacity:1;transform:none}
 
-/* REMOVE FLOATING BUTTONS ON ALL DEVICES */
+/* remove floating old */
 .float{display:none !important}
 
-/* Mobile 3-dot menu */
+/* mobile 3-dot menu */
 .mobile-menu{
   display:none;
   position:fixed;
@@ -650,15 +657,360 @@ footer{
 .menu-panel a:hover{background:rgba(255,255,255,.05)}
 .menu-panel small{font-weight:800;color:rgba(255,255,255,.45)}
 
+.demo-grid{
+  display:grid;
+  gap:24px;
+}
+@media(min-width:980px){
+  .demo-grid{grid-template-columns:1.1fr .9fr;align-items:start}
+}
+.demo-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:18px;
+}
+.demo-table th,.demo-table td{
+  padding:14px 12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  text-align:left;
+  font-size:13px;
+}
+.demo-table th{
+  color:var(--muted2);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+}
+.status-active{color:#d7ffe8;border-color:rgba(44,214,124,.25);background:rgba(44,214,124,.10)}
+.status-disabled{color:#ffd9dd;border-color:rgba(255,100,110,.25);background:rgba(255,100,110,.10)}
+.status-replacing{color:#fff2d3;border-color:rgba(255,203,107,.25);background:rgba(255,203,107,.10)}
+.mini-log{
+  margin-top:16px;
+  display:grid;
+  gap:10px;
+}
+.mini-log-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+  font-size:13px;
+}
+.mini-log-item strong{color:#fff}
+.mini-log-item .time{color:var(--muted2);white-space:nowrap}
+.feed-shell{
+  height:360px;
+  overflow:hidden;
+  position:relative;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  padding:14px;
+}
+.chat-list{
+  display:grid;
+  gap:10px;
+}
+.chat-msg{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+.chat-avatar{
+  width:34px;height:34px;border-radius:999px;
+  display:grid;place-items:center;
+  flex:0 0 auto;
+  font-size:12px;
+  font-weight:900;
+  color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+}
+.chat-meta{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  font-size:12px;
+}
+.chat-name{font-weight:900;color:#fff}
+.chat-source{color:var(--blue)}
+.chat-text{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+.roi-grid{
+  display:grid;
+  gap:24px;
+}
+@media(min-width:980px){
+  .roi-grid{grid-template-columns:.9fr 1.1fr;align-items:start}
+}
+.calc{
+  display:grid;
+  gap:14px;
+}
+.input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  outline:none;
+  font:inherit;
+}
+.input:focus{
+  border-color:rgba(214,177,94,.35);
+  box-shadow:0 0 20px rgba(214,177,94,.10);
+}
+.calc-result{
+  margin-top:8px;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+}
+.calc-result-grid{
+  display:grid;
+  gap:14px;
+  margin-top:16px;
+}
+@media(min-width:640px){
+  .calc-result-grid{grid-template-columns:repeat(3,1fr)}
+}
+.calc-box{
+  padding:16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+}
+.calc-box .v{
+  font-size:28px;
+  font-weight:950;
+  letter-spacing:-.02em;
+  color:#fff;
+  margin-top:8px;
+}
+.compare-grid{
+  display:grid;
+  gap:24px;
+}
+@media(min-width:980px){
+  .compare-grid{grid-template-columns:1fr 1fr}
+}
+.compare-list{
+  display:grid;
+  gap:10px;
+  margin-top:16px;
+}
+.compare-item{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  color:var(--muted);
+  font-size:14px;
+}
+.compare-icon{
+  width:22px;height:22px;border-radius:999px;
+  display:grid;place-items:center;
+  flex:0 0 auto;
+  font-size:12px;
+  font-weight:900;
+}
+.compare-bad .compare-icon{
+  background:rgba(255,100,110,.10);
+  color:var(--red);
+  border:1px solid rgba(255,100,110,.20);
+}
+.compare-good .compare-icon{
+  background:rgba(44,214,124,.10);
+  color:var(--green);
+  border:1px solid rgba(44,214,124,.20);
+}
+.trust-grid{
+  display:grid;
+  gap:24px;
+}
+@media(min-width:980px){
+  .trust-grid{grid-template-columns:repeat(3,1fr)}
+}
+.trust-quote{
+  margin-top:16px;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+}
+.activity-feed{
+  position:fixed;
+  top:88px;
+  right:18px;
+  width:min(300px, calc(100vw - 36px));
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:120;
+  pointer-events:none;
+}
+.activity-toast{
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(10,10,14,.84);
+  backdrop-filter:blur(12px);
+  box-shadow:0 18px 50px -28px rgba(0,0,0,.75);
+  transform:translateY(8px);
+  opacity:0;
+  transition:.35s var(--ease);
+}
+.activity-toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+.activity-toast strong{
+  display:block;
+  color:#fff;
+  font-size:13px;
+}
+.activity-toast span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+.popup{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%) translateY(20px);
+  width:min(560px, calc(100vw - 24px));
+  padding:16px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(10,10,14,.90);
+  backdrop-filter:blur(18px);
+  box-shadow:0 28px 70px -30px rgba(0,0,0,.85);
+  z-index:130;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s var(--ease);
+}
+.popup.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+.popup-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.popup-copy strong{font-size:16px}
+.popup-copy span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:13px;
+}
+.popup-close{
+  background:none;
+  border:none;
+  color:var(--muted2);
+  cursor:pointer;
+  font-size:18px;
+  line-height:1;
+}
+.bg-canvas{
+  position:absolute;
+  inset:auto 0 0 0;
+  width:100%;
+  height:180px;
+  opacity:.9;
+  pointer-events:none;
+}
+.hero-ambient{
+  position:absolute;
+  inset:auto 0 0 0;
+  height:220px;
+  pointer-events:none;
+  background:
+    radial-gradient(500px circle at 20% 50%, rgba(44,214,124,.06), transparent 60%),
+    radial-gradient(500px circle at 80% 50%, rgba(73,178,255,.07), transparent 60%);
+  filter:blur(10px);
+}
+.step-list{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+.step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+}
+.step-num{
+  width:28px;height:28px;border-radius:999px;
+  display:grid;place-items:center;
+  flex:0 0 auto;
+  color:#111;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+}
+.step-copy{color:var(--muted);font-size:14px;line-height:1.55}
+.step-copy b{display:block;color:#fff;margin-bottom:3px}
 @media(max-width:979px){
   .nav{display:none;}
   .mobile-menu{display:block;}
   .hero{padding-top:110px;}
+  .activity-feed{display:none}
 }
 </style>
 </head>
 
 <body>
+
+<div class="activity-feed" id="activityFeed"></div>
+
+<div class="popup" id="offerPopup">
+  <div class="popup-inner">
+    <div class="popup-copy">
+      <strong>Need stable ad accounts right now?</strong>
+      <span>Get fast onboarding, 24/7 support, and unlimited replacements.</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Telegram</a>
+      <button class="popup-close" id="popupClose" aria-label="Close">✕</button>
+    </div>
+  </div>
+</div>
 
 <!-- Mobile 3-dot menu -->
 <div class="mobile-menu" aria-label="Mobile menu">
@@ -668,10 +1020,13 @@ footer{
 
   <div class="menu-panel" id="menuPanel">
     <a href="#stats" class="mnav">Stats <small>→</small></a>
+    <a href="#demo" class="mnav">Live Demo <small>→</small></a>
     <a href="#verticals" class="mnav">Verticals <small>→</small></a>
     <a href="#graph" class="mnav">Graph <small>→</small></a>
     <a href="#pricing" class="mnav">Pricing <small>→</small></a>
     <a href="#social" class="mnav">Social <small>→</small></a>
+    <a href="#roi" class="mnav">ROI <small>→</small></a>
+    <a href="#trust" class="mnav">Trust <small>→</small></a>
     <a href="#reviews" class="mnav">Reviews <small>→</small></a>
     <a href="#faq" class="mnav">FAQ <small>→</small></a>
     <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
@@ -691,9 +1046,12 @@ footer{
       </div>
       <div class="nav-links">
         <a href="#stats">Stats</a>
+        <a href="#demo">Live Demo</a>
         <a href="#verticals">Verticals</a>
         <a href="#graph">Graph</a>
         <a href="#pricing">Pricing</a>
+        <a href="#roi">ROI</a>
+        <a href="#trust">Trust</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
         <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
@@ -771,6 +1129,74 @@ footer{
       <div class="chip"><span class="dot"></span> Secure onboarding</div>
     </div>
   </div>
+
+  <div class="hero-surface">
+    <div class="card reveal" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> LIVE SYSTEM PREVIEW</div>
+      <h3 style="font-size:24px;">See the replacement flow in action</h3>
+      <p style="max-width:60ch">This simulates exactly what clients care about: account dies, replacement gets assigned, campaigns keep moving.</p>
+
+      <table class="demo-table">
+        <thead>
+          <tr>
+            <th>Account ID</th>
+            <th>Spend</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b id="demoAccId">act_4938201881</b></td>
+            <td id="demoSpend">$5,240</td>
+            <td>
+              <span class="status-pill status-active" id="demoStatus">🟢 Active</span>
+            </td>
+            <td>
+              <button class="btn btn-primary" id="replaceBtn">Replace Now</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mini-log" id="miniLog">
+        <div class="mini-log-item">
+          <div><strong>Live monitor armed</strong><br>Watching status changes and replacement queue.</div>
+          <div class="time">00:00</div>
+        </div>
+        <div class="mini-log-item">
+          <div><strong>Client dashboard active</strong><br>Manual + fast replacement workflow ready.</div>
+          <div class="time">00:08</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> AUTO DEMO FLOW</div>
+      <h3 style="font-size:24px;">Why this converts</h3>
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-copy"><b>Account gets disabled</b>Pressure starts immediately when spend is live.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-copy"><b>Replacement gets assigned</b>No waiting around trying to rebuild momentum.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-copy"><b>Scaling continues</b>Your team keeps moving instead of losing days.</div>
+        </div>
+      </div>
+
+      <div class="trust-quote">
+        “This is the core reason people buy infrastructure — not because it looks nice, but because dead accounts cost real money.”
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-ambient"></div>
+  <canvas class="bg-canvas" id="heroCanvas"></canvas>
 </section>
 
 <!-- STATS -->
@@ -781,7 +1207,7 @@ footer{
     <p>High-level performance indicators (animated).</p>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
+  <div class="grid-4" style="margin-top:30px;">
     <div class="card reveal">
       <div class="stat count" data-value="200" data-type="moneyM">$0M+</div>
       <p>Ad Spend Managed</p>
@@ -793,6 +1219,10 @@ footer{
     <div class="card reveal">
       <div class="stat count" data-value="16100" data-type="k">0.0K</div>
       <p>Campaigns Monitored</p>
+    </div>
+    <div class="card reveal">
+      <div class="stat count" data-value="147" data-type="plain">0</div>
+      <p>Accounts Replaced Today</p>
     </div>
   </div>
 
@@ -872,6 +1302,14 @@ footer{
     <div class="card reveal">
       <h3>What this means for you</h3>
       <p>Neutral usually scales steadily; iGaming can scale faster but needs tighter monitoring.</p>
+      <div class="mini-log" style="margin-top:20px;">
+        <div class="mini-log-item">
+          <div><strong>More speed</strong><br>High-pressure verticals need faster operational response.</div>
+        </div>
+        <div class="mini-log-item">
+          <div><strong>More monitoring</strong><br>When pressure rises, downtime gets more expensive.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -938,71 +1376,201 @@ footer{
   </div>
 </section>
 
-<!-- SOCIAL / INSTAGRAM PREVIEW + SOCIAL PROOF -->
+<!-- SOCIAL / LIVE FEED -->
 <section id="social">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> SOCIAL</div>
-    <h2>Instagram preview</h2>
-    <p>Follow our updates, case studies, and scaling insights on Instagram.</p>
+    <div class="kicker"><span class="kdot"></span> SOCIAL PROOF</div>
+    <h2>What buyers say in real time</h2>
+    <p>Telegram-style proof feed that shows the exact reason clients stay: dead account, fast swap, campaign saved.</p>
+  </div>
 
-    <div class="grid-3" style="margin-top:30px;">
-      <div class="card reveal">
-        <div class="stat count" data-value="1500" data-type="plus">0+</div>
-        <p>Instagram Community (editable)</p>
-      </div>
-      <div class="card reveal">
-        <div class="stat count" data-value="24" data-type="plain">0</div>
-        <p>Support Coverage (hours/day)</p>
-      </div>
-      <div class="card reveal">
-        <div class="stat count" data-value="5" data-type="plain">0</div>
-        <p>Avg Reply (minutes)</p>
+  <div class="demo-grid" style="margin-top:30px;">
+    <div class="card reveal">
+      <div class="kicker"><span class="kdot"></span> CLIENT CHAT FEED</div>
+      <div class="feed-shell">
+        <div class="chat-list" id="chatFeed">
+          <div class="chat-msg">
+            <div class="chat-avatar">AK</div>
+            <div>
+              <div class="chat-meta"><span class="chat-name">Artem</span><span class="chat-source">Telegram</span></div>
+              <div class="chat-text">Bro saved my campaign mid-scale 🔥</div>
+            </div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar">RM</div>
+            <div>
+              <div class="chat-meta"><span class="chat-name">Rafael</span><span class="chat-source">Discord</span></div>
+              <div class="chat-text">Got new acc in 20 sec, no joke.</div>
+            </div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar">NS</div>
+            <div>
+              <div class="chat-meta"><span class="chat-name">Nadia</span><span class="chat-source">Telegram</span></div>
+              <div class="chat-text">Best infra I used so far, clean setup and fast support.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="ig-grid">
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">Update</div>
-          <div class="ig-caption">Scaling tips • reliability • replacements workflow</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+    <div class="card reveal">
+      <div class="kicker"><span class="kdot"></span> INSTAGRAM</div>
+      <h3 style="font-size:24px;">Instagram preview</h3>
+      <p>Follow updates, scaling clips, proof content, and operational wins.</p>
+
+      <div class="grid-3" style="margin-top:18px;">
+        <div class="card" style="padding:18px;">
+          <div class="stat count" data-value="1500" data-type="plus">0+</div>
+          <p>Instagram Community</p>
         </div>
-      </a>
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">Case Study</div>
-          <div class="ig-caption">Structure + support + swaps keep campaigns running</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+        <div class="card" style="padding:18px;">
+          <div class="stat count" data-value="24" data-type="plain">0</div>
+          <p>Support Hours</p>
         </div>
-      </a>
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">Support</div>
-          <div class="ig-caption">Always-on response: access, approvals, troubleshooting</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+        <div class="card" style="padding:18px;">
+          <div class="stat count" data-value="5" data-type="plain">0</div>
+          <p>Avg Reply (mins)</p>
         </div>
-      </a>
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">Infra</div>
-          <div class="ig-caption">Replacement engine: less downtime, more momentum</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+      </div>
+
+      <div class="ig-grid">
+        <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
+          <div class="ig-post-inner">
+            <div class="ig-pill">Update</div>
+            <div class="ig-caption">Scaling tips • reliability • replacements workflow</div>
+            <div class="ig-mini">Tap to open Instagram</div>
+          </div>
+        </a>
+        <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
+          <div class="ig-post-inner">
+            <div class="ig-pill">Case Study</div>
+            <div class="ig-caption">Structure + support + swaps keep campaigns running</div>
+            <div class="ig-mini">Tap to open Instagram</div>
+          </div>
+        </a>
+        <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
+          <div class="ig-post-inner">
+            <div class="ig-pill">Support</div>
+            <div class="ig-caption">Always-on response: access, approvals, troubleshooting</div>
+            <div class="ig-mini">Tap to open Instagram</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section id="roi">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> ROI CALCULATOR</div>
+    <h2>What downtime really costs</h2>
+    <p>If a campaign gets banned while spend is live, the loss is usually bigger than the monthly price of stable infrastructure.</p>
+  </div>
+
+  <div class="roi-grid" style="margin-top:30px;">
+    <div class="card reveal">
+      <div class="calc">
+        <div>
+          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Daily ad spend</label>
+          <input class="input" type="number" id="roiSpend" value="5000" min="0" step="100" placeholder="5000">
         </div>
-      </a>
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">News</div>
-          <div class="ig-caption">Announcements • packages • onboarding upgrades</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+        <div>
+          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Downtime hours</label>
+          <input class="input" type="number" id="roiHours" value="36" min="1" step="1" placeholder="36">
         </div>
-      </a>
-      <a class="ig-post" href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">
-        <div class="ig-post-inner">
-          <div class="ig-pill">Creative</div>
-          <div class="ig-caption">Creative iteration cycles: testing with stable infra</div>
-          <div class="ig-mini">Tap to open Instagram</div>
+        <button class="btn btn-primary" id="roiBtn">Calculate Loss</button>
+      </div>
+
+      <div class="calc-result">
+        <div style="font-weight:900;color:#fff;">Simple logic</div>
+        <p style="margin-top:8px;">If your account dies at $5k/day and you lose even 24–48 hours, the damage usually costs more than a monthly package.</p>
+
+        <div class="calc-result-grid">
+          <div class="calc-box">
+            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Estimated loss</div>
+            <div class="v" id="roiLoss">$7,500</div>
+          </div>
+          <div class="calc-box">
+            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Potential saved</div>
+            <div class="v" id="roiSaved">$7,500</div>
+          </div>
+          <div class="calc-box">
+            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">vs Top Package</div>
+            <div class="v" id="roiVs">$5,550</div>
+          </div>
         </div>
-      </a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3 style="font-size:24px;">Why this matters</h3>
+      <div class="mini-log" style="margin-top:18px;">
+        <div class="mini-log-item">
+          <div><strong>Bans don’t just pause ads</strong><br>They kill momentum, learning, and cash flow.</div>
+        </div>
+        <div class="mini-log-item">
+          <div><strong>Time is expensive when spend is live</strong><br>Even one bad day can cost more than infrastructure.</div>
+        </div>
+        <div class="mini-log-item">
+          <div><strong>Speed changes the math</strong><br>The faster the replace, the smaller the loss window.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> TRUST</div>
+    <h2>Built for operators who need reliability, not lectures</h2>
+    <p>This section says exactly what your audience wants to hear, in direct language.</p>
+  </div>
+
+  <div class="trust-grid" style="margin-top:30px;">
+    <div class="card reveal">
+      <h3>We don’t ask questions</h3>
+      <p>We care about infrastructure, speed, and keeping operations moving.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Works with gray / blackhat</h3>
+      <p>We understand the pressure. Reliability and replacements matter more when policy pressure is higher.</p>
+    </div>
+    <div class="card reveal">
+      <h3>No delays. No bullshit.</h3>
+      <p>Clear onboarding, fast responses, and no wasting time with fake promises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="compare">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> BEFORE vs AFTER</div>
+    <h2>What operations look like with and without ScaleShield</h2>
+  </div>
+
+  <div class="compare-grid" style="margin-top:30px;">
+    <div class="card reveal compare-bad">
+      <h3>Without ScaleShield</h3>
+      <div class="compare-list">
+        <div class="compare-item"><div class="compare-icon">✕</div><div>Bans hit and campaigns stop.</div></div>
+        <div class="compare-item"><div class="compare-icon">✕</div><div>Downtime burns cash and kills momentum.</div></div>
+        <div class="compare-item"><div class="compare-icon">✕</div><div>Teams waste time looking for replacements.</div></div>
+        <div class="compare-item"><div class="compare-icon">✕</div><div>Scaling rhythm gets broken again and again.</div></div>
+      </div>
+    </div>
+
+    <div class="card reveal compare-good">
+      <h3>With ScaleShield</h3>
+      <div class="compare-list">
+        <div class="compare-item"><div class="compare-icon">✓</div><div>Instant replace workflow keeps things moving.</div></div>
+        <div class="compare-item"><div class="compare-icon">✓</div><div>Less downtime = less money burned.</div></div>
+        <div class="compare-item"><div class="compare-icon">✓</div><div>Support answers when pressure is real.</div></div>
+        <div class="compare-item"><div class="compare-icon">✓</div><div>Scaling continues instead of restarting from zero.</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1069,44 +1637,9 @@ footer{
         <div class="review-meta"><strong>Sami R.</strong><small>Agency Owner</small></div>
       </div>
     </div>
-
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“What stood out to me is how organized the process was. We didn’t waste time explaining the same thing ten times. Everything moved much faster.”</div>
-      <div class="review-person">
-        <div class="review-avatar">TK</div>
-        <div class="review-meta"><strong>Tomas K.</strong><small>Media Buyer</small></div>
-      </div>
-    </div>
-
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“Support availability is real. We had late-hour issues and still got a response. That matters a lot when campaigns are live and spend is active.”</div>
-      <div class="review-person">
-        <div class="review-avatar">AL</div>
-        <div class="review-meta"><strong>Alex L.</strong><small>Performance Team Lead</small></div>
-      </div>
-    </div>
-
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We’ve tested multiple setups and this one feels the most stable operationally. Less friction, less waiting, more focus on scaling.”</div>
-      <div class="review-person">
-        <div class="review-avatar">VG</div>
-        <div class="review-meta"><strong>Viktor G.</strong><small>Ecom Scaling Team</small></div>
-      </div>
-    </div>
-
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“Good communication, solid structure, and a cleaner overall experience than most providers in this space. We stayed because it actually works.”</div>
-      <div class="review-person">
-        <div class="review-avatar">IP</div>
-        <div class="review-meta"><strong>Ivan P.</strong><small>Agency Operator</small></div>
-      </div>
-    </div>
   </div>
 </section>
+
 <!-- FAQ -->
 <section id="faq">
   <div class="reveal">
@@ -1266,7 +1799,7 @@ document.querySelectorAll('.count').forEach(el=>{
   io.observe(el);
 });
 
-/* ===== Animated Chart (Neutral vs iGaming) ===== */
+/* Vertical graph */
 const canvas = document.getElementById("verticalChart");
 const ctx = canvas.getContext("2d");
 
@@ -1284,7 +1817,6 @@ window.addEventListener("resize", resizeCanvas);
 function drawChart(progress){
   const w = canvas.getBoundingClientRect().width;
   const h = 320;
-
   ctx.clearRect(0,0,w,h);
 
   const padL = 44, padR = 18, padT = 20, padB = 34;
@@ -1392,6 +1924,50 @@ const chartObserver = new IntersectionObserver((entries)=>{
 chartObserver.observe(document.getElementById("graph"));
 drawChart(0);
 
+/* Hero background chart */
+const heroCanvas = document.getElementById("heroCanvas");
+const heroCtx = heroCanvas.getContext("2d");
+function resizeHeroCanvas(){
+  const dpr = window.devicePixelRatio || 1;
+  const rect = heroCanvas.getBoundingClientRect();
+  heroCanvas.width = Math.round(rect.width * dpr);
+  heroCanvas.height = Math.round(rect.height * dpr);
+  heroCtx.setTransform(dpr,0,0,dpr,0,0);
+}
+resizeHeroCanvas();
+window.addEventListener("resize", resizeHeroCanvas);
+
+let heroT = 0;
+function drawHeroLines(){
+  const w = heroCanvas.getBoundingClientRect().width;
+  const h = heroCanvas.getBoundingClientRect().height;
+  heroCtx.clearRect(0,0,w,h);
+
+  function line(seed, color, amp, speed){
+    heroCtx.beginPath();
+    for(let x=0;x<=w;x+=8){
+      const y = h - 28 - (Math.sin((x*0.012)+(heroT*speed)+seed)*amp) - (Math.cos((x*0.006)+(heroT*0.6)+seed)*amp*0.6);
+      if(x===0) heroCtx.moveTo(x,y);
+      else heroCtx.lineTo(x,y);
+    }
+    heroCtx.strokeStyle = color;
+    heroCtx.lineWidth = 2;
+    heroCtx.shadowBlur = 12;
+    heroCtx.shadowColor = color;
+    heroCtx.stroke();
+    heroCtx.shadowBlur = 0;
+  }
+
+  heroCtx.globalAlpha = .85;
+  line(0.4, "rgba(242,210,122,.95)", 16, 1.1);
+  line(1.2, "rgba(73,178,255,.75)", 12, .85);
+  line(2.1, "rgba(44,214,124,.55)", 10, .65);
+
+  heroT += 0.015;
+  requestAnimationFrame(drawHeroLines);
+}
+drawHeroLines();
+
 /* Mobile menu */
 const kebabBtn = document.getElementById("kebabBtn");
 const menuPanel = document.getElementById("menuPanel");
@@ -1415,6 +1991,153 @@ document.addEventListener("click", (e)=>{
 document.querySelectorAll(".mnav").forEach(a=>{
   a.addEventListener("click", ()=>closeMenu());
 });
+
+/* Live replacement demo */
+const replaceBtn = document.getElementById("replaceBtn");
+const demoStatus = document.getElementById("demoStatus");
+const miniLog = document.getElementById("miniLog");
+const demoAccId = document.getElementById("demoAccId");
+const demoSpend = document.getElementById("demoSpend");
+
+let simRunning = false;
+let simIndex = 0;
+const simAccounts = [
+  {id:"act_4938201881", spend:"$5,240", time:"42 sec"},
+  {id:"act_6011482290", spend:"$7,910", time:"58 sec"},
+  {id:"act_1182405903", spend:"$3,680", time:"1.5 min"}
+];
+
+function addMiniLog(title, text, time){
+  const div = document.createElement("div");
+  div.className = "mini-log-item";
+  div.innerHTML = `<div><strong>${title}</strong><br>${text}</div><div class="time">${time}</div>`;
+  miniLog.prepend(div);
+  while(miniLog.children.length > 4){
+    miniLog.removeChild(miniLog.lastElementChild);
+  }
+}
+
+function runReplacementSim(){
+  if(simRunning) return;
+  simRunning = true;
+
+  const item = simAccounts[simIndex % simAccounts.length];
+  simIndex++;
+
+  demoAccId.textContent = item.id;
+  demoSpend.textContent = item.spend;
+
+  demoStatus.className = "status-pill status-disabled";
+  demoStatus.textContent = "🔴 Disabled";
+  addMiniLog("Account disabled", `${item.id} stopped scaling mid-flight.`, "00:00");
+
+  setTimeout(()=>{
+    demoStatus.className = "status-pill status-replacing";
+    demoStatus.textContent = "🟡 Replacing";
+    addMiniLog("Replacement requested", "Queue opened, replacement workflow started.", "00:12");
+  }, 1300);
+
+  setTimeout(()=>{
+    demoStatus.className = "status-pill status-active";
+    demoStatus.textContent = "🟢 Replaced";
+    addMiniLog("Replacement completed", `New account assigned in ${item.time}.`, "00:42");
+    simRunning = false;
+  }, 3200);
+}
+
+replaceBtn.addEventListener("click", runReplacementSim);
+
+const demoObserver = new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting){
+    setTimeout(runReplacementSim, 900);
+    demoObserver.disconnect();
+  }
+},{threshold:.35});
+demoObserver.observe(document.getElementById("demo"));
+
+/* social proof feed */
+const chatFeed = document.getElementById("chatFeed");
+const socialMessages = [
+  {name:"Dani", src:"Telegram", text:"Bro saved my campaign mid-scale 🔥"},
+  {name:"Mo", src:"Discord", text:"Got new acc in 20 sec, actually insane."},
+  {name:"Alex", src:"Telegram", text:"Best infra I used no joke."},
+  {name:"Raf", src:"Discord", text:"Support answered fast and we kept scaling."},
+  {name:"Nadia", src:"Telegram", text:"No downtime this time, huge difference."},
+  {name:"Mark", src:"Telegram", text:"Replacement was smoother than expected."}
+];
+function addChatMessage(){
+  const item = socialMessages[Math.floor(Math.random()*socialMessages.length)];
+  const initials = item.name.slice(0,2).toUpperCase();
+  const div = document.createElement("div");
+  div.className = "chat-msg";
+  div.innerHTML = `
+    <div class="chat-avatar">${initials}</div>
+    <div>
+      <div class="chat-meta"><span class="chat-name">${item.name}</span><span class="chat-source">${item.src}</span></div>
+      <div class="chat-text">${item.text}</div>
+    </div>
+  `;
+  chatFeed.prepend(div);
+  while(chatFeed.children.length > 6){
+    chatFeed.removeChild(chatFeed.lastElementChild);
+  }
+}
+setInterval(addChatMessage, 2400);
+
+/* ROI calculator */
+function money(v){
+  return "$" + Math.round(v).toLocaleString();
+}
+function updateROI(){
+  const spend = Math.max(0, Number(document.getElementById("roiSpend").value || 0));
+  const hours = Math.max(1, Number(document.getElementById("roiHours").value || 1));
+  const loss = (spend / 24) * hours;
+  const saved = loss;
+  const vsTop = loss - 1950;
+
+  document.getElementById("roiLoss").textContent = money(loss);
+  document.getElementById("roiSaved").textContent = money(saved);
+  document.getElementById("roiVs").textContent = money(vsTop);
+}
+document.getElementById("roiBtn").addEventListener("click", updateROI);
+document.getElementById("roiSpend").addEventListener("input", updateROI);
+document.getElementById("roiHours").addEventListener("input", updateROI);
+updateROI();
+
+/* fake live activity feed */
+const activityFeed = document.getElementById("activityFeed");
+const activityItems = [
+  ["User from Brazil", "just replaced account in 42 sec"],
+  ["User from UAE", "launched campaign on fresh account"],
+  ["User from Germany", "recovered scaling after ban"],
+  ["User from USA", "got replacement assigned"],
+  ["User from Spain", "swapped account and kept spend live"],
+  ["User from UK", "started onboarding with support"]
+];
+function spawnActivity(){
+  const [title, text] = activityItems[Math.floor(Math.random()*activityItems.length)];
+  const div = document.createElement("div");
+  div.className = "activity-toast";
+  div.innerHTML = `<strong>${title}</strong><span>${text}</span>`;
+  activityFeed.prepend(div);
+  requestAnimationFrame(()=>div.classList.add("show"));
+  setTimeout(()=>{
+    div.classList.remove("show");
+    setTimeout(()=>div.remove(), 350);
+  }, 4200);
+
+  while(activityFeed.children.length > 4){
+    activityFeed.removeChild(activityFeed.lastElementChild);
+  }
+}
+setInterval(spawnActivity, 3200);
+setTimeout(spawnActivity, 1800);
+
+/* popup */
+const offerPopup = document.getElementById("offerPopup");
+const popupClose = document.getElementById("popupClose");
+setTimeout(()=>offerPopup.classList.add("show"), 5000);
+popupClose.addEventListener("click", ()=>offerPopup.classList.remove("show"));
 </script>
 
 </body>
