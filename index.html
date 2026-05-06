@@ -21,11 +21,22 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ScaleShield — Agency Infrastructure</title>
+<meta name="description" content="ScaleShield — Premium Meta agency infrastructure. Stable accounts, instant replacements, 24/7 support, BM packages from $199/mo to $35,000/mo enterprise." />
+<title>ScaleShield — Premium Agency Infrastructure</title>
 
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="shortcut icon" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- High-end animation stack -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4"></script>
 
 <style>
 :root{
@@ -38,6 +49,7 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 
   --gold:#D6B15E;
   --gold2:#F2D27A;
+  --gold-warm:#E8C778;
 
   --text:#ffffff;
   --muted:rgba(255,255,255,.65);
@@ -47,9 +59,12 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
   --red:#ff646e;
   --blue:#49b2ff;
   --amber:#ffcb6b;
+  --violet:#a855f7;
 
   --radius:22px;
+  --radius-lg:30px;
   --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
 
   --tg:#2AABEE;
   --wa:#25D366;
@@ -60,10 +75,14 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
 
 body{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
   background:
     radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
     radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
@@ -72,8 +91,10 @@ body{
   color:var(--text);
   overflow-x:hidden;
   position:relative;
+  min-height:100vh;
 }
 
+/* Cinematic ambient back layer */
 body::before{
   content:"";
   position:fixed;
@@ -91,27 +112,146 @@ body::before{
   to{transform:translateY(-20px) scale(1.03)}
 }
 
+/* Mouse-tracking spotlight */
+.spotlight{
+  position:fixed;
+  top:0;left:0;
+  width:520px;height:520px;
+  margin:-260px 0 0 -260px;
+  background:radial-gradient(circle, rgba(214,177,94,.16), transparent 60%);
+  pointer-events:none;
+  z-index:1;
+  transform:translate3d(0,0,0);
+  transition:opacity .35s var(--ease);
+  opacity:0;
+  mix-blend-mode:screen;
+  filter:blur(8px);
+  will-change:transform;
+}
+.spotlight.on{opacity:1}
+@media(hover:none){ .spotlight{display:none} }
+
+/* Scroll progress */
+.scroll-progress{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:2px;
+  background:transparent;
+  z-index:200;
+  pointer-events:none;
+}
+.scroll-progress::after{
+  content:"";
+  display:block;
+  height:100%;
+  width:var(--p,0%);
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#fff);
+  box-shadow:0 0 20px rgba(214,177,94,.55);
+  transition:width .12s linear;
+}
+
+/* Custom cursor */
+.cursor-dot,.cursor-ring{
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate3d(-100px,-100px,0);
+  will-change:transform;
+}
+.cursor-dot{
+  width:6px;height:6px;
+  border-radius:999px;
+  background:var(--gold2);
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+  margin:-3px 0 0 -3px;
+  transition:transform .18s var(--ease), background .18s var(--ease);
+}
+.cursor-ring{
+  width:38px;height:38px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.55);
+  margin:-19px 0 0 -19px;
+  transition:width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  mix-blend-mode:screen;
+}
+.cursor-ring.hover{
+  width:64px;height:64px;
+  margin:-32px 0 0 -32px;
+  border-color:rgba(214,177,94,.85);
+  background:rgba(214,177,94,.06);
+}
+@media(hover:none){
+  .cursor-dot,.cursor-ring{display:none}
+}
+
+/* Page loader */
+.loader{
+  position:fixed;
+  inset:0;
+  background:#050507;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+.loader-inner{
+  text-align:center;
+}
+.loader-logo{
+  height:42px;
+  filter:drop-shadow(0 0 24px rgba(214,177,94,.4));
+  animation:loaderPulse 1.4s ease-in-out infinite;
+}
+.loader-bar{
+  margin-top:18px;
+  width:200px;
+  height:2px;
+  background:rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+  position:relative;
+}
+.loader-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  width:30%;
+  background:linear-gradient(90deg, transparent, var(--gold2), transparent);
+  animation:loaderSlide 1.1s linear infinite;
+}
+@keyframes loaderPulse{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.04)}
+}
+@keyframes loaderSlide{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(400%)}
+}
+
 a{color:inherit;text-decoration:none}
 b{color:rgba(255,255,255,.92)}
 
 section{
   max-width:1200px;
   margin:auto;
-  padding:88px 24px;
+  padding:108px 24px;
   position:relative;
-  z-index:1;
+  z-index:2;
 }
 
+h1,h2,h3{font-family:'Sora','Inter',system-ui,sans-serif}
 h1{
-  font-size:50px;
+  font-size:clamp(40px, 6.4vw, 72px);
   font-weight:900;
-  letter-spacing:-.03em;
-  line-height:1.06;
+  letter-spacing:-.035em;
+  line-height:1.04;
 }
 h2{
-  font-size:38px;
+  font-size:clamp(30px, 4vw, 46px);
   font-weight:850;
-  letter-spacing:-.02em;
+  letter-spacing:-.025em;
+  line-height:1.08;
 }
 h3{
   font-size:18px;
@@ -124,38 +264,55 @@ p{
 }
 
 .kicker{
-  display:flex;
+  display:inline-flex;
   align-items:center;
   gap:10px;
-  margin-bottom:12px;
-  color:var(--muted2);
-  font-size:12px;
+  margin-bottom:14px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.20);
+  background:rgba(214,177,94,.06);
+  color:var(--muted);
+  font-size:11px;
   letter-spacing:.22em;
   font-weight:950;
   text-transform:uppercase;
+  backdrop-filter:blur(8px);
 }
 .kdot{
   width:8px;height:8px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 18px rgba(214,177,94,.22);
+  box-shadow:0 0 18px rgba(214,177,94,.35);
+  animation:dotBlink 1.6s ease-in-out infinite;
+}
+@keyframes dotBlink{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.55;transform:scale(.85)}
 }
 .grad{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
 }
 
 /* NAV */
 .nav{
   position:fixed;
   top:0;left:0;right:0;
-  backdrop-filter:blur(14px);
-  background:rgba(5,5,7,.72);
+  backdrop-filter:blur(18px) saturate(140%);
+  background:rgba(5,5,7,.62);
   border-bottom:1px solid rgba(255,255,255,.06);
   z-index:100;
-  transition:transform .28s var(--ease), opacity .28s var(--ease);
+  transition:transform .28s var(--ease), opacity .28s var(--ease), background .28s var(--ease);
 }
+.nav.scrolled{ background:rgba(5,5,7,.86); border-bottom-color:rgba(214,177,94,.10) }
 .nav.hidden{
   transform:translateY(-120%);
   opacity:0;
@@ -188,27 +345,40 @@ p{
 }
 .nav-links{
   display:none;
-  gap:16px;
+  gap:18px;
   align-items:center;
   flex-wrap:nowrap;
   white-space:nowrap;
 }
 .nav-links a{
+  position:relative;
   font-size:13px;
   font-weight:750;
   color:var(--muted);
   transition:color .18s var(--ease);
   white-space:nowrap;
 }
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-6px;
+  height:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s var(--ease);
+}
 .nav-links a:hover{color:#fff}
+.nav-links a:hover::after{transform:scaleX(1)}
 @media(min-width:1120px){ .nav-links{display:flex} }
 
 /* Buttons */
 .btn{
-  padding:14px 18px;
+  position:relative;
+  padding:14px 22px;
   border-radius:16px;
   font-weight:900;
-  transition:.25s var(--ease);
+  transition:.28s var(--ease);
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -217,6 +387,8 @@ p{
   white-space:nowrap;
   line-height:1;
   cursor:pointer;
+  overflow:hidden;
+  isolation:isolate;
 }
 .btn.small{
   padding:11px 16px;
@@ -225,18 +397,29 @@ p{
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   color:#111;
-  box-shadow:0 0 40px rgba(214,177,94,.20);
+  box-shadow:0 0 40px rgba(214,177,94,.20), inset 0 1px 0 rgba(255,255,255,.5);
 }
-.btn-primary:hover{transform:translateY(-3px);filter:brightness(1.02)}
+.btn-primary::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--gold2),#fff,var(--gold2));
+  opacity:0;
+  transition:opacity .25s var(--ease);
+  z-index:-1;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 50px rgba(214,177,94,.32)}
+.btn-primary:hover::before{opacity:1}
 .btn-ghost{
   background:rgba(255,255,255,.05);
   border-color:rgba(255,255,255,.12);
   color:#fff;
+  backdrop-filter:blur(8px);
 }
 .btn-ghost:hover{
   transform:translateY(-2px);
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 30px rgba(214,177,94,.12);
+  border-color:rgba(214,177,94,.45);
+  box-shadow:0 0 36px rgba(214,177,94,.16);
 }
 .btn-icon{
   width:18px;height:18px;display:inline-block;flex:0 0 auto;
@@ -263,6 +446,19 @@ p{
     linear-gradient(135deg, rgba(245,133,41,.14), rgba(221,42,123,.10), rgba(81,91,212,.10));
 }
 
+/* Sweeping shine on primary buttons */
+.btn-primary::after{
+  content:"";
+  position:absolute;
+  top:0; left:-80%;
+  width:50%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+  transform:skewX(-22deg);
+  pointer-events:none;
+  transition:left .9s var(--ease);
+}
+.btn-primary:hover::after{ left:140% }
+
 /* Cards */
 .card{
   background:var(--panel);
@@ -272,12 +468,13 @@ p{
   transition:.30s var(--ease);
   position:relative;
   overflow:hidden;
+  transform-style:preserve-3d;
 }
 .card::after{
   content:"";
   position:absolute;
   inset:-2px;
-  background:radial-gradient(800px circle at 50% 0%, rgba(214,177,94,.16), transparent 55%);
+  background:radial-gradient(800px circle at var(--mx,50%) var(--my,0%), rgba(214,177,94,.18), transparent 55%);
   opacity:0;
   transition:opacity .28s var(--ease);
   pointer-events:none;
@@ -286,8 +483,10 @@ p{
 .card:hover{
   transform:translateY(-4px);
   border-color:rgba(214,177,94,.40);
-  box-shadow:0 0 55px rgba(214,177,94,.12);
+  box-shadow:0 20px 60px -20px rgba(214,177,94,.14);
 }
+
+.tilt{ will-change:transform; transition:transform .35s var(--ease); transform-style:preserve-3d }
 
 .grid-2{display:grid;gap:24px}
 @media(min-width:980px){ .grid-2{grid-template-columns:1.05fr .95fr;align-items:start} }
@@ -314,23 +513,82 @@ p{
 
 /* Hero */
 .hero{
-  padding-top:146px;
-  padding-bottom:34px;
+  padding-top:172px;
+  padding-bottom:60px;
   text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.hero-bg img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.45;
+  filter:blur(2px) saturate(115%);
+  mix-blend-mode:screen;
+  transform:scale(1.06);
+}
+.hero-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(5,5,7,.0), rgba(5,5,7,.55) 70%, rgba(5,5,7,.95) 100%),
+    linear-gradient(180deg, rgba(5,5,7,.35), transparent 35%);
+}
+.hero-orb{
+  position:absolute;
+  width:720px; height:720px;
+  border-radius:999px;
+  background:radial-gradient(circle, rgba(214,177,94,.32), transparent 60%);
+  filter:blur(40px);
+  pointer-events:none;
+  z-index:-1;
+  top:-180px;
+  left:50%;
+  transform:translateX(-50%);
+  animation:orbDrift 14s ease-in-out infinite;
+}
+@keyframes orbDrift{
+  0%,100%{transform:translateX(-50%) translateY(0) scale(1);opacity:.85}
+  50%{transform:translateX(-46%) translateY(20px) scale(1.06);opacity:1}
+}
+.hero-mouse-orb{
+  position:absolute;
+  width:520px; height:520px;
+  margin:-260px 0 0 -260px;
+  background:radial-gradient(circle, rgba(73,178,255,.18), transparent 65%);
+  filter:blur(20px);
+  pointer-events:none;
+  z-index:-1;
+  top:0; left:50%;
+  mix-blend-mode:screen;
+  transition:transform .25s var(--ease-out);
+  will-change:transform;
 }
 .hero-sub{
-  max-width:78ch;
-  margin:16px auto 0 auto;
+  max-width:74ch;
+  margin:18px auto 0 auto;
+  font-size:clamp(15px,1.3vw,18px);
 }
 .hero-actions{
-  margin-top:28px;
+  margin-top:32px;
   display:flex;
   gap:12px;
   justify-content:center;
   flex-wrap:wrap;
 }
 .hero-strip{
-  margin-top:22px;
+  margin-top:24px;
   display:flex;
   justify-content:center;
   flex-wrap:wrap;
@@ -340,7 +598,7 @@ p{
   display:inline-flex;
   align-items:center;
   gap:10px;
-  padding:10px 12px;
+  padding:10px 14px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
@@ -348,56 +606,284 @@ p{
   font-size:12px;
   font-weight:850;
   transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  backdrop-filter:blur(8px);
 }
 .chip:hover{
   transform:translateY(-1px);
   border-color:rgba(214,177,94,.35);
   box-shadow:0 0 24px rgba(214,177,94,.10);
+  color:#fff;
 }
 .chip .dot{
-  width:10px;height:10px;border-radius:999px;
+  width:8px;height:8px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 16px rgba(214,177,94,.18);
+  box-shadow:0 0 16px rgba(214,177,94,.30);
 }
 .hero-surface{
-  margin-top:34px;
+  margin-top:48px;
   display:grid;
   gap:24px;
+  text-align:left;
 }
 @media(min-width:980px){
   .hero-surface{grid-template-columns:1.15fr .85fr;align-items:stretch}
 }
 
+/* Marquee strip */
+.marquee{
+  margin-top:60px;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:18px 0;
+  background:rgba(255,255,255,.02);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+.marquee-track{
+  display:flex;
+  gap:48px;
+  width:max-content;
+  animation:marquee 40s linear infinite;
+}
+.marquee-item{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  color:var(--muted);
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.marquee-item .gem{
+  width:6px;height:6px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 12px rgba(214,177,94,.5);
+}
+@keyframes marquee{
+  to{transform:translateX(-50%)}
+}
+
 /* stats */
 .stat{
-  font-size:44px;
+  font-family:'Sora',sans-serif;
+  font-size:54px;
   font-weight:950;
   letter-spacing:-.02em;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff);
+  background-size:200% 200%;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  animation:gradShift 7s ease-in-out infinite;
 }
 
-/* pricing */
-.price{
-  font-size:40px;
+/* PRICING */
+.pricing-section{
+  position:relative;
+  overflow:hidden;
+}
+.pricing-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.pricing-bg img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.30;
+  filter:saturate(110%);
+  mix-blend-mode:screen;
+}
+.pricing-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(60% 80% at 50% 50%, transparent, rgba(5,5,7,.78) 90%);
+}
+.pricing-grid{
+  margin-top:42px;
+  display:grid;
+  gap:22px;
+  position:relative;
+  z-index:1;
+}
+@media(min-width:780px){
+  .pricing-grid{ grid-template-columns:repeat(2,1fr) }
+}
+@media(min-width:1100px){
+  .pricing-grid{ grid-template-columns:repeat(3,1fr) }
+}
+.tier{
+  position:relative;
+  padding:30px 26px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  transition:.35s var(--ease);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  isolation:isolate;
+  backdrop-filter:blur(10px);
+}
+.tier::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%), rgba(214,177,94,.12), transparent 55%);
+  opacity:0;
+  transition:opacity .3s var(--ease);
+  z-index:-1;
+}
+.tier:hover::before{ opacity:1 }
+.tier:hover{
+  transform:translateY(-6px);
+  border-color:rgba(214,177,94,.40);
+  box-shadow:0 30px 80px -30px rgba(214,177,94,.20);
+}
+.tier-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  align-self:flex-start;
+}
+.tier-name{
+  font-family:'Sora',sans-serif;
+  font-size:22px;
+  font-weight:900;
+  margin-top:14px;
+  letter-spacing:-.01em;
+}
+.tier-price{
+  font-family:'Sora',sans-serif;
+  font-size:46px;
   font-weight:950;
   letter-spacing:-.02em;
-  margin-top:12px;
+  margin-top:14px;
+  line-height:1;
 }
-.most{
-  position:absolute;
-  top:18px;
-  right:18px;
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:950;
+.tier-price small{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+  margin-left:4px;
+}
+.tier-desc{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  min-height:42px;
+}
+.tier-list{
+  margin-top:18px;
+  display:grid;
+  gap:10px;
+  list-style:none;
+  padding:0;
+  flex:1;
+}
+.tier-list li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.tier-list li::before{
+  content:"";
+  width:18px; height:18px; border-radius:999px;
+  flex:0 0 auto;
+  background:
+    linear-gradient(135deg, rgba(214,177,94,.30), rgba(214,177,94,.10)),
+    radial-gradient(circle, rgba(214,177,94,.25), transparent 70%);
+  border:1px solid rgba(214,177,94,.35);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'><path d='M2 6 L5 9 L10 3' stroke='%23F2D27A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"),
+    linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.04));
+  background-repeat:no-repeat;
+  background-position:center;
+  margin-top:1px;
+}
+.tier-cta{
+  margin-top:22px;
+  width:100%;
+  justify-content:center;
+}
+.tier.popular{
+  border-color:rgba(214,177,94,.55);
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(214,177,94,.16), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow:0 30px 90px -30px rgba(214,177,94,.30);
+}
+.tier.popular .tier-tag{
   color:#111;
+  border-color:rgba(214,177,94,.55);
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 30px rgba(214,177,94,.20);
+  box-shadow:0 0 20px rgba(214,177,94,.30);
 }
+.tier.onetime{
+  border-color:rgba(73,178,255,.35);
+}
+.tier.onetime .tier-tag{
+  color:#cfe9ff;
+  border-color:rgba(73,178,255,.40);
+  background:rgba(73,178,255,.10);
+}
+.tier.enterprise{
+  grid-column:1/-1;
+  border-color:rgba(168,85,247,.35);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(168,85,247,.15), transparent 55%),
+    radial-gradient(120% 100% at 100% 100%, rgba(214,177,94,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.tier.enterprise .tier-tag{
+  color:#e9d5ff;
+  border-color:rgba(168,85,247,.45);
+  background:rgba(168,85,247,.12);
+}
+.tier.enterprise .enterprise-grid{
+  display:grid;
+  gap:24px;
+  margin-top:20px;
+}
+@media(min-width:900px){
+  .tier.enterprise .enterprise-grid{ grid-template-columns:1.1fr .9fr; align-items:end }
+}
+.tier.enterprise .tier-list{ grid-template-columns:repeat(2,1fr); gap:10px 22px }
+.tier.enterprise .tier-cta{ margin-top:0 }
+.tier-shine{
+  position:absolute;
+  top:0; left:-50%;
+  width:50%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.06), transparent);
+  pointer-events:none;
+  transform:skewX(-22deg);
+  transition:left .9s var(--ease);
+}
+.tier:hover .tier-shine{ left:140% }
 
 /* verticals */
 .vert-card{min-height:210px}
@@ -409,6 +895,7 @@ p{
   filter:blur(10px);
   opacity:.75;
   animation:pulse 5.6s ease-in-out infinite;
+  pointer-events:none;
 }
 @keyframes pulse{
   0%,100%{ transform:scale(1); opacity:.70 }
@@ -465,7 +952,7 @@ p{
   border-radius:var(--radius);
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.05);
-  padding:16px 18px;
+  padding:18px 20px;
   cursor:pointer;
   color:#fff;
   transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
@@ -475,11 +962,20 @@ p{
   border-color:rgba(214,177,94,.25);
   box-shadow:0 0 26px rgba(214,177,94,.10);
 }
-.faq-q{font-weight:950;font-size:14px}
+.faq-q{font-weight:900;font-size:14.5px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faq-q::after{
+  content:"+";
+  color:var(--gold2);
+  font-weight:900;
+  font-size:22px;
+  transition:transform .25s var(--ease);
+  flex:0 0 auto;
+}
+.faq-btn[aria-expanded="true"] .faq-q::after{ transform:rotate(45deg) }
 .faq-a{
   margin-top:10px;
   color:var(--muted);
-  font-size:13px;
+  font-size:13.5px;
   line-height:1.65;
   display:none;
 }
@@ -488,19 +984,24 @@ p{
 /* footer */
 footer{
   border-top:1px solid rgba(255,255,255,.06);
-  padding:42px 24px;
+  padding:48px 24px;
   text-align:center;
   color:var(--muted);
+  position:relative;
+  z-index:2;
 }
 
 /* reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
+.reveal{opacity:0;transform:translateY(34px);transition:.95s var(--ease-out)}
 .reveal.active{opacity:1;transform:none}
+.reveal-stagger > *{opacity:0;transform:translateY(28px);transition:.85s var(--ease-out)}
+.reveal-stagger.active > *{opacity:1;transform:none}
 
-/* remove floating old */
-.float{display:none !important}
+/* split text reveal target */
+.split-line{ display:block; overflow:hidden }
+.split-word, .split-char{ display:inline-block; will-change:transform,opacity }
 
-/* mobile 3-dot menu */
+/* Mobile menu (preserved) */
 .mobile-menu{
   display:none;
   position:fixed;
@@ -628,6 +1129,11 @@ footer{
   border-radius:16px;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
+  animation:chatIn .55s var(--ease-out) both;
+}
+@keyframes chatIn{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:none}
 }
 .chat-avatar{
   width:34px;height:34px;border-radius:999px;
@@ -701,7 +1207,8 @@ footer{
   background:rgba(255,255,255,.03);
 }
 .calc-box .v{
-  font-size:28px;
+  font-family:'Sora',sans-serif;
+  font-size:30px;
   font-weight:950;
   letter-spacing:-.02em;
   color:#fff;
@@ -870,14 +1377,14 @@ footer{
   position:absolute;
   inset:auto 0 0 0;
   width:100%;
-  height:180px;
-  opacity:.9;
+  height:200px;
+  opacity:.85;
   pointer-events:none;
 }
 .hero-ambient{
   position:absolute;
   inset:auto 0 0 0;
-  height:220px;
+  height:240px;
   pointer-events:none;
   background:
     radial-gradient(500px circle at 20% 50%, rgba(44,214,124,.06), transparent 60%),
@@ -912,13 +1419,37 @@ footer{
 @media(max-width:1119px){
   .nav{display:none;}
   .mobile-menu{display:block;}
-  .hero{padding-top:110px;}
+  .hero{padding-top:130px;}
   .activity-feed{display:none}
+  .cursor-dot,.cursor-ring{display:none}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001s !important; transition-duration:.001s !important }
+  .marquee-track{ animation:none }
 }
 </style>
 </head>
 
 <body>
+
+<!-- Loader -->
+<div class="loader" id="pageLoader">
+  <div class="loader-inner">
+    <img src="logo.png" alt="ScaleShield" class="loader-logo">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Mouse spotlight -->
+<div class="spotlight" id="spotlight"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <div class="activity-feed" id="activityFeed"></div>
 
@@ -929,8 +1460,8 @@ footer{
       <span>Get fast onboarding, 24/7 support, and unlimited replacements.</span>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small">Telegram</a>
-      <button class="popup-close" id="popupClose" aria-label="Close">✕</button>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4">Telegram</a>
+      <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
     </div>
   </div>
 </div>
@@ -942,20 +1473,20 @@ footer{
   </div>
 
   <div class="menu-panel" id="menuPanel">
-    <a href="#stats" class="mnav">Stats <small>→</small></a>
-    <a href="#demo" class="mnav">Live Demo <small>→</small></a>
-    <a href="#verticals" class="mnav">Verticals <small>→</small></a>
-    <a href="#pricing" class="mnav">Pricing <small>→</small></a>
-    <a href="#roi" class="mnav">ROI <small>→</small></a>
-    <a href="#trust" class="mnav">Trust <small>→</small></a>
-    <a href="#reviews" class="mnav">Reviews <small>→</small></a>
-    <a href="#faq" class="mnav">FAQ <small>→</small></a>
-    <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
-    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in <small>↗</small></a>
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a>
-    <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
-    <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>↗</small></a>
-    <a href="#contact" class="mnav">Contact <small>→</small></a>
+    <a href="#stats" class="mnav">Stats <small>&rarr;</small></a>
+    <a href="#demo" class="mnav">Live Demo <small>&rarr;</small></a>
+    <a href="#verticals" class="mnav">Verticals <small>&rarr;</small></a>
+    <a href="#pricing" class="mnav">Pricing <small>&rarr;</small></a>
+    <a href="#roi" class="mnav">ROI <small>&rarr;</small></a>
+    <a href="#trust" class="mnav">Trust <small>&rarr;</small></a>
+    <a href="#reviews" class="mnav">Reviews <small>&rarr;</small></a>
+    <a href="#faq" class="mnav">FAQ <small>&rarr;</small></a>
+    <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>&#8599;</small></a>
+    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in <small>&#8599;</small></a>
+    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>&#8599;</small></a>
+    <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>&#8599;</small></a>
+    <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>&#8599;</small></a>
+    <a href="#contact" class="mnav">Contact <small>&rarr;</small></a>
   </div>
 </div>
 
@@ -981,7 +1512,7 @@ footer{
     </div>
 
     <div style="display:flex;gap:10px;flex-wrap:nowrap;align-items:center;white-space:nowrap;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg small">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg small magnetic" data-mag="0.3">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -989,7 +1520,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa small">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa small magnetic" data-mag="0.3">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -997,7 +1528,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4">
         Contact Now
       </a>
     </div>
@@ -1006,17 +1537,23 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> RELIABLE META INFRASTRUCTURE</div>
-    <h1>Scale Meta with <span class="grad">Premium</span> agency infrastructure.</h1>
-    <p class="hero-sub">
-      Stable access, fast onboarding, and <b>unlimited replacements</b> — built for teams that don’t want downtime.
+  <div class="hero-bg">
+    <img src="hero-bg.jpg" alt="" id="heroBgImg" loading="eager" decoding="async">
+  </div>
+  <div class="hero-orb"></div>
+  <div class="hero-mouse-orb" id="heroMouseOrb"></div>
+
+  <div>
+    <div class="kicker reveal"><span class="kdot"></span> Reliable Meta Infrastructure</div>
+    <h1 class="hero-title">Scale Meta with <span class="grad">premium</span><br>agency infrastructure.</h1>
+    <p class="hero-sub reveal">
+      Stable access, fast onboarding, and <b>unlimited replacements</b> &mdash; built for teams that don&rsquo;t want downtime.
     </p>
 
-    <div class="hero-actions">
-      <a href="#pricing" class="btn btn-primary">View Pricing</a>
+    <div class="hero-actions reveal">
+      <a href="#pricing" class="btn btn-primary magnetic" data-mag="0.45">View Pricing</a>
 
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -1024,7 +1561,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1032,7 +1569,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -1042,7 +1579,7 @@ footer{
       </a>
     </div>
 
-    <div class="hero-strip">
+    <div class="hero-strip reveal">
       <div class="chip"><span class="dot"></span> Launch without delays</div>
       <div class="chip"><span class="dot"></span> Always-on support (24/7)</div>
       <div class="chip"><span class="dot"></span> Replacement-ready</div>
@@ -1051,8 +1588,8 @@ footer{
   </div>
 
   <div class="hero-surface">
-    <div class="card reveal" id="demo" style="padding:22px;">
-      <div class="kicker"><span class="kdot"></span> LIVE SYSTEM PREVIEW</div>
+    <div class="card tilt reveal" id="demo" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> Live System Preview</div>
       <h3 style="font-size:24px;">See the replacement flow in action</h3>
       <p style="max-width:60ch">This simulates exactly what clients care about: account dies, replacement gets assigned, campaigns keep moving.</p>
 
@@ -1070,10 +1607,10 @@ footer{
             <td><b id="demoAccId">act_4938201881</b></td>
             <td id="demoSpend">$5,240</td>
             <td>
-              <span class="status-pill status-active" id="demoStatus">🟢 Active</span>
+              <span class="status-pill status-active" id="demoStatus">&#x1F7E2; Active</span>
             </td>
             <td>
-              <button class="btn btn-primary" id="replaceBtn">Replace Now</button>
+              <button class="btn btn-primary magnetic" data-mag="0.4" id="replaceBtn">Replace Now</button>
             </td>
           </tr>
         </tbody>
@@ -1091,8 +1628,8 @@ footer{
       </div>
     </div>
 
-    <div class="card reveal" style="padding:22px;">
-      <div class="kicker"><span class="kdot"></span> AUTO DEMO FLOW</div>
+    <div class="card tilt reveal" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> Auto Demo Flow</div>
       <h3 style="font-size:24px;">Why this converts</h3>
       <div class="step-list">
         <div class="step">
@@ -1110,7 +1647,7 @@ footer{
       </div>
 
       <div class="trust-quote">
-        “This is the core reason people buy infrastructure — not because it looks nice, but because dead accounts cost real money.”
+        &ldquo;This is the core reason people buy infrastructure &mdash; not because it looks nice, but because dead accounts cost real money.&rdquo;
       </div>
     </div>
   </div>
@@ -1119,28 +1656,42 @@ footer{
   <canvas class="bg-canvas" id="heroCanvas"></canvas>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item"><span class="gem"></span> 24/7 Support</div>
+    <div class="marquee-item"><span class="gem"></span> Unlimited Replacements</div>
+    <div class="marquee-item"><span class="gem"></span> Premium Agency BMs</div>
+    <div class="marquee-item"><span class="gem"></span> Fast Onboarding</div>
+    <div class="marquee-item"><span class="gem"></span> Stable Access</div>
+    <div class="marquee-item"><span class="gem"></span> Real Support, Real Speed</div>
+    <div class="marquee-item"><span class="gem"></span> Instant Replace Workflow</div>
+    <div class="marquee-item"><span class="gem"></span> Built For Operators</div>
+  </div>
+</div>
+
 <!-- STATS -->
 <section id="stats">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> PROOF</div>
-    <h2>Scale Metrics</h2>
-    <p>High-level performance indicators (animated).</p>
+    <div class="kicker"><span class="kdot"></span> Proof</div>
+    <h2>Scale metrics that matter.</h2>
+    <p>High-level performance indicators from the operations engine.</p>
   </div>
 
-  <div class="grid-4" style="margin-top:30px;">
-    <div class="card reveal">
+  <div class="grid-4 reveal-stagger" style="margin-top:36px;">
+    <div class="card tilt">
       <div class="stat count" data-value="200" data-type="moneyM">$0M+</div>
       <p>Ad Spend Managed</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="300" data-type="plus">0+</div>
       <p>Active Clients</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="16100" data-type="k">0.0K</div>
       <p>Campaigns Monitored</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="147" data-type="plain">0</div>
       <p>Accounts Replaced Today</p>
     </div>
@@ -1154,11 +1705,11 @@ footer{
       </div>
       <div>
         <div class="badge"><strong>Unlimited</strong>&nbsp;Replacements</div>
-        <p style="margin-top:10px;">If something breaks, we swap it — so campaigns keep running.</p>
+        <p style="margin-top:10px;">If something breaks, we swap it &mdash; so campaigns keep running.</p>
       </div>
       <div>
         <div class="badge"><strong>Secure</strong>&nbsp;Onboarding</div>
-        <p style="margin-top:10px;">Clear steps, clean handoff, stable structure — minimal friction.</p>
+        <p style="margin-top:10px;">Clear steps, clean handoff, stable structure &mdash; minimal friction.</p>
       </div>
     </div>
   </div>
@@ -1167,31 +1718,174 @@ footer{
 <!-- VERTICALS -->
 <section id="verticals">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> VERTICAL FOCUS</div>
-    <h2>Neutral, Gambling/iGaming, and policy-sensitive verticals</h2>
+    <div class="kicker"><span class="kdot"></span> Vertical Focus</div>
+    <h2>Neutral, iGaming, and policy-sensitive verticals.</h2>
     <p>
-      We support teams across <b>Neutral</b> and <b>iGaming/Gambling</b> — and for <b>policy-sensitive gray verticals</b>,
+      We support teams across <b>Neutral</b> and <b>iGaming/Gambling</b> &mdash; and for <b>policy-sensitive gray verticals</b>,
       we focus on <b>reliability, monitoring, and fast replacements</b>.
     </p>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal vert-card">
+  <div class="grid-3 reveal-stagger" style="margin-top:36px;">
+    <div class="card tilt vert-card">
       <div class="pulse"></div>
       <h3><span class="wiggle">Neutral</span> verticals</h3>
-      <p>Ecom, lead gen, apps, content — steady growth curves.</p>
+      <p>Ecom, lead gen, apps, content &mdash; steady growth curves.</p>
     </div>
 
-    <div class="card reveal vert-card">
+    <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.55"></div>
       <h3><span class="wiggle">Gambling / iGaming</span></h3>
       <p>High velocity operations with tighter monitoring needs.</p>
     </div>
 
-    <div class="card reveal vert-card">
+    <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.45"></div>
       <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
-      <p>Reliability first — structure, monitoring, rapid replacement.</p>
+      <p>Reliability first &mdash; structure, monitoring, rapid replacement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING (NEW) -->
+<section id="pricing" class="pricing-section">
+  <div class="pricing-bg">
+    <img src="pricing-bg.jpg" alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="reveal" style="position:relative;z-index:1;">
+    <div class="kicker"><span class="kdot"></span> Pricing</div>
+    <h2>Choose the infrastructure that <span class="grad">fits your scale</span>.</h2>
+    <p>From entry-level testing to enterprise unlimited &mdash; every package includes 24/7 support and the replacement workflow that keeps spend live.</p>
+  </div>
+
+  <div class="pricing-grid reveal-stagger">
+    <!-- BM3 -->
+    <div class="tier tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Starter</span>
+      <div class="tier-name">BM3 Package</div>
+      <div class="tier-price">$199<small>/ month</small></div>
+      <p class="tier-desc">Cleanest entry point for controlled testing and lower-spend ramp-up.</p>
+      <ul class="tier-list">
+        <li>BM3 Business Manager structure</li>
+        <li>24/7 support coverage</li>
+        <li>Unlimited replacements</li>
+        <li>Lower spend, easier ramp</li>
+        <li>Use your own cards for ad spend</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3</a>
+    </div>
+
+    <!-- Single -->
+    <div class="tier tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Solo</span>
+      <div class="tier-name">Single Agency Account</div>
+      <div class="tier-price">$450<small>/ month</small></div>
+      <p class="tier-desc">One stable agency ad account &mdash; ideal when you need predictable single-account spend.</p>
+      <ul class="tier-list">
+        <li>1 agency ad account</li>
+        <li>24/7 support coverage</li>
+        <li>Unlimited replacements</li>
+        <li>Stable monthly access</li>
+        <li>Use your own cards for ad spend</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
+    </div>
+
+    <!-- BM10 ONE-TIME (NEW PRICE) -->
+    <div class="tier onetime tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">One-Time &middot; No Commitment</span>
+      <div class="tier-name">BM10 Instant Access</div>
+      <div class="tier-price">$550<small>/ one-time</small></div>
+      <p class="tier-desc">Buy a BM with 10 agency ad accounts in one transaction. No subscription, no warranty.</p>
+      <ul class="tier-list">
+        <li>1 BM containing 10 ad accounts</li>
+        <li>One payment, no commitment</li>
+        <li>Wallet top-up &amp; auto-delivery in CRM</li>
+        <li>Use your own cards for ad spend</li>
+        <li>No warranty &mdash; speed-first product</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
+    </div>
+
+    <!-- Dual -->
+    <div class="tier tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Scale</span>
+      <div class="tier-name">Dual Agency Accounts</div>
+      <div class="tier-price">$850<small>/ month</small></div>
+      <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume.</p>
+      <ul class="tier-list">
+        <li>2 agency ad accounts</li>
+        <li>24/7 support coverage</li>
+        <li>Unlimited replacements</li>
+        <li>Better for higher volume</li>
+        <li>Use your own cards for ad spend</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
+    </div>
+
+    <!-- Top Agency (Most Popular) -->
+    <div class="tier popular tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Most Popular</span>
+      <div class="tier-name">Top Agency Package</div>
+      <div class="tier-price">$1,950<small>/ month</small></div>
+      <p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling.</p>
+      <ul class="tier-list">
+        <li>Top-tier agency setup</li>
+        <li>Priority 24/7 support</li>
+        <li>Unlimited replacements</li>
+        <li>Aggressive scaling-ready</li>
+        <li>Use your own cards for ad spend</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
+    </div>
+
+    <!-- Custom -->
+    <div class="tier tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Custom</span>
+      <div class="tier-name">Custom Package</div>
+      <div class="tier-price">Quote<small>/ tailored</small></div>
+      <p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we&rsquo;ll architect it.</p>
+      <ul class="tier-list">
+        <li>Custom BM &amp; account structure</li>
+        <li>Vertical-specific setup</li>
+        <li>24/7 support &amp; unlimited replacements</li>
+        <li>Bespoke onboarding plan</li>
+        <li>Use your own cards for ad spend</li>
+      </ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
+    </div>
+
+    <!-- Agency Unlimited (NEW) -->
+    <div class="tier enterprise tilt">
+      <div class="tier-shine"></div>
+      <span class="tier-tag">Enterprise &middot; Unlimited</span>
+      <div class="enterprise-grid">
+        <div>
+          <div class="tier-name" style="font-size:28px;">Agency Unlimited</div>
+          <div class="tier-price">$35,000<small>/ month</small></div>
+          <p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, the dedicated relationship for media buyers operating at the very top end.</p>
+        </div>
+        <div>
+          <ul class="tier-list">
+            <li><b>Unlimited</b> ad accounts</li>
+            <li><b>Unlimited</b> Business Managers</li>
+            <li>Dedicated account manager</li>
+            <li>Priority replacement queue</li>
+            <li>Custom infrastructure architecture</li>
+            <li>White-glove onboarding</li>
+            <li>Use your own cards for ad spend</li>
+            <li>Operational support 24/7</li>
+          </ul>
+          <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1199,21 +1893,21 @@ footer{
 <!-- SOCIAL / LIVE FEED -->
 <section id="social">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> SOCIAL PROOF</div>
-    <h2>What buyers say in real time</h2>
+    <div class="kicker"><span class="kdot"></span> Social Proof</div>
+    <h2>What buyers say in real time.</h2>
     <p>Telegram-style proof feed that shows the exact reason clients stay: dead account, fast swap, campaign saved.</p>
   </div>
 
   <div style="margin-top:30px;">
     <div class="card reveal">
-      <div class="kicker"><span class="kdot"></span> CLIENT CHAT FEED</div>
+      <div class="kicker"><span class="kdot"></span> Client Chat Feed</div>
       <div class="feed-shell">
         <div class="chat-list" id="chatFeed">
           <div class="chat-msg">
             <div class="chat-avatar">AK</div>
             <div>
               <div class="chat-meta"><span class="chat-name">Artem</span><span class="chat-source">Telegram</span></div>
-              <div class="chat-text">Bro saved my campaign mid-scale 🔥</div>
+              <div class="chat-text">Bro saved my campaign mid-scale</div>
             </div>
           </div>
           <div class="chat-msg">
@@ -1239,8 +1933,8 @@ footer{
 <!-- ROI -->
 <section id="roi">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> ROI CALCULATOR</div>
-    <h2>What downtime really costs</h2>
+    <div class="kicker"><span class="kdot"></span> ROI Calculator</div>
+    <h2>What downtime really costs.</h2>
     <p>If a campaign gets banned while spend is live, the loss is usually bigger than the monthly price of stable infrastructure.</p>
   </div>
 
@@ -1255,12 +1949,12 @@ footer{
           <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Downtime hours</label>
           <input class="input" type="number" id="roiHours" value="24" min="1" step="1" placeholder="24">
         </div>
-        <button type="button" class="btn btn-primary" id="roiBtn">Calculate Loss</button>
+        <button type="button" class="btn btn-primary magnetic" data-mag="0.4" id="roiBtn">Calculate Loss</button>
       </div>
 
       <div class="calc-result">
         <div style="font-weight:900;color:#fff;font-size:18px;">Simple logic</div>
-        <p style="margin-top:8px;">If your account dies at $5k/day and you lose even 24–48 hours, the damage usually costs more than a monthly package.</p>
+        <p style="margin-top:8px;">If your account dies at $5k/day and you lose even 24&ndash;48 hours, the damage usually costs more than a monthly package.</p>
 
         <div class="calc-result-grid">
           <div class="calc-box">
@@ -1283,7 +1977,7 @@ footer{
       <h3 style="font-size:24px;">Why this matters</h3>
       <div class="why-stack">
         <div class="why-box">
-          <strong>Bans don’t just pause ads</strong>
+          <strong>Bans don&rsquo;t just pause ads</strong>
           <span>They kill momentum, learning, and cash flow.</span>
         </div>
         <div class="why-box">
@@ -1302,21 +1996,21 @@ footer{
 <!-- TRUST -->
 <section id="trust">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> TRUST</div>
-    <h2>Built for operators who need reliability, not lectures</h2>
+    <div class="kicker"><span class="kdot"></span> Trust</div>
+    <h2>Built for operators who need reliability, not lectures.</h2>
     <p>This section says exactly what your audience wants to hear, in direct language.</p>
   </div>
 
-  <div class="trust-grid" style="margin-top:30px;">
-    <div class="card reveal">
-      <h3>We don’t ask questions</h3>
+  <div class="trust-grid reveal-stagger" style="margin-top:30px;">
+    <div class="card tilt">
+      <h3>We don&rsquo;t ask questions</h3>
       <p>We care about infrastructure, speed, and keeping operations moving.</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <h3>Works with gray / blackhat</h3>
       <p>We understand the pressure. Reliability and replacements matter more when policy pressure is higher.</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <h3>No delays. No bullshit.</h3>
       <p>Clear onboarding, fast responses, and no wasting time with fake promises.</p>
     </div>
@@ -1326,28 +2020,28 @@ footer{
 <!-- BEFORE / AFTER -->
 <section id="compare">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> BEFORE vs AFTER</div>
-    <h2>What operations look like with and without ScaleShield</h2>
+    <div class="kicker"><span class="kdot"></span> Before vs After</div>
+    <h2>What operations look like with and without ScaleShield.</h2>
   </div>
 
   <div class="compare-grid" style="margin-top:30px;">
     <div class="card reveal compare-bad">
       <h3>Without ScaleShield</h3>
       <div class="compare-list">
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Bans hit and campaigns stop.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Downtime burns cash and kills momentum.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Teams waste time looking for replacements.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Scaling rhythm gets broken again and again.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Bans hit and campaigns stop.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Downtime burns cash and kills momentum.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Teams waste time looking for replacements.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Scaling rhythm gets broken again and again.</div></div>
       </div>
     </div>
 
     <div class="card reveal compare-good">
       <h3>With ScaleShield</h3>
       <div class="compare-list">
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Instant replace workflow keeps things moving.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Less downtime = less money burned.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Support answers when pressure is real.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Scaling continues instead of restarting from zero.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Instant replace workflow keeps things moving.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Less downtime = less money burned.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Support answers when pressure is real.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Scaling continues instead of restarting from zero.</div></div>
       </div>
     </div>
   </div>
@@ -1356,60 +2050,60 @@ footer{
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> REVIEWS</div>
-    <h2>What clients say</h2>
-    <p>Generated testimonials styled to match your current website design.</p>
+    <div class="kicker"><span class="kdot"></span> Reviews</div>
+    <h2>What clients say.</h2>
+    <p>Verified-style testimonials from operators across verticals.</p>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We moved over because we needed stability, not promises. Setup was smooth, replacements were actually fast, and support answered when it mattered.”</div>
+  <div class="grid-3 reveal-stagger" style="margin-top:30px;">
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We moved over because we needed stability, not promises. Setup was smooth, replacements were actually fast, and support answered when it mattered.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">AK</div>
-        <div class="review-meta"><strong>Artem K.</strong><small>Ecom Buyer • EU</small></div>
+        <div class="review-meta"><strong>Artem K.</strong><small>Ecom Buyer &middot; EU</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“The structure feels premium. Everything is more organized, response time is good, and we don’t lose momentum every time something needs to be swapped.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;The structure feels premium. Everything is more organized, response time is good, and we don&rsquo;t lose momentum every time something needs to be swapped.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">NS</div>
         <div class="review-meta"><strong>Nadia S.</strong><small>Lead Gen Agency</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“For us the biggest value is not having downtime. That alone pays for itself. Support stays active and doesn’t disappear after onboarding.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;For us the biggest value is not having downtime. That alone pays for itself. Support stays active and doesn&rsquo;t disappear after onboarding.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">RM</div>
         <div class="review-meta"><strong>Rafael M.</strong><small>Performance Buyer</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We run high-volume offers, so speed matters. ScaleShield is one of the few setups where the operational side feels built for real media buying.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We run high-volume offers, so speed matters. ScaleShield is one of the few setups where the operational side feels built for real media buying.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">DL</div>
         <div class="review-meta"><strong>Daria L.</strong><small>iGaming Ops</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“BM3 was perfect for testing. Easy to start, controlled spend, and we had a much cleaner launch than with other providers we used before.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;BM3 was perfect for testing. Easy to start, controlled spend, and we had a much cleaner launch than with other providers we used before.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">ML</div>
         <div class="review-meta"><strong>Mark L.</strong><small>App Marketing</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We needed something predictable. Clear steps, fast answers, clean handoff. It feels more like infrastructure than just another service.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We needed something predictable. Clear steps, fast answers, clean handoff. It feels more like infrastructure than just another service.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">SR</div>
         <div class="review-meta"><strong>Sami R.</strong><small>Agency Owner</small></div>
@@ -1422,19 +2116,19 @@ footer{
 <section id="faq">
   <div class="reveal">
     <div class="kicker"><span class="kdot"></span> FAQ</div>
-    <h2>Quick answers</h2>
-    <p>If you don’t see your question here, message Telegram/WhatsApp and we’ll respond fast.</p>
+    <h2>Quick answers.</h2>
+    <p>If you don&rsquo;t see your question here, message Telegram/WhatsApp and we&rsquo;ll respond fast.</p>
   </div>
 
   <div class="faq" style="margin-top:26px;">
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">Do all monthly packages include unlimited replacements?</div>
-      <div class="faq-a">Yes — monthly packages include 24/7 support and unlimited replacements.</div>
+      <div class="faq-a">Yes &mdash; monthly packages include 24/7 support and unlimited replacements.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">How fast can we start?</div>
-      <div class="faq-a">Onboarding is designed to be quick. Message support and we’ll guide you through setup steps.</div>
+      <div class="faq-a">Onboarding is designed to be quick. Message support and we&rsquo;ll guide you through setup steps.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -1464,7 +2158,17 @@ footer{
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">Which package is best for more aggressive scaling?</div>
-      <div class="faq-a">Dual Agency Ad Accounts and Top Agency Package are better suited for teams running larger volumes, multiple offers, or more aggressive scaling operations.</div>
+      <div class="faq-a">Dual Agency Ad Accounts and Top Agency Package are better suited for teams running larger volumes, multiple offers, or more aggressive scaling operations. For unlimited scale, the Agency Unlimited package gives you unlimited BMs and unlimited ad accounts.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What does the BM10 one-time purchase include?</div>
+      <div class="faq-a">$550 one-time payment for a Business Manager containing 10 agency ad accounts. No subscription, no warranty &mdash; built for buyers who want fast access without ongoing commitment. You can still use your own cards for ad spend after delivery.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is the Agency Unlimited package?</div>
+      <div class="faq-a">$35,000/month enterprise tier with unlimited Business Managers and unlimited agency ad accounts. Includes a dedicated account manager, priority replacement queue, custom infrastructure architecture, and white-glove onboarding. Built for media buyers operating at the very top of the volume curve.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -1482,12 +2186,12 @@ footer{
 <!-- CONTACT -->
 <section id="contact">
   <div class="card reveal">
-    <div class="kicker"><span class="kdot"></span> CONTACT</div>
-    <h2>Talk to ScaleShield Support</h2>
-    <p>Fast responses. Setup, approvals guidance, scaling, replacements — 24/7.</p>
+    <div class="kicker"><span class="kdot"></span> Contact</div>
+    <h2>Talk to ScaleShield Support.</h2>
+    <p>Fast responses. Setup, approvals guidance, scaling, replacements &mdash; 24/7.</p>
 
     <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-mag="0.45">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -1495,7 +2199,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1503,7 +2207,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -1512,20 +2216,21 @@ footer{
         Instagram
       </a>
 
-      <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost">Payment Details</a>
-      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost">Log in</a>
+      <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Payment Details</a>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Log in</a>
     </div>
   </div>
 </section>
 
 <footer>
-© <span id="year"></span> ScaleShield — All rights reserved.
+&copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
 </footer>
 
 <script>
+/* ====== Year ====== */
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* FAQ toggles */
+/* ====== FAQ toggles ====== */
 document.querySelectorAll(".faq-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const open = btn.getAttribute("aria-expanded") === "true";
@@ -1533,19 +2238,101 @@ document.querySelectorAll(".faq-btn").forEach(btn=>{
   });
 });
 
-/* scroll reveal */
-const elements = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries)=>{
+/* ====== GSAP + Lenis bootstrap ====== */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lenis = null;
+if (window.Lenis && !reduceMotion){
+  lenis = new Lenis({
+    duration:1.05,
+    easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),
+    smoothWheel:true,
+    smoothTouch:false,
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  // Hash links: defer to Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      if (id && id.length > 1){
+        const target = document.querySelector(id);
+        if (target){
+          e.preventDefault();
+          lenis.scrollTo(target, { offset:-72, duration:1.2 });
+        }
+      }
+    });
+  });
+}
+
+if (window.gsap && window.ScrollTrigger){
+  gsap.registerPlugin(ScrollTrigger);
+  if (lenis){
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time)=>lenis.raf(time*1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+}
+
+/* ====== Page loader fade ====== */
+window.addEventListener('load', ()=>{
+  const loader = document.getElementById('pageLoader');
+  if (!loader) return;
+  if (window.gsap){
+    gsap.to(loader, {opacity:0, duration:.7, delay:.15, ease:'power2.out', onComplete:()=>loader.remove()});
+  } else {
+    loader.style.transition = 'opacity .55s ease';
+    loader.style.opacity = '0';
+    setTimeout(()=>loader.remove(), 600);
+  }
+});
+
+/* ====== Hero title split + reveal ====== */
+(function heroTitleReveal(){
+  if (reduceMotion || !window.gsap || !window.SplitType) return;
+  const title = document.querySelector('.hero-title');
+  if (!title) return;
+  const split = new SplitType(title, { types:'lines,words' });
+  // Wrap each line in an overflow-hidden container
+  split.lines.forEach(line=>{ line.classList.add('split-line'); });
+  gsap.set(split.words, { yPercent:115, opacity:0 });
+  gsap.to(split.words, {
+    yPercent:0, opacity:1,
+    duration:1.05, ease:'power3.out',
+    stagger:0.045, delay:.35
+  });
+})();
+
+/* ====== Reveal observer ====== */
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('active');
-      observer.unobserve(e.target);
+      revealObserver.unobserve(e.target);
     }
   });
-},{threshold:.18});
-elements.forEach(el=>observer.observe(el));
+},{threshold:.15});
+reveals.forEach(el=>revealObserver.observe(el));
 
-/* counters */
+/* ====== Stagger reveals ====== */
+const staggerGroups = document.querySelectorAll('.reveal-stagger');
+staggerGroups.forEach(group=>{
+  const io = new IntersectionObserver((entries)=>{
+    if (entries[0].isIntersecting){
+      group.classList.add('active');
+      const kids = group.children;
+      Array.from(kids).forEach((kid,i)=>{
+        kid.style.transitionDelay = (i*70) + 'ms';
+      });
+      io.disconnect();
+    }
+  },{threshold:.18});
+  io.observe(group);
+});
+
+/* ====== Counters ====== */
 function formatCount(type, n){
   if(type === "moneyM") return "$" + n.toLocaleString() + "M+";
   if(type === "plus") return n.toLocaleString() + "+";
@@ -1555,7 +2342,7 @@ function formatCount(type, n){
 }
 function animateCount(el,target,type){
   const start = performance.now();
-  const duration = 1200;
+  const duration = 1400;
   function tick(now){
     const t = Math.min(1,(now-start)/duration);
     const eased = 1 - Math.pow(1-t,3);
@@ -1577,98 +2364,103 @@ document.querySelectorAll('.count').forEach(el=>{
   io.observe(el);
 });
 
-/* Hero background chart */
+/* ====== Hero canvas waves ====== */
 const heroCanvas = document.getElementById("heroCanvas");
-const heroCtx = heroCanvas.getContext("2d");
-function resizeHeroCanvas(){
-  const dpr = window.devicePixelRatio || 1;
-  const rect = heroCanvas.getBoundingClientRect();
-  heroCanvas.width = Math.round(rect.width * dpr);
-  heroCanvas.height = Math.round(rect.height * dpr);
-  heroCtx.setTransform(dpr,0,0,dpr,0,0);
-}
-resizeHeroCanvas();
-window.addEventListener("resize", resizeHeroCanvas);
-
-let heroT = 0;
-function drawHeroLines(){
-  const w = heroCanvas.getBoundingClientRect().width;
-  const h = heroCanvas.getBoundingClientRect().height;
-  heroCtx.clearRect(0,0,w,h);
-
-  function line(seed, color, amp, speed){
-    heroCtx.beginPath();
-    for(let x=0;x<=w;x+=8){
-      const y = h - 28 - (Math.sin((x*0.012)+(heroT*speed)+seed)*amp) - (Math.cos((x*0.006)+(heroT*0.6)+seed)*amp*0.6);
-      if(x===0) heroCtx.moveTo(x,y);
-      else heroCtx.lineTo(x,y);
-    }
-    heroCtx.strokeStyle = color;
-    heroCtx.lineWidth = 2;
-    heroCtx.shadowBlur = 12;
-    heroCtx.shadowColor = color;
-    heroCtx.stroke();
-    heroCtx.shadowBlur = 0;
+if (heroCanvas){
+  const heroCtx = heroCanvas.getContext("2d");
+  function resizeHeroCanvas(){
+    const dpr = window.devicePixelRatio || 1;
+    const rect = heroCanvas.getBoundingClientRect();
+    heroCanvas.width = Math.round(rect.width * dpr);
+    heroCanvas.height = Math.round(rect.height * dpr);
+    heroCtx.setTransform(dpr,0,0,dpr,0,0);
   }
+  resizeHeroCanvas();
+  window.addEventListener("resize", resizeHeroCanvas);
 
-  heroCtx.globalAlpha = .85;
-  line(0.4, "rgba(242,210,122,.95)", 16, 1.1);
-  line(1.2, "rgba(73,178,255,.75)", 12, .85);
-  line(2.1, "rgba(44,214,124,.55)", 10, .65);
+  let heroT = 0;
+  function drawHeroLines(){
+    const w = heroCanvas.getBoundingClientRect().width;
+    const h = heroCanvas.getBoundingClientRect().height;
+    heroCtx.clearRect(0,0,w,h);
 
-  heroT += 0.015;
-  requestAnimationFrame(drawHeroLines);
+    function line(seed, color, amp, speed){
+      heroCtx.beginPath();
+      for(let x=0;x<=w;x+=8){
+        const y = h - 28 - (Math.sin((x*0.012)+(heroT*speed)+seed)*amp) - (Math.cos((x*0.006)+(heroT*0.6)+seed)*amp*0.6);
+        if(x===0) heroCtx.moveTo(x,y);
+        else heroCtx.lineTo(x,y);
+      }
+      heroCtx.strokeStyle = color;
+      heroCtx.lineWidth = 2;
+      heroCtx.shadowBlur = 12;
+      heroCtx.shadowColor = color;
+      heroCtx.stroke();
+      heroCtx.shadowBlur = 0;
+    }
+
+    heroCtx.globalAlpha = .85;
+    line(0.4, "rgba(242,210,122,.95)", 16, 1.1);
+    line(1.2, "rgba(73,178,255,.75)", 12, .85);
+    line(2.1, "rgba(44,214,124,.55)", 10, .65);
+
+    heroT += 0.015;
+    requestAnimationFrame(drawHeroLines);
+  }
+  drawHeroLines();
 }
-drawHeroLines();
 
-/* Mobile menu */
+/* ====== Mobile menu ====== */
 const kebabBtn = document.getElementById("kebabBtn");
 const menuPanel = document.getElementById("menuPanel");
-
 function toggleMenu(){ menuPanel.classList.toggle("open"); }
 function closeMenu(){ menuPanel.classList.remove("open"); }
-
-kebabBtn.addEventListener("click", toggleMenu);
-kebabBtn.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter" || e.key === " "){
-    e.preventDefault();
-    toggleMenu();
-  }
-});
-
+if (kebabBtn){
+  kebabBtn.addEventListener("click", toggleMenu);
+  kebabBtn.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggleMenu(); }
+  });
+}
 document.addEventListener("click", (e)=>{
-  if(!menuPanel.classList.contains("open")) return;
+  if(!menuPanel || !menuPanel.classList.contains("open")) return;
   if(!e.target.closest(".mobile-menu")) closeMenu();
 });
-
 document.querySelectorAll(".mnav").forEach(a=>{
   a.addEventListener("click", ()=>closeMenu());
 });
 
-/* Hide header on scroll */
+/* ====== Hide header on scroll + scrolled state ====== */
 const siteNav = document.getElementById("siteNav");
 const mobileMenu = document.getElementById("mobileMenu");
 let lastScrollY = window.scrollY;
-
 window.addEventListener("scroll", ()=>{
   const y = window.scrollY;
-  if (y > lastScrollY && y > 80) {
-    siteNav && siteNav.classList.add("hidden");
-    mobileMenu && mobileMenu.classList.add("hidden");
-  } else {
-    siteNav && siteNav.classList.remove("hidden");
-    mobileMenu && mobileMenu.classList.remove("hidden");
+  if (siteNav){
+    siteNav.classList.toggle('scrolled', y > 20);
+    if (y > lastScrollY && y > 80) siteNav.classList.add("hidden");
+    else siteNav.classList.remove("hidden");
+  }
+  if (mobileMenu){
+    if (y > lastScrollY && y > 80) mobileMenu.classList.add("hidden");
+    else mobileMenu.classList.remove("hidden");
   }
   lastScrollY = y;
+
+  // scroll progress
+  const sp = document.getElementById('scrollProgress');
+  if (sp){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? (y / max) * 100 : 0;
+    sp.style.setProperty('--p', p + '%');
+  }
 }, { passive:true });
 
-/* Live replacement demo */
+/* ====== Live replacement demo ====== */
 const replaceBtn = document.getElementById("replaceBtn");
 const demoStatus = document.getElementById("demoStatus");
 const miniLog = document.getElementById("miniLog");
 const demoAccId = document.getElementById("demoAccId");
 const demoSpend = document.getElementById("demoSpend");
-
 let simRunning = false;
 let simIndex = 0;
 const simAccounts = [
@@ -1676,59 +2468,50 @@ const simAccounts = [
   {id:"act_6011482290", spend:"$7,910", time:"58 sec"},
   {id:"act_1182405903", spend:"$3,680", time:"1.5 min"}
 ];
-
 function addMiniLog(title, text, time){
   const div = document.createElement("div");
   div.className = "mini-log-item";
-  div.innerHTML = `<div><strong>${title}</strong><br>${text}</div><div class="time">${time}</div>`;
+  div.innerHTML = '<div><strong>'+title+'</strong><br>'+text+'</div><div class="time">'+time+'</div>';
   miniLog.prepend(div);
-  while(miniLog.children.length > 4){
-    miniLog.removeChild(miniLog.lastElementChild);
-  }
+  while(miniLog.children.length > 4){ miniLog.removeChild(miniLog.lastElementChild); }
 }
-
 function runReplacementSim(){
   if(simRunning) return;
   simRunning = true;
-
   const item = simAccounts[simIndex % simAccounts.length];
   simIndex++;
-
   demoAccId.textContent = item.id;
   demoSpend.textContent = item.spend;
-
   demoStatus.className = "status-pill status-disabled";
   demoStatus.textContent = "🔴 Disabled";
-  addMiniLog("Account disabled", `${item.id} stopped scaling mid-flight.`, "00:00");
-
+  addMiniLog("Account disabled", item.id+" stopped scaling mid-flight.", "00:00");
   setTimeout(()=>{
     demoStatus.className = "status-pill status-replacing";
     demoStatus.textContent = "🟡 Replacing";
     addMiniLog("Replacement requested", "Queue opened, replacement workflow started.", "00:12");
   }, 1300);
-
   setTimeout(()=>{
     demoStatus.className = "status-pill status-active";
     demoStatus.textContent = "🟢 Replaced";
-    addMiniLog("Replacement completed", `New account assigned in ${item.time}.`, "00:42");
+    addMiniLog("Replacement completed", "New account assigned in "+item.time+".", "00:42");
     simRunning = false;
   }, 3200);
 }
+if (replaceBtn){
+  replaceBtn.addEventListener("click", runReplacementSim);
+  const demoObserver = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){
+      setTimeout(runReplacementSim, 900);
+      demoObserver.disconnect();
+    }
+  },{threshold:.35});
+  demoObserver.observe(document.getElementById("demo"));
+}
 
-replaceBtn.addEventListener("click", runReplacementSim);
-
-const demoObserver = new IntersectionObserver((entries)=>{
-  if(entries[0].isIntersecting){
-    setTimeout(runReplacementSim, 900);
-    demoObserver.disconnect();
-  }
-},{threshold:.35});
-demoObserver.observe(document.getElementById("demo"));
-
-/* social proof feed */
+/* ====== Social proof feed ====== */
 const chatFeed = document.getElementById("chatFeed");
 const socialMessages = [
-  {name:"Dani", src:"Telegram", text:"Bro saved my campaign mid-scale 🔥"},
+  {name:"Dani", src:"Telegram", text:"Bro saved my campaign mid-scale"},
   {name:"Mo", src:"Discord", text:"Got new acc in 20 sec, actually insane."},
   {name:"Alex", src:"Telegram", text:"Best infra I used no joke."},
   {name:"Raf", src:"Discord", text:"Support answered fast and we kept scaling."},
@@ -1736,25 +2519,23 @@ const socialMessages = [
   {name:"Mark", src:"Telegram", text:"Replacement was smoother than expected."}
 ];
 function addChatMessage(){
+  if (!chatFeed) return;
   const item = socialMessages[Math.floor(Math.random()*socialMessages.length)];
   const initials = item.name.slice(0,2).toUpperCase();
   const div = document.createElement("div");
   div.className = "chat-msg";
-  div.innerHTML = `
-    <div class="chat-avatar">${initials}</div>
-    <div>
-      <div class="chat-meta"><span class="chat-name">${item.name}</span><span class="chat-source">${item.src}</span></div>
-      <div class="chat-text">${item.text}</div>
-    </div>
-  `;
+  div.innerHTML =
+    '<div class="chat-avatar">'+initials+'</div>'+
+    '<div>'+
+      '<div class="chat-meta"><span class="chat-name">'+item.name+'</span><span class="chat-source">'+item.src+'</span></div>'+
+      '<div class="chat-text">'+item.text+'</div>'+
+    '</div>';
   chatFeed.prepend(div);
-  while(chatFeed.children.length > 6){
-    chatFeed.removeChild(chatFeed.lastElementChild);
-  }
+  while(chatFeed.children.length > 6){ chatFeed.removeChild(chatFeed.lastElementChild); }
 }
 setInterval(addChatMessage, 2400);
 
-/* ROI calculator */
+/* ====== ROI calculator ====== */
 function money(v){
   const rounded = Math.max(0, Math.round(v));
   return "$" + rounded.toLocaleString();
@@ -1767,17 +2548,19 @@ function updateROI(){
   const loss = (spend / 24) * hours;
   const saved = loss;
   const vsTop = Math.max(0, loss - 1950);
-
   document.getElementById("roiLoss").textContent = money(loss);
   document.getElementById("roiSaved").textContent = money(saved);
   document.getElementById("roiVs").textContent = money(vsTop);
 }
-document.getElementById("roiBtn").addEventListener("click", updateROI);
-document.getElementById("roiSpend").addEventListener("input", updateROI);
-document.getElementById("roiHours").addEventListener("input", updateROI);
-updateROI();
+const roiBtn = document.getElementById("roiBtn");
+if (roiBtn){
+  roiBtn.addEventListener("click", updateROI);
+  document.getElementById("roiSpend").addEventListener("input", updateROI);
+  document.getElementById("roiHours").addEventListener("input", updateROI);
+  updateROI();
+}
 
-/* fake live activity feed */
+/* ====== Activity feed toasts ====== */
 const activityFeed = document.getElementById("activityFeed");
 const activityItems = [
   ["User from Brazil", "just replaced account in 42 sec"],
@@ -1788,30 +2571,160 @@ const activityItems = [
   ["User from UK", "started onboarding with support"]
 ];
 function spawnActivity(){
+  if (!activityFeed) return;
   const [title, text] = activityItems[Math.floor(Math.random()*activityItems.length)];
   const div = document.createElement("div");
   div.className = "activity-toast";
-  div.innerHTML = `<strong>${title}</strong><span>${text}</span>`;
+  div.innerHTML = '<strong>'+title+'</strong><span>'+text+'</span>';
   activityFeed.prepend(div);
   requestAnimationFrame(()=>div.classList.add("show"));
   setTimeout(()=>{
     div.classList.remove("show");
     setTimeout(()=>div.remove(), 350);
   }, 4200);
-
-  while(activityFeed.children.length > 4){
-    activityFeed.removeChild(activityFeed.lastElementChild);
-  }
+  while(activityFeed.children.length > 3){ activityFeed.removeChild(activityFeed.lastElementChild); }
 }
-setInterval(spawnActivity, 3200);
-setTimeout(spawnActivity, 1800);
+setTimeout(spawnActivity, 2200);
+setInterval(spawnActivity, 5400);
 
-/* popup */
-const offerPopup = document.getElementById("offerPopup");
-const popupClose = document.getElementById("popupClose");
-setTimeout(()=>offerPopup.classList.add("show"), 5000);
-popupClose.addEventListener("click", ()=>offerPopup.classList.remove("show"));
+/* ====== Offer popup ====== */
+const popup = document.getElementById('offerPopup');
+const popupClose = document.getElementById('popupClose');
+let popupShown = false;
+function showPopup(){
+  if (popupShown) return;
+  popupShown = true;
+  popup && popup.classList.add('show');
+}
+setTimeout(showPopup, 22000);
+window.addEventListener('scroll', ()=>{
+  if (window.scrollY > document.documentElement.scrollHeight*0.45) showPopup();
+}, { passive:true });
+popupClose && popupClose.addEventListener('click', ()=>popup.classList.remove('show'));
+
+/* ====== Custom cursor ====== */
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+const spotlight = document.getElementById('spotlight');
+const heroMouseOrb = document.getElementById('heroMouseOrb');
+const isTouch = matchMedia('(hover:none)').matches;
+if (!isTouch && cursorDot && cursorRing){
+  let mx=0,my=0, rx=0,ry=0;
+  document.addEventListener('mousemove', (e)=>{
+    mx = e.clientX; my = e.clientY;
+    cursorDot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+    if (spotlight){
+      spotlight.classList.add('on');
+      spotlight.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+    }
+    if (heroMouseOrb){
+      heroMouseOrb.style.transform = 'translate3d('+(mx-window.innerWidth/2)+'px,'+(my)+'px,0)';
+    }
+  });
+  function ringLoop(){
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    cursorRing.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)';
+    requestAnimationFrame(ringLoop);
+  }
+  ringLoop();
+  // Hover targets
+  document.querySelectorAll('a, button, .tier, .card, .chip').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', ()=>cursorRing.classList.remove('hover'));
+  });
+}
+
+/* ====== Magnetic buttons ====== */
+if (!isTouch && !reduceMotion){
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    const strength = parseFloat(el.dataset.mag || '0.4');
+    el.addEventListener('mousemove', (e)=>{
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width/2);
+      const y = e.clientY - (r.top + r.height/2);
+      el.style.transform = 'translate('+(x*strength)+'px,'+(y*strength)+'px)';
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.transform = '';
+    });
+  });
+}
+
+/* ====== 3D card tilt ====== */
+if (!isTouch && !reduceMotion){
+  document.querySelectorAll('.tilt').forEach(el=>{
+    let rect = null;
+    function onEnter(){ rect = el.getBoundingClientRect(); }
+    function onMove(e){
+      if (!rect) rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const px = (x / rect.width) * 100;
+      const py = (y / rect.height) * 100;
+      el.style.setProperty('--mx', px + '%');
+      el.style.setProperty('--my', py + '%');
+      const rx = ((y / rect.height) - .5) * -7;
+      const ry = ((x / rect.width) - .5) * 9;
+      el.style.transform = 'perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(0)';
+    }
+    function onLeave(){
+      rect = null;
+      el.style.transform = '';
+    }
+    el.addEventListener('mouseenter', onEnter);
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+  });
+}
+
+/* ====== Section scroll-pin parallax for hero background image ====== */
+if (window.gsap && window.ScrollTrigger && !reduceMotion){
+  const heroBgImg = document.getElementById('heroBgImg');
+  if (heroBgImg){
+    gsap.to(heroBgImg, {
+      yPercent: 18,
+      scale: 1.15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  }
+
+  // Section reveals beyond the IO observer get a subtle GSAP polish
+  gsap.utils.toArray('section').forEach(sec=>{
+    const kicker = sec.querySelector('.kicker');
+    if (kicker){
+      gsap.from(kicker, {
+        y: 14, opacity: 0, duration: .8, ease:'power3.out',
+        scrollTrigger: { trigger:sec, start:'top 85%' }
+      });
+    }
+  });
+
+  // Pricing tiers staggered reveal with subtle 3D
+  gsap.from('.pricing-grid > .tier', {
+    y: 60, opacity: 0, duration: 1, ease:'power3.out',
+    stagger: 0.08,
+    scrollTrigger: { trigger:'.pricing-grid', start:'top 80%' }
+  });
+}
+
+/* ====== Hero background image graceful fallback ====== */
+(function(){
+  const img = document.getElementById('heroBgImg');
+  const pricing = document.querySelector('.pricing-bg img');
+  function hideOnError(el){
+    if (!el) return;
+    el.addEventListener('error', ()=>{ el.style.display = 'none'; });
+  }
+  hideOnError(img);
+  hideOnError(pricing);
+})();
 </script>
-
 </body>
 </html>
