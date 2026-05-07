@@ -21,11 +21,22 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ScaleShield — Agency Infrastructure</title>
+<meta name="description" content="ScaleShield — Premium Meta agency infrastructure. Stable accounts, instant replacements, 24/7 support, BM packages from $199/mo to $35,000/mo enterprise." />
+<title>ScaleShield — Premium Agency Infrastructure</title>
 
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="shortcut icon" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- High-end animation stack -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4"></script>
 
 <style>
 :root{
@@ -38,6 +49,7 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 
   --gold:#D6B15E;
   --gold2:#F2D27A;
+  --gold-warm:#E8C778;
 
   --text:#ffffff;
   --muted:rgba(255,255,255,.65);
@@ -47,9 +59,12 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
   --red:#ff646e;
   --blue:#49b2ff;
   --amber:#ffcb6b;
+  --violet:#a855f7;
 
   --radius:22px;
+  --radius-lg:30px;
   --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
 
   --tg:#2AABEE;
   --wa:#25D366;
@@ -60,10 +75,15 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto; width:100%}
+html, body{ overflow-x:hidden }
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
 
 body{
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
   background:
     radial-gradient(900px circle at 50% -20%, rgba(214,177,94,.16), transparent 55%),
     radial-gradient(800px circle at 85% 5%, rgba(56,189,248,.08), transparent 60%),
@@ -72,8 +92,10 @@ body{
   color:var(--text);
   overflow-x:hidden;
   position:relative;
+  min-height:100vh;
 }
 
+/* Cinematic ambient back layer */
 body::before{
   content:"";
   position:fixed;
@@ -91,27 +113,191 @@ body::before{
   to{transform:translateY(-20px) scale(1.03)}
 }
 
+/* Mouse-tracking spotlight */
+.spotlight{
+  position:fixed;
+  top:0;left:0;
+  width:520px;height:520px;
+  margin:-260px 0 0 -260px;
+  background:radial-gradient(circle, rgba(214,177,94,.16), transparent 60%);
+  pointer-events:none;
+  z-index:1;
+  transform:translate3d(0,0,0);
+  transition:opacity .35s var(--ease);
+  opacity:0;
+  mix-blend-mode:screen;
+  filter:blur(8px);
+  will-change:transform;
+}
+.spotlight.on{opacity:1}
+@media(hover:none){ .spotlight{display:none} }
+
+/* Scroll progress */
+.scroll-progress{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:2px;
+  background:transparent;
+  z-index:200;
+  pointer-events:none;
+}
+.scroll-progress::after{
+  content:"";
+  display:block;
+  height:100%;
+  width:var(--p,0%);
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#fff);
+  box-shadow:0 0 20px rgba(214,177,94,.55);
+  transition:width .12s linear;
+}
+
+/* Custom cursor */
+.cursor-dot,.cursor-ring{
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate3d(-100px,-100px,0);
+  will-change:transform;
+}
+.cursor-dot{
+  width:6px;height:6px;
+  border-radius:999px;
+  background:var(--gold2);
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+  margin:-3px 0 0 -3px;
+  transition:transform .18s var(--ease), background .18s var(--ease);
+}
+.cursor-ring{
+  width:38px;height:38px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.55);
+  margin:-19px 0 0 -19px;
+  transition:width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  mix-blend-mode:screen;
+}
+.cursor-ring.hover{
+  width:64px;height:64px;
+  margin:-32px 0 0 -32px;
+  border-color:rgba(214,177,94,.85);
+  background:rgba(214,177,94,.06);
+}
+@media(hover:none){
+  .cursor-dot,.cursor-ring{display:none}
+}
+
+/* Page loader */
+.loader{
+  position:fixed;
+  inset:0;
+  background:#050507;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+.loader-inner{
+  text-align:center;
+}
+.loader-logo{
+  height:42px;
+  filter:drop-shadow(0 0 24px rgba(214,177,94,.4));
+  animation:loaderPulse 1.4s ease-in-out infinite;
+}
+.loader-bar{
+  margin-top:18px;
+  width:200px;
+  height:2px;
+  background:rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+  position:relative;
+}
+.loader-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  width:30%;
+  background:linear-gradient(90deg, transparent, var(--gold2), transparent);
+  animation:loaderSlide 1.1s linear infinite;
+}
+@keyframes loaderPulse{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.04)}
+}
+@keyframes loaderSlide{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(400%)}
+}
+
 a{color:inherit;text-decoration:none}
 b{color:rgba(255,255,255,.92)}
 
 section{
   max-width:1200px;
   margin:auto;
-  padding:88px 24px;
+  padding:108px 24px;
   position:relative;
-  z-index:1;
+  z-index:2;
+}
+/* Full-bleed sections — their backgrounds extend edge-to-edge.
+   Inner content blocks have their own max-width to stay readable. */
+.hero,
+.reality-section,
+.onyx-section,
+.pricing-section{
+  max-width:none;
+  width:100%;
+}
+/* Constrain inner content of full-bleed sections to a centered column.
+   Excludes background and decorative divs so they fill the viewport. */
+.hero > div:not(.hero-bg):not(.hero-orb):not(.hero-mouse-orb):not(.hero-ambient),
+.reality-scene > .scene-text,
+.pricing-section > .reveal,
+.pricing-section > .warmup-note,
+.pricing-section > .pricing-cat{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+/* Belt-and-suspenders: explicitly force background/decorative divs to
+   span the full viewport in case any other rule narrows them. */
+.hero-bg, .hero-orb, .hero-mouse-orb, .hero-ambient,
+.pricing-bg, .reality-grid, .onyx-bg{
+  max-width:none !important;
+  width:auto !important;
+}
+/* Center any section intro block — identified by containing a .kicker child.
+   Uses :has() so it works regardless of preceding background-image divs. */
+section > .reveal:has(> .kicker){ text-align:center }
+section > .reveal:has(> .kicker) .kicker{ display:inline-flex }
+section > .reveal:has(> .kicker) > p{
+  max-width:64ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+section > .reveal:has(> .kicker) > h2{ margin-left:auto; margin-right:auto }
+/* Same treatment for the contact/cards that act as section heads */
+section > .card.reveal > .kicker{ display:inline-flex }
+section > .card.reveal{ text-align:center }
+section > .card.reveal > p{
+  max-width:64ch;
+  margin-left:auto;
+  margin-right:auto;
 }
 
+h1,h2,h3{font-family:'Sora','Inter',system-ui,sans-serif}
 h1{
-  font-size:50px;
+  font-size:clamp(40px, 6.4vw, 72px);
   font-weight:900;
-  letter-spacing:-.03em;
-  line-height:1.06;
+  letter-spacing:-.035em;
+  line-height:1.04;
 }
 h2{
-  font-size:38px;
+  font-size:clamp(30px, 4vw, 46px);
   font-weight:850;
-  letter-spacing:-.02em;
+  letter-spacing:-.025em;
+  line-height:1.08;
 }
 h3{
   font-size:18px;
@@ -124,38 +310,65 @@ p{
 }
 
 .kicker{
-  display:flex;
+  display:inline-flex;
   align-items:center;
   gap:10px;
-  margin-bottom:12px;
-  color:var(--muted2);
-  font-size:12px;
+  margin-bottom:14px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.20);
+  background:rgba(214,177,94,.06);
+  color:var(--muted);
+  font-size:11px;
   letter-spacing:.22em;
   font-weight:950;
   text-transform:uppercase;
+  backdrop-filter:blur(8px);
 }
 .kdot{
   width:8px;height:8px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 18px rgba(214,177,94,.22);
+  box-shadow:0 0 18px rgba(214,177,94,.35);
+  animation:dotBlink 1.6s ease-in-out infinite;
+}
+@keyframes dotBlink{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.55;transform:scale(.85)}
 }
 .grad{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+/* SplitType wraps inner content in .word spans which break background-clip
+   inheritance — re-apply the gradient to inner spans so .grad works
+   inside split text. */
+.grad .word, .grad .char, .grad span{
+  background:inherit !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  color:transparent !important;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
 }
 
 /* NAV */
 .nav{
   position:fixed;
   top:0;left:0;right:0;
-  backdrop-filter:blur(14px);
-  background:rgba(5,5,7,.72);
+  backdrop-filter:blur(18px) saturate(140%);
+  background:rgba(5,5,7,.62);
   border-bottom:1px solid rgba(255,255,255,.06);
   z-index:100;
-  transition:transform .28s var(--ease), opacity .28s var(--ease);
+  transition:transform .28s var(--ease), opacity .28s var(--ease), background .28s var(--ease);
 }
+.nav.scrolled{ background:rgba(5,5,7,.86); border-bottom-color:rgba(214,177,94,.10) }
 .nav.hidden{
   transform:translateY(-120%);
   opacity:0;
@@ -188,27 +401,40 @@ p{
 }
 .nav-links{
   display:none;
-  gap:16px;
+  gap:18px;
   align-items:center;
   flex-wrap:nowrap;
   white-space:nowrap;
 }
 .nav-links a{
+  position:relative;
   font-size:13px;
   font-weight:750;
   color:var(--muted);
   transition:color .18s var(--ease);
   white-space:nowrap;
 }
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-6px;
+  height:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s var(--ease);
+}
 .nav-links a:hover{color:#fff}
+.nav-links a:hover::after{transform:scaleX(1)}
 @media(min-width:1120px){ .nav-links{display:flex} }
 
 /* Buttons */
 .btn{
-  padding:14px 18px;
+  position:relative;
+  padding:14px 22px;
   border-radius:16px;
   font-weight:900;
-  transition:.25s var(--ease);
+  transition:.28s var(--ease);
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -217,6 +443,8 @@ p{
   white-space:nowrap;
   line-height:1;
   cursor:pointer;
+  overflow:hidden;
+  isolation:isolate;
 }
 .btn.small{
   padding:11px 16px;
@@ -225,18 +453,29 @@ p{
 .btn-primary{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   color:#111;
-  box-shadow:0 0 40px rgba(214,177,94,.20);
+  box-shadow:0 0 40px rgba(214,177,94,.20), inset 0 1px 0 rgba(255,255,255,.5);
 }
-.btn-primary:hover{transform:translateY(-3px);filter:brightness(1.02)}
+.btn-primary::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--gold2),#fff,var(--gold2));
+  opacity:0;
+  transition:opacity .25s var(--ease);
+  z-index:-1;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 50px rgba(214,177,94,.32)}
+.btn-primary:hover::before{opacity:1}
 .btn-ghost{
   background:rgba(255,255,255,.05);
   border-color:rgba(255,255,255,.12);
   color:#fff;
+  backdrop-filter:blur(8px);
 }
 .btn-ghost:hover{
   transform:translateY(-2px);
-  border-color:rgba(214,177,94,.35);
-  box-shadow:0 0 30px rgba(214,177,94,.12);
+  border-color:rgba(214,177,94,.45);
+  box-shadow:0 0 36px rgba(214,177,94,.16);
 }
 .btn-icon{
   width:18px;height:18px;display:inline-block;flex:0 0 auto;
@@ -263,6 +502,19 @@ p{
     linear-gradient(135deg, rgba(245,133,41,.14), rgba(221,42,123,.10), rgba(81,91,212,.10));
 }
 
+/* Sweeping shine on primary buttons */
+.btn-primary::after{
+  content:"";
+  position:absolute;
+  top:0; left:-80%;
+  width:50%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+  transform:skewX(-22deg);
+  pointer-events:none;
+  transition:left .9s var(--ease);
+}
+.btn-primary:hover::after{ left:140% }
+
 /* Cards */
 .card{
   background:var(--panel);
@@ -272,12 +524,13 @@ p{
   transition:.30s var(--ease);
   position:relative;
   overflow:hidden;
+  transform-style:preserve-3d;
 }
 .card::after{
   content:"";
   position:absolute;
   inset:-2px;
-  background:radial-gradient(800px circle at 50% 0%, rgba(214,177,94,.16), transparent 55%);
+  background:radial-gradient(800px circle at var(--mx,50%) var(--my,0%), rgba(214,177,94,.18), transparent 55%);
   opacity:0;
   transition:opacity .28s var(--ease);
   pointer-events:none;
@@ -286,8 +539,10 @@ p{
 .card:hover{
   transform:translateY(-4px);
   border-color:rgba(214,177,94,.40);
-  box-shadow:0 0 55px rgba(214,177,94,.12);
+  box-shadow:0 20px 60px -20px rgba(214,177,94,.14);
 }
+
+.tilt{ will-change:transform; transition:transform .35s var(--ease); transform-style:preserve-3d }
 
 .grid-2{display:grid;gap:24px}
 @media(min-width:980px){ .grid-2{grid-template-columns:1.05fr .95fr;align-items:start} }
@@ -314,23 +569,82 @@ p{
 
 /* Hero */
 .hero{
-  padding-top:146px;
-  padding-bottom:34px;
+  padding-top:172px;
+  padding-bottom:60px;
   text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.hero-bg img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.55;
+  filter:blur(2px) saturate(118%);
+  mix-blend-mode:screen;
+  transform:scale(1.08);
+}
+.hero-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(140% 90% at 50% 35%, rgba(5,5,7,.0), rgba(5,5,7,.25) 70%, rgba(5,5,7,.55) 100%),
+    linear-gradient(180deg, rgba(5,5,7,.18), transparent 30%);
+}
+.hero-orb{
+  position:absolute;
+  width:720px; height:720px;
+  border-radius:999px;
+  background:radial-gradient(circle, rgba(214,177,94,.32), transparent 60%);
+  filter:blur(40px);
+  pointer-events:none;
+  z-index:-1;
+  top:-180px;
+  left:50%;
+  transform:translateX(-50%);
+  animation:orbDrift 14s ease-in-out infinite;
+}
+@keyframes orbDrift{
+  0%,100%{transform:translateX(-50%) translateY(0) scale(1);opacity:.85}
+  50%{transform:translateX(-46%) translateY(20px) scale(1.06);opacity:1}
+}
+.hero-mouse-orb{
+  position:absolute;
+  width:520px; height:520px;
+  margin:-260px 0 0 -260px;
+  background:radial-gradient(circle, rgba(73,178,255,.18), transparent 65%);
+  filter:blur(20px);
+  pointer-events:none;
+  z-index:-1;
+  top:0; left:50%;
+  mix-blend-mode:screen;
+  transition:transform .25s var(--ease-out);
+  will-change:transform;
 }
 .hero-sub{
-  max-width:78ch;
-  margin:16px auto 0 auto;
+  max-width:74ch;
+  margin:18px auto 0 auto;
+  font-size:clamp(15px,1.3vw,18px);
 }
 .hero-actions{
-  margin-top:28px;
+  margin-top:32px;
   display:flex;
   gap:12px;
   justify-content:center;
   flex-wrap:wrap;
 }
 .hero-strip{
-  margin-top:22px;
+  margin-top:24px;
   display:flex;
   justify-content:center;
   flex-wrap:wrap;
@@ -340,7 +654,7 @@ p{
   display:inline-flex;
   align-items:center;
   gap:10px;
-  padding:10px 12px;
+  padding:10px 14px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
@@ -348,56 +662,288 @@ p{
   font-size:12px;
   font-weight:850;
   transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+  backdrop-filter:blur(8px);
 }
 .chip:hover{
   transform:translateY(-1px);
   border-color:rgba(214,177,94,.35);
   box-shadow:0 0 24px rgba(214,177,94,.10);
+  color:#fff;
 }
 .chip .dot{
-  width:10px;height:10px;border-radius:999px;
+  width:8px;height:8px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 16px rgba(214,177,94,.18);
+  box-shadow:0 0 16px rgba(214,177,94,.30);
 }
 .hero-surface{
-  margin-top:34px;
+  margin-top:48px;
   display:grid;
   gap:24px;
+  text-align:left;
 }
 @media(min-width:980px){
   .hero-surface{grid-template-columns:1.15fr .85fr;align-items:stretch}
 }
 
+/* Marquee strip */
+.marquee{
+  margin-top:60px;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:18px 0;
+  background:rgba(255,255,255,.02);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+.marquee-track{
+  display:flex;
+  gap:48px;
+  width:max-content;
+  animation:marquee 40s linear infinite;
+}
+.marquee-item{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  color:var(--muted);
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.marquee-item .gem{
+  width:6px;height:6px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 12px rgba(214,177,94,.5);
+}
+@keyframes marquee{
+  to{transform:translateX(-50%)}
+}
+
 /* stats */
 .stat{
-  font-size:44px;
+  font-family:'Sora',sans-serif;
+  font-size:54px;
   font-weight:950;
   letter-spacing:-.02em;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff);
+  background-size:200% 200%;
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  animation:gradShift 7s ease-in-out infinite;
 }
 
-/* pricing */
-.price{
-  font-size:40px;
+/* PRICING */
+.pricing-section{
+  position:relative;
+  overflow:hidden;
+}
+.pricing-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.pricing-bg img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.30;
+  filter:saturate(110%);
+  mix-blend-mode:screen;
+}
+.pricing-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(60% 80% at 50% 50%, transparent, rgba(5,5,7,.78) 90%);
+}
+.pricing-grid{
+  margin-top:42px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+  position:relative;
+  z-index:1;
+}
+.pricing-grid > .tier{
+  flex:1 1 300px;
+  max-width:380px;
+}
+.pricing-grid > .tier.enterprise{
+  flex-basis:100%;
+  max-width:100%;
+}
+.tier{
+  position:relative;
+  padding:30px 26px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  transition:.35s var(--ease);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  isolation:isolate;
+  backdrop-filter:blur(10px);
+}
+.tier::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%), rgba(214,177,94,.12), transparent 55%);
+  opacity:0;
+  transition:opacity .3s var(--ease);
+  z-index:-1;
+}
+.tier:hover::before{ opacity:1 }
+.tier:hover{
+  transform:translateY(-6px);
+  border-color:rgba(214,177,94,.40);
+  box-shadow:0 30px 80px -30px rgba(214,177,94,.20);
+}
+.tier-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  align-self:flex-start;
+}
+.tier-name{
+  font-family:'Sora',sans-serif;
+  font-size:22px;
+  font-weight:900;
+  margin-top:14px;
+  letter-spacing:-.01em;
+}
+.tier-price{
+  font-family:'Sora',sans-serif;
+  font-size:46px;
   font-weight:950;
   letter-spacing:-.02em;
-  margin-top:12px;
+  margin-top:14px;
+  line-height:1;
 }
-.most{
-  position:absolute;
-  top:18px;
-  right:18px;
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:950;
+.tier-price small{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+  margin-left:4px;
+}
+.tier-desc{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  min-height:42px;
+}
+.tier-list{
+  margin-top:18px;
+  display:grid;
+  gap:10px;
+  list-style:none;
+  padding:0;
+  flex:1;
+}
+.tier-list li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.tier-list li::before{
+  content:"";
+  width:18px; height:18px; border-radius:999px;
+  flex:0 0 auto;
+  background:
+    linear-gradient(135deg, rgba(214,177,94,.30), rgba(214,177,94,.10)),
+    radial-gradient(circle, rgba(214,177,94,.25), transparent 70%);
+  border:1px solid rgba(214,177,94,.35);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'><path d='M2 6 L5 9 L10 3' stroke='%23F2D27A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"),
+    linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.04));
+  background-repeat:no-repeat;
+  background-position:center;
+  margin-top:1px;
+}
+.tier-cta{
+  margin-top:22px;
+  width:100%;
+  justify-content:center;
+}
+.tier.popular{
+  border-color:rgba(214,177,94,.55);
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(214,177,94,.16), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow:0 30px 90px -30px rgba(214,177,94,.30);
+}
+.tier.popular .tier-tag{
   color:#111;
+  border-color:rgba(214,177,94,.55);
   background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 30px rgba(214,177,94,.20);
+  box-shadow:0 0 20px rgba(214,177,94,.30);
 }
+.tier.onetime{
+  border-color:rgba(73,178,255,.35);
+}
+.tier.onetime .tier-tag{
+  color:#cfe9ff;
+  border-color:rgba(73,178,255,.40);
+  background:rgba(73,178,255,.10);
+}
+.tier.enterprise{
+  grid-column:1/-1;
+  border-color:rgba(168,85,247,.35);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(168,85,247,.15), transparent 55%),
+    radial-gradient(120% 100% at 100% 100%, rgba(214,177,94,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.tier.enterprise .tier-tag{
+  color:#e9d5ff;
+  border-color:rgba(168,85,247,.45);
+  background:rgba(168,85,247,.12);
+}
+.tier.enterprise .enterprise-grid{
+  display:grid;
+  gap:24px;
+  margin-top:20px;
+}
+@media(min-width:900px){
+  .tier.enterprise .enterprise-grid{ grid-template-columns:1.1fr .9fr; align-items:end }
+}
+.tier.enterprise .tier-list{ grid-template-columns:repeat(2,1fr); gap:10px 22px }
+.tier.enterprise .tier-cta{ margin-top:0 }
+.tier-shine{
+  position:absolute;
+  top:0; left:-50%;
+  width:50%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.06), transparent);
+  pointer-events:none;
+  transform:skewX(-22deg);
+  transition:left .9s var(--ease);
+}
+.tier:hover .tier-shine{ left:140% }
 
 /* verticals */
 .vert-card{min-height:210px}
@@ -409,6 +955,7 @@ p{
   filter:blur(10px);
   opacity:.75;
   animation:pulse 5.6s ease-in-out infinite;
+  pointer-events:none;
 }
 @keyframes pulse{
   0%,100%{ transform:scale(1); opacity:.70 }
@@ -465,7 +1012,7 @@ p{
   border-radius:var(--radius);
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.05);
-  padding:16px 18px;
+  padding:18px 20px;
   cursor:pointer;
   color:#fff;
   transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
@@ -475,11 +1022,20 @@ p{
   border-color:rgba(214,177,94,.25);
   box-shadow:0 0 26px rgba(214,177,94,.10);
 }
-.faq-q{font-weight:950;font-size:14px}
+.faq-q{font-weight:900;font-size:14.5px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faq-q::after{
+  content:"+";
+  color:var(--gold2);
+  font-weight:900;
+  font-size:22px;
+  transition:transform .25s var(--ease);
+  flex:0 0 auto;
+}
+.faq-btn[aria-expanded="true"] .faq-q::after{ transform:rotate(45deg) }
 .faq-a{
   margin-top:10px;
   color:var(--muted);
-  font-size:13px;
+  font-size:13.5px;
   line-height:1.65;
   display:none;
 }
@@ -488,19 +1044,24 @@ p{
 /* footer */
 footer{
   border-top:1px solid rgba(255,255,255,.06);
-  padding:42px 24px;
+  padding:48px 24px;
   text-align:center;
   color:var(--muted);
+  position:relative;
+  z-index:2;
 }
 
 /* reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:.85s var(--ease)}
+.reveal{opacity:0;transform:translateY(34px);transition:.95s var(--ease-out)}
 .reveal.active{opacity:1;transform:none}
+.reveal-stagger > *{opacity:0;transform:translateY(28px);transition:.85s var(--ease-out)}
+.reveal-stagger.active > *{opacity:1;transform:none}
 
-/* remove floating old */
-.float{display:none !important}
+/* split text reveal target */
+.split-line{ display:block; overflow:hidden }
+.split-word, .split-char{ display:inline-block; will-change:transform,opacity }
 
-/* mobile 3-dot menu */
+/* Mobile menu (preserved) */
 .mobile-menu{
   display:none;
   position:fixed;
@@ -628,6 +1189,11 @@ footer{
   border-radius:16px;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
+  animation:chatIn .55s var(--ease-out) both;
+}
+@keyframes chatIn{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:none}
 }
 .chat-avatar{
   width:34px;height:34px;border-radius:999px;
@@ -701,7 +1267,8 @@ footer{
   background:rgba(255,255,255,.03);
 }
 .calc-box .v{
-  font-size:28px;
+  font-family:'Sora',sans-serif;
+  font-size:30px;
   font-weight:950;
   letter-spacing:-.02em;
   color:#fff;
@@ -870,14 +1437,14 @@ footer{
   position:absolute;
   inset:auto 0 0 0;
   width:100%;
-  height:180px;
-  opacity:.9;
+  height:200px;
+  opacity:.85;
   pointer-events:none;
 }
 .hero-ambient{
   position:absolute;
   inset:auto 0 0 0;
-  height:220px;
+  height:240px;
   pointer-events:none;
   background:
     radial-gradient(500px circle at 20% 50%, rgba(44,214,124,.06), transparent 60%),
@@ -912,13 +1479,1143 @@ footer{
 @media(max-width:1119px){
   .nav{display:none;}
   .mobile-menu{display:block;}
-  .hero{padding-top:110px;}
+  .hero{padding-top:130px;}
   .activity-feed{display:none}
+  .cursor-dot,.cursor-ring{display:none}
+}
+
+/* ====== Vertical chips ====== */
+.vert-chips{
+  margin-top:24px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* ====== ONYX SECTION ====== */
+.onyx-section{
+  position:relative;
+  overflow:hidden;
+  padding:120px 24px 130px;
+  max-width:1280px;
+  margin:auto;
+}
+.onyx-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  border-radius:36px;
+  margin:0 24px;
+}
+.onyx-bg img{
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:.62;
+  filter:saturate(118%) contrast(108%);
+  transform:scale(1.04);
+}
+.onyx-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(80% 70% at 50% 0%, transparent, rgba(5,5,7,.55) 60%, rgba(5,5,7,.92) 100%),
+    linear-gradient(180deg, rgba(5,5,7,.20), rgba(5,5,7,.55) 60%);
+}
+.onyx-frame{
+  position:relative;
+  z-index:1;
+  border:1px solid rgba(214,177,94,.18);
+  border-radius:36px;
+  padding:60px 36px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.005));
+  backdrop-filter:blur(6px);
+  overflow:hidden;
+  isolation:isolate;
+}
+.onyx-frame::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:38px;
+  background:linear-gradient(135deg, rgba(214,177,94,.50), rgba(214,177,94,0) 40%, rgba(214,177,94,0) 60%, rgba(214,177,94,.32));
+  z-index:-1;
+  opacity:.4;
+  pointer-events:none;
+}
+.onyx-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.45);
+  background:linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.05));
+  color:#F2D27A;
+  font-size:11px;
+  letter-spacing:.26em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.onyx-eyebrow .star{
+  display:inline-block;
+  width:10px; height:10px;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  box-shadow:0 0 18px rgba(214,177,94,.55);
+}
+.onyx-title{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(40px, 6vw, 76px);
+  font-weight:950;
+  letter-spacing:-.035em;
+  line-height:1;
+  margin-top:18px;
+}
+.onyx-title .grad{
+  background:linear-gradient(135deg, var(--gold), var(--gold2), #fff, var(--gold));
+  background-size:220% 220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:gradShift 8s ease-in-out infinite;
+}
+.onyx-tag{
+  margin-top:18px;
+  font-size:18px;
+  color:rgba(255,255,255,.82);
+  font-weight:700;
+  max-width:62ch;
+}
+.onyx-meta{
+  margin-top:22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  align-items:center;
+}
+.onyx-price{
+  font-family:'Sora',sans-serif;
+  font-size:46px;
+  font-weight:950;
+  letter-spacing:-.02em;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+}
+.onyx-price small{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+  margin-left:8px;
+  -webkit-text-fill-color:var(--muted);
+}
+
+.onyx-block{
+  margin-top:60px;
+}
+.onyx-block-head{
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:18px;
+}
+.onyx-block-num{
+  width:34px; height:34px; border-radius:12px;
+  display:grid; place-items:center;
+  font-weight:900; color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.30);
+  font-family:'Sora',sans-serif;
+}
+.onyx-block-title{
+  font-family:'Sora',sans-serif;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:-.01em;
+}
+
+/* Architecture diagram */
+.onyx-arch{
+  position:relative;
+  padding:30px 20px 24px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+}
+.arch-canvas{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/7;
+  min-height:280px;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(214,177,94,.10), transparent 55%),
+    rgba(0,0,0,.30);
+  border:1px solid rgba(255,255,255,.05);
+  overflow:hidden;
+}
+.arch-svg{
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+.arch-svg .arch-link{
+  stroke:rgba(214,177,94,.40);
+  stroke-width:1.4;
+  fill:none;
+  stroke-dasharray:8 6;
+  animation:archDash 5s linear infinite;
+}
+@keyframes archDash{
+  to{ stroke-dashoffset:-140 }
+}
+.arch-node{
+  position:absolute;
+  width:78px; height:78px;
+  border-radius:18px;
+  border:1px solid rgba(214,177,94,.30);
+  background:rgba(255,255,255,.04);
+  display:grid; place-items:center;
+  text-align:center;
+  font-size:11px;
+  font-weight:900;
+  color:rgba(255,255,255,.85);
+  backdrop-filter:blur(6px);
+  transform:translate(-50%,-50%);
+  box-shadow:0 12px 30px -16px rgba(0,0,0,.6);
+  animation:archNodePulse 3.4s ease-in-out infinite;
+}
+@keyframes archNodePulse{
+  0%,100%{ box-shadow:0 12px 30px -16px rgba(0,0,0,.6), 0 0 0 0 rgba(214,177,94,.0) }
+  50%{ box-shadow:0 12px 30px -16px rgba(0,0,0,.6), 0 0 0 6px rgba(214,177,94,.07) }
+}
+.arch-node small{
+  display:block;
+  font-size:9px; font-weight:700;
+  color:rgba(255,255,255,.45);
+  margin-top:4px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.arch-hub{
+  position:absolute;
+  width:148px; height:148px;
+  border-radius:26px;
+  display:grid; place-items:center;
+  text-align:center;
+  background:
+    radial-gradient(circle, rgba(214,177,94,.30), transparent 70%),
+    linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.05));
+  border:1.5px solid rgba(214,177,94,.55);
+  color:#fff;
+  font-family:'Sora',sans-serif;
+  font-weight:900;
+  transform:translate(-50%,-50%);
+  font-size:14px;
+  box-shadow:0 0 50px rgba(214,177,94,.30);
+  animation:hubGlow 3.4s ease-in-out infinite;
+}
+@keyframes hubGlow{
+  0%,100%{ box-shadow:0 0 50px rgba(214,177,94,.30) }
+  50%{ box-shadow:0 0 90px rgba(214,177,94,.45) }
+}
+.arch-hub small{
+  display:block;
+  font-size:10px; font-weight:700;
+  color:rgba(255,255,255,.6);
+  margin-top:6px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.arch-legend{
+  margin-top:14px;
+  display:flex; flex-wrap:wrap; gap:14px;
+  font-size:12px;
+  color:var(--muted);
+}
+.arch-legend span{
+  display:inline-flex; align-items:center; gap:8px;
+}
+.arch-legend i{
+  display:inline-block; width:10px; height:10px; border-radius:3px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+}
+
+/* CRM mockup */
+.crm-mockup{
+  position:relative;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(10,10,14,.92), rgba(8,8,11,.95));
+  overflow:hidden;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.crm-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+}
+.crm-dot{ width:10px; height:10px; border-radius:999px; }
+.crm-dot.r{ background:#ff5f56 }
+.crm-dot.y{ background:#ffbd2e }
+.crm-dot.g{ background:#27c93f }
+.crm-bar-title{
+  margin-left:14px;
+  font-size:12px;
+  font-weight:800;
+  color:rgba(255,255,255,.65);
+  font-family:'Sora',sans-serif;
+  letter-spacing:.04em;
+}
+.crm-bar-meta{
+  margin-left:auto;
+  font-size:11px;
+  color:var(--muted2);
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:6px;
+}
+.crm-pulse-dot{
+  display:inline-block;
+  width:7px; height:7px; border-radius:999px;
+  background:#2cd67c;
+  box-shadow:0 0 10px rgba(44,214,124,.7);
+  animation:crmLive 1.4s ease-in-out infinite;
+}
+@keyframes crmLive{
+  0%,100%{ opacity:1; transform:scale(1) }
+  50%{ opacity:.5; transform:scale(.8) }
+}
+.crm-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.crm-stat{
+  padding:14px 16px;
+  background:rgba(8,8,11,.95);
+}
+.crm-stat-label{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  font-weight:900;
+}
+.crm-stat-val{
+  margin-top:6px;
+  font-family:'Sora',sans-serif;
+  font-size:20px;
+  font-weight:900;
+  color:#fff;
+}
+.crm-stat-val.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+@media(max-width:780px){
+  .crm-stats{ grid-template-columns:repeat(2,1fr) }
+}
+.crm-table{
+  padding:8px 0;
+  max-height:440px;
+  overflow:hidden;
+}
+.crm-row{
+  display:grid;
+  grid-template-columns:1.1fr .8fr 1fr 1fr .8fr;
+  align-items:center;
+  gap:12px;
+  padding:12px 18px;
+  border-bottom:1px dashed rgba(255,255,255,.05);
+  font-size:13px;
+  transition:background .25s var(--ease);
+  position:relative;
+}
+.crm-row:hover{ background:rgba(214,177,94,.04) }
+.crm-row .id{
+  font-family:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  font-size:12.5px;
+  color:rgba(255,255,255,.86);
+  font-weight:700;
+}
+.crm-row .src{
+  color:var(--muted2);
+  font-size:11px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+.crm-row .spend{
+  font-family:'Sora',sans-serif;
+  font-weight:900;
+  color:#fff;
+}
+.crm-row .pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.10);
+}
+.crm-row .pill.ok{ color:#d7ffe8; border-color:rgba(44,214,124,.30); background:rgba(44,214,124,.10) }
+.crm-row .pill.warn{ color:#fff2d3; border-color:rgba(255,203,107,.30); background:rgba(255,203,107,.10) }
+.crm-row .pill.bad{ color:#ffd9dd; border-color:rgba(255,100,110,.30); background:rgba(255,100,110,.10) }
+.crm-row .pill .pulse-dot{
+  display:inline-block; width:6px; height:6px; border-radius:999px;
+  background:currentColor;
+  animation:crmLive 1.4s ease-in-out infinite;
+}
+.crm-share{
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  color:#111;
+  border:none;
+  padding:7px 12px;
+  border-radius:10px;
+  font-size:11.5px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s var(--ease);
+  letter-spacing:.04em;
+}
+.crm-share:hover{ transform:translateY(-1px); box-shadow:0 8px 22px -10px rgba(214,177,94,.5) }
+.crm-share:active{ transform:translateY(0) }
+.crm-row.flash-good{ animation:flashGood 1.4s ease-out 1 }
+.crm-row.flash-bad{ animation:flashBad 1.4s ease-out 1 }
+@keyframes flashGood{
+  0%{ background:rgba(44,214,124,.18) }
+  100%{ background:transparent }
+}
+@keyframes flashBad{
+  0%{ background:rgba(255,100,110,.18) }
+  100%{ background:transparent }
+}
+.crm-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(8,8,11,.78);
+  backdrop-filter:blur(6px);
+  display:none;
+  place-items:center;
+  z-index:10;
+}
+.crm-overlay.show{ display:grid; animation:fadeIn .3s ease-out }
+@keyframes fadeIn{ from{ opacity:0 } to{ opacity:1 } }
+.crm-modal{
+  width:min(360px, 92%);
+  background:rgba(15,15,20,.96);
+  border:1px solid rgba(214,177,94,.30);
+  border-radius:20px;
+  padding:22px;
+  text-align:left;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85);
+  animation:modalIn .35s var(--ease) both;
+}
+@keyframes modalIn{
+  from{ transform:translateY(20px); opacity:0 }
+  to{ transform:translateY(0); opacity:1 }
+}
+.crm-modal h4{
+  font-family:'Sora',sans-serif;
+  font-size:16px; font-weight:900;
+  color:#fff;
+}
+.crm-modal p{ margin-top:6px; font-size:13px }
+.crm-modal-input{
+  margin-top:14px;
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  font-size:13px;
+  font-weight:800;
+}
+.crm-modal-actions{
+  margin-top:16px;
+  display:flex; gap:10px; justify-content:flex-end;
+}
+.crm-modal-btn{
+  padding:9px 14px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:12.5px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  cursor:pointer;
+}
+.crm-modal-btn.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; border-color:transparent;
+}
+.crm-toast{
+  position:absolute;
+  left:18px; right:18px; bottom:18px;
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid rgba(214,177,94,.35);
+  background:linear-gradient(135deg, rgba(214,177,94,.16), rgba(214,177,94,.06));
+  backdrop-filter:blur(8px);
+  display:flex; gap:14px; align-items:center;
+  font-size:13px; color:#fff; font-weight:700;
+  transform:translateY(120%);
+  opacity:0;
+  transition:.45s var(--ease);
+  z-index:5;
+}
+.crm-toast.show{ transform:translateY(0); opacity:1 }
+.crm-toast .icon{
+  width:30px; height:30px; border-radius:10px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; font-weight:900;
+}
+
+/* Onyx vs traditional comparison */
+.onyx-vs{
+  display:grid;
+  gap:18px;
+  margin-top:20px;
+}
+@media(min-width:880px){
+  .onyx-vs{ grid-template-columns:1fr 1fr }
+}
+.vs-card{
+  position:relative;
+  padding:24px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+}
+.vs-card.bad{ border-color:rgba(255,100,110,.20); background:rgba(255,100,110,.04) }
+.vs-card.good{ border-color:rgba(214,177,94,.30); background:rgba(214,177,94,.05) }
+.vs-card h4{
+  font-family:'Sora',sans-serif;
+  font-size:18px; font-weight:900;
+  display:flex; align-items:center; gap:10px;
+}
+.vs-card.bad h4{ color:#ffb3b8 }
+.vs-card.good h4{ color:#F2D27A }
+.vs-list{
+  margin-top:14px;
+  display:grid; gap:10px;
+  list-style:none; padding:0;
+}
+.vs-list li{
+  display:flex; gap:10px; align-items:flex-start;
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.vs-list li::before{
+  width:18px; height:18px; flex:0 0 auto;
+  border-radius:999px;
+  display:grid; place-items:center;
+  font-weight:900; font-size:11px;
+  margin-top:1px;
+}
+.vs-card.bad .vs-list li::before{
+  content:"\00d7";
+  background:rgba(255,100,110,.10);
+  color:#ff646e;
+  border:1px solid rgba(255,100,110,.20);
+}
+.vs-card.good .vs-list li::before{
+  content:"\2713";
+  background:rgba(214,177,94,.12);
+  color:#F2D27A;
+  border:1px solid rgba(214,177,94,.30);
+}
+
+.onyx-cta-row{
+  margin-top:42px;
+  display:flex; gap:12px; flex-wrap:wrap;
+  align-items:center;
+}
+
+/* ====== Pricing categories + new tier meta pills ====== */
+.pricing-cat{
+  margin-top:56px;
+}
+.pricing-cat-head{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  margin-bottom:28px;
+  text-align:center;
+}
+.pricing-cat-title{
+  font-family:'Sora',sans-serif;
+  font-size:24px; font-weight:900;
+  letter-spacing:-.01em;
+  color:#fff;
+  position:relative;
+  padding-bottom:10px;
+}
+.pricing-cat-title::after{
+  content:"";
+  position:absolute;
+  bottom:0; left:50%;
+  transform:translateX(-50%);
+  width:42px; height:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-radius:2px;
+  box-shadow:0 0 12px rgba(214,177,94,.55);
+}
+.pricing-cat-sub{
+  color:var(--muted);
+  font-size:13.5px;
+  font-weight:700;
+}
+/* (pricing-grid centering handled in main rule above via flex) */
+.pricing-cat .pricing-grid{ margin-top:0 }
+.warmup-note{
+  margin-top:30px;
+  padding:18px 22px;
+  border-radius:18px;
+  border:1px solid rgba(255,203,107,.22);
+  background:linear-gradient(135deg, rgba(255,203,107,.06), rgba(255,203,107,.02));
+  display:flex; gap:14px; align-items:flex-start;
+  font-size:13.5px;
+  color:rgba(255,255,255,.85);
+  position:relative;
+  z-index:1;
+}
+.warmup-note .icon{
+  width:38px; height:38px; flex:0 0 auto;
+  border-radius:12px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(255,203,107,.20), rgba(255,203,107,.08));
+  border:1px solid rgba(255,203,107,.25);
+  font-size:18px;
+}
+.warmup-note strong{
+  color:#ffcb6b;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:11px;
+  font-weight:950;
+}
+.warmup-note p{
+  margin-top:4px;
+  color:rgba(255,255,255,.78);
+  line-height:1.55;
+}
+.tier-meta{
+  margin-top:14px;
+  display:flex; flex-wrap:wrap; gap:6px;
+}
+.tier-meta-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:10.5px;
+  font-weight:900;
+  letter-spacing:.04em;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+}
+.tier-meta-pill.warranty{
+  color:#d7ffe8;
+  border-color:rgba(44,214,124,.30);
+  background:rgba(44,214,124,.08);
+}
+.tier-meta-pill.warmup{
+  color:#fff2d3;
+  border-color:rgba(255,203,107,.30);
+  background:rgba(255,203,107,.06);
+}
+.tier-meta-pill.verticals{
+  color:#cfe9ff;
+  border-color:rgba(73,178,255,.25);
+  background:rgba(73,178,255,.06);
+}
+
+/* Onyx tier card hover */
+.tier.onyx{
+  border-color:rgba(214,177,94,.55);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.18), transparent 55%),
+    radial-gradient(120% 100% at 100% 100%, rgba(168,85,247,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.tier.onyx .tier-tag{
+  color:#111;
+  border-color:rgba(214,177,94,.55);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 22px rgba(214,177,94,.30);
+}
+
+/* JetBrains mono fallback */
+.mono{
+  font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+}
+
+/* ============ REALITY CHECK NARRATIVE (stacked, no pin) ============ */
+.reality-section{
+  position:relative;
+  margin:60px 0 0 0;
+  overflow:hidden;
+  background:
+    radial-gradient(80% 60% at 50% 30%, rgba(214,177,94,.06), transparent 70%),
+    linear-gradient(180deg, #060709, #08090d);
+  border-top:1px solid rgba(214,177,94,.10);
+  border-bottom:1px solid rgba(214,177,94,.10);
+}
+.reality-grid{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(214,177,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,177,94,.04) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image: linear-gradient(180deg, black, black 90%, transparent);
+          mask-image: linear-gradient(180deg, black, black 90%, transparent);
+}
+
+.reality-scene{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:90px 24px 90px;
+  overflow:hidden;
+}
+.reality-scene + .reality-scene{
+  border-top:1px dashed rgba(214,177,94,.10);
+}
+.reality-scene .scene-text{
+  position:relative;
+  z-index:5;
+  max-width:760px;
+}
+.reality-scene .scene-text h2{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(34px, 5.5vw, 64px);
+  font-weight:950;
+  letter-spacing:-.03em;
+  line-height:1.04;
+}
+.reality-scene .scene-text p{
+  font-size:clamp(15px, 1.4vw, 18px);
+  max-width:60ch;
+  margin:14px auto 0;
+}
+
+/* Reality dots indicator */
+.reality-dots{
+  position:absolute;
+  bottom:30px; left:50%;
+  transform:translateX(-50%);
+  display:flex; gap:10px;
+  z-index:10;
+}
+.reality-dots .dot{
+  width:8px; height:8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  transition:.35s var(--ease);
+}
+.reality-dots .dot.active{
+  width:28px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+}
+
+/* Scroll hint */
+.scroll-hint{
+  position:absolute;
+  top:30px; left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:950;
+  color:var(--muted2);
+  z-index:9;
+  display:flex; align-items:center; gap:10px;
+}
+.scroll-hint::before{
+  content:"";
+  width:14px; height:1px; background:var(--gold2);
+  animation:hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse{
+  0%,100%{ opacity:1; transform:scaleX(1) }
+  50%{ opacity:.4; transform:scaleX(.4) }
+}
+
+/* === Glitch text === */
+.glitch-text{
+  position:relative;
+  display:inline-block;
+}
+.glitch-text::before,
+.glitch-text::after{
+  content:attr(data-text);
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+}
+.glitch-text::before{
+  color:#ff646e;
+  animation:glitchA .9s steps(1) infinite;
+  clip-path:inset(0 0 55% 0);
+  text-shadow:2px 0 #ff646e;
+}
+.glitch-text::after{
+  color:#49b2ff;
+  animation:glitchB .9s steps(1) infinite;
+  clip-path:inset(50% 0 0 0);
+  text-shadow:-2px 0 #49b2ff;
+}
+@keyframes glitchA{
+  0%,100%{ transform:translate(0) }
+  20%{ transform:translate(-3px,1px) }
+  40%{ transform:translate(3px,-1px) }
+  60%{ transform:translate(-2px,2px) }
+  80%{ transform:translate(2px,-2px) }
+}
+@keyframes glitchB{
+  0%,100%{ transform:translate(0) }
+  25%{ transform:translate(3px,-1px) }
+  50%{ transform:translate(-3px,1px) }
+  75%{ transform:translate(2px,2px) }
+}
+
+/* === Scene 1 — floating products === */
+.scene-1 .float-icons{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.float-icon{
+  position:absolute;
+  font-size:52px;
+  filter:drop-shadow(0 14px 32px rgba(0,0,0,.55));
+  animation:floatBob 4s ease-in-out infinite;
+  user-select:none;
+}
+@keyframes floatBob{
+  0%,100%{ transform:translateY(0) rotate(0) }
+  50%{ transform:translateY(-18px) rotate(5deg) }
+}
+.scene-1 .scene-graph{
+  position:absolute;
+  inset:auto 5% 10% 5%;
+  height:140px;
+  pointer-events:none;
+  opacity:.7;
+}
+
+/* === Scene 2 — Meta crash === */
+.scene-2 .meta-logo{
+  position:absolute;
+  top:14%; left:50%;
+  transform:translate(-50%,0);
+  font-family:'Sora',sans-serif;
+  font-size:clamp(80px, 14vw, 200px);
+  font-weight:950;
+  letter-spacing:-.05em;
+  background:linear-gradient(135deg,#1877F2,#0E5FB5);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 0 60px rgba(24,119,242,.45);
+  animation:metaGlitch .42s steps(1) infinite;
+}
+@keyframes metaGlitch{
+  0%{ clip-path:inset(0 0 0 0); transform:translate(-50%,0) }
+  20%{ clip-path:inset(15% 0 70% 0); transform:translate(-49%,-3px) }
+  40%{ clip-path:inset(60% 0 20% 0); transform:translate(-51%,3px) }
+  60%{ clip-path:inset(0 0 0 0); transform:translate(-50%,0) }
+  80%{ clip-path:inset(40% 0 30% 0); transform:translate(-50.4%,1px) }
+}
+.scene-2 .banned-stamp{
+  position:absolute;
+  top:54%; left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg) scale(3);
+  padding:18px 52px;
+  border:5px solid #ff646e;
+  color:#ff646e;
+  font-family:'Sora',sans-serif;
+  font-size:clamp(38px, 6.4vw, 56px);
+  font-weight:950;
+  letter-spacing:.18em;
+  background:rgba(255,100,110,.06);
+  text-transform:uppercase;
+  opacity:0;
+  box-shadow:0 0 50px rgba(255,100,110,.3), inset 0 0 30px rgba(255,100,110,.1);
+}
+.scene-2.fire-stamp .banned-stamp{
+  animation:stampSlam .55s var(--ease-out) forwards;
+}
+@keyframes stampSlam{
+  0%{ opacity:0; transform:translate(-50%,-50%) rotate(-12deg) scale(3.2) }
+  60%{ opacity:1; transform:translate(-50%,-50%) rotate(-12deg) scale(.9) }
+  100%{ opacity:1; transform:translate(-50%,-50%) rotate(-12deg) scale(1) }
+}
+.scene-2 .scanlines{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 4px, rgba(255,100,110,.06) 4px 5px);
+  mix-blend-mode:screen;
+  animation:scanlineMove 1.4s linear infinite;
+}
+@keyframes scanlineMove{
+  to{ background-position-y:9px }
+}
+.scene-2 .red-flash{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(80% 60% at 50% 50%, rgba(255,100,110,.18), transparent 70%);
+  opacity:0;
+}
+.scene-2.fire-stamp .red-flash{
+  animation:redFlash 1.2s ease-out;
+}
+@keyframes redFlash{
+  0%{ opacity:0 }
+  20%{ opacity:1 }
+  100%{ opacity:0 }
+}
+
+/* === Scene 3 — shatter & crash === */
+.scene-3 .shatter-grid{
+  position:absolute;
+  top:18%; left:50%;
+  transform:translateX(-50%);
+  display:grid;
+  grid-template-columns:repeat(5, 84px);
+  grid-template-rows:repeat(2, 84px);
+  gap:14px;
+  z-index:2;
+}
+.shatter-cell{
+  width:84px; height:84px;
+  border-radius:14px;
+  display:grid; place-items:center;
+  font-size:42px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  filter:grayscale(.4) brightness(.85);
+  transform-origin:center;
+}
+.scene-3.fire-shatter .shatter-cell{
+  animation:shatterFall 1s var(--ease-out) forwards;
+}
+.scene-3.fire-shatter .shatter-cell:nth-child(1){ animation-delay:0s }
+.scene-3.fire-shatter .shatter-cell:nth-child(2){ animation-delay:.05s }
+.scene-3.fire-shatter .shatter-cell:nth-child(3){ animation-delay:.1s }
+.scene-3.fire-shatter .shatter-cell:nth-child(4){ animation-delay:.15s }
+.scene-3.fire-shatter .shatter-cell:nth-child(5){ animation-delay:.2s }
+.scene-3.fire-shatter .shatter-cell:nth-child(6){ animation-delay:.08s }
+.scene-3.fire-shatter .shatter-cell:nth-child(7){ animation-delay:.13s }
+.scene-3.fire-shatter .shatter-cell:nth-child(8){ animation-delay:.18s }
+.scene-3.fire-shatter .shatter-cell:nth-child(9){ animation-delay:.22s }
+.scene-3.fire-shatter .shatter-cell:nth-child(10){ animation-delay:.27s }
+@keyframes shatterFall{
+  0%{ transform:translateY(0) rotate(0) scale(1); opacity:1; filter:grayscale(.4) brightness(.85) }
+  40%{ transform:translateY(8px) rotate(-4deg) scale(1.04); filter:grayscale(.7) brightness(.7) }
+  100%{ transform:translateY(70vh) rotate(45deg) scale(.7); opacity:0; filter:grayscale(1) brightness(.3) }
+}
+.scene-3 .scene-graph{
+  position:absolute;
+  inset:auto 8% 14% 8%;
+  height:160px;
+  z-index:1;
+}
+.scene-3 .crash-shake{
+  position:absolute;
+  inset:0;
+}
+.scene-3.fire-shatter .crash-shake{
+  animation:crashShake .5s ease-in-out 2;
+}
+@keyframes crashShake{
+  0%,100%{ transform:translate(0) }
+  20%{ transform:translate(-8px,4px) }
+  40%{ transform:translate(8px,-4px) }
+  60%{ transform:translate(-4px,4px) }
+  80%{ transform:translate(4px,-2px) }
+}
+
+/* === Scene 4 — Recovery === */
+.scene-4 .recovery-logo{
+  position:absolute;
+  top:18%; left:50%;
+  transform:translate(-50%,0);
+  width:120px; height:120px;
+  border-radius:28px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(214,177,94,.22), rgba(214,177,94,.05));
+  border:1px solid rgba(214,177,94,.55);
+  box-shadow:0 0 100px rgba(214,177,94,.5);
+}
+.scene-4 .recovery-logo img{
+  height:60px;
+  filter:drop-shadow(0 0 16px rgba(214,177,94,.6));
+}
+.scene-4 .recovery-logo::after{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border-radius:36px;
+  border:2px solid rgba(214,177,94,.45);
+  animation:logoRing 2.4s ease-out infinite;
+}
+.scene-4 .recovery-logo::before{
+  content:"";
+  position:absolute;
+  inset:-24px;
+  border-radius:48px;
+  border:1px solid rgba(214,177,94,.25);
+  animation:logoRing 2.4s ease-out .6s infinite;
+}
+@keyframes logoRing{
+  0%{ transform:scale(.85); opacity:.9 }
+  100%{ transform:scale(1.7); opacity:0 }
+}
+.scene-4 .gold-particles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.gold-particle{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+  opacity:0;
+}
+.scene-4.fire-recover .gold-particle{
+  animation:goldRise 3s ease-out infinite;
+}
+@keyframes goldRise{
+  0%{ transform:translate(0,0) scale(0); opacity:0 }
+  20%{ opacity:1; transform:translate(0,-20px) scale(1) }
+  100%{ transform:translate(var(--dx,0),var(--dy,-200px)) scale(.4); opacity:0 }
+}
+
+/* === Scene 5 — Continued growth === */
+.scene-5 .scene-graph{
+  position:absolute;
+  inset:auto 6% 14% 6%;
+  height:200px;
+  pointer-events:none;
+}
+.scene-5 .money-bills{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.money-bill{
+  position:absolute;
+  font-size:34px;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.5));
+  opacity:0;
+}
+.scene-5.fire-growth .money-bill{
+  animation:moneyFly 5s linear infinite;
+}
+@keyframes moneyFly{
+  0%{ transform:translateY(110vh) rotate(-12deg); opacity:0 }
+  10%{ opacity:1 }
+  90%{ opacity:1 }
+  100%{ transform:translateY(-30vh) rotate(12deg); opacity:0 }
+}
+
+/* === Per-tier hover gold burst === */
+.tier{ position:relative }
+.tier .gold-burst{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:999px;
+  background:radial-gradient(circle, var(--gold2), transparent 70%);
+  pointer-events:none;
+  opacity:0;
+}
+
+/* Stagger active class for floating products */
+.float-icon.f1{ top:18%; left:14%; animation-delay:.0s }
+.float-icon.f2{ top:34%; left:78%; animation-delay:.4s }
+.float-icon.f3{ top:62%; left:20%; animation-delay:.8s }
+.float-icon.f4{ top:24%; left:56%; animation-delay:.2s }
+.float-icon.f5{ top:68%; left:70%; animation-delay:.6s }
+.float-icon.f6{ top:46%; left:42%; animation-delay:1.0s }
+
+/* Mobile fallback — disable pin, show scenes stacked */
+@media (max-width:780px){
+  .reality-pin{ height:auto; min-height:0 }
+  .reality-stage{ position:relative; inset:auto }
+  .reality-scene{ position:relative; opacity:1 !important; min-height:80vh }
+  .reality-dots, .scroll-hint{ display:none }
+  .scene-3 .shatter-grid{ grid-template-columns:repeat(4, 70px); grid-template-rows:repeat(2, 70px) }
+  .shatter-cell{ width:70px; height:70px; font-size:34px }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001s !important; transition-duration:.001s !important }
+  .marquee-track{ animation:none }
+  .reality-scene{ opacity:1 !important; position:relative !important }
+  .reality-pin{ height:auto !important }
 }
 </style>
 </head>
 
 <body>
+
+<!-- Loader -->
+<div class="loader" id="pageLoader">
+  <div class="loader-inner">
+    <img src="logo.png" alt="ScaleShield" class="loader-logo">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Mouse spotlight -->
+<div class="spotlight" id="spotlight"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <div class="activity-feed" id="activityFeed"></div>
 
@@ -929,8 +2626,8 @@ footer{
       <span>Get fast onboarding, 24/7 support, and unlimited replacements.</span>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small">Telegram</a>
-      <button class="popup-close" id="popupClose" aria-label="Close">✕</button>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4">Telegram</a>
+      <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
     </div>
   </div>
 </div>
@@ -942,20 +2639,20 @@ footer{
   </div>
 
   <div class="menu-panel" id="menuPanel">
-    <a href="#stats" class="mnav">Stats <small>→</small></a>
-    <a href="#demo" class="mnav">Live Demo <small>→</small></a>
-    <a href="#verticals" class="mnav">Verticals <small>→</small></a>
-    <a href="#pricing" class="mnav">Pricing <small>→</small></a>
-    <a href="#roi" class="mnav">ROI <small>→</small></a>
-    <a href="#trust" class="mnav">Trust <small>→</small></a>
-    <a href="#reviews" class="mnav">Reviews <small>→</small></a>
-    <a href="#faq" class="mnav">FAQ <small>→</small></a>
-    <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>↗</small></a>
-    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in <small>↗</small></a>
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a>
-    <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
-    <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>↗</small></a>
-    <a href="#contact" class="mnav">Contact <small>→</small></a>
+    <a href="#stats" class="mnav">Stats <small>&rarr;</small></a>
+    <a href="#demo" class="mnav">Live Demo <small>&rarr;</small></a>
+    <a href="#verticals" class="mnav">Verticals <small>&rarr;</small></a>
+    <a href="#onyx" class="mnav" style="color:#F2D27A">Onyx BM2500 <small>&rarr;</small></a>
+    <a href="#pricing" class="mnav">Pricing <small>&rarr;</small></a>
+    <a href="#trust" class="mnav">Trust <small>&rarr;</small></a>
+    <a href="#reviews" class="mnav">Reviews <small>&rarr;</small></a>
+    <a href="#faq" class="mnav">FAQ <small>&rarr;</small></a>
+    <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>&#8599;</small></a>
+    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in <small>&#8599;</small></a>
+    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>&#8599;</small></a>
+    <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>&#8599;</small></a>
+    <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>&#8599;</small></a>
+    <a href="#contact" class="mnav">Contact <small>&rarr;</small></a>
   </div>
 </div>
 
@@ -967,21 +2664,19 @@ footer{
       </div>
       <div class="nav-links">
         <a href="#stats">Stats</a>
-        <a href="#demo">Live Demo</a>
         <a href="#verticals">Verticals</a>
+        <a href="#onyx" style="color:#F2D27A">Onyx</a>
         <a href="#pricing">Pricing</a>
-        <a href="#roi">ROI</a>
-        <a href="#trust">Trust</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
+        <a href="payment-details.html" target="_blank" rel="noopener">Payment</a>
         <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
 
     <div style="display:flex;gap:10px;flex-wrap:nowrap;align-items:center;white-space:nowrap;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg small">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg small magnetic" data-mag="0.3">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -989,7 +2684,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa small">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa small magnetic" data-mag="0.3">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -997,7 +2692,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4">
         Contact Now
       </a>
     </div>
@@ -1006,17 +2701,23 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> RELIABLE META INFRASTRUCTURE</div>
-    <h1>Scale Meta with <span class="grad">Premium</span> agency infrastructure.</h1>
-    <p class="hero-sub">
-      Stable access, fast onboarding, and <b>unlimited replacements</b> — built for teams that don’t want downtime.
+  <div class="hero-bg">
+    <img src="hero-bg.jpg" alt="" id="heroBgImg" loading="eager" decoding="async">
+  </div>
+  <div class="hero-orb"></div>
+  <div class="hero-mouse-orb" id="heroMouseOrb"></div>
+
+  <div>
+    <div class="kicker reveal"><span class="kdot"></span> Reliable Meta Infrastructure</div>
+    <h1 class="hero-title">Scale Meta with <span class="grad">premium</span><br>agency infrastructure.</h1>
+    <p class="hero-sub reveal">
+      Stable access, fast onboarding, and <b>unlimited replacements</b> &mdash; built for teams that don&rsquo;t want downtime.
     </p>
 
-    <div class="hero-actions">
-      <a href="#pricing" class="btn btn-primary">View Pricing</a>
+    <div class="hero-actions reveal">
+      <a href="#pricing" class="btn btn-primary magnetic" data-mag="0.45">View Pricing</a>
 
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -1024,7 +2725,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1032,7 +2733,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -1042,7 +2743,7 @@ footer{
       </a>
     </div>
 
-    <div class="hero-strip">
+    <div class="hero-strip reveal">
       <div class="chip"><span class="dot"></span> Launch without delays</div>
       <div class="chip"><span class="dot"></span> Always-on support (24/7)</div>
       <div class="chip"><span class="dot"></span> Replacement-ready</div>
@@ -1051,8 +2752,8 @@ footer{
   </div>
 
   <div class="hero-surface">
-    <div class="card reveal" id="demo" style="padding:22px;">
-      <div class="kicker"><span class="kdot"></span> LIVE SYSTEM PREVIEW</div>
+    <div class="card tilt reveal" id="demo" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> Live System Preview</div>
       <h3 style="font-size:24px;">See the replacement flow in action</h3>
       <p style="max-width:60ch">This simulates exactly what clients care about: account dies, replacement gets assigned, campaigns keep moving.</p>
 
@@ -1070,10 +2771,10 @@ footer{
             <td><b id="demoAccId">act_4938201881</b></td>
             <td id="demoSpend">$5,240</td>
             <td>
-              <span class="status-pill status-active" id="demoStatus">🟢 Active</span>
+              <span class="status-pill status-active" id="demoStatus">&#x1F7E2; Active</span>
             </td>
             <td>
-              <button class="btn btn-primary" id="replaceBtn">Replace Now</button>
+              <button class="btn btn-primary magnetic" data-mag="0.4" id="replaceBtn">Replace Now</button>
             </td>
           </tr>
         </tbody>
@@ -1091,8 +2792,8 @@ footer{
       </div>
     </div>
 
-    <div class="card reveal" style="padding:22px;">
-      <div class="kicker"><span class="kdot"></span> AUTO DEMO FLOW</div>
+    <div class="card tilt reveal" style="padding:22px;">
+      <div class="kicker"><span class="kdot"></span> Auto Demo Flow</div>
       <h3 style="font-size:24px;">Why this converts</h3>
       <div class="step-list">
         <div class="step">
@@ -1110,7 +2811,7 @@ footer{
       </div>
 
       <div class="trust-quote">
-        “This is the core reason people buy infrastructure — not because it looks nice, but because dead accounts cost real money.”
+        &ldquo;This is the core reason people buy infrastructure &mdash; not because it looks nice, but because dead accounts cost real money.&rdquo;
       </div>
     </div>
   </div>
@@ -1119,28 +2820,42 @@ footer{
   <canvas class="bg-canvas" id="heroCanvas"></canvas>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item"><span class="gem"></span> 24/7 Support</div>
+    <div class="marquee-item"><span class="gem"></span> Unlimited Replacements</div>
+    <div class="marquee-item"><span class="gem"></span> Premium Agency BMs</div>
+    <div class="marquee-item"><span class="gem"></span> Fast Onboarding</div>
+    <div class="marquee-item"><span class="gem"></span> Stable Access</div>
+    <div class="marquee-item"><span class="gem"></span> Real Support, Real Speed</div>
+    <div class="marquee-item"><span class="gem"></span> Instant Replace Workflow</div>
+    <div class="marquee-item"><span class="gem"></span> Built For Operators</div>
+  </div>
+</div>
+
 <!-- STATS -->
 <section id="stats">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> PROOF</div>
-    <h2>Scale Metrics</h2>
-    <p>High-level performance indicators (animated).</p>
+    <div class="kicker"><span class="kdot"></span> Proof</div>
+    <h2>Scale metrics that matter.</h2>
+    <p>High-level performance indicators from the operations engine.</p>
   </div>
 
-  <div class="grid-4" style="margin-top:30px;">
-    <div class="card reveal">
+  <div class="grid-4 reveal-stagger" style="margin-top:36px;">
+    <div class="card tilt">
       <div class="stat count" data-value="200" data-type="moneyM">$0M+</div>
       <p>Ad Spend Managed</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="300" data-type="plus">0+</div>
       <p>Active Clients</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="16100" data-type="k">0.0K</div>
       <p>Campaigns Monitored</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <div class="stat count" data-value="147" data-type="plain">0</div>
       <p>Accounts Replaced Today</p>
     </div>
@@ -1154,11 +2869,11 @@ footer{
       </div>
       <div>
         <div class="badge"><strong>Unlimited</strong>&nbsp;Replacements</div>
-        <p style="margin-top:10px;">If something breaks, we swap it — so campaigns keep running.</p>
+        <p style="margin-top:10px;">If something breaks, we swap it &mdash; so campaigns keep running.</p>
       </div>
       <div>
         <div class="badge"><strong>Secure</strong>&nbsp;Onboarding</div>
-        <p style="margin-top:10px;">Clear steps, clean handoff, stable structure — minimal friction.</p>
+        <p style="margin-top:10px;">Clear steps, clean handoff, stable structure &mdash; minimal friction.</p>
       </div>
     </div>
   </div>
@@ -1167,53 +2882,611 @@ footer{
 <!-- VERTICALS -->
 <section id="verticals">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> VERTICAL FOCUS</div>
-    <h2>Neutral, Gambling/iGaming, and policy-sensitive verticals</h2>
+    <div class="kicker"><span class="kdot"></span> Verticals</div>
+    <h2>Built for the verticals that <span class="grad">actually need infrastructure</span>.</h2>
     <p>
-      We support teams across <b>Neutral</b> and <b>iGaming/Gambling</b> — and for <b>policy-sensitive gray verticals</b>,
-      we focus on <b>reliability, monitoring, and fast replacements</b>.
+      ScaleShield supports media buyers across <b>nutra, iGaming, finance, peptides, casinos, sweepstakes, crypto, dating</b>
+      and other policy-sensitive verticals &mdash; with the structure, monitoring, and replacement workflow that grey
+      and blackhat operations actually need.
     </p>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal vert-card">
+  <div class="vert-chips reveal">
+    <div class="chip"><span class="dot"></span> Nutra</div>
+    <div class="chip"><span class="dot"></span> iGaming</div>
+    <div class="chip"><span class="dot"></span> Casinos</div>
+    <div class="chip"><span class="dot"></span> Finance</div>
+    <div class="chip"><span class="dot"></span> Peptides</div>
+    <div class="chip"><span class="dot"></span> Crypto</div>
+    <div class="chip"><span class="dot"></span> Sweepstakes</div>
+    <div class="chip"><span class="dot"></span> Dating</div>
+    <div class="chip"><span class="dot"></span> BH &amp; GH friendly</div>
+  </div>
+
+  <div class="grid-3 reveal-stagger" style="margin-top:36px;">
+    <div class="card tilt vert-card">
       <div class="pulse"></div>
-      <h3><span class="wiggle">Neutral</span> verticals</h3>
-      <p>Ecom, lead gen, apps, content — steady growth curves.</p>
+      <h3><span class="wiggle">Neutral &amp; e-com</span></h3>
+      <p>Ecom, lead gen, apps, content &mdash; steady growth curves on stable infrastructure.</p>
     </div>
 
-    <div class="card reveal vert-card">
+    <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.55"></div>
-      <h3><span class="wiggle">Gambling / iGaming</span></h3>
-      <p>High velocity operations with tighter monitoring needs.</p>
+      <h3><span class="wiggle">iGaming &amp; nutra</span></h3>
+      <p>High velocity, tight monitoring, fast replace cadence. Built for offers that move fast.</p>
     </div>
 
-    <div class="card reveal vert-card">
+    <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.45"></div>
-      <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
-      <p>Reliability first — structure, monitoring, rapid replacement.</p>
+      <h3><span class="wiggle">Grey &amp; blackhat</span></h3>
+      <p>Reliability first &mdash; structure, monitoring, rapid replacement, and recoverable infrastructure.</p>
     </div>
   </div>
+</section>
+
+<!-- REALITY CHECK NARRATIVE -->
+<section id="reality" class="reality-section" aria-label="The reality of media buying without infrastructure">
+  <div class="reality-grid"></div>
+
+      <!-- Scene 1: Scaling -->
+      <div class="reality-scene scene-1">
+        <div class="float-icons" aria-hidden="true">
+          <span class="float-icon f1">&#x1F48A;</span>
+          <span class="float-icon f2">&#x1F3B0;</span>
+          <span class="float-icon f3">&#x1F4B0;</span>
+          <span class="float-icon f4">&#x1F4B5;</span>
+          <span class="float-icon f5">&#x1F48E;</span>
+          <span class="float-icon f6">&#x1F389;</span>
+        </div>
+        <div class="scene-text">
+          <div class="kicker"><span class="kdot"></span> Day 1 &middot; 09:14 AM</div>
+          <h2>You&rsquo;re scaling. <span class="grad">Spend is live.</span></h2>
+          <p>Nutra. Casinos. Finance. Crypto. Peptides. Your offers are running, accounts are spending, momentum is building. It&rsquo;s a great day.</p>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 140" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="growGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2cd67c" stop-opacity=".0"/>
+              <stop offset="60%" stop-color="#2cd67c" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#F2D27A" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <path class="grow-path" d="M0,120 C120,100 220,80 340,60 C460,40 560,30 800,10" fill="none" stroke="url(#growGrad)" stroke-width="3"/>
+        </svg>
+      </div>
+
+      <!-- Scene 2: Meta crash -->
+      <div class="reality-scene scene-2">
+        <div class="meta-logo" aria-hidden="true">META</div>
+        <div class="banned-stamp" aria-hidden="true">Disabled</div>
+        <div class="scanlines" aria-hidden="true"></div>
+        <div class="red-flash" aria-hidden="true"></div>
+        <div class="scene-text" style="margin-top:140px">
+          <div class="kicker" style="border-color:rgba(255,100,110,.35); background:rgba(255,100,110,.06); color:#ffb3b8;">
+            <span class="kdot" style="background:linear-gradient(135deg,#ff646e,#ff9aa2)"></span> Day 2 &middot; 03:14 AM
+          </div>
+          <h2 class="glitch-text" data-text="Then Meta hits.">Then Meta hits.</h2>
+          <p>Account flagged. Spend frozen. Campaigns disabled. Every other ban risk you&rsquo;ve been ignoring is now your problem.</p>
+        </div>
+      </div>
+
+      <!-- Scene 3: Crash -->
+      <div class="reality-scene scene-3">
+        <div class="crash-shake">
+          <div class="shatter-grid" aria-hidden="true">
+            <div class="shatter-cell">&#x1F48A;</div>
+            <div class="shatter-cell">&#x1F3B0;</div>
+            <div class="shatter-cell">&#x1F4B5;</div>
+            <div class="shatter-cell">&#x1F48E;</div>
+            <div class="shatter-cell">&#x1F4B0;</div>
+            <div class="shatter-cell">&#x1F4B3;</div>
+            <div class="shatter-cell">&#x1F3E6;</div>
+            <div class="shatter-cell">&#x1F4B8;</div>
+            <div class="shatter-cell">&#x1F389;</div>
+            <div class="shatter-cell">&#x1F4C8;</div>
+          </div>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 160" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="crashGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2cd67c" stop-opacity=".8"/>
+              <stop offset="55%" stop-color="#F2D27A" stop-opacity=".9"/>
+              <stop offset="60%" stop-color="#ff646e" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#ff646e" stop-opacity=".5"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,120 C100,100 200,70 300,50 C380,38 440,30 460,28 L470,140 L480,150 L800,150" fill="none" stroke="url(#crashGrad)" stroke-width="3"/>
+        </svg>
+        <div class="scene-text" style="margin-top:30px">
+          <div class="kicker" style="border-color:rgba(255,100,110,.35); background:rgba(255,100,110,.06); color:#ffb3b8;">
+            <span class="kdot" style="background:linear-gradient(135deg,#ff646e,#ff9aa2)"></span> Loss confirmed
+          </div>
+          <h2>Your account is dead.<br><span style="color:#ff646e">Your money is gone.</span></h2>
+          <p>$0 in spend yesterday is no consolation. Every hour offline costs more than the package itself.</p>
+        </div>
+      </div>
+
+      <!-- Scene 4: Recovery -->
+      <div class="reality-scene scene-4">
+        <div class="recovery-logo" aria-hidden="true">
+          <img src="logo.png" alt="">
+        </div>
+        <div class="gold-particles" aria-hidden="true">
+          <span class="gold-particle" style="top:60%; left:18%; --dx:-30px; --dy:-200px; animation-delay:.0s;"></span>
+          <span class="gold-particle" style="top:65%; left:30%; --dx:20px; --dy:-260px; animation-delay:.3s;"></span>
+          <span class="gold-particle" style="top:70%; left:50%; --dx:-10px; --dy:-300px; animation-delay:.6s;"></span>
+          <span class="gold-particle" style="top:62%; left:68%; --dx:30px; --dy:-220px; animation-delay:.4s;"></span>
+          <span class="gold-particle" style="top:72%; left:82%; --dx:-20px; --dy:-260px; animation-delay:.7s;"></span>
+          <span class="gold-particle" style="top:78%; left:42%; --dx:0px; --dy:-280px; animation-delay:.2s;"></span>
+          <span class="gold-particle" style="top:55%; left:8%; --dx:25px; --dy:-200px; animation-delay:.9s;"></span>
+          <span class="gold-particle" style="top:50%; left:90%; --dx:-25px; --dy:-200px; animation-delay:1.1s;"></span>
+        </div>
+        <div class="scene-text" style="margin-top:200px">
+          <div class="kicker"><span class="kdot"></span> But it doesn&rsquo;t have to be this way</div>
+          <h2>Infrastructure that <span class="grad">survives the hit</span>.</h2>
+          <p>Distributed accounts across multiple BMs. Auto-replacement in 5&ndash;10 minutes. BM-level recovery if the worst happens. The accounts you would have lost? Replaced. The money you would have lost? Saved.</p>
+        </div>
+      </div>
+
+      <!-- Scene 5: Continued growth -->
+      <div class="reality-scene scene-5">
+        <div class="money-bills" aria-hidden="true">
+          <span class="money-bill" style="left:10%; animation-delay:.0s; animation-duration:5s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:24%; animation-delay:.6s; animation-duration:5.4s;">&#x1F4B0;</span>
+          <span class="money-bill" style="left:42%; animation-delay:1.0s; animation-duration:4.8s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:58%; animation-delay:.3s; animation-duration:5.2s;">&#x1F4B0;</span>
+          <span class="money-bill" style="left:74%; animation-delay:.9s; animation-duration:4.6s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:88%; animation-delay:1.4s; animation-duration:5.6s;">&#x1F48E;</span>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="recoverGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#ff646e" stop-opacity=".4"/>
+              <stop offset="20%" stop-color="#F2D27A" stop-opacity=".5"/>
+              <stop offset="40%" stop-color="#2cd67c" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#F2D27A" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,180 L120,180 C160,180 180,170 220,150 C300,110 400,90 520,60 C640,30 720,20 800,10" fill="none" stroke="url(#recoverGrad)" stroke-width="3"/>
+        </svg>
+        <div class="scene-text" style="margin-top:30px">
+          <div class="kicker"><span class="kdot"></span> Day 3 &middot; 03:24 AM</div>
+          <h2>Back online. <span class="grad">Still scaling.</span></h2>
+          <p>That&rsquo;s what 2,500 ad accounts and a recoverable BM mean. That&rsquo;s what Onyx delivers. Keep scrolling.</p>
+        </div>
+      </div>
+
+</section>
+
+<!-- ONYX BM2500 EXCLUSIVE -->
+<section id="onyx" class="onyx-section">
+  <div class="onyx-bg">
+    <img src="onyx-bg.jpg" alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="onyx-frame reveal">
+    <div class="onyx-eyebrow"><span class="star"></span> Exclusive Tier &middot; Onyx</div>
+    <h2 class="onyx-title">Onyx <span class="grad">BM2500</span></h2>
+    <p class="onyx-tag">A one of a kind infrastructure for uninterrupted scaling. Up to <b>2,500 ad accounts shared into a single high-trust BM</b> from multiple sources &mdash; distributed sourcing means no single point of failure.</p>
+
+    <div class="onyx-meta">
+      <div class="onyx-price">$15,000<small>/ month</small></div>
+      <div class="tier-meta-pill warranty">&check; Unlimited replacements</div>
+      <div class="tier-meta-pill warmup">&#9888; Warmup managed by us</div>
+      <div class="tier-meta-pill verticals">High-spend BH / GH</div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">1</div>
+        <div class="onyx-block-title">How it works &middot; distributed sourcing</div>
+      </div>
+      <p>We use verified US Business Managers with no prior history and strengthen them through asset protection and trust optimization. Once the BM reaches high-trust levels, we connect a large network of ad accounts into it from <b>multiple different Business Managers</b>. Because the accounts originate from different sources, normal Meta limitations would prevent re-sharing &mdash; so we built our own proprietary system to handle it.</p>
+
+      <div class="onyx-arch reveal" aria-hidden="true">
+        <div class="arch-canvas">
+          <svg class="arch-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <line class="arch-link" x1="50" y1="50" x2="12" y2="20"/>
+            <line class="arch-link" x1="50" y1="50" x2="22" y2="78"/>
+            <line class="arch-link" x1="50" y1="50" x2="88" y2="22"/>
+            <line class="arch-link" x1="50" y1="50" x2="80" y2="78"/>
+            <line class="arch-link" x1="50" y1="50" x2="50" y2="12"/>
+            <line class="arch-link" x1="50" y1="50" x2="50" y2="88"/>
+            <line class="arch-link" x1="50" y1="50" x2="14" y2="50"/>
+            <line class="arch-link" x1="50" y1="50" x2="86" y2="50"/>
+          </svg>
+          <div class="arch-node" style="top:20%; left:12%;">BM #1<small>Source</small></div>
+          <div class="arch-node" style="top:78%; left:22%;">BM #2<small>Source</small></div>
+          <div class="arch-node" style="top:22%; left:88%;">BM #3<small>Source</small></div>
+          <div class="arch-node" style="top:78%; left:80%;">BM #4<small>Source</small></div>
+          <div class="arch-node" style="top:12%; left:50%;">BM #5<small>Source</small></div>
+          <div class="arch-node" style="top:88%; left:50%;">BM #6<small>Source</small></div>
+          <div class="arch-node" style="top:50%; left:14%;">BM #7<small>Source</small></div>
+          <div class="arch-node" style="top:50%; left:86%;">BM #8<small>Source</small></div>
+          <div class="arch-hub" style="top:50%; left:50%;">YOUR BM<small>2,500 accounts</small></div>
+        </div>
+        <div class="arch-legend">
+          <span><i></i> Distributed source BMs feed into one high-trust hub. Restricting one source can never take you down.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">2</div>
+        <div class="onyx-block-title">Your CRM &middot; the core advantage</div>
+      </div>
+      <p>Inside our custom CRM (synced with Meta in real time), you view all accounts in one place, track per-account and per-BM spend, monitor account status (active / disabled), and <b>share any account into any other BM via a single click</b>. Just enter the target BM ID &mdash; our system bypasses the normal Meta re-sharing limitation automatically.</p>
+
+      <div class="crm-mockup reveal">
+        <div class="crm-bar">
+          <div class="crm-dot r"></div>
+          <div class="crm-dot y"></div>
+          <div class="crm-dot g"></div>
+          <div class="crm-bar-title mono">scaleshield.crm &mdash; your BM 1247-8847</div>
+          <div class="crm-bar-meta"><span class="crm-pulse-dot"></span> Live</div>
+        </div>
+        <div class="crm-stats">
+          <div class="crm-stat">
+            <div class="crm-stat-label">Total accounts</div>
+            <div class="crm-stat-val gold" id="crmTotalAccts">2,487</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Active right now</div>
+            <div class="crm-stat-val" id="crmActiveAccts">2,341</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Spend / 24h</div>
+            <div class="crm-stat-val gold" id="crmSpend24">$184,720</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Auto-replaced today</div>
+            <div class="crm-stat-val" id="crmReplaced">38</div>
+          </div>
+        </div>
+        <div class="crm-table" id="crmTable">
+          <!-- rows injected by JS -->
+        </div>
+        <div class="crm-toast" id="crmToast">
+          <div class="icon">&#8635;</div>
+          <div><strong id="crmToastTitle">Auto-replaced</strong><br><span id="crmToastBody" style="color:rgba(255,255,255,.7)"></span></div>
+        </div>
+        <div class="crm-overlay" id="crmOverlay">
+          <div class="crm-modal">
+            <h4>Share account into another BM</h4>
+            <p>Enter the target BM ID. Our system handles the share automatically &mdash; no Meta re-share limitation.</p>
+            <input class="crm-modal-input mono" id="crmModalInput" type="text" value="1247-9921" autocomplete="off" spellcheck="false">
+            <div class="crm-modal-actions">
+              <button class="crm-modal-btn" id="crmModalCancel">Cancel</button>
+              <button class="crm-modal-btn gold" id="crmModalConfirm">Share now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">3</div>
+        <div class="onyx-block-title">Zero downtime infrastructure</div>
+      </div>
+      <p>If any account goes down or underperforms, our system automatically replaces it within <b>5&ndash;10 minutes</b>. And here&rsquo;s where Onyx becomes strictly better than a traditional BM2500: if your BM gets restricted, we transfer all 2,500 ad accounts to a new BM and get you back running fast. Your infrastructure is <b>portable and recoverable</b>.</p>
+
+      <div class="onyx-vs">
+        <div class="vs-card bad">
+          <h4>Traditional BM2500</h4>
+          <ul class="vs-list">
+            <li>Single BM owns all 2,500 accounts directly</li>
+            <li>BM goes down &rarr; everything is gone</li>
+            <li>No portability, no recovery path</li>
+            <li>Manual replacements when something breaks</li>
+            <li>No CRM, no real-time monitoring</li>
+            <li>Single point of failure</li>
+          </ul>
+        </div>
+        <div class="vs-card good">
+          <h4>Onyx BM2500</h4>
+          <ul class="vs-list">
+            <li>Up to 2,500 accounts distributed across multiple source BMs</li>
+            <li>BM gets restricted &rarr; we transfer all accounts to a new BM</li>
+            <li>Portable and recoverable infrastructure</li>
+            <li>Auto-replacement in 5&ndash;10 minutes</li>
+            <li>Proprietary CRM with one-click share to any BM</li>
+            <li>No single point of failure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-cta-row">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-mag="0.45">Get Onyx BM2500</a>
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">Talk on WhatsApp</a>
+      <span class="badge"><strong>Built for</strong>&nbsp;high-spend nutra, iGaming, finance, casinos, peptides &amp; gray verticals</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING (RESTRUCTURED, 10 TIERS, 3 CATEGORIES) -->
+<section id="pricing" class="pricing-section">
+  <div class="pricing-bg">
+    <img src="pricing-bg.jpg" alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="reveal" style="position:relative;z-index:1;">
+    <div class="kicker"><span class="kdot"></span> Pricing</div>
+    <h2>Choose the infrastructure that <span class="grad">fits your scale</span>.</h2>
+    <p>From a $100 Facebook profile to a $35,000/mo unlimited enterprise package. Every tier includes 24/7 support &mdash; with a clear difference on replacements depending on which model you pick.</p>
+  </div>
+
+  <div class="warmup-note reveal" style="border-color:rgba(73,178,255,.22); background:linear-gradient(135deg, rgba(73,178,255,.06), rgba(73,178,255,.02));">
+    <div class="icon" style="background:linear-gradient(135deg, rgba(73,178,255,.2), rgba(73,178,255,.06)); border-color:rgba(73,178,255,.25); color:#cfe9ff;">&#x21BB;</div>
+    <div>
+      <strong style="color:#cfe9ff;">Replacement policy &mdash; subscription vs one-time</strong>
+      <p><b style="color:#fff">Subscriptions:</b> unlimited replacements throughout the billing period &mdash; if any account dies, we swap it. <b style="color:#fff">One-time purchases (Profile FB, BM3 Verified, BM10):</b> free replacement only if the account goes down with $0 or minimal spend. Once you&rsquo;ve actually used the asset, the one-time warranty ends &mdash; that&rsquo;s the trade-off for the lower entry price and no commitment.</p>
+    </div>
+  </div>
+
+  <div class="warmup-note reveal">
+    <div class="icon">&#9888;</div>
+    <div>
+      <strong>Important &mdash; warm-up required</strong>
+      <p>All ad accounts (and Profile FB) must be warmed up by spending a few dollars first to build trust signals on the asset before scaling. This protects the account and ensures stable performance once you push real volume. We&rsquo;ll guide you through the right warm-up flow during onboarding.</p>
+    </div>
+  </div>
+
+  <!-- ===== Quick Start ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Quick Start &middot; One-Time</div>
+      <div class="pricing-cat-sub">Pay once, get access &mdash; no subscription.</div>
+    </div>
+
+    <div class="pricing-grid reveal-stagger">
+      <!-- Profile FB (NEW) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Profile &middot; One-Time</span>
+        <div class="tier-name">Profile FB</div>
+        <div class="tier-price">$100<small>/ one-time</small></div>
+        <p class="tier-desc">Aged Facebook profile with verified history and warm activity. Use it to spin up new BMs, claim assets, or add as admin to existing Business Managers.</p>
+        <ul class="tier-list">
+          <li>Aged &amp; warmed-up FB profile</li>
+          <li>Verified email + 2FA-ready</li>
+          <li>Login + recovery details handed over securely</li>
+          <li>Use your own cards / payment methods</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Replace on $0 / minimal spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Profile FB</a>
+      </div>
+
+      <!-- BM3 Verified (NEW, ONE-TIME) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Verified &middot; One-Time</span>
+        <div class="tier-name">BM3 Verified</div>
+        <div class="tier-price">$200<small>/ one-time</small></div>
+        <p class="tier-desc">Verified Business Manager with 3 agency ad accounts &mdash; one-time purchase. Stronger trust profile and verified business status mean better deliverability and account longevity.</p>
+        <ul class="tier-list">
+          <li>Verified Business Manager status</li>
+          <li>3 ad accounts inside one BM</li>
+          <li>Higher trust + better limits</li>
+          <li>One payment, no subscription</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Replace on $0 / minimal spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
+      </div>
+
+      <!-- BM10 (UPDATED PRICE $550) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Instant Access &middot; One-Time</span>
+        <div class="tier-name">BM10 Instant</div>
+        <div class="tier-price">$550<small>/ one-time</small></div>
+        <p class="tier-desc">Buy a Business Manager with 10 ad accounts in a single transaction. No subscription, instant delivery via wallet top-up in CRM.</p>
+        <ul class="tier-list">
+          <li>1 BM containing 10 ad accounts</li>
+          <li>One payment, no commitment</li>
+          <li>Wallet top-up &amp; auto-delivery in CRM</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Replace on $0 / minimal spend (24h)</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Monthly Subscriptions ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Monthly Subscriptions</div>
+      <div class="pricing-cat-sub">Long-term stable infrastructure with unlimited replacements.</div>
+    </div>
+
+    <div class="pricing-grid reveal-stagger">
+      <!-- Single Agency -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Solo</span>
+        <div class="tier-name">Single Agency Account</div>
+        <div class="tier-price">$450<small>/ month</small></div>
+        <p class="tier-desc">One stable agency ad account &mdash; ideal when you need predictable single-account spend with higher daily ceilings.</p>
+        <ul class="tier-list">
+          <li>1 agency ad account</li>
+          <li>Higher trust + higher daily caps</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
+      </div>
+
+      <!-- Dual Agency -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Scale</span>
+        <div class="tier-name">Dual Agency Accounts</div>
+        <div class="tier-price">$850<small>/ month</small></div>
+        <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p>
+        <ul class="tier-list">
+          <li>2 agency ad accounts</li>
+          <li>Better for higher volume</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
+      </div>
+
+      <!-- Top Agency (Most Popular) -->
+      <div class="tier popular tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Most Popular</span>
+        <div class="tier-name">Top Agency Package</div>
+        <div class="tier-price">$1,950<small>/ month</small></div>
+        <p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling. Priority response from support.</p>
+        <ul class="tier-list">
+          <li>Top-tier agency BM setup</li>
+          <li>Priority 24/7 support</li>
+          <li>Unlimited replacements</li>
+          <li>Aggressive scaling-ready</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Enterprise ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Enterprise</div>
+      <div class="pricing-cat-sub">Custom architecture for high-spend operators &amp; agencies.</div>
+    </div>
+
+    <div class="pricing-grid reveal-stagger">
+      <!-- Custom -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Custom</span>
+        <div class="tier-name">Custom Package</div>
+        <div class="tier-price">Quote<small>/ tailored</small></div>
+        <p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we&rsquo;ll architect the right structure for your offer.</p>
+        <ul class="tier-list">
+          <li>Custom BM &amp; account structure</li>
+          <li>Vertical-specific setup</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Bespoke onboarding plan</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
+      </div>
+
+      <!-- Onyx BM2500 (link to dedicated section above) -->
+      <div class="tier onyx tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Onyx &middot; Exclusive</span>
+        <div class="tier-name">Onyx BM2500</div>
+        <div class="tier-price">$15,000<small>/ month</small></div>
+        <p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources. Distributed sourcing, proprietary CRM, BM-level recovery. <a href="#onyx" style="color:#F2D27A;text-decoration:underline;">See full details &uarr;</a></p>
+        <ul class="tier-list">
+          <li>Up to 2,500 ad accounts in one hub BM</li>
+          <li>Distributed sourcing &mdash; no single point of failure</li>
+          <li>Proprietary CRM with one-click share to any BM</li>
+          <li>Auto-replacement in 5&ndash;10 minutes</li>
+          <li>BM-level recovery (transfer all accounts to a new BM)</li>
+          <li>White-glove support</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+          <span class="tier-meta-pill warmup">&#9888; Warmup managed by us</span>
+          <span class="tier-meta-pill verticals">High-spend BH / GH</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Onyx BM2500</a>
+      </div>
+
+      <!-- Agency Unlimited -->
+      <div class="tier enterprise tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Enterprise &middot; Unlimited</span>
+        <div class="enterprise-grid">
+          <div>
+            <div class="tier-name" style="font-size:28px;">Agency Unlimited</div>
+            <div class="tier-price">$35,000<small>/ month</small></div>
+            <p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for media buyers operating at the very top end of the volume curve.</p>
+            <div class="tier-meta">
+              <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
+              <span class="tier-meta-pill warmup">&#9888; Warmup handled white-glove</span>
+              <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
+            </div>
+          </div>
+          <div>
+            <ul class="tier-list">
+              <li><b>Unlimited</b> ad accounts</li>
+              <li><b>Unlimited</b> Business Managers</li>
+              <li>Dedicated account manager</li>
+              <li>Priority replacement queue</li>
+              <li>Custom infrastructure architecture</li>
+              <li>White-glove onboarding</li>
+              <li>Operational support 24/7</li>
+              <li>Use your own cards for ad spend</li>
+            </ul>
+            <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- SOCIAL / LIVE FEED -->
 <section id="social">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> SOCIAL PROOF</div>
-    <h2>What buyers say in real time</h2>
+    <div class="kicker"><span class="kdot"></span> Social Proof</div>
+    <h2>What buyers say in real time.</h2>
     <p>Telegram-style proof feed that shows the exact reason clients stay: dead account, fast swap, campaign saved.</p>
   </div>
 
   <div style="margin-top:30px;">
     <div class="card reveal">
-      <div class="kicker"><span class="kdot"></span> CLIENT CHAT FEED</div>
+      <div class="kicker"><span class="kdot"></span> Client Chat Feed</div>
       <div class="feed-shell">
         <div class="chat-list" id="chatFeed">
           <div class="chat-msg">
             <div class="chat-avatar">AK</div>
             <div>
               <div class="chat-meta"><span class="chat-name">Artem</span><span class="chat-source">Telegram</span></div>
-              <div class="chat-text">Bro saved my campaign mid-scale 🔥</div>
+              <div class="chat-text">Bro saved my campaign mid-scale</div>
             </div>
           </div>
           <div class="chat-msg">
@@ -1236,87 +3509,24 @@ footer{
   </div>
 </section>
 
-<!-- ROI -->
-<section id="roi">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> ROI CALCULATOR</div>
-    <h2>What downtime really costs</h2>
-    <p>If a campaign gets banned while spend is live, the loss is usually bigger than the monthly price of stable infrastructure.</p>
-  </div>
-
-  <div class="roi-grid" style="margin-top:30px;">
-    <div class="card reveal">
-      <div class="calc">
-        <div>
-          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Daily ad spend</label>
-          <input class="input" type="number" id="roiSpend" value="10000" min="0" step="100" placeholder="10000">
-        </div>
-        <div>
-          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Downtime hours</label>
-          <input class="input" type="number" id="roiHours" value="24" min="1" step="1" placeholder="24">
-        </div>
-        <button type="button" class="btn btn-primary" id="roiBtn">Calculate Loss</button>
-      </div>
-
-      <div class="calc-result">
-        <div style="font-weight:900;color:#fff;font-size:18px;">Simple logic</div>
-        <p style="margin-top:8px;">If your account dies at $5k/day and you lose even 24–48 hours, the damage usually costs more than a monthly package.</p>
-
-        <div class="calc-result-grid">
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Estimated loss</div>
-            <div class="v" id="roiLoss">$10,000</div>
-          </div>
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Potential saved</div>
-            <div class="v" id="roiSaved">$10,000</div>
-          </div>
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">vs Top Package</div>
-            <div class="v" id="roiVs">$8,050</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card reveal">
-      <h3 style="font-size:24px;">Why this matters</h3>
-      <div class="why-stack">
-        <div class="why-box">
-          <strong>Bans don’t just pause ads</strong>
-          <span>They kill momentum, learning, and cash flow.</span>
-        </div>
-        <div class="why-box">
-          <strong>Time is expensive when spend is live</strong>
-          <span>Even one bad day can cost more than infrastructure.</span>
-        </div>
-        <div class="why-box">
-          <strong>Speed changes the math</strong>
-          <span>The faster the replace, the smaller the loss window.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- TRUST -->
 <section id="trust">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> TRUST</div>
-    <h2>Built for operators who need reliability, not lectures</h2>
+    <div class="kicker"><span class="kdot"></span> Trust</div>
+    <h2>Built for operators who need reliability, not lectures.</h2>
     <p>This section says exactly what your audience wants to hear, in direct language.</p>
   </div>
 
-  <div class="trust-grid" style="margin-top:30px;">
-    <div class="card reveal">
-      <h3>We don’t ask questions</h3>
+  <div class="trust-grid reveal-stagger" style="margin-top:30px;">
+    <div class="card tilt">
+      <h3>We don&rsquo;t ask questions</h3>
       <p>We care about infrastructure, speed, and keeping operations moving.</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <h3>Works with gray / blackhat</h3>
       <p>We understand the pressure. Reliability and replacements matter more when policy pressure is higher.</p>
     </div>
-    <div class="card reveal">
+    <div class="card tilt">
       <h3>No delays. No bullshit.</h3>
       <p>Clear onboarding, fast responses, and no wasting time with fake promises.</p>
     </div>
@@ -1326,28 +3536,28 @@ footer{
 <!-- BEFORE / AFTER -->
 <section id="compare">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> BEFORE vs AFTER</div>
-    <h2>What operations look like with and without ScaleShield</h2>
+    <div class="kicker"><span class="kdot"></span> Before vs After</div>
+    <h2>What operations look like with and without ScaleShield.</h2>
   </div>
 
   <div class="compare-grid" style="margin-top:30px;">
     <div class="card reveal compare-bad">
       <h3>Without ScaleShield</h3>
       <div class="compare-list">
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Bans hit and campaigns stop.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Downtime burns cash and kills momentum.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Teams waste time looking for replacements.</div></div>
-        <div class="compare-item"><div class="compare-icon">✕</div><div>Scaling rhythm gets broken again and again.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Bans hit and campaigns stop.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Downtime burns cash and kills momentum.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Teams waste time looking for replacements.</div></div>
+        <div class="compare-item"><div class="compare-icon">&times;</div><div>Scaling rhythm gets broken again and again.</div></div>
       </div>
     </div>
 
     <div class="card reveal compare-good">
       <h3>With ScaleShield</h3>
       <div class="compare-list">
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Instant replace workflow keeps things moving.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Less downtime = less money burned.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Support answers when pressure is real.</div></div>
-        <div class="compare-item"><div class="compare-icon">✓</div><div>Scaling continues instead of restarting from zero.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Instant replace workflow keeps things moving.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Less downtime = less money burned.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Support answers when pressure is real.</div></div>
+        <div class="compare-item"><div class="compare-icon">&check;</div><div>Scaling continues instead of restarting from zero.</div></div>
       </div>
     </div>
   </div>
@@ -1356,60 +3566,60 @@ footer{
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> REVIEWS</div>
-    <h2>What clients say</h2>
-    <p>Generated testimonials styled to match your current website design.</p>
+    <div class="kicker"><span class="kdot"></span> Reviews</div>
+    <h2>What clients say.</h2>
+    <p>Verified-style testimonials from operators across verticals.</p>
   </div>
 
-  <div class="grid-3" style="margin-top:30px;">
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We moved over because we needed stability, not promises. Setup was smooth, replacements were actually fast, and support answered when it mattered.”</div>
+  <div class="grid-3 reveal-stagger" style="margin-top:30px;">
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We moved over because we needed stability, not promises. Setup was smooth, replacements were actually fast, and support answered when it mattered.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">AK</div>
-        <div class="review-meta"><strong>Artem K.</strong><small>Ecom Buyer • EU</small></div>
+        <div class="review-meta"><strong>Artem K.</strong><small>Ecom Buyer &middot; EU</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“The structure feels premium. Everything is more organized, response time is good, and we don’t lose momentum every time something needs to be swapped.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;The structure feels premium. Everything is more organized, response time is good, and we don&rsquo;t lose momentum every time something needs to be swapped.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">NS</div>
         <div class="review-meta"><strong>Nadia S.</strong><small>Lead Gen Agency</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“For us the biggest value is not having downtime. That alone pays for itself. Support stays active and doesn’t disappear after onboarding.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;For us the biggest value is not having downtime. That alone pays for itself. Support stays active and doesn&rsquo;t disappear after onboarding.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">RM</div>
         <div class="review-meta"><strong>Rafael M.</strong><small>Performance Buyer</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We run high-volume offers, so speed matters. ScaleShield is one of the few setups where the operational side feels built for real media buying.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We run high-volume offers, so speed matters. ScaleShield is one of the few setups where the operational side feels built for real media buying.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">DL</div>
         <div class="review-meta"><strong>Daria L.</strong><small>iGaming Ops</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“BM3 was perfect for testing. Easy to start, controlled spend, and we had a much cleaner launch than with other providers we used before.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;BM3 Verified was perfect for testing. Easy to start, verified status from day one, and we had a much cleaner launch than with other providers we used before.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">ML</div>
         <div class="review-meta"><strong>Mark L.</strong><small>App Marketing</small></div>
       </div>
     </div>
 
-    <div class="card reveal review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">“We needed something predictable. Clear steps, fast answers, clean handoff. It feels more like infrastructure than just another service.”</div>
+    <div class="card tilt review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">&ldquo;We needed something predictable. Clear steps, fast answers, clean handoff. It feels more like infrastructure than just another service.&rdquo;</div>
       <div class="review-person">
         <div class="review-avatar">SR</div>
         <div class="review-meta"><strong>Sami R.</strong><small>Agency Owner</small></div>
@@ -1422,19 +3632,19 @@ footer{
 <section id="faq">
   <div class="reveal">
     <div class="kicker"><span class="kdot"></span> FAQ</div>
-    <h2>Quick answers</h2>
-    <p>If you don’t see your question here, message Telegram/WhatsApp and we’ll respond fast.</p>
+    <h2>Quick answers.</h2>
+    <p>If you don&rsquo;t see your question here, message Telegram/WhatsApp and we&rsquo;ll respond fast.</p>
   </div>
 
   <div class="faq" style="margin-top:26px;">
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">Do all monthly packages include unlimited replacements?</div>
-      <div class="faq-a">Yes — monthly packages include 24/7 support and unlimited replacements.</div>
+      <div class="faq-a">Yes &mdash; monthly packages include 24/7 support and unlimited replacements.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">How fast can we start?</div>
-      <div class="faq-a">Onboarding is designed to be quick. Message support and we’ll guide you through setup steps.</div>
+      <div class="faq-a">Onboarding is designed to be quick. Message support and we&rsquo;ll guide you through setup steps.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -1459,12 +3669,52 @@ footer{
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">Which package is best for testing?</div>
-      <div class="faq-a">BM3 is usually the cleanest option for controlled testing because of the lower spend structure and easier ramp-up process.</div>
+      <div class="faq-a">BM3 Verified ($200 one-time) is the cleanest option for controlled testing &mdash; verified Business Manager status, three ad accounts, and no monthly commitment, so you can validate stability before scaling into a subscription tier.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">Which package is best for more aggressive scaling?</div>
-      <div class="faq-a">Dual Agency Ad Accounts and Top Agency Package are better suited for teams running larger volumes, multiple offers, or more aggressive scaling operations.</div>
+      <div class="faq-a">Dual Agency Ad Accounts and Top Agency Package are better suited for teams running larger volumes, multiple offers, or more aggressive scaling operations. For unlimited scale, the Agency Unlimited package gives you unlimited BMs and unlimited ad accounts.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What does the BM10 one-time purchase include?</div>
+      <div class="faq-a">$550 one-time payment for a Business Manager containing 10 agency ad accounts. No subscription, no warranty &mdash; built for buyers who want fast access without ongoing commitment. You can still use your own cards for ad spend after delivery.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is the Agency Unlimited package?</div>
+      <div class="faq-a">$35,000/month enterprise tier with unlimited Business Managers and unlimited agency ad accounts. Includes a dedicated account manager, priority replacement queue, custom infrastructure architecture, and white-glove onboarding. Built for media buyers operating at the very top of the volume curve.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is Profile FB and what is it for?</div>
+      <div class="faq-a">$100 one-time. An aged Facebook profile with verified history and warm activity. Use it to spin up new BMs, claim assets, or be added as admin to existing Business Managers. Comes with verified email, 2FA-ready setup, and login + recovery details handed over securely. Free replacement if it dies before you use it.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is BM3 Verified?</div>
+      <div class="faq-a">BM3 Verified ($200 one-time) is a verified Business Manager containing 3 agency ad accounts. Verified BM status means stronger trust profile, better deliverability, higher account longevity, and less restrictive limits than a standard unverified BM. One payment, no subscription &mdash; you keep the asset.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is Onyx BM2500 and how is it different from a normal BM2500?</div>
+      <div class="faq-a">Onyx BM2500 ($15,000/mo) gives you up to 2,500 ad accounts shared into a single high-trust Business Manager from <b>multiple different source BMs</b>. A traditional BM2500 owns all 2,500 accounts directly &mdash; if that BM dies, everything is gone. With Onyx, accounts come from distributed sources, our proprietary CRM lets you one-click share any account into any other BM (bypassing Meta&rsquo;s normal re-share limit), auto-replacement happens in 5&ndash;10 minutes, and if your BM gets restricted we transfer all accounts to a new BM. No single point of failure. See the dedicated Onyx section above for the full breakdown.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do I need to warm up my accounts before scaling?</div>
+      <div class="faq-a">Yes &mdash; every ad account (and Profile FB) must be warmed up by spending a few dollars first. This builds trust signals on the asset, protects the account from early restriction, and ensures stable performance once you push real volume. We&rsquo;ll guide you through the right warm-up flow during onboarding.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Which verticals do you actually support?</div>
+      <div class="faq-a">Nutra, iGaming, casinos, finance, peptides, crypto, sweepstakes, dating, and other policy-sensitive grey/blackhat verticals &mdash; plus all neutral verticals (e-com, lead gen, apps, content). Reliability and rapid replacement matter more in policy-sensitive niches, which is exactly where ScaleShield is built to perform.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What happens if an account dies? How does replacement work?</div>
+      <div class="faq-a"><b>Subscriptions</b> (Single, Dual, Top Agency, Onyx BM2500, Agency Unlimited, Custom) include <b>unlimited replacements</b> for the duration of the billing period &mdash; if any account gets disabled, we swap it. <b>One-time purchases</b> (Profile FB, BM3 Verified, BM10) include a narrower warranty: free replacement only if the account goes down with <b>$0 or minimal spend</b>. Once the asset has been actually used, the one-time warranty ends &mdash; that&rsquo;s the trade-off for the lower entry price and no commitment.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -1482,12 +3732,12 @@ footer{
 <!-- CONTACT -->
 <section id="contact">
   <div class="card reveal">
-    <div class="kicker"><span class="kdot"></span> CONTACT</div>
-    <h2>Talk to ScaleShield Support</h2>
-    <p>Fast responses. Setup, approvals guidance, scaling, replacements — 24/7.</p>
+    <div class="kicker"><span class="kdot"></span> Contact</div>
+    <h2>Talk to ScaleShield Support.</h2>
+    <p>Fast responses. Setup, approvals guidance, scaling, replacements &mdash; 24/7.</p>
 
     <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-mag="0.45">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
           <path d="M8 13l14-9"></path>
@@ -1495,7 +3745,7 @@ footer{
         Telegram
       </a>
 
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa">
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
           <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
@@ -1503,7 +3753,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig">
+      <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="btn btn-ghost btn-ig magnetic" data-mag="0.35">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="5"></rect>
           <circle cx="12" cy="12" r="4"></circle>
@@ -1512,20 +3762,21 @@ footer{
         Instagram
       </a>
 
-      <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost">Payment Details</a>
-      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost">Log in</a>
+      <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Payment Details</a>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Log in</a>
     </div>
   </div>
 </section>
 
 <footer>
-© <span id="year"></span> ScaleShield — All rights reserved.
+&copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
 </footer>
 
 <script>
+/* ====== Year ====== */
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* FAQ toggles */
+/* ====== FAQ toggles ====== */
 document.querySelectorAll(".faq-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const open = btn.getAttribute("aria-expanded") === "true";
@@ -1533,19 +3784,101 @@ document.querySelectorAll(".faq-btn").forEach(btn=>{
   });
 });
 
-/* scroll reveal */
-const elements = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries)=>{
+/* ====== GSAP + Lenis bootstrap ====== */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lenis = null;
+if (window.Lenis && !reduceMotion){
+  lenis = new Lenis({
+    duration:1.05,
+    easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),
+    smoothWheel:true,
+    smoothTouch:false,
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  // Hash links: defer to Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      if (id && id.length > 1){
+        const target = document.querySelector(id);
+        if (target){
+          e.preventDefault();
+          lenis.scrollTo(target, { offset:-72, duration:1.2 });
+        }
+      }
+    });
+  });
+}
+
+if (window.gsap && window.ScrollTrigger){
+  gsap.registerPlugin(ScrollTrigger);
+  if (lenis){
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time)=>lenis.raf(time*1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+}
+
+/* ====== Page loader fade ====== */
+window.addEventListener('load', ()=>{
+  const loader = document.getElementById('pageLoader');
+  if (!loader) return;
+  if (window.gsap){
+    gsap.to(loader, {opacity:0, duration:.7, delay:.15, ease:'power2.out', onComplete:()=>loader.remove()});
+  } else {
+    loader.style.transition = 'opacity .55s ease';
+    loader.style.opacity = '0';
+    setTimeout(()=>loader.remove(), 600);
+  }
+});
+
+/* ====== Hero title split + reveal ====== */
+(function heroTitleReveal(){
+  if (reduceMotion || !window.gsap || !window.SplitType) return;
+  const title = document.querySelector('.hero-title');
+  if (!title) return;
+  const split = new SplitType(title, { types:'lines,words' });
+  // Wrap each line in an overflow-hidden container
+  split.lines.forEach(line=>{ line.classList.add('split-line'); });
+  gsap.set(split.words, { yPercent:115, opacity:0 });
+  gsap.to(split.words, {
+    yPercent:0, opacity:1,
+    duration:1.05, ease:'power3.out',
+    stagger:0.045, delay:.35
+  });
+})();
+
+/* ====== Reveal observer ====== */
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('active');
-      observer.unobserve(e.target);
+      revealObserver.unobserve(e.target);
     }
   });
-},{threshold:.18});
-elements.forEach(el=>observer.observe(el));
+},{threshold:.15});
+reveals.forEach(el=>revealObserver.observe(el));
 
-/* counters */
+/* ====== Stagger reveals ====== */
+const staggerGroups = document.querySelectorAll('.reveal-stagger');
+staggerGroups.forEach(group=>{
+  const io = new IntersectionObserver((entries)=>{
+    if (entries[0].isIntersecting){
+      group.classList.add('active');
+      const kids = group.children;
+      Array.from(kids).forEach((kid,i)=>{
+        kid.style.transitionDelay = (i*70) + 'ms';
+      });
+      io.disconnect();
+    }
+  },{threshold:.18});
+  io.observe(group);
+});
+
+/* ====== Counters ====== */
 function formatCount(type, n){
   if(type === "moneyM") return "$" + n.toLocaleString() + "M+";
   if(type === "plus") return n.toLocaleString() + "+";
@@ -1555,7 +3888,7 @@ function formatCount(type, n){
 }
 function animateCount(el,target,type){
   const start = performance.now();
-  const duration = 1200;
+  const duration = 1400;
   function tick(now){
     const t = Math.min(1,(now-start)/duration);
     const eased = 1 - Math.pow(1-t,3);
@@ -1577,98 +3910,103 @@ document.querySelectorAll('.count').forEach(el=>{
   io.observe(el);
 });
 
-/* Hero background chart */
+/* ====== Hero canvas waves ====== */
 const heroCanvas = document.getElementById("heroCanvas");
-const heroCtx = heroCanvas.getContext("2d");
-function resizeHeroCanvas(){
-  const dpr = window.devicePixelRatio || 1;
-  const rect = heroCanvas.getBoundingClientRect();
-  heroCanvas.width = Math.round(rect.width * dpr);
-  heroCanvas.height = Math.round(rect.height * dpr);
-  heroCtx.setTransform(dpr,0,0,dpr,0,0);
-}
-resizeHeroCanvas();
-window.addEventListener("resize", resizeHeroCanvas);
-
-let heroT = 0;
-function drawHeroLines(){
-  const w = heroCanvas.getBoundingClientRect().width;
-  const h = heroCanvas.getBoundingClientRect().height;
-  heroCtx.clearRect(0,0,w,h);
-
-  function line(seed, color, amp, speed){
-    heroCtx.beginPath();
-    for(let x=0;x<=w;x+=8){
-      const y = h - 28 - (Math.sin((x*0.012)+(heroT*speed)+seed)*amp) - (Math.cos((x*0.006)+(heroT*0.6)+seed)*amp*0.6);
-      if(x===0) heroCtx.moveTo(x,y);
-      else heroCtx.lineTo(x,y);
-    }
-    heroCtx.strokeStyle = color;
-    heroCtx.lineWidth = 2;
-    heroCtx.shadowBlur = 12;
-    heroCtx.shadowColor = color;
-    heroCtx.stroke();
-    heroCtx.shadowBlur = 0;
+if (heroCanvas){
+  const heroCtx = heroCanvas.getContext("2d");
+  function resizeHeroCanvas(){
+    const dpr = window.devicePixelRatio || 1;
+    const rect = heroCanvas.getBoundingClientRect();
+    heroCanvas.width = Math.round(rect.width * dpr);
+    heroCanvas.height = Math.round(rect.height * dpr);
+    heroCtx.setTransform(dpr,0,0,dpr,0,0);
   }
+  resizeHeroCanvas();
+  window.addEventListener("resize", resizeHeroCanvas);
 
-  heroCtx.globalAlpha = .85;
-  line(0.4, "rgba(242,210,122,.95)", 16, 1.1);
-  line(1.2, "rgba(73,178,255,.75)", 12, .85);
-  line(2.1, "rgba(44,214,124,.55)", 10, .65);
+  let heroT = 0;
+  function drawHeroLines(){
+    const w = heroCanvas.getBoundingClientRect().width;
+    const h = heroCanvas.getBoundingClientRect().height;
+    heroCtx.clearRect(0,0,w,h);
 
-  heroT += 0.015;
-  requestAnimationFrame(drawHeroLines);
+    function line(seed, color, amp, speed){
+      heroCtx.beginPath();
+      for(let x=0;x<=w;x+=8){
+        const y = h - 28 - (Math.sin((x*0.012)+(heroT*speed)+seed)*amp) - (Math.cos((x*0.006)+(heroT*0.6)+seed)*amp*0.6);
+        if(x===0) heroCtx.moveTo(x,y);
+        else heroCtx.lineTo(x,y);
+      }
+      heroCtx.strokeStyle = color;
+      heroCtx.lineWidth = 2;
+      heroCtx.shadowBlur = 12;
+      heroCtx.shadowColor = color;
+      heroCtx.stroke();
+      heroCtx.shadowBlur = 0;
+    }
+
+    heroCtx.globalAlpha = .85;
+    line(0.4, "rgba(242,210,122,.95)", 16, 1.1);
+    line(1.2, "rgba(73,178,255,.75)", 12, .85);
+    line(2.1, "rgba(44,214,124,.55)", 10, .65);
+
+    heroT += 0.015;
+    requestAnimationFrame(drawHeroLines);
+  }
+  drawHeroLines();
 }
-drawHeroLines();
 
-/* Mobile menu */
+/* ====== Mobile menu ====== */
 const kebabBtn = document.getElementById("kebabBtn");
 const menuPanel = document.getElementById("menuPanel");
-
 function toggleMenu(){ menuPanel.classList.toggle("open"); }
 function closeMenu(){ menuPanel.classList.remove("open"); }
-
-kebabBtn.addEventListener("click", toggleMenu);
-kebabBtn.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter" || e.key === " "){
-    e.preventDefault();
-    toggleMenu();
-  }
-});
-
+if (kebabBtn){
+  kebabBtn.addEventListener("click", toggleMenu);
+  kebabBtn.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggleMenu(); }
+  });
+}
 document.addEventListener("click", (e)=>{
-  if(!menuPanel.classList.contains("open")) return;
+  if(!menuPanel || !menuPanel.classList.contains("open")) return;
   if(!e.target.closest(".mobile-menu")) closeMenu();
 });
-
 document.querySelectorAll(".mnav").forEach(a=>{
   a.addEventListener("click", ()=>closeMenu());
 });
 
-/* Hide header on scroll */
+/* ====== Hide header on scroll + scrolled state ====== */
 const siteNav = document.getElementById("siteNav");
 const mobileMenu = document.getElementById("mobileMenu");
 let lastScrollY = window.scrollY;
-
 window.addEventListener("scroll", ()=>{
   const y = window.scrollY;
-  if (y > lastScrollY && y > 80) {
-    siteNav && siteNav.classList.add("hidden");
-    mobileMenu && mobileMenu.classList.add("hidden");
-  } else {
-    siteNav && siteNav.classList.remove("hidden");
-    mobileMenu && mobileMenu.classList.remove("hidden");
+  if (siteNav){
+    siteNav.classList.toggle('scrolled', y > 20);
+    if (y > lastScrollY && y > 80) siteNav.classList.add("hidden");
+    else siteNav.classList.remove("hidden");
+  }
+  if (mobileMenu){
+    if (y > lastScrollY && y > 80) mobileMenu.classList.add("hidden");
+    else mobileMenu.classList.remove("hidden");
   }
   lastScrollY = y;
+
+  // scroll progress
+  const sp = document.getElementById('scrollProgress');
+  if (sp){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? (y / max) * 100 : 0;
+    sp.style.setProperty('--p', p + '%');
+  }
 }, { passive:true });
 
-/* Live replacement demo */
+/* ====== Live replacement demo ====== */
 const replaceBtn = document.getElementById("replaceBtn");
 const demoStatus = document.getElementById("demoStatus");
 const miniLog = document.getElementById("miniLog");
 const demoAccId = document.getElementById("demoAccId");
 const demoSpend = document.getElementById("demoSpend");
-
 let simRunning = false;
 let simIndex = 0;
 const simAccounts = [
@@ -1676,59 +4014,50 @@ const simAccounts = [
   {id:"act_6011482290", spend:"$7,910", time:"58 sec"},
   {id:"act_1182405903", spend:"$3,680", time:"1.5 min"}
 ];
-
 function addMiniLog(title, text, time){
   const div = document.createElement("div");
   div.className = "mini-log-item";
-  div.innerHTML = `<div><strong>${title}</strong><br>${text}</div><div class="time">${time}</div>`;
+  div.innerHTML = '<div><strong>'+title+'</strong><br>'+text+'</div><div class="time">'+time+'</div>';
   miniLog.prepend(div);
-  while(miniLog.children.length > 4){
-    miniLog.removeChild(miniLog.lastElementChild);
-  }
+  while(miniLog.children.length > 4){ miniLog.removeChild(miniLog.lastElementChild); }
 }
-
 function runReplacementSim(){
   if(simRunning) return;
   simRunning = true;
-
   const item = simAccounts[simIndex % simAccounts.length];
   simIndex++;
-
   demoAccId.textContent = item.id;
   demoSpend.textContent = item.spend;
-
   demoStatus.className = "status-pill status-disabled";
   demoStatus.textContent = "🔴 Disabled";
-  addMiniLog("Account disabled", `${item.id} stopped scaling mid-flight.`, "00:00");
-
+  addMiniLog("Account disabled", item.id+" stopped scaling mid-flight.", "00:00");
   setTimeout(()=>{
     demoStatus.className = "status-pill status-replacing";
     demoStatus.textContent = "🟡 Replacing";
     addMiniLog("Replacement requested", "Queue opened, replacement workflow started.", "00:12");
   }, 1300);
-
   setTimeout(()=>{
     demoStatus.className = "status-pill status-active";
     demoStatus.textContent = "🟢 Replaced";
-    addMiniLog("Replacement completed", `New account assigned in ${item.time}.`, "00:42");
+    addMiniLog("Replacement completed", "New account assigned in "+item.time+".", "00:42");
     simRunning = false;
   }, 3200);
 }
+if (replaceBtn){
+  replaceBtn.addEventListener("click", runReplacementSim);
+  const demoObserver = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){
+      setTimeout(runReplacementSim, 900);
+      demoObserver.disconnect();
+    }
+  },{threshold:.35});
+  demoObserver.observe(document.getElementById("demo"));
+}
 
-replaceBtn.addEventListener("click", runReplacementSim);
-
-const demoObserver = new IntersectionObserver((entries)=>{
-  if(entries[0].isIntersecting){
-    setTimeout(runReplacementSim, 900);
-    demoObserver.disconnect();
-  }
-},{threshold:.35});
-demoObserver.observe(document.getElementById("demo"));
-
-/* social proof feed */
+/* ====== Social proof feed ====== */
 const chatFeed = document.getElementById("chatFeed");
 const socialMessages = [
-  {name:"Dani", src:"Telegram", text:"Bro saved my campaign mid-scale 🔥"},
+  {name:"Dani", src:"Telegram", text:"Bro saved my campaign mid-scale"},
   {name:"Mo", src:"Discord", text:"Got new acc in 20 sec, actually insane."},
   {name:"Alex", src:"Telegram", text:"Best infra I used no joke."},
   {name:"Raf", src:"Discord", text:"Support answered fast and we kept scaling."},
@@ -1736,25 +4065,23 @@ const socialMessages = [
   {name:"Mark", src:"Telegram", text:"Replacement was smoother than expected."}
 ];
 function addChatMessage(){
+  if (!chatFeed) return;
   const item = socialMessages[Math.floor(Math.random()*socialMessages.length)];
   const initials = item.name.slice(0,2).toUpperCase();
   const div = document.createElement("div");
   div.className = "chat-msg";
-  div.innerHTML = `
-    <div class="chat-avatar">${initials}</div>
-    <div>
-      <div class="chat-meta"><span class="chat-name">${item.name}</span><span class="chat-source">${item.src}</span></div>
-      <div class="chat-text">${item.text}</div>
-    </div>
-  `;
+  div.innerHTML =
+    '<div class="chat-avatar">'+initials+'</div>'+
+    '<div>'+
+      '<div class="chat-meta"><span class="chat-name">'+item.name+'</span><span class="chat-source">'+item.src+'</span></div>'+
+      '<div class="chat-text">'+item.text+'</div>'+
+    '</div>';
   chatFeed.prepend(div);
-  while(chatFeed.children.length > 6){
-    chatFeed.removeChild(chatFeed.lastElementChild);
-  }
+  while(chatFeed.children.length > 6){ chatFeed.removeChild(chatFeed.lastElementChild); }
 }
 setInterval(addChatMessage, 2400);
 
-/* ROI calculator */
+/* ====== ROI calculator ====== */
 function money(v){
   const rounded = Math.max(0, Math.round(v));
   return "$" + rounded.toLocaleString();
@@ -1767,17 +4094,19 @@ function updateROI(){
   const loss = (spend / 24) * hours;
   const saved = loss;
   const vsTop = Math.max(0, loss - 1950);
-
   document.getElementById("roiLoss").textContent = money(loss);
   document.getElementById("roiSaved").textContent = money(saved);
   document.getElementById("roiVs").textContent = money(vsTop);
 }
-document.getElementById("roiBtn").addEventListener("click", updateROI);
-document.getElementById("roiSpend").addEventListener("input", updateROI);
-document.getElementById("roiHours").addEventListener("input", updateROI);
-updateROI();
+const roiBtn = document.getElementById("roiBtn");
+if (roiBtn){
+  roiBtn.addEventListener("click", updateROI);
+  document.getElementById("roiSpend").addEventListener("input", updateROI);
+  document.getElementById("roiHours").addEventListener("input", updateROI);
+  updateROI();
+}
 
-/* fake live activity feed */
+/* ====== Activity feed toasts ====== */
 const activityFeed = document.getElementById("activityFeed");
 const activityItems = [
   ["User from Brazil", "just replaced account in 42 sec"],
@@ -1788,30 +4117,480 @@ const activityItems = [
   ["User from UK", "started onboarding with support"]
 ];
 function spawnActivity(){
+  if (!activityFeed) return;
   const [title, text] = activityItems[Math.floor(Math.random()*activityItems.length)];
   const div = document.createElement("div");
   div.className = "activity-toast";
-  div.innerHTML = `<strong>${title}</strong><span>${text}</span>`;
+  div.innerHTML = '<strong>'+title+'</strong><span>'+text+'</span>';
   activityFeed.prepend(div);
   requestAnimationFrame(()=>div.classList.add("show"));
   setTimeout(()=>{
     div.classList.remove("show");
     setTimeout(()=>div.remove(), 350);
   }, 4200);
-
-  while(activityFeed.children.length > 4){
-    activityFeed.removeChild(activityFeed.lastElementChild);
-  }
+  while(activityFeed.children.length > 3){ activityFeed.removeChild(activityFeed.lastElementChild); }
 }
-setInterval(spawnActivity, 3200);
-setTimeout(spawnActivity, 1800);
+setTimeout(spawnActivity, 2200);
+setInterval(spawnActivity, 5400);
 
-/* popup */
-const offerPopup = document.getElementById("offerPopup");
-const popupClose = document.getElementById("popupClose");
-setTimeout(()=>offerPopup.classList.add("show"), 5000);
-popupClose.addEventListener("click", ()=>offerPopup.classList.remove("show"));
+/* ====== Offer popup ====== */
+const popup = document.getElementById('offerPopup');
+const popupClose = document.getElementById('popupClose');
+let popupShown = false;
+function showPopup(){
+  if (popupShown) return;
+  popupShown = true;
+  popup && popup.classList.add('show');
+}
+setTimeout(showPopup, 22000);
+window.addEventListener('scroll', ()=>{
+  if (window.scrollY > document.documentElement.scrollHeight*0.45) showPopup();
+}, { passive:true });
+popupClose && popupClose.addEventListener('click', ()=>popup.classList.remove('show'));
+
+/* ====== Custom cursor ====== */
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+const spotlight = document.getElementById('spotlight');
+const heroMouseOrb = document.getElementById('heroMouseOrb');
+const isTouch = matchMedia('(hover:none)').matches;
+if (!isTouch && cursorDot && cursorRing){
+  let mx=0,my=0, rx=0,ry=0;
+  document.addEventListener('mousemove', (e)=>{
+    mx = e.clientX; my = e.clientY;
+    cursorDot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+    if (spotlight){
+      spotlight.classList.add('on');
+      spotlight.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+    }
+    if (heroMouseOrb){
+      heroMouseOrb.style.transform = 'translate3d('+(mx-window.innerWidth/2)+'px,'+(my)+'px,0)';
+    }
+  });
+  function ringLoop(){
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    cursorRing.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)';
+    requestAnimationFrame(ringLoop);
+  }
+  ringLoop();
+  // Hover targets
+  document.querySelectorAll('a, button, .tier, .card, .chip').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', ()=>cursorRing.classList.remove('hover'));
+  });
+}
+
+/* ====== Magnetic buttons ====== */
+if (!isTouch && !reduceMotion){
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    const strength = parseFloat(el.dataset.mag || '0.4');
+    el.addEventListener('mousemove', (e)=>{
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width/2);
+      const y = e.clientY - (r.top + r.height/2);
+      el.style.transform = 'translate('+(x*strength)+'px,'+(y*strength)+'px)';
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.transform = '';
+    });
+  });
+}
+
+/* ====== 3D card tilt ====== */
+if (!isTouch && !reduceMotion){
+  document.querySelectorAll('.tilt').forEach(el=>{
+    let rect = null;
+    function onEnter(){ rect = el.getBoundingClientRect(); }
+    function onMove(e){
+      if (!rect) rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const px = (x / rect.width) * 100;
+      const py = (y / rect.height) * 100;
+      el.style.setProperty('--mx', px + '%');
+      el.style.setProperty('--my', py + '%');
+      const rx = ((y / rect.height) - .5) * -7;
+      const ry = ((x / rect.width) - .5) * 9;
+      el.style.transform = 'perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(0)';
+    }
+    function onLeave(){
+      rect = null;
+      el.style.transform = '';
+    }
+    el.addEventListener('mouseenter', onEnter);
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+  });
+}
+
+/* ====== Section scroll-pin parallax for hero background image ====== */
+if (window.gsap && window.ScrollTrigger && !reduceMotion){
+  const heroBgImg = document.getElementById('heroBgImg');
+  if (heroBgImg){
+    gsap.to(heroBgImg, {
+      yPercent: 18,
+      scale: 1.15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  }
+
+  // Section reveals beyond the IO observer get a subtle GSAP polish
+  gsap.utils.toArray('section').forEach(sec=>{
+    const kicker = sec.querySelector('.kicker');
+    if (kicker){
+      gsap.from(kicker, {
+        y: 14, opacity: 0, duration: .8, ease:'power3.out',
+        scrollTrigger: { trigger:sec, start:'top 85%' }
+      });
+    }
+  });
+
+  // Pricing tiers — fromTo + once so they always settle to visible
+  gsap.utils.toArray('.pricing-grid').forEach(grid=>{
+    const tiers = grid.querySelectorAll('.tier');
+    if (!tiers.length) return;
+    gsap.fromTo(tiers,
+      { y: 40, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger:grid, start:'top 92%', once:true }
+      }
+    );
+  });
+
+  // Onyx frame entrance — use fromTo with toggleActions so it never gets
+  // stuck at opacity:0 if the trigger is scrolled past quickly.
+  const onyxFrame = document.querySelector('.onyx-frame');
+  if (onyxFrame){
+    gsap.fromTo(onyxFrame,
+      { y: 80, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1.2, ease:'power3.out',
+        scrollTrigger: {
+          trigger: onyxFrame,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      }
+    );
+  }
+
+  // Onyx blocks staggered (fromTo + once so they never get stuck)
+  gsap.utils.toArray('.onyx-block').forEach(block=>{
+    gsap.fromTo(block,
+      { y: 50, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        scrollTrigger: { trigger:block, start:'top 90%', once:true } }
+    );
+  });
+
+  // Architecture nodes pop in with stagger
+  const archNodes = document.querySelectorAll('.arch-node');
+  if (archNodes.length){
+    gsap.fromTo(archNodes,
+      { scale: 0.6, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: .7, ease:'back.out(1.7)',
+        stagger: 0.06,
+        scrollTrigger: { trigger:'.onyx-arch', start:'top 90%', once:true } }
+    );
+  }
+  const archHub = document.querySelector('.arch-hub');
+  if (archHub){
+    gsap.fromTo(archHub,
+      { scale: 0.5, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: .9, ease:'back.out(1.7)', delay: .3,
+        scrollTrigger: { trigger:'.onyx-arch', start:'top 90%', once:true } }
+    );
+  }
+
+  // VS comparison cards
+  gsap.utils.toArray('.vs-card').forEach((card,i)=>{
+    gsap.fromTo(card,
+      { x: i === 0 ? -40 : 40, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        scrollTrigger: { trigger:card, start:'top 90%', once:true } }
+    );
+  });
+
+  // After images load, refresh ScrollTrigger so triggers use correct positions.
+  // Images change the page height significantly.
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>ScrollTrigger.refresh(), 250);
+  });
+
+  // Failsafe: if any GSAP-controlled element is still at autoAlpha:0 after
+  // 4s past full page load, force it visible. Avoids stuck-invisible bugs.
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>{
+      const watched = ['.onyx-frame', '.onyx-block', '.arch-node', '.arch-hub', '.vs-card', '.tier'];
+      watched.forEach(sel=>{
+        document.querySelectorAll(sel).forEach(el=>{
+          const cs = getComputedStyle(el);
+          if (parseFloat(cs.opacity) < 0.05 && cs.visibility !== 'hidden'){
+            // never animated → settle to visible
+            gsap.set(el, { autoAlpha: 1, y: 0, x: 0, scale: 1 });
+          }
+        });
+      });
+    }, 4000);
+  });
+}
+
+/* ====== CRM mockup live animation ====== */
+(function crmMockup(){
+  const table = document.getElementById('crmTable');
+  if (!table) return;
+
+  const sources = ['BM #1','BM #2','BM #3','BM #4','BM #5','BM #6','BM #7','BM #8'];
+  const seedRows = [
+    {id:'act_8847_2031', src:'BM #1', spend:'$2,840', status:'ok'},
+    {id:'act_8847_2032', src:'BM #3', spend:'$5,120', status:'ok'},
+    {id:'act_8847_2033', src:'BM #2', spend:'$1,940', status:'ok'},
+    {id:'act_8847_2034', src:'BM #5', spend:'$8,720', status:'ok'},
+    {id:'act_8847_2035', src:'BM #4', spend:'$3,610', status:'warn'},
+    {id:'act_8847_2036', src:'BM #6', spend:'$6,450', status:'ok'},
+    {id:'act_8847_2037', src:'BM #1', spend:'$4,180', status:'ok'},
+    {id:'act_8847_2038', src:'BM #8', spend:'$7,990', status:'ok'}
+  ];
+
+  function pillFor(status){
+    if (status === 'ok') return '<span class="pill ok"><span class="pulse-dot"></span>Active</span>';
+    if (status === 'warn') return '<span class="pill warn"><span class="pulse-dot"></span>Replacing</span>';
+    if (status === 'bad') return '<span class="pill bad"><span class="pulse-dot"></span>Disabled</span>';
+    return '';
+  }
+
+  function rowHTML(r){
+    return ''+
+      '<div class="id mono">'+r.id+'</div>'+
+      '<div class="src">'+r.src+'</div>'+
+      '<div class="spend">'+r.spend+'</div>'+
+      '<div>'+pillFor(r.status)+'</div>'+
+      '<div><button class="crm-share" data-id="'+r.id+'">Share &rarr;</button></div>';
+  }
+
+  function render(){
+    table.innerHTML = '';
+    seedRows.forEach((r)=>{
+      const div = document.createElement('div');
+      div.className = 'crm-row';
+      div.dataset.id = r.id;
+      div.innerHTML = rowHTML(r);
+      table.appendChild(div);
+    });
+    // bind share buttons
+    table.querySelectorAll('.crm-share').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        openModal(btn.getAttribute('data-id'));
+      });
+    });
+  }
+
+  /* === Modal === */
+  const overlay = document.getElementById('crmOverlay');
+  const modalInput = document.getElementById('crmModalInput');
+  const cancel = document.getElementById('crmModalCancel');
+  const confirm = document.getElementById('crmModalConfirm');
+  let activeShareId = null;
+  function openModal(id){
+    activeShareId = id;
+    if (modalInput) modalInput.value = '1247-' + Math.floor(8000 + Math.random()*1500);
+    overlay && overlay.classList.add('show');
+  }
+  function closeModal(){
+    overlay && overlay.classList.remove('show');
+    activeShareId = null;
+  }
+  cancel && cancel.addEventListener('click', closeModal);
+  overlay && overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeModal(); });
+  confirm && confirm.addEventListener('click', ()=>{
+    const target = (modalInput && modalInput.value) || '1247-XXXX';
+    closeModal();
+    showToast('Account shared', activeShareId + ' → BM ' + target);
+  });
+
+  /* === Toast === */
+  const toast = document.getElementById('crmToast');
+  const toastTitle = document.getElementById('crmToastTitle');
+  const toastBody = document.getElementById('crmToastBody');
+  let toastTimer = null;
+  function showToast(title, body){
+    if (!toast) return;
+    toastTitle.textContent = title;
+    toastBody.textContent = body;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 3800);
+  }
+
+  /* === Auto replacement loop (only runs when CRM is in view) === */
+  let inView = false;
+  let loopTimer = null;
+  function autoReplaceTick(){
+    if (!inView){ loopTimer = setTimeout(autoReplaceTick, 3000); return; }
+    // pick a random row
+    const idx = Math.floor(Math.random() * seedRows.length);
+    const row = seedRows[idx];
+    const oldId = row.id;
+    const rowEl = table.querySelector('[data-id="'+oldId+'"]');
+    if (!rowEl){ loopTimer = setTimeout(autoReplaceTick, 4000); return; }
+
+    // mark as bad
+    row.status = 'bad';
+    rowEl.innerHTML = rowHTML(row);
+    rowEl.classList.remove('flash-good');
+    rowEl.classList.add('flash-bad');
+    bindShare(rowEl);
+
+    setTimeout(()=>{
+      // mark as warn
+      row.status = 'warn';
+      rowEl.innerHTML = rowHTML(row);
+      bindShare(rowEl);
+    }, 1200);
+
+    setTimeout(()=>{
+      // replaced — new id, new src, fresh spend, ok
+      const newSeq = 2100 + Math.floor(Math.random()*500);
+      const newId = 'act_8847_' + newSeq;
+      const newSrc = sources[Math.floor(Math.random()*sources.length)];
+      row.id = newId;
+      row.src = newSrc;
+      row.spend = '$' + (100 + Math.floor(Math.random()*900)).toLocaleString();
+      row.status = 'ok';
+      rowEl.dataset.id = newId;
+      rowEl.classList.remove('flash-bad');
+      rowEl.innerHTML = rowHTML(row);
+      rowEl.classList.add('flash-good');
+      bindShare(rowEl);
+      showToast('Auto-replaced in 7 min', oldId + ' → ' + newId);
+      // bump replaced counter
+      const replacedEl = document.getElementById('crmReplaced');
+      if (replacedEl){
+        const n = parseInt(replacedEl.textContent.replace(/[^0-9]/g,''),10) || 0;
+        replacedEl.textContent = (n+1).toLocaleString();
+      }
+    }, 2800);
+
+    loopTimer = setTimeout(autoReplaceTick, 9500);
+  }
+
+  function bindShare(rowEl){
+    const btn = rowEl.querySelector('.crm-share');
+    if (btn){
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        openModal(btn.getAttribute('data-id'));
+      });
+    }
+  }
+
+  // Spend ticker — slowly increment the 24h spend stat
+  const spendEl = document.getElementById('crmSpend24');
+  if (spendEl){
+    let base = 184720;
+    setInterval(()=>{
+      if (!inView) return;
+      base += Math.floor(Math.random()*220 + 40);
+      spendEl.textContent = '$' + base.toLocaleString();
+    }, 1800);
+  }
+
+  // Init
+  render();
+
+  // Start loop when CRM mockup enters viewport
+  const mockupEl = document.querySelector('.crm-mockup');
+  if (mockupEl){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ inView = e.isIntersecting; });
+    }, { threshold: 0.2 });
+    io.observe(mockupEl);
+  }
+  loopTimer = setTimeout(autoReplaceTick, 2200);
+})();
+
+/* ====== REALITY CHECK NARRATIVE — scroll-stacked scenes (no pin) ====== */
+(function realityNarrative(){
+  const scenes = document.querySelectorAll('.reality-scene');
+  if (!scenes.length) return;
+
+  // Map scene class -> fire-* class that triggers its CSS animation
+  const fireMap = {
+    'scene-1': null,            // scene 1 is just floating icons (always animating)
+    'scene-2': 'fire-stamp',    // META logo + BANNED stamp slam
+    'scene-3': 'fire-shatter',  // products shatter and fall
+    'scene-4': 'fire-recover',  // gold particles rise from logo
+    'scene-5': 'fire-growth'    // money bills float up
+  };
+
+  scenes.forEach(scene => {
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (!e.isIntersecting) return;
+        for (const [sceneCls, fireCls] of Object.entries(fireMap)){
+          if (fireCls && scene.classList.contains(sceneCls)){
+            scene.classList.add(fireCls);
+          }
+        }
+        io.unobserve(scene);
+      });
+    }, { threshold: 0.35 });
+    io.observe(scene);
+  });
+})();
+
+/* ====== Tier hover gold burst (small UX flourish) ====== */
+(function tierGoldBurst(){
+  if (matchMedia('(hover:none)').matches || reduceMotion) return;
+  document.querySelectorAll('.tier').forEach(tier=>{
+    let lastBurst = 0;
+    tier.addEventListener('mouseenter', ()=>{
+      const now = performance.now();
+      if (now - lastBurst < 800) return;
+      lastBurst = now;
+      const r = tier.getBoundingClientRect();
+      for (let i=0; i<6; i++){
+        const p = document.createElement('span');
+        p.className = 'gold-burst';
+        p.style.left = (10 + Math.random()*(r.width-20)) + 'px';
+        p.style.top = (r.height/2 + (Math.random()*30-15)) + 'px';
+        tier.appendChild(p);
+        const dx = (Math.random()*120 - 60);
+        const dy = -(40 + Math.random()*70);
+        if (window.gsap){
+          gsap.fromTo(p,
+            { opacity:1, scale:0.4, x:0, y:0 },
+            { opacity:0, scale:1.6, x:dx, y:dy, duration:.85, ease:'power2.out',
+              onComplete:()=>p.remove() }
+          );
+        } else {
+          setTimeout(()=>p.remove(), 900);
+        }
+      }
+    });
+  });
+})();
+
+/* ====== Hero background image graceful fallback ====== */
+(function(){
+  const img = document.getElementById('heroBgImg');
+  const pricing = document.querySelector('.pricing-bg img');
+  function hideOnError(el){
+    if (!el) return;
+    el.addEventListener('error', ()=>{ el.style.display = 'none'; });
+  }
+  hideOnError(img);
+  hideOnError(pricing);
+})();
 </script>
-
 </body>
 </html>
