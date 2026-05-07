@@ -239,6 +239,15 @@ section{
   position:relative;
   z-index:2;
 }
+/* Center the section intro (kicker + h2 + intro paragraph) for visual cohesion */
+section > .reveal:first-of-type{ text-align:center }
+section > .reveal:first-of-type .kicker{ display:inline-flex }
+section > .reveal:first-of-type > p{
+  max-width:64ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+section > .reveal:first-of-type h2{ margin-left:auto; margin-right:auto }
 
 h1,h2,h3{font-family:'Sora','Inter',system-ui,sans-serif}
 h1{
@@ -2111,55 +2120,43 @@ footer{
   font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
 }
 
-/* ============ REALITY CHECK NARRATIVE ============ */
+/* ============ REALITY CHECK NARRATIVE (stacked, no pin) ============ */
 .reality-section{
   position:relative;
   margin:60px 0 0 0;
-}
-.reality-pin{
-  position:relative;
-  height:100vh;
-  min-height:640px;
   overflow:hidden;
   background:
-    radial-gradient(80% 60% at 50% 50%, rgba(214,177,94,.08), transparent 60%),
+    radial-gradient(80% 60% at 50% 30%, rgba(214,177,94,.06), transparent 70%),
     linear-gradient(180deg, #060709, #08090d);
   border-top:1px solid rgba(214,177,94,.10);
   border-bottom:1px solid rgba(214,177,94,.10);
 }
 .reality-grid{
   position:absolute;
-  inset:-2px;
+  inset:0;
   pointer-events:none;
   background-image:
-    linear-gradient(rgba(214,177,94,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(214,177,94,.05) 1px, transparent 1px);
+    linear-gradient(rgba(214,177,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,177,94,.04) 1px, transparent 1px);
   background-size:48px 48px;
-  -webkit-mask-image: radial-gradient(60% 70% at 50% 50%, black 30%, transparent 80%);
-          mask-image: radial-gradient(60% 70% at 50% 50%, black 30%, transparent 80%);
-  animation:gridDrift 18s linear infinite;
-}
-@keyframes gridDrift{
-  to{ background-position:48px 48px }
+  -webkit-mask-image: linear-gradient(180deg, black, black 90%, transparent);
+          mask-image: linear-gradient(180deg, black, black 90%, transparent);
 }
 
-.reality-stage{
-  position:absolute;
-  inset:0;
-}
 .reality-scene{
-  position:absolute;
-  inset:0;
+  position:relative;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding:80px 24px 110px;
-  opacity:0;
-  pointer-events:none;
+  padding:90px 24px 90px;
+  overflow:hidden;
 }
-.reality-scene.active{ pointer-events:auto }
+.reality-scene + .reality-scene{
+  border-top:1px dashed rgba(214,177,94,.10);
+}
 .reality-scene .scene-text{
   position:relative;
   z-index:5;
@@ -2590,7 +2587,6 @@ footer{
     <a href="#verticals" class="mnav">Verticals <small>&rarr;</small></a>
     <a href="#onyx" class="mnav" style="color:#F2D27A">Onyx BM2500 <small>&rarr;</small></a>
     <a href="#pricing" class="mnav">Pricing <small>&rarr;</small></a>
-    <a href="#roi" class="mnav">ROI <small>&rarr;</small></a>
     <a href="#trust" class="mnav">Trust <small>&rarr;</small></a>
     <a href="#reviews" class="mnav">Reviews <small>&rarr;</small></a>
     <a href="#faq" class="mnav">FAQ <small>&rarr;</small></a>
@@ -2614,7 +2610,6 @@ footer{
         <a href="#verticals">Verticals</a>
         <a href="#onyx" style="color:#F2D27A">Onyx</a>
         <a href="#pricing">Pricing</a>
-        <a href="#roi">ROI</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
         <a href="payment-details.html" target="_blank" rel="noopener">Payment</a>
@@ -2874,11 +2869,7 @@ footer{
 
 <!-- REALITY CHECK NARRATIVE -->
 <section id="reality" class="reality-section" aria-label="The reality of media buying without infrastructure">
-  <div class="reality-pin">
-    <div class="reality-grid"></div>
-    <div class="scroll-hint">Scroll &mdash; the story plays</div>
-
-    <div class="reality-stage">
+  <div class="reality-grid"></div>
 
       <!-- Scene 1: Scaling -->
       <div class="reality-scene scene-1">
@@ -3008,16 +2999,6 @@ footer{
         </div>
       </div>
 
-    </div>
-
-    <div class="reality-dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-  </div>
 </section>
 
 <!-- ONYX BM2500 EXCLUSIVE -->
@@ -3486,69 +3467,6 @@ footer{
               <div class="chat-text">Best infra I used so far, clean setup and fast support.</div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ROI -->
-<section id="roi">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> ROI Calculator</div>
-    <h2>What downtime really costs.</h2>
-    <p>If a campaign gets banned while spend is live, the loss is usually bigger than the monthly price of stable infrastructure.</p>
-  </div>
-
-  <div class="roi-grid" style="margin-top:30px;">
-    <div class="card reveal">
-      <div class="calc">
-        <div>
-          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Daily ad spend</label>
-          <input class="input" type="number" id="roiSpend" value="10000" min="0" step="100" placeholder="10000">
-        </div>
-        <div>
-          <label style="display:block;color:var(--muted2);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Downtime hours</label>
-          <input class="input" type="number" id="roiHours" value="24" min="1" step="1" placeholder="24">
-        </div>
-        <button type="button" class="btn btn-primary magnetic" data-mag="0.4" id="roiBtn">Calculate Loss</button>
-      </div>
-
-      <div class="calc-result">
-        <div style="font-weight:900;color:#fff;font-size:18px;">Simple logic</div>
-        <p style="margin-top:8px;">If your account dies at $5k/day and you lose even 24&ndash;48 hours, the damage usually costs more than a monthly package.</p>
-
-        <div class="calc-result-grid">
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Estimated loss</div>
-            <div class="v" id="roiLoss">$10,000</div>
-          </div>
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">Potential saved</div>
-            <div class="v" id="roiSaved">$10,000</div>
-          </div>
-          <div class="calc-box">
-            <div style="color:var(--muted2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;">vs Top Package</div>
-            <div class="v" id="roiVs">$8,050</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card reveal">
-      <h3 style="font-size:24px;">Why this matters</h3>
-      <div class="why-stack">
-        <div class="why-box">
-          <strong>Bans don&rsquo;t just pause ads</strong>
-          <span>They kill momentum, learning, and cash flow.</span>
-        </div>
-        <div class="why-box">
-          <strong>Time is expensive when spend is live</strong>
-          <span>Even one bad day can cost more than infrastructure.</span>
-        </div>
-        <div class="why-box">
-          <strong>Speed changes the math</strong>
-          <span>The faster the replace, the smaller the loss window.</span>
         </div>
       </div>
     </div>
@@ -4562,82 +4480,33 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
   loopTimer = setTimeout(autoReplaceTick, 2200);
 })();
 
-/* ====== REALITY CHECK NARRATIVE — pinned scroll storytelling ====== */
+/* ====== REALITY CHECK NARRATIVE — scroll-stacked scenes (no pin) ====== */
 (function realityNarrative(){
-  const section = document.querySelector('.reality-section');
-  if (!section) return;
-  const scenes = Array.from(section.querySelectorAll('.reality-scene'));
-  const dots = Array.from(section.querySelectorAll('.reality-dots .dot'));
+  const scenes = document.querySelectorAll('.reality-scene');
   if (!scenes.length) return;
 
-  const isSmall = matchMedia('(max-width:780px)').matches;
-  if (isSmall || reduceMotion || !window.gsap || !window.ScrollTrigger){
-    // Static fallback: show all scenes stacked
-    scenes.forEach(s => s.style.opacity = 1);
-    return;
-  }
-
-  // Initialize first scene visible
-  scenes.forEach((s,i)=>{
-    gsap.set(s, { autoAlpha: i === 0 ? 1 : 0 });
-    if (i === 0) s.classList.add('active');
-  });
-
-  let currentIdx = 0;
-  const fireSceneEffect = (idx)=>{
-    const scene = scenes[idx];
-    if (!scene) return;
-    if (idx === 1) scene.classList.add('fire-stamp');
-    if (idx === 2) scene.classList.add('fire-shatter');
-    if (idx === 3) scene.classList.add('fire-recover');
-    if (idx === 4) scene.classList.add('fire-growth');
+  // Map scene class -> fire-* class that triggers its CSS animation
+  const fireMap = {
+    'scene-1': null,            // scene 1 is just floating icons (always animating)
+    'scene-2': 'fire-stamp',    // META logo + BANNED stamp slam
+    'scene-3': 'fire-shatter',  // products shatter and fall
+    'scene-4': 'fire-recover',  // gold particles rise from logo
+    'scene-5': 'fire-growth'    // money bills float up
   };
 
-  // Fire effect for first scene right away
-  fireSceneEffect(0);
-
-  ScrollTrigger.create({
-    trigger: section,
-    start: 'top top',
-    end: '+=' + (scenes.length * 700),
-    pin: '.reality-pin',
-    pinSpacing: true,
-    scrub: 0.6,
-    anticipatePin: 1,
-    onUpdate: (self)=>{
-      const p = self.progress;
-      const idx = Math.min(scenes.length - 1, Math.floor(p * scenes.length));
-      if (idx !== currentIdx){
-        // fade out previous
-        gsap.to(scenes[currentIdx], { autoAlpha: 0, duration: 0.45, ease:'power2.out' });
-        scenes[currentIdx].classList.remove('active');
-        // fade in current
-        gsap.to(scenes[idx], { autoAlpha: 1, duration: 0.55, ease:'power2.out' });
-        scenes[idx].classList.add('active');
-        // dots
-        dots.forEach((d,i)=> d.classList.toggle('active', i === idx));
-        // scene-specific effects (re-fire each time scene becomes active)
-        fireSceneEffect(idx);
-        currentIdx = idx;
-      }
-    }
-  });
-
-  // Per-scene continuous effects within each scene's progress range
-  // Subtle parallax on the floating icons in scene 1
-  const floatIcons = section.querySelectorAll('.scene-1 .float-icon');
-  floatIcons.forEach((el, i)=>{
-    const speed = 0.3 + (i * 0.08);
-    gsap.to(el, {
-      y: -40 * speed,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=' + (scenes.length * 700),
-        scrub: true
-      }
-    });
+  scenes.forEach(scene => {
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (!e.isIntersecting) return;
+        for (const [sceneCls, fireCls] of Object.entries(fireMap)){
+          if (fireCls && scene.classList.contains(sceneCls)){
+            scene.classList.add(fireCls);
+          }
+        }
+        io.unobserve(scene);
+      });
+    }, { threshold: 0.35 });
+    io.observe(scene);
   });
 })();
 
