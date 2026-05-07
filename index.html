@@ -2101,9 +2101,434 @@ footer{
   font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
 }
 
+/* ============ REALITY CHECK NARRATIVE ============ */
+.reality-section{
+  position:relative;
+  margin:60px 0 0 0;
+}
+.reality-pin{
+  position:relative;
+  height:100vh;
+  min-height:640px;
+  overflow:hidden;
+  background:
+    radial-gradient(80% 60% at 50% 50%, rgba(214,177,94,.08), transparent 60%),
+    linear-gradient(180deg, #060709, #08090d);
+  border-top:1px solid rgba(214,177,94,.10);
+  border-bottom:1px solid rgba(214,177,94,.10);
+}
+.reality-grid{
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(214,177,94,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,177,94,.05) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image: radial-gradient(60% 70% at 50% 50%, black 30%, transparent 80%);
+          mask-image: radial-gradient(60% 70% at 50% 50%, black 30%, transparent 80%);
+  animation:gridDrift 18s linear infinite;
+}
+@keyframes gridDrift{
+  to{ background-position:48px 48px }
+}
+
+.reality-stage{
+  position:absolute;
+  inset:0;
+}
+.reality-scene{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:80px 24px 110px;
+  opacity:0;
+  pointer-events:none;
+}
+.reality-scene.active{ pointer-events:auto }
+.reality-scene .scene-text{
+  position:relative;
+  z-index:5;
+  max-width:760px;
+}
+.reality-scene .scene-text h2{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(34px, 5.5vw, 64px);
+  font-weight:950;
+  letter-spacing:-.03em;
+  line-height:1.04;
+}
+.reality-scene .scene-text p{
+  font-size:clamp(15px, 1.4vw, 18px);
+  max-width:60ch;
+  margin:14px auto 0;
+}
+
+/* Reality dots indicator */
+.reality-dots{
+  position:absolute;
+  bottom:30px; left:50%;
+  transform:translateX(-50%);
+  display:flex; gap:10px;
+  z-index:10;
+}
+.reality-dots .dot{
+  width:8px; height:8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  transition:.35s var(--ease);
+}
+.reality-dots .dot.active{
+  width:28px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+}
+
+/* Scroll hint */
+.scroll-hint{
+  position:absolute;
+  top:30px; left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:950;
+  color:var(--muted2);
+  z-index:9;
+  display:flex; align-items:center; gap:10px;
+}
+.scroll-hint::before{
+  content:"";
+  width:14px; height:1px; background:var(--gold2);
+  animation:hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse{
+  0%,100%{ opacity:1; transform:scaleX(1) }
+  50%{ opacity:.4; transform:scaleX(.4) }
+}
+
+/* === Glitch text === */
+.glitch-text{
+  position:relative;
+  display:inline-block;
+}
+.glitch-text::before,
+.glitch-text::after{
+  content:attr(data-text);
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+}
+.glitch-text::before{
+  color:#ff646e;
+  animation:glitchA .9s steps(1) infinite;
+  clip-path:inset(0 0 55% 0);
+  text-shadow:2px 0 #ff646e;
+}
+.glitch-text::after{
+  color:#49b2ff;
+  animation:glitchB .9s steps(1) infinite;
+  clip-path:inset(50% 0 0 0);
+  text-shadow:-2px 0 #49b2ff;
+}
+@keyframes glitchA{
+  0%,100%{ transform:translate(0) }
+  20%{ transform:translate(-3px,1px) }
+  40%{ transform:translate(3px,-1px) }
+  60%{ transform:translate(-2px,2px) }
+  80%{ transform:translate(2px,-2px) }
+}
+@keyframes glitchB{
+  0%,100%{ transform:translate(0) }
+  25%{ transform:translate(3px,-1px) }
+  50%{ transform:translate(-3px,1px) }
+  75%{ transform:translate(2px,2px) }
+}
+
+/* === Scene 1 — floating products === */
+.scene-1 .float-icons{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.float-icon{
+  position:absolute;
+  font-size:52px;
+  filter:drop-shadow(0 14px 32px rgba(0,0,0,.55));
+  animation:floatBob 4s ease-in-out infinite;
+  user-select:none;
+}
+@keyframes floatBob{
+  0%,100%{ transform:translateY(0) rotate(0) }
+  50%{ transform:translateY(-18px) rotate(5deg) }
+}
+.scene-1 .scene-graph{
+  position:absolute;
+  inset:auto 5% 10% 5%;
+  height:140px;
+  pointer-events:none;
+  opacity:.7;
+}
+
+/* === Scene 2 — Meta crash === */
+.scene-2 .meta-logo{
+  position:absolute;
+  top:14%; left:50%;
+  transform:translate(-50%,0);
+  font-family:'Sora',sans-serif;
+  font-size:clamp(80px, 14vw, 200px);
+  font-weight:950;
+  letter-spacing:-.05em;
+  background:linear-gradient(135deg,#1877F2,#0E5FB5);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 0 60px rgba(24,119,242,.45);
+  animation:metaGlitch .42s steps(1) infinite;
+}
+@keyframes metaGlitch{
+  0%{ clip-path:inset(0 0 0 0); transform:translate(-50%,0) }
+  20%{ clip-path:inset(15% 0 70% 0); transform:translate(-49%,-3px) }
+  40%{ clip-path:inset(60% 0 20% 0); transform:translate(-51%,3px) }
+  60%{ clip-path:inset(0 0 0 0); transform:translate(-50%,0) }
+  80%{ clip-path:inset(40% 0 30% 0); transform:translate(-50.4%,1px) }
+}
+.scene-2 .banned-stamp{
+  position:absolute;
+  top:54%; left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg) scale(3);
+  padding:18px 52px;
+  border:5px solid #ff646e;
+  color:#ff646e;
+  font-family:'Sora',sans-serif;
+  font-size:clamp(38px, 6.4vw, 56px);
+  font-weight:950;
+  letter-spacing:.18em;
+  background:rgba(255,100,110,.06);
+  text-transform:uppercase;
+  opacity:0;
+  box-shadow:0 0 50px rgba(255,100,110,.3), inset 0 0 30px rgba(255,100,110,.1);
+}
+.scene-2.fire-stamp .banned-stamp{
+  animation:stampSlam .55s var(--ease-out) forwards;
+}
+@keyframes stampSlam{
+  0%{ opacity:0; transform:translate(-50%,-50%) rotate(-12deg) scale(3.2) }
+  60%{ opacity:1; transform:translate(-50%,-50%) rotate(-12deg) scale(.9) }
+  100%{ opacity:1; transform:translate(-50%,-50%) rotate(-12deg) scale(1) }
+}
+.scene-2 .scanlines{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 4px, rgba(255,100,110,.06) 4px 5px);
+  mix-blend-mode:screen;
+  animation:scanlineMove 1.4s linear infinite;
+}
+@keyframes scanlineMove{
+  to{ background-position-y:9px }
+}
+.scene-2 .red-flash{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(80% 60% at 50% 50%, rgba(255,100,110,.18), transparent 70%);
+  opacity:0;
+}
+.scene-2.fire-stamp .red-flash{
+  animation:redFlash 1.2s ease-out;
+}
+@keyframes redFlash{
+  0%{ opacity:0 }
+  20%{ opacity:1 }
+  100%{ opacity:0 }
+}
+
+/* === Scene 3 — shatter & crash === */
+.scene-3 .shatter-grid{
+  position:absolute;
+  top:18%; left:50%;
+  transform:translateX(-50%);
+  display:grid;
+  grid-template-columns:repeat(5, 84px);
+  grid-template-rows:repeat(2, 84px);
+  gap:14px;
+  z-index:2;
+}
+.shatter-cell{
+  width:84px; height:84px;
+  border-radius:14px;
+  display:grid; place-items:center;
+  font-size:42px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  filter:grayscale(.4) brightness(.85);
+  transform-origin:center;
+}
+.scene-3.fire-shatter .shatter-cell{
+  animation:shatterFall 1s var(--ease-out) forwards;
+}
+.scene-3.fire-shatter .shatter-cell:nth-child(1){ animation-delay:0s }
+.scene-3.fire-shatter .shatter-cell:nth-child(2){ animation-delay:.05s }
+.scene-3.fire-shatter .shatter-cell:nth-child(3){ animation-delay:.1s }
+.scene-3.fire-shatter .shatter-cell:nth-child(4){ animation-delay:.15s }
+.scene-3.fire-shatter .shatter-cell:nth-child(5){ animation-delay:.2s }
+.scene-3.fire-shatter .shatter-cell:nth-child(6){ animation-delay:.08s }
+.scene-3.fire-shatter .shatter-cell:nth-child(7){ animation-delay:.13s }
+.scene-3.fire-shatter .shatter-cell:nth-child(8){ animation-delay:.18s }
+.scene-3.fire-shatter .shatter-cell:nth-child(9){ animation-delay:.22s }
+.scene-3.fire-shatter .shatter-cell:nth-child(10){ animation-delay:.27s }
+@keyframes shatterFall{
+  0%{ transform:translateY(0) rotate(0) scale(1); opacity:1; filter:grayscale(.4) brightness(.85) }
+  40%{ transform:translateY(8px) rotate(-4deg) scale(1.04); filter:grayscale(.7) brightness(.7) }
+  100%{ transform:translateY(70vh) rotate(45deg) scale(.7); opacity:0; filter:grayscale(1) brightness(.3) }
+}
+.scene-3 .scene-graph{
+  position:absolute;
+  inset:auto 8% 14% 8%;
+  height:160px;
+  z-index:1;
+}
+.scene-3 .crash-shake{
+  position:absolute;
+  inset:0;
+}
+.scene-3.fire-shatter .crash-shake{
+  animation:crashShake .5s ease-in-out 2;
+}
+@keyframes crashShake{
+  0%,100%{ transform:translate(0) }
+  20%{ transform:translate(-8px,4px) }
+  40%{ transform:translate(8px,-4px) }
+  60%{ transform:translate(-4px,4px) }
+  80%{ transform:translate(4px,-2px) }
+}
+
+/* === Scene 4 — Recovery === */
+.scene-4 .recovery-logo{
+  position:absolute;
+  top:18%; left:50%;
+  transform:translate(-50%,0);
+  width:120px; height:120px;
+  border-radius:28px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(214,177,94,.22), rgba(214,177,94,.05));
+  border:1px solid rgba(214,177,94,.55);
+  box-shadow:0 0 100px rgba(214,177,94,.5);
+}
+.scene-4 .recovery-logo img{
+  height:60px;
+  filter:drop-shadow(0 0 16px rgba(214,177,94,.6));
+}
+.scene-4 .recovery-logo::after{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border-radius:36px;
+  border:2px solid rgba(214,177,94,.45);
+  animation:logoRing 2.4s ease-out infinite;
+}
+.scene-4 .recovery-logo::before{
+  content:"";
+  position:absolute;
+  inset:-24px;
+  border-radius:48px;
+  border:1px solid rgba(214,177,94,.25);
+  animation:logoRing 2.4s ease-out .6s infinite;
+}
+@keyframes logoRing{
+  0%{ transform:scale(.85); opacity:.9 }
+  100%{ transform:scale(1.7); opacity:0 }
+}
+.scene-4 .gold-particles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.gold-particle{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 14px rgba(214,177,94,.7);
+  opacity:0;
+}
+.scene-4.fire-recover .gold-particle{
+  animation:goldRise 3s ease-out infinite;
+}
+@keyframes goldRise{
+  0%{ transform:translate(0,0) scale(0); opacity:0 }
+  20%{ opacity:1; transform:translate(0,-20px) scale(1) }
+  100%{ transform:translate(var(--dx,0),var(--dy,-200px)) scale(.4); opacity:0 }
+}
+
+/* === Scene 5 — Continued growth === */
+.scene-5 .scene-graph{
+  position:absolute;
+  inset:auto 6% 14% 6%;
+  height:200px;
+  pointer-events:none;
+}
+.scene-5 .money-bills{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.money-bill{
+  position:absolute;
+  font-size:34px;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.5));
+  opacity:0;
+}
+.scene-5.fire-growth .money-bill{
+  animation:moneyFly 5s linear infinite;
+}
+@keyframes moneyFly{
+  0%{ transform:translateY(110vh) rotate(-12deg); opacity:0 }
+  10%{ opacity:1 }
+  90%{ opacity:1 }
+  100%{ transform:translateY(-30vh) rotate(12deg); opacity:0 }
+}
+
+/* === Per-tier hover gold burst === */
+.tier{ position:relative }
+.tier .gold-burst{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:999px;
+  background:radial-gradient(circle, var(--gold2), transparent 70%);
+  pointer-events:none;
+  opacity:0;
+}
+
+/* Stagger active class for floating products */
+.float-icon.f1{ top:18%; left:14%; animation-delay:.0s }
+.float-icon.f2{ top:34%; left:78%; animation-delay:.4s }
+.float-icon.f3{ top:62%; left:20%; animation-delay:.8s }
+.float-icon.f4{ top:24%; left:56%; animation-delay:.2s }
+.float-icon.f5{ top:68%; left:70%; animation-delay:.6s }
+.float-icon.f6{ top:46%; left:42%; animation-delay:1.0s }
+
+/* Mobile fallback — disable pin, show scenes stacked */
+@media (max-width:780px){
+  .reality-pin{ height:auto; min-height:0 }
+  .reality-stage{ position:relative; inset:auto }
+  .reality-scene{ position:relative; opacity:1 !important; min-height:80vh }
+  .reality-dots, .scroll-hint{ display:none }
+  .scene-3 .shatter-grid{ grid-template-columns:repeat(4, 70px); grid-template-rows:repeat(2, 70px) }
+  .shatter-cell{ width:70px; height:70px; font-size:34px }
+}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation-duration:.001s !important; transition-duration:.001s !important }
   .marquee-track{ animation:none }
+  .reality-scene{ opacity:1 !important; position:relative !important }
+  .reality-pin{ height:auto !important }
 }
 </style>
 </head>
@@ -2437,6 +2862,154 @@ footer{
   </div>
 </section>
 
+<!-- REALITY CHECK NARRATIVE -->
+<section id="reality" class="reality-section" aria-label="The reality of media buying without infrastructure">
+  <div class="reality-pin">
+    <div class="reality-grid"></div>
+    <div class="scroll-hint">Scroll &mdash; the story plays</div>
+
+    <div class="reality-stage">
+
+      <!-- Scene 1: Scaling -->
+      <div class="reality-scene scene-1">
+        <div class="float-icons" aria-hidden="true">
+          <span class="float-icon f1">&#x1F48A;</span>
+          <span class="float-icon f2">&#x1F3B0;</span>
+          <span class="float-icon f3">&#x1F4B0;</span>
+          <span class="float-icon f4">&#x1F4B5;</span>
+          <span class="float-icon f5">&#x1F48E;</span>
+          <span class="float-icon f6">&#x1F389;</span>
+        </div>
+        <div class="scene-text">
+          <div class="kicker"><span class="kdot"></span> Day 1 &middot; 09:14 AM</div>
+          <h2>You&rsquo;re scaling. <span class="grad">Spend is live.</span></h2>
+          <p>Nutra. Casinos. Finance. Crypto. Peptides. Your offers are running, accounts are spending, momentum is building. It&rsquo;s a great day.</p>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 140" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="growGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2cd67c" stop-opacity=".0"/>
+              <stop offset="60%" stop-color="#2cd67c" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#F2D27A" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <path class="grow-path" d="M0,120 C120,100 220,80 340,60 C460,40 560,30 800,10" fill="none" stroke="url(#growGrad)" stroke-width="3"/>
+        </svg>
+      </div>
+
+      <!-- Scene 2: Meta crash -->
+      <div class="reality-scene scene-2">
+        <div class="meta-logo" aria-hidden="true">META</div>
+        <div class="banned-stamp" aria-hidden="true">Disabled</div>
+        <div class="scanlines" aria-hidden="true"></div>
+        <div class="red-flash" aria-hidden="true"></div>
+        <div class="scene-text" style="margin-top:140px">
+          <div class="kicker" style="border-color:rgba(255,100,110,.35); background:rgba(255,100,110,.06); color:#ffb3b8;">
+            <span class="kdot" style="background:linear-gradient(135deg,#ff646e,#ff9aa2)"></span> Day 2 &middot; 03:14 AM
+          </div>
+          <h2 class="glitch-text" data-text="Then Meta hits.">Then Meta hits.</h2>
+          <p>Account flagged. Spend frozen. Campaigns disabled. Every other ban risk you&rsquo;ve been ignoring is now your problem.</p>
+        </div>
+      </div>
+
+      <!-- Scene 3: Crash -->
+      <div class="reality-scene scene-3">
+        <div class="crash-shake">
+          <div class="shatter-grid" aria-hidden="true">
+            <div class="shatter-cell">&#x1F48A;</div>
+            <div class="shatter-cell">&#x1F3B0;</div>
+            <div class="shatter-cell">&#x1F4B5;</div>
+            <div class="shatter-cell">&#x1F48E;</div>
+            <div class="shatter-cell">&#x1F4B0;</div>
+            <div class="shatter-cell">&#x1F4B3;</div>
+            <div class="shatter-cell">&#x1F3E6;</div>
+            <div class="shatter-cell">&#x1F4B8;</div>
+            <div class="shatter-cell">&#x1F389;</div>
+            <div class="shatter-cell">&#x1F4C8;</div>
+          </div>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 160" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="crashGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2cd67c" stop-opacity=".8"/>
+              <stop offset="55%" stop-color="#F2D27A" stop-opacity=".9"/>
+              <stop offset="60%" stop-color="#ff646e" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#ff646e" stop-opacity=".5"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,120 C100,100 200,70 300,50 C380,38 440,30 460,28 L470,140 L480,150 L800,150" fill="none" stroke="url(#crashGrad)" stroke-width="3"/>
+        </svg>
+        <div class="scene-text" style="margin-top:30px">
+          <div class="kicker" style="border-color:rgba(255,100,110,.35); background:rgba(255,100,110,.06); color:#ffb3b8;">
+            <span class="kdot" style="background:linear-gradient(135deg,#ff646e,#ff9aa2)"></span> Loss confirmed
+          </div>
+          <h2>Your account is dead.<br><span style="color:#ff646e">Your money is gone.</span></h2>
+          <p>$0 in spend yesterday is no consolation. Every hour offline costs more than the package itself.</p>
+        </div>
+      </div>
+
+      <!-- Scene 4: Recovery -->
+      <div class="reality-scene scene-4">
+        <div class="recovery-logo" aria-hidden="true">
+          <img src="logo.png" alt="">
+        </div>
+        <div class="gold-particles" aria-hidden="true">
+          <span class="gold-particle" style="top:60%; left:18%; --dx:-30px; --dy:-200px; animation-delay:.0s;"></span>
+          <span class="gold-particle" style="top:65%; left:30%; --dx:20px; --dy:-260px; animation-delay:.3s;"></span>
+          <span class="gold-particle" style="top:70%; left:50%; --dx:-10px; --dy:-300px; animation-delay:.6s;"></span>
+          <span class="gold-particle" style="top:62%; left:68%; --dx:30px; --dy:-220px; animation-delay:.4s;"></span>
+          <span class="gold-particle" style="top:72%; left:82%; --dx:-20px; --dy:-260px; animation-delay:.7s;"></span>
+          <span class="gold-particle" style="top:78%; left:42%; --dx:0px; --dy:-280px; animation-delay:.2s;"></span>
+          <span class="gold-particle" style="top:55%; left:8%; --dx:25px; --dy:-200px; animation-delay:.9s;"></span>
+          <span class="gold-particle" style="top:50%; left:90%; --dx:-25px; --dy:-200px; animation-delay:1.1s;"></span>
+        </div>
+        <div class="scene-text" style="margin-top:200px">
+          <div class="kicker"><span class="kdot"></span> But it doesn&rsquo;t have to be this way</div>
+          <h2>Infrastructure that <span class="grad">survives the hit</span>.</h2>
+          <p>Distributed accounts across multiple BMs. Auto-replacement in 5&ndash;10 minutes. BM-level recovery if the worst happens. The accounts you would have lost? Replaced. The money you would have lost? Saved.</p>
+        </div>
+      </div>
+
+      <!-- Scene 5: Continued growth -->
+      <div class="reality-scene scene-5">
+        <div class="money-bills" aria-hidden="true">
+          <span class="money-bill" style="left:10%; animation-delay:.0s; animation-duration:5s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:24%; animation-delay:.6s; animation-duration:5.4s;">&#x1F4B0;</span>
+          <span class="money-bill" style="left:42%; animation-delay:1.0s; animation-duration:4.8s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:58%; animation-delay:.3s; animation-duration:5.2s;">&#x1F4B0;</span>
+          <span class="money-bill" style="left:74%; animation-delay:.9s; animation-duration:4.6s;">&#x1F4B5;</span>
+          <span class="money-bill" style="left:88%; animation-delay:1.4s; animation-duration:5.6s;">&#x1F48E;</span>
+        </div>
+        <svg class="scene-graph" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="recoverGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#ff646e" stop-opacity=".4"/>
+              <stop offset="20%" stop-color="#F2D27A" stop-opacity=".5"/>
+              <stop offset="40%" stop-color="#2cd67c" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#F2D27A" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,180 L120,180 C160,180 180,170 220,150 C300,110 400,90 520,60 C640,30 720,20 800,10" fill="none" stroke="url(#recoverGrad)" stroke-width="3"/>
+        </svg>
+        <div class="scene-text" style="margin-top:30px">
+          <div class="kicker"><span class="kdot"></span> Day 3 &middot; 03:24 AM</div>
+          <h2>Back online. <span class="grad">Still scaling.</span></h2>
+          <p>That&rsquo;s what 2,500 ad accounts and a recoverable BM mean. That&rsquo;s what Onyx delivers. Keep scrolling.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reality-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
 <!-- ONYX BM2500 EXCLUSIVE -->
 <section id="onyx" class="onyx-section">
   <div class="onyx-bg">
@@ -2634,6 +3207,28 @@ footer{
         <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Profile FB</a>
       </div>
 
+      <!-- BM3 Verified (NEW, ONE-TIME) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Verified &middot; One-Time</span>
+        <div class="tier-name">BM3 Verified</div>
+        <div class="tier-price">$200<small>/ one-time</small></div>
+        <p class="tier-desc">Verified BM3 in one transaction. Stronger trust profile, verified business status, better deliverability and account longevity than a standard BM3.</p>
+        <ul class="tier-list">
+          <li>Verified Business Manager status</li>
+          <li>3 ad accounts inside one BM</li>
+          <li>Higher trust + better limits</li>
+          <li>One payment, no subscription</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
+      </div>
+
       <!-- BM10 (UPDATED PRICE $550) -->
       <div class="tier onetime tilt">
         <div class="tier-shine"></div>
@@ -2684,28 +3279,6 @@ footer{
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
         <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3</a>
-      </div>
-
-      <!-- BM3 Verified (NEW) -->
-      <div class="tier tilt">
-        <div class="tier-shine"></div>
-        <span class="tier-tag">Verified</span>
-        <div class="tier-name">BM3 Verified</div>
-        <div class="tier-price">$200<small>/ month</small></div>
-        <p class="tier-desc">Verified BM3 with stronger trust profile and verified business status &mdash; better deliverability and longevity than the standard BM3.</p>
-        <ul class="tier-list">
-          <li>Verified Business Manager status</li>
-          <li>3 ad accounts inside one BM</li>
-          <li>Higher trust + better limits</li>
-          <li>24/7 support &amp; unlimited replacements</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
       </div>
 
       <!-- Single Agency -->
@@ -3149,7 +3722,7 @@ footer{
 
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">What&rsquo;s the difference between BM3 and BM3 Verified?</div>
-      <div class="faq-a">Standard BM3 ($199/mo) is the cleanest entry point for testing. BM3 Verified ($200/mo) is the same 3-account structure but inside a verified Business Manager &mdash; stronger trust profile, better deliverability, higher account longevity, and less restrictive limits. The $1/mo difference is one of the easiest upgrades in the lineup.</div>
+      <div class="faq-a">Standard BM3 ($199/mo) is a monthly subscription with 3 ad accounts in a Business Manager &mdash; the cleanest entry point for testing. BM3 Verified ($200 one-time) is the same 3-account structure but inside a <b>verified</b> Business Manager &mdash; stronger trust profile, better deliverability, higher account longevity, and less restrictive limits. BM3 Verified is paid once, no subscription.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -3935,6 +4508,117 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
     io.observe(mockupEl);
   }
   loopTimer = setTimeout(autoReplaceTick, 2200);
+})();
+
+/* ====== REALITY CHECK NARRATIVE — pinned scroll storytelling ====== */
+(function realityNarrative(){
+  const section = document.querySelector('.reality-section');
+  if (!section) return;
+  const scenes = Array.from(section.querySelectorAll('.reality-scene'));
+  const dots = Array.from(section.querySelectorAll('.reality-dots .dot'));
+  if (!scenes.length) return;
+
+  const isSmall = matchMedia('(max-width:780px)').matches;
+  if (isSmall || reduceMotion || !window.gsap || !window.ScrollTrigger){
+    // Static fallback: show all scenes stacked
+    scenes.forEach(s => s.style.opacity = 1);
+    return;
+  }
+
+  // Initialize first scene visible
+  scenes.forEach((s,i)=>{
+    gsap.set(s, { autoAlpha: i === 0 ? 1 : 0 });
+    if (i === 0) s.classList.add('active');
+  });
+
+  let currentIdx = 0;
+  const fireSceneEffect = (idx)=>{
+    const scene = scenes[idx];
+    if (!scene) return;
+    if (idx === 1) scene.classList.add('fire-stamp');
+    if (idx === 2) scene.classList.add('fire-shatter');
+    if (idx === 3) scene.classList.add('fire-recover');
+    if (idx === 4) scene.classList.add('fire-growth');
+  };
+
+  // Fire effect for first scene right away
+  fireSceneEffect(0);
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top top',
+    end: '+=' + (scenes.length * 700),
+    pin: '.reality-pin',
+    pinSpacing: true,
+    scrub: 0.6,
+    anticipatePin: 1,
+    onUpdate: (self)=>{
+      const p = self.progress;
+      const idx = Math.min(scenes.length - 1, Math.floor(p * scenes.length));
+      if (idx !== currentIdx){
+        // fade out previous
+        gsap.to(scenes[currentIdx], { autoAlpha: 0, duration: 0.45, ease:'power2.out' });
+        scenes[currentIdx].classList.remove('active');
+        // fade in current
+        gsap.to(scenes[idx], { autoAlpha: 1, duration: 0.55, ease:'power2.out' });
+        scenes[idx].classList.add('active');
+        // dots
+        dots.forEach((d,i)=> d.classList.toggle('active', i === idx));
+        // scene-specific effects (re-fire each time scene becomes active)
+        fireSceneEffect(idx);
+        currentIdx = idx;
+      }
+    }
+  });
+
+  // Per-scene continuous effects within each scene's progress range
+  // Subtle parallax on the floating icons in scene 1
+  const floatIcons = section.querySelectorAll('.scene-1 .float-icon');
+  floatIcons.forEach((el, i)=>{
+    const speed = 0.3 + (i * 0.08);
+    gsap.to(el, {
+      y: -40 * speed,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=' + (scenes.length * 700),
+        scrub: true
+      }
+    });
+  });
+})();
+
+/* ====== Tier hover gold burst (small UX flourish) ====== */
+(function tierGoldBurst(){
+  if (matchMedia('(hover:none)').matches || reduceMotion) return;
+  document.querySelectorAll('.tier').forEach(tier=>{
+    let lastBurst = 0;
+    tier.addEventListener('mouseenter', ()=>{
+      const now = performance.now();
+      if (now - lastBurst < 800) return;
+      lastBurst = now;
+      const r = tier.getBoundingClientRect();
+      for (let i=0; i<6; i++){
+        const p = document.createElement('span');
+        p.className = 'gold-burst';
+        p.style.left = (10 + Math.random()*(r.width-20)) + 'px';
+        p.style.top = (r.height/2 + (Math.random()*30-15)) + 'px';
+        tier.appendChild(p);
+        const dx = (Math.random()*120 - 60);
+        const dy = -(40 + Math.random()*70);
+        if (window.gsap){
+          gsap.fromTo(p,
+            { opacity:1, scale:0.4, x:0, y:0 },
+            { opacity:0, scale:1.6, x:dx, y:dy, duration:.85, ease:'power2.out',
+              onComplete:()=>p.remove() }
+          );
+        } else {
+          setTimeout(()=>p.remove(), 900);
+        }
+      }
+    });
+  });
 })();
 
 /* ====== Hero background image graceful fallback ====== */
