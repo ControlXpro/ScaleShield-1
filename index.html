@@ -1424,6 +1424,683 @@ footer{
   .cursor-dot,.cursor-ring{display:none}
 }
 
+/* ====== Vertical chips ====== */
+.vert-chips{
+  margin-top:24px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* ====== ONYX SECTION ====== */
+.onyx-section{
+  position:relative;
+  overflow:hidden;
+  padding:120px 24px 130px;
+  max-width:1280px;
+  margin:auto;
+}
+.onyx-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  border-radius:36px;
+  margin:0 24px;
+}
+.onyx-bg img{
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:.62;
+  filter:saturate(118%) contrast(108%);
+  transform:scale(1.04);
+}
+.onyx-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(80% 70% at 50% 0%, transparent, rgba(5,5,7,.55) 60%, rgba(5,5,7,.92) 100%),
+    linear-gradient(180deg, rgba(5,5,7,.20), rgba(5,5,7,.55) 60%);
+}
+.onyx-frame{
+  position:relative;
+  z-index:1;
+  border:1px solid rgba(214,177,94,.18);
+  border-radius:36px;
+  padding:60px 36px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.005));
+  backdrop-filter:blur(6px);
+  overflow:hidden;
+  isolation:isolate;
+}
+.onyx-frame::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:38px;
+  background:linear-gradient(135deg, rgba(214,177,94,.50), rgba(214,177,94,0) 40%, rgba(214,177,94,0) 60%, rgba(214,177,94,.32));
+  z-index:-1;
+  opacity:.4;
+  pointer-events:none;
+}
+.onyx-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(214,177,94,.45);
+  background:linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.05));
+  color:#F2D27A;
+  font-size:11px;
+  letter-spacing:.26em;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.onyx-eyebrow .star{
+  display:inline-block;
+  width:10px; height:10px;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  box-shadow:0 0 18px rgba(214,177,94,.55);
+}
+.onyx-title{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(40px, 6vw, 76px);
+  font-weight:950;
+  letter-spacing:-.035em;
+  line-height:1;
+  margin-top:18px;
+}
+.onyx-title .grad{
+  background:linear-gradient(135deg, var(--gold), var(--gold2), #fff, var(--gold));
+  background-size:220% 220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:gradShift 8s ease-in-out infinite;
+}
+.onyx-tag{
+  margin-top:18px;
+  font-size:18px;
+  color:rgba(255,255,255,.82);
+  font-weight:700;
+  max-width:62ch;
+}
+.onyx-meta{
+  margin-top:22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  align-items:center;
+}
+.onyx-price{
+  font-family:'Sora',sans-serif;
+  font-size:46px;
+  font-weight:950;
+  letter-spacing:-.02em;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+}
+.onyx-price small{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+  margin-left:8px;
+  -webkit-text-fill-color:var(--muted);
+}
+
+.onyx-block{
+  margin-top:60px;
+}
+.onyx-block-head{
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:18px;
+}
+.onyx-block-num{
+  width:34px; height:34px; border-radius:12px;
+  display:grid; place-items:center;
+  font-weight:900; color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.30);
+  font-family:'Sora',sans-serif;
+}
+.onyx-block-title{
+  font-family:'Sora',sans-serif;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:-.01em;
+}
+
+/* Architecture diagram */
+.onyx-arch{
+  position:relative;
+  padding:30px 20px 24px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+}
+.arch-canvas{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/7;
+  min-height:280px;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(214,177,94,.10), transparent 55%),
+    rgba(0,0,0,.30);
+  border:1px solid rgba(255,255,255,.05);
+  overflow:hidden;
+}
+.arch-svg{
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+.arch-svg .arch-link{
+  stroke:rgba(214,177,94,.40);
+  stroke-width:1.4;
+  fill:none;
+  stroke-dasharray:8 6;
+  animation:archDash 5s linear infinite;
+}
+@keyframes archDash{
+  to{ stroke-dashoffset:-140 }
+}
+.arch-node{
+  position:absolute;
+  width:78px; height:78px;
+  border-radius:18px;
+  border:1px solid rgba(214,177,94,.30);
+  background:rgba(255,255,255,.04);
+  display:grid; place-items:center;
+  text-align:center;
+  font-size:11px;
+  font-weight:900;
+  color:rgba(255,255,255,.85);
+  backdrop-filter:blur(6px);
+  transform:translate(-50%,-50%);
+  box-shadow:0 12px 30px -16px rgba(0,0,0,.6);
+  animation:archNodePulse 3.4s ease-in-out infinite;
+}
+@keyframes archNodePulse{
+  0%,100%{ box-shadow:0 12px 30px -16px rgba(0,0,0,.6), 0 0 0 0 rgba(214,177,94,.0) }
+  50%{ box-shadow:0 12px 30px -16px rgba(0,0,0,.6), 0 0 0 6px rgba(214,177,94,.07) }
+}
+.arch-node small{
+  display:block;
+  font-size:9px; font-weight:700;
+  color:rgba(255,255,255,.45);
+  margin-top:4px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.arch-hub{
+  position:absolute;
+  width:148px; height:148px;
+  border-radius:26px;
+  display:grid; place-items:center;
+  text-align:center;
+  background:
+    radial-gradient(circle, rgba(214,177,94,.30), transparent 70%),
+    linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.05));
+  border:1.5px solid rgba(214,177,94,.55);
+  color:#fff;
+  font-family:'Sora',sans-serif;
+  font-weight:900;
+  transform:translate(-50%,-50%);
+  font-size:14px;
+  box-shadow:0 0 50px rgba(214,177,94,.30);
+  animation:hubGlow 3.4s ease-in-out infinite;
+}
+@keyframes hubGlow{
+  0%,100%{ box-shadow:0 0 50px rgba(214,177,94,.30) }
+  50%{ box-shadow:0 0 90px rgba(214,177,94,.45) }
+}
+.arch-hub small{
+  display:block;
+  font-size:10px; font-weight:700;
+  color:rgba(255,255,255,.6);
+  margin-top:6px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.arch-legend{
+  margin-top:14px;
+  display:flex; flex-wrap:wrap; gap:14px;
+  font-size:12px;
+  color:var(--muted);
+}
+.arch-legend span{
+  display:inline-flex; align-items:center; gap:8px;
+}
+.arch-legend i{
+  display:inline-block; width:10px; height:10px; border-radius:3px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+}
+
+/* CRM mockup */
+.crm-mockup{
+  position:relative;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(10,10,14,.92), rgba(8,8,11,.95));
+  overflow:hidden;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.crm-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+}
+.crm-dot{ width:10px; height:10px; border-radius:999px; }
+.crm-dot.r{ background:#ff5f56 }
+.crm-dot.y{ background:#ffbd2e }
+.crm-dot.g{ background:#27c93f }
+.crm-bar-title{
+  margin-left:14px;
+  font-size:12px;
+  font-weight:800;
+  color:rgba(255,255,255,.65);
+  font-family:'Sora',sans-serif;
+  letter-spacing:.04em;
+}
+.crm-bar-meta{
+  margin-left:auto;
+  font-size:11px;
+  color:var(--muted2);
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:6px;
+}
+.crm-pulse-dot{
+  display:inline-block;
+  width:7px; height:7px; border-radius:999px;
+  background:#2cd67c;
+  box-shadow:0 0 10px rgba(44,214,124,.7);
+  animation:crmLive 1.4s ease-in-out infinite;
+}
+@keyframes crmLive{
+  0%,100%{ opacity:1; transform:scale(1) }
+  50%{ opacity:.5; transform:scale(.8) }
+}
+.crm-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.crm-stat{
+  padding:14px 16px;
+  background:rgba(8,8,11,.95);
+}
+.crm-stat-label{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  font-weight:900;
+}
+.crm-stat-val{
+  margin-top:6px;
+  font-family:'Sora',sans-serif;
+  font-size:20px;
+  font-weight:900;
+  color:#fff;
+}
+.crm-stat-val.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+@media(max-width:780px){
+  .crm-stats{ grid-template-columns:repeat(2,1fr) }
+}
+.crm-table{
+  padding:8px 0;
+  max-height:440px;
+  overflow:hidden;
+}
+.crm-row{
+  display:grid;
+  grid-template-columns:1.1fr .8fr 1fr 1fr .8fr;
+  align-items:center;
+  gap:12px;
+  padding:12px 18px;
+  border-bottom:1px dashed rgba(255,255,255,.05);
+  font-size:13px;
+  transition:background .25s var(--ease);
+  position:relative;
+}
+.crm-row:hover{ background:rgba(214,177,94,.04) }
+.crm-row .id{
+  font-family:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  font-size:12.5px;
+  color:rgba(255,255,255,.86);
+  font-weight:700;
+}
+.crm-row .src{
+  color:var(--muted2);
+  font-size:11px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+.crm-row .spend{
+  font-family:'Sora',sans-serif;
+  font-weight:900;
+  color:#fff;
+}
+.crm-row .pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.10);
+}
+.crm-row .pill.ok{ color:#d7ffe8; border-color:rgba(44,214,124,.30); background:rgba(44,214,124,.10) }
+.crm-row .pill.warn{ color:#fff2d3; border-color:rgba(255,203,107,.30); background:rgba(255,203,107,.10) }
+.crm-row .pill.bad{ color:#ffd9dd; border-color:rgba(255,100,110,.30); background:rgba(255,100,110,.10) }
+.crm-row .pill .pulse-dot{
+  display:inline-block; width:6px; height:6px; border-radius:999px;
+  background:currentColor;
+  animation:crmLive 1.4s ease-in-out infinite;
+}
+.crm-share{
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  color:#111;
+  border:none;
+  padding:7px 12px;
+  border-radius:10px;
+  font-size:11.5px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s var(--ease);
+  letter-spacing:.04em;
+}
+.crm-share:hover{ transform:translateY(-1px); box-shadow:0 8px 22px -10px rgba(214,177,94,.5) }
+.crm-share:active{ transform:translateY(0) }
+.crm-row.flash-good{ animation:flashGood 1.4s ease-out 1 }
+.crm-row.flash-bad{ animation:flashBad 1.4s ease-out 1 }
+@keyframes flashGood{
+  0%{ background:rgba(44,214,124,.18) }
+  100%{ background:transparent }
+}
+@keyframes flashBad{
+  0%{ background:rgba(255,100,110,.18) }
+  100%{ background:transparent }
+}
+.crm-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(8,8,11,.78);
+  backdrop-filter:blur(6px);
+  display:none;
+  place-items:center;
+  z-index:10;
+}
+.crm-overlay.show{ display:grid; animation:fadeIn .3s ease-out }
+@keyframes fadeIn{ from{ opacity:0 } to{ opacity:1 } }
+.crm-modal{
+  width:min(360px, 92%);
+  background:rgba(15,15,20,.96);
+  border:1px solid rgba(214,177,94,.30);
+  border-radius:20px;
+  padding:22px;
+  text-align:left;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85);
+  animation:modalIn .35s var(--ease) both;
+}
+@keyframes modalIn{
+  from{ transform:translateY(20px); opacity:0 }
+  to{ transform:translateY(0); opacity:1 }
+}
+.crm-modal h4{
+  font-family:'Sora',sans-serif;
+  font-size:16px; font-weight:900;
+  color:#fff;
+}
+.crm-modal p{ margin-top:6px; font-size:13px }
+.crm-modal-input{
+  margin-top:14px;
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  font-size:13px;
+  font-weight:800;
+}
+.crm-modal-actions{
+  margin-top:16px;
+  display:flex; gap:10px; justify-content:flex-end;
+}
+.crm-modal-btn{
+  padding:9px 14px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:12.5px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  cursor:pointer;
+}
+.crm-modal-btn.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; border-color:transparent;
+}
+.crm-toast{
+  position:absolute;
+  left:18px; right:18px; bottom:18px;
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid rgba(214,177,94,.35);
+  background:linear-gradient(135deg, rgba(214,177,94,.16), rgba(214,177,94,.06));
+  backdrop-filter:blur(8px);
+  display:flex; gap:14px; align-items:center;
+  font-size:13px; color:#fff; font-weight:700;
+  transform:translateY(120%);
+  opacity:0;
+  transition:.45s var(--ease);
+  z-index:5;
+}
+.crm-toast.show{ transform:translateY(0); opacity:1 }
+.crm-toast .icon{
+  width:30px; height:30px; border-radius:10px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; font-weight:900;
+}
+
+/* Onyx vs traditional comparison */
+.onyx-vs{
+  display:grid;
+  gap:18px;
+  margin-top:20px;
+}
+@media(min-width:880px){
+  .onyx-vs{ grid-template-columns:1fr 1fr }
+}
+.vs-card{
+  position:relative;
+  padding:24px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+}
+.vs-card.bad{ border-color:rgba(255,100,110,.20); background:rgba(255,100,110,.04) }
+.vs-card.good{ border-color:rgba(214,177,94,.30); background:rgba(214,177,94,.05) }
+.vs-card h4{
+  font-family:'Sora',sans-serif;
+  font-size:18px; font-weight:900;
+  display:flex; align-items:center; gap:10px;
+}
+.vs-card.bad h4{ color:#ffb3b8 }
+.vs-card.good h4{ color:#F2D27A }
+.vs-list{
+  margin-top:14px;
+  display:grid; gap:10px;
+  list-style:none; padding:0;
+}
+.vs-list li{
+  display:flex; gap:10px; align-items:flex-start;
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.vs-list li::before{
+  width:18px; height:18px; flex:0 0 auto;
+  border-radius:999px;
+  display:grid; place-items:center;
+  font-weight:900; font-size:11px;
+  margin-top:1px;
+}
+.vs-card.bad .vs-list li::before{
+  content:"\00d7";
+  background:rgba(255,100,110,.10);
+  color:#ff646e;
+  border:1px solid rgba(255,100,110,.20);
+}
+.vs-card.good .vs-list li::before{
+  content:"\2713";
+  background:rgba(214,177,94,.12);
+  color:#F2D27A;
+  border:1px solid rgba(214,177,94,.30);
+}
+
+.onyx-cta-row{
+  margin-top:42px;
+  display:flex; gap:12px; flex-wrap:wrap;
+  align-items:center;
+}
+
+/* ====== Pricing categories + new tier meta pills ====== */
+.pricing-cat{
+  margin-top:48px;
+}
+.pricing-cat-head{
+  display:flex; align-items:baseline; gap:14px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.pricing-cat-title{
+  font-family:'Sora',sans-serif;
+  font-size:22px; font-weight:900;
+  letter-spacing:-.01em;
+  color:#fff;
+}
+.pricing-cat-sub{
+  color:var(--muted);
+  font-size:13.5px;
+  font-weight:700;
+}
+.pricing-cat .pricing-grid{ margin-top:0 }
+.warmup-note{
+  margin-top:30px;
+  padding:18px 22px;
+  border-radius:18px;
+  border:1px solid rgba(255,203,107,.22);
+  background:linear-gradient(135deg, rgba(255,203,107,.06), rgba(255,203,107,.02));
+  display:flex; gap:14px; align-items:flex-start;
+  font-size:13.5px;
+  color:rgba(255,255,255,.85);
+  position:relative;
+  z-index:1;
+}
+.warmup-note .icon{
+  width:38px; height:38px; flex:0 0 auto;
+  border-radius:12px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(255,203,107,.20), rgba(255,203,107,.08));
+  border:1px solid rgba(255,203,107,.25);
+  font-size:18px;
+}
+.warmup-note strong{
+  color:#ffcb6b;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:11px;
+  font-weight:950;
+}
+.warmup-note p{
+  margin-top:4px;
+  color:rgba(255,255,255,.78);
+  line-height:1.55;
+}
+.tier-meta{
+  margin-top:14px;
+  display:flex; flex-wrap:wrap; gap:6px;
+}
+.tier-meta-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:10.5px;
+  font-weight:900;
+  letter-spacing:.04em;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+}
+.tier-meta-pill.warranty{
+  color:#d7ffe8;
+  border-color:rgba(44,214,124,.30);
+  background:rgba(44,214,124,.08);
+}
+.tier-meta-pill.warmup{
+  color:#fff2d3;
+  border-color:rgba(255,203,107,.30);
+  background:rgba(255,203,107,.06);
+}
+.tier-meta-pill.verticals{
+  color:#cfe9ff;
+  border-color:rgba(73,178,255,.25);
+  background:rgba(73,178,255,.06);
+}
+
+/* Onyx tier card hover */
+.tier.onyx{
+  border-color:rgba(214,177,94,.55);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.18), transparent 55%),
+    radial-gradient(120% 100% at 100% 100%, rgba(168,85,247,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.tier.onyx .tier-tag{
+  color:#111;
+  border-color:rgba(214,177,94,.55);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 22px rgba(214,177,94,.30);
+}
+
+/* JetBrains mono fallback */
+.mono{
+  font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation-duration:.001s !important; transition-duration:.001s !important }
   .marquee-track{ animation:none }
@@ -1476,6 +2153,7 @@ footer{
     <a href="#stats" class="mnav">Stats <small>&rarr;</small></a>
     <a href="#demo" class="mnav">Live Demo <small>&rarr;</small></a>
     <a href="#verticals" class="mnav">Verticals <small>&rarr;</small></a>
+    <a href="#onyx" class="mnav" style="color:#F2D27A">Onyx BM2500 <small>&rarr;</small></a>
     <a href="#pricing" class="mnav">Pricing <small>&rarr;</small></a>
     <a href="#roi" class="mnav">ROI <small>&rarr;</small></a>
     <a href="#trust" class="mnav">Trust <small>&rarr;</small></a>
@@ -1498,14 +2176,13 @@ footer{
       </div>
       <div class="nav-links">
         <a href="#stats">Stats</a>
-        <a href="#demo">Live Demo</a>
         <a href="#verticals">Verticals</a>
+        <a href="#onyx" style="color:#F2D27A">Onyx</a>
         <a href="#pricing">Pricing</a>
         <a href="#roi">ROI</a>
-        <a href="#trust">Trust</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="payment-details.html" target="_blank" rel="noopener">Payment Details</a>
+        <a href="payment-details.html" target="_blank" rel="noopener">Payment</a>
         <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
         <a href="#contact">Contact</a>
       </div>
@@ -1718,36 +2395,197 @@ footer{
 <!-- VERTICALS -->
 <section id="verticals">
   <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> Vertical Focus</div>
-    <h2>Neutral, iGaming, and policy-sensitive verticals.</h2>
+    <div class="kicker"><span class="kdot"></span> Verticals</div>
+    <h2>Built for the verticals that <span class="grad">actually need infrastructure</span>.</h2>
     <p>
-      We support teams across <b>Neutral</b> and <b>iGaming/Gambling</b> &mdash; and for <b>policy-sensitive gray verticals</b>,
-      we focus on <b>reliability, monitoring, and fast replacements</b>.
+      ScaleShield supports media buyers across <b>nutra, iGaming, finance, peptides, casinos, sweepstakes, crypto, dating</b>
+      and other policy-sensitive verticals &mdash; with the structure, monitoring, and replacement workflow that grey
+      and blackhat operations actually need.
     </p>
+  </div>
+
+  <div class="vert-chips reveal">
+    <div class="chip"><span class="dot"></span> Nutra</div>
+    <div class="chip"><span class="dot"></span> iGaming</div>
+    <div class="chip"><span class="dot"></span> Casinos</div>
+    <div class="chip"><span class="dot"></span> Finance</div>
+    <div class="chip"><span class="dot"></span> Peptides</div>
+    <div class="chip"><span class="dot"></span> Crypto</div>
+    <div class="chip"><span class="dot"></span> Sweepstakes</div>
+    <div class="chip"><span class="dot"></span> Dating</div>
+    <div class="chip"><span class="dot"></span> BH &amp; GH friendly</div>
   </div>
 
   <div class="grid-3 reveal-stagger" style="margin-top:36px;">
     <div class="card tilt vert-card">
       <div class="pulse"></div>
-      <h3><span class="wiggle">Neutral</span> verticals</h3>
-      <p>Ecom, lead gen, apps, content &mdash; steady growth curves.</p>
+      <h3><span class="wiggle">Neutral &amp; e-com</span></h3>
+      <p>Ecom, lead gen, apps, content &mdash; steady growth curves on stable infrastructure.</p>
     </div>
 
     <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.55"></div>
-      <h3><span class="wiggle">Gambling / iGaming</span></h3>
-      <p>High velocity operations with tighter monitoring needs.</p>
+      <h3><span class="wiggle">iGaming &amp; nutra</span></h3>
+      <p>High velocity, tight monitoring, fast replace cadence. Built for offers that move fast.</p>
     </div>
 
     <div class="card tilt vert-card">
       <div class="pulse" style="opacity:.45"></div>
-      <h3><span class="wiggle">Gray / policy-sensitive</span></h3>
-      <p>Reliability first &mdash; structure, monitoring, rapid replacement.</p>
+      <h3><span class="wiggle">Grey &amp; blackhat</span></h3>
+      <p>Reliability first &mdash; structure, monitoring, rapid replacement, and recoverable infrastructure.</p>
     </div>
   </div>
 </section>
 
-<!-- PRICING (NEW) -->
+<!-- ONYX BM2500 EXCLUSIVE -->
+<section id="onyx" class="onyx-section">
+  <div class="onyx-bg">
+    <img src="onyx-bg.jpg" alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="onyx-frame reveal">
+    <div class="onyx-eyebrow"><span class="star"></span> Exclusive Tier &middot; Onyx</div>
+    <h2 class="onyx-title">Onyx <span class="grad">BM2500</span></h2>
+    <p class="onyx-tag">A one of a kind infrastructure for uninterrupted scaling. Up to <b>2,500 ad accounts shared into a single high-trust BM</b> from multiple sources &mdash; distributed sourcing means no single point of failure.</p>
+
+    <div class="onyx-meta">
+      <div class="onyx-price">$15,000<small>/ month</small></div>
+      <div class="tier-meta-pill warranty">&check; Free replace on $0 / minimal spend</div>
+      <div class="tier-meta-pill warmup">&#9888; Warmup managed by us</div>
+      <div class="tier-meta-pill verticals">High-spend BH / GH</div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">1</div>
+        <div class="onyx-block-title">How it works &middot; distributed sourcing</div>
+      </div>
+      <p>We use verified US Business Managers with no prior history and strengthen them through asset protection and trust optimization. Once the BM reaches high-trust levels, we connect a large network of ad accounts into it from <b>multiple different Business Managers</b>. Because the accounts originate from different sources, normal Meta limitations would prevent re-sharing &mdash; so we built our own proprietary system to handle it.</p>
+
+      <div class="onyx-arch reveal" aria-hidden="true">
+        <div class="arch-canvas">
+          <svg class="arch-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <line class="arch-link" x1="50" y1="50" x2="12" y2="20"/>
+            <line class="arch-link" x1="50" y1="50" x2="22" y2="78"/>
+            <line class="arch-link" x1="50" y1="50" x2="88" y2="22"/>
+            <line class="arch-link" x1="50" y1="50" x2="80" y2="78"/>
+            <line class="arch-link" x1="50" y1="50" x2="50" y2="12"/>
+            <line class="arch-link" x1="50" y1="50" x2="50" y2="88"/>
+            <line class="arch-link" x1="50" y1="50" x2="14" y2="50"/>
+            <line class="arch-link" x1="50" y1="50" x2="86" y2="50"/>
+          </svg>
+          <div class="arch-node" style="top:20%; left:12%;">BM #1<small>Source</small></div>
+          <div class="arch-node" style="top:78%; left:22%;">BM #2<small>Source</small></div>
+          <div class="arch-node" style="top:22%; left:88%;">BM #3<small>Source</small></div>
+          <div class="arch-node" style="top:78%; left:80%;">BM #4<small>Source</small></div>
+          <div class="arch-node" style="top:12%; left:50%;">BM #5<small>Source</small></div>
+          <div class="arch-node" style="top:88%; left:50%;">BM #6<small>Source</small></div>
+          <div class="arch-node" style="top:50%; left:14%;">BM #7<small>Source</small></div>
+          <div class="arch-node" style="top:50%; left:86%;">BM #8<small>Source</small></div>
+          <div class="arch-hub" style="top:50%; left:50%;">YOUR BM<small>2,500 accounts</small></div>
+        </div>
+        <div class="arch-legend">
+          <span><i></i> Distributed source BMs feed into one high-trust hub. Restricting one source can never take you down.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">2</div>
+        <div class="onyx-block-title">Your CRM &middot; the core advantage</div>
+      </div>
+      <p>Inside our custom CRM (synced with Meta in real time), you view all accounts in one place, track per-account and per-BM spend, monitor account status (active / disabled), and <b>share any account into any other BM via a single click</b>. Just enter the target BM ID &mdash; our system bypasses the normal Meta re-sharing limitation automatically.</p>
+
+      <div class="crm-mockup reveal">
+        <div class="crm-bar">
+          <div class="crm-dot r"></div>
+          <div class="crm-dot y"></div>
+          <div class="crm-dot g"></div>
+          <div class="crm-bar-title mono">scaleshield.crm &mdash; your BM 1247-8847</div>
+          <div class="crm-bar-meta"><span class="crm-pulse-dot"></span> Live</div>
+        </div>
+        <div class="crm-stats">
+          <div class="crm-stat">
+            <div class="crm-stat-label">Total accounts</div>
+            <div class="crm-stat-val gold" id="crmTotalAccts">2,487</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Active right now</div>
+            <div class="crm-stat-val" id="crmActiveAccts">2,341</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Spend / 24h</div>
+            <div class="crm-stat-val gold" id="crmSpend24">$184,720</div>
+          </div>
+          <div class="crm-stat">
+            <div class="crm-stat-label">Auto-replaced today</div>
+            <div class="crm-stat-val" id="crmReplaced">38</div>
+          </div>
+        </div>
+        <div class="crm-table" id="crmTable">
+          <!-- rows injected by JS -->
+        </div>
+        <div class="crm-toast" id="crmToast">
+          <div class="icon">&#8635;</div>
+          <div><strong id="crmToastTitle">Auto-replaced</strong><br><span id="crmToastBody" style="color:rgba(255,255,255,.7)"></span></div>
+        </div>
+        <div class="crm-overlay" id="crmOverlay">
+          <div class="crm-modal">
+            <h4>Share account into another BM</h4>
+            <p>Enter the target BM ID. Our system handles the share automatically &mdash; no Meta re-share limitation.</p>
+            <input class="crm-modal-input mono" id="crmModalInput" type="text" value="1247-9921" autocomplete="off" spellcheck="false">
+            <div class="crm-modal-actions">
+              <button class="crm-modal-btn" id="crmModalCancel">Cancel</button>
+              <button class="crm-modal-btn gold" id="crmModalConfirm">Share now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-block">
+      <div class="onyx-block-head">
+        <div class="onyx-block-num">3</div>
+        <div class="onyx-block-title">Zero downtime infrastructure</div>
+      </div>
+      <p>If any account goes down or underperforms, our system automatically replaces it within <b>5&ndash;10 minutes</b>. And here&rsquo;s where Onyx becomes strictly better than a traditional BM2500: if your BM gets restricted, we transfer all 2,500 ad accounts to a new BM and get you back running fast. Your infrastructure is <b>portable and recoverable</b>.</p>
+
+      <div class="onyx-vs">
+        <div class="vs-card bad">
+          <h4>Traditional BM2500</h4>
+          <ul class="vs-list">
+            <li>Single BM owns all 2,500 accounts directly</li>
+            <li>BM goes down &rarr; everything is gone</li>
+            <li>No portability, no recovery path</li>
+            <li>Manual replacements when something breaks</li>
+            <li>No CRM, no real-time monitoring</li>
+            <li>Single point of failure</li>
+          </ul>
+        </div>
+        <div class="vs-card good">
+          <h4>Onyx BM2500</h4>
+          <ul class="vs-list">
+            <li>Up to 2,500 accounts distributed across multiple source BMs</li>
+            <li>BM gets restricted &rarr; we transfer all accounts to a new BM</li>
+            <li>Portable and recoverable infrastructure</li>
+            <li>Auto-replacement in 5&ndash;10 minutes</li>
+            <li>Proprietary CRM with one-click share to any BM</li>
+            <li>No single point of failure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="onyx-cta-row">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-mag="0.45">Get Onyx BM2500</a>
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">Talk on WhatsApp</a>
+      <span class="badge"><strong>Built for</strong>&nbsp;high-spend nutra, iGaming, finance, casinos, peptides &amp; gray verticals</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING (RESTRUCTURED, 10 TIERS, 3 CATEGORIES) -->
 <section id="pricing" class="pricing-section">
   <div class="pricing-bg">
     <img src="pricing-bg.jpg" alt="" loading="lazy" decoding="async">
@@ -1756,138 +2594,271 @@ footer{
   <div class="reveal" style="position:relative;z-index:1;">
     <div class="kicker"><span class="kdot"></span> Pricing</div>
     <h2>Choose the infrastructure that <span class="grad">fits your scale</span>.</h2>
-    <p>From entry-level testing to enterprise unlimited &mdash; every package includes 24/7 support and the replacement workflow that keeps spend live.</p>
+    <p>From a $100 Facebook profile to a $35,000/mo unlimited enterprise package. Every tier includes 24/7 support, the replacement workflow that keeps spend live, and a free-replacement warranty if accounts get disabled with $0 or minimal spend.</p>
   </div>
 
-  <div class="pricing-grid reveal-stagger">
-    <!-- BM3 -->
-    <div class="tier tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Starter</span>
-      <div class="tier-name">BM3 Package</div>
-      <div class="tier-price">$199<small>/ month</small></div>
-      <p class="tier-desc">Cleanest entry point for controlled testing and lower-spend ramp-up.</p>
-      <ul class="tier-list">
-        <li>BM3 Business Manager structure</li>
-        <li>24/7 support coverage</li>
-        <li>Unlimited replacements</li>
-        <li>Lower spend, easier ramp</li>
-        <li>Use your own cards for ad spend</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3</a>
+  <div class="warmup-note reveal">
+    <div class="icon">&#9888;</div>
+    <div>
+      <strong>Important &mdash; warm-up required</strong>
+      <p>All ad accounts (and Profile FB) must be warmed up by spending a few dollars first to build trust signals on the asset before scaling. This protects the account and ensures stable performance once you push real volume. We&rsquo;ll guide you through the right warm-up flow during onboarding.</p>
+    </div>
+  </div>
+
+  <!-- ===== Quick Start ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Quick Start &middot; One-Time</div>
+      <div class="pricing-cat-sub">Pay once, get access &mdash; no subscription.</div>
     </div>
 
-    <!-- Single -->
-    <div class="tier tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Solo</span>
-      <div class="tier-name">Single Agency Account</div>
-      <div class="tier-price">$450<small>/ month</small></div>
-      <p class="tier-desc">One stable agency ad account &mdash; ideal when you need predictable single-account spend.</p>
-      <ul class="tier-list">
-        <li>1 agency ad account</li>
-        <li>24/7 support coverage</li>
-        <li>Unlimited replacements</li>
-        <li>Stable monthly access</li>
-        <li>Use your own cards for ad spend</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
-    </div>
-
-    <!-- BM10 ONE-TIME (NEW PRICE) -->
-    <div class="tier onetime tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">One-Time &middot; No Commitment</span>
-      <div class="tier-name">BM10 Instant Access</div>
-      <div class="tier-price">$550<small>/ one-time</small></div>
-      <p class="tier-desc">Buy a BM with 10 agency ad accounts in one transaction. No subscription, no warranty.</p>
-      <ul class="tier-list">
-        <li>1 BM containing 10 ad accounts</li>
-        <li>One payment, no commitment</li>
-        <li>Wallet top-up &amp; auto-delivery in CRM</li>
-        <li>Use your own cards for ad spend</li>
-        <li>No warranty &mdash; speed-first product</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
-    </div>
-
-    <!-- Dual -->
-    <div class="tier tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Scale</span>
-      <div class="tier-name">Dual Agency Accounts</div>
-      <div class="tier-price">$850<small>/ month</small></div>
-      <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume.</p>
-      <ul class="tier-list">
-        <li>2 agency ad accounts</li>
-        <li>24/7 support coverage</li>
-        <li>Unlimited replacements</li>
-        <li>Better for higher volume</li>
-        <li>Use your own cards for ad spend</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
-    </div>
-
-    <!-- Top Agency (Most Popular) -->
-    <div class="tier popular tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Most Popular</span>
-      <div class="tier-name">Top Agency Package</div>
-      <div class="tier-price">$1,950<small>/ month</small></div>
-      <p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling.</p>
-      <ul class="tier-list">
-        <li>Top-tier agency setup</li>
-        <li>Priority 24/7 support</li>
-        <li>Unlimited replacements</li>
-        <li>Aggressive scaling-ready</li>
-        <li>Use your own cards for ad spend</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
-    </div>
-
-    <!-- Custom -->
-    <div class="tier tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Custom</span>
-      <div class="tier-name">Custom Package</div>
-      <div class="tier-price">Quote<small>/ tailored</small></div>
-      <p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we&rsquo;ll architect it.</p>
-      <ul class="tier-list">
-        <li>Custom BM &amp; account structure</li>
-        <li>Vertical-specific setup</li>
-        <li>24/7 support &amp; unlimited replacements</li>
-        <li>Bespoke onboarding plan</li>
-        <li>Use your own cards for ad spend</li>
-      </ul>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
-    </div>
-
-    <!-- Agency Unlimited (NEW) -->
-    <div class="tier enterprise tilt">
-      <div class="tier-shine"></div>
-      <span class="tier-tag">Enterprise &middot; Unlimited</span>
-      <div class="enterprise-grid">
-        <div>
-          <div class="tier-name" style="font-size:28px;">Agency Unlimited</div>
-          <div class="tier-price">$35,000<small>/ month</small></div>
-          <p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, the dedicated relationship for media buyers operating at the very top end.</p>
+    <div class="pricing-grid reveal-stagger">
+      <!-- Profile FB (NEW) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Profile &middot; One-Time</span>
+        <div class="tier-name">Profile FB</div>
+        <div class="tier-price">$100<small>/ one-time</small></div>
+        <p class="tier-desc">Aged Facebook profile with verified history and warm activity. Use it to spin up new BMs, claim assets, or add as admin to existing Business Managers.</p>
+        <ul class="tier-list">
+          <li>Aged &amp; warmed-up FB profile</li>
+          <li>Verified email + 2FA-ready</li>
+          <li>Login + recovery details handed over securely</li>
+          <li>Use your own cards / payment methods</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <div>
-          <ul class="tier-list">
-            <li><b>Unlimited</b> ad accounts</li>
-            <li><b>Unlimited</b> Business Managers</li>
-            <li>Dedicated account manager</li>
-            <li>Priority replacement queue</li>
-            <li>Custom infrastructure architecture</li>
-            <li>White-glove onboarding</li>
-            <li>Use your own cards for ad spend</li>
-            <li>Operational support 24/7</li>
-          </ul>
-          <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Profile FB</a>
+      </div>
+
+      <!-- BM10 (UPDATED PRICE $550) -->
+      <div class="tier onetime tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Instant Access &middot; One-Time</span>
+        <div class="tier-name">BM10 Instant</div>
+        <div class="tier-price">$550<small>/ one-time</small></div>
+        <p class="tier-desc">Buy a Business Manager with 10 ad accounts in a single transaction. No subscription, instant delivery via wallet top-up in CRM.</p>
+        <ul class="tier-list">
+          <li>1 BM containing 10 ad accounts</li>
+          <li>One payment, no commitment</li>
+          <li>Wallet top-up &amp; auto-delivery in CRM</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend (24h)</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Monthly Subscriptions ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Monthly Subscriptions</div>
+      <div class="pricing-cat-sub">Long-term stable infrastructure with unlimited replacements.</div>
+    </div>
+
+    <div class="pricing-grid reveal-stagger">
+      <!-- BM3 -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Starter</span>
+        <div class="tier-name">BM3 Package</div>
+        <div class="tier-price">$199<small>/ month</small></div>
+        <p class="tier-desc">Cleanest entry point for controlled testing and lower-spend ramp-up. Three ad accounts inside a Business Manager structure.</p>
+        <ul class="tier-list">
+          <li>3 ad accounts inside one BM</li>
+          <li>24/7 support coverage</li>
+          <li>Unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3</a>
+      </div>
+
+      <!-- BM3 Verified (NEW) -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Verified</span>
+        <div class="tier-name">BM3 Verified</div>
+        <div class="tier-price">$200<small>/ month</small></div>
+        <p class="tier-desc">Verified BM3 with stronger trust profile and verified business status &mdash; better deliverability and longevity than the standard BM3.</p>
+        <ul class="tier-list">
+          <li>Verified Business Manager status</li>
+          <li>3 ad accounts inside one BM</li>
+          <li>Higher trust + better limits</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
+      </div>
+
+      <!-- Single Agency -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Solo</span>
+        <div class="tier-name">Single Agency Account</div>
+        <div class="tier-price">$450<small>/ month</small></div>
+        <p class="tier-desc">One stable agency ad account &mdash; ideal when you need predictable single-account spend with higher daily ceilings.</p>
+        <ul class="tier-list">
+          <li>1 agency ad account</li>
+          <li>Higher trust + higher daily caps</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
+      </div>
+
+      <!-- Dual Agency -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Scale</span>
+        <div class="tier-name">Dual Agency Accounts</div>
+        <div class="tier-price">$850<small>/ month</small></div>
+        <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p>
+        <ul class="tier-list">
+          <li>2 agency ad accounts</li>
+          <li>Better for higher volume</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
+      </div>
+
+      <!-- Top Agency (Most Popular) -->
+      <div class="tier popular tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Most Popular</span>
+        <div class="tier-name">Top Agency Package</div>
+        <div class="tier-price">$1,950<small>/ month</small></div>
+        <p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling. Priority response from support.</p>
+        <ul class="tier-list">
+          <li>Top-tier agency BM setup</li>
+          <li>Priority 24/7 support</li>
+          <li>Unlimited replacements</li>
+          <li>Aggressive scaling-ready</li>
+          <li>Use your own cards for ad spend</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">BH / GH friendly</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Enterprise ===== -->
+  <div class="pricing-cat">
+    <div class="pricing-cat-head reveal">
+      <div class="pricing-cat-title">Enterprise</div>
+      <div class="pricing-cat-sub">Custom architecture for high-spend operators &amp; agencies.</div>
+    </div>
+
+    <div class="pricing-grid reveal-stagger">
+      <!-- Custom -->
+      <div class="tier tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Custom</span>
+        <div class="tier-name">Custom Package</div>
+        <div class="tier-price">Quote<small>/ tailored</small></div>
+        <p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we&rsquo;ll architect the right structure for your offer.</p>
+        <ul class="tier-list">
+          <li>Custom BM &amp; account structure</li>
+          <li>Vertical-specific setup</li>
+          <li>24/7 support &amp; unlimited replacements</li>
+          <li>Bespoke onboarding plan</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
+          <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
+      </div>
+
+      <!-- Onyx BM2500 (link to dedicated section above) -->
+      <div class="tier onyx tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Onyx &middot; Exclusive</span>
+        <div class="tier-name">Onyx BM2500</div>
+        <div class="tier-price">$15,000<small>/ month</small></div>
+        <p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources. Distributed sourcing, proprietary CRM, BM-level recovery. <a href="#onyx" style="color:#F2D27A;text-decoration:underline;">See full details &uarr;</a></p>
+        <ul class="tier-list">
+          <li>Up to 2,500 ad accounts in one hub BM</li>
+          <li>Distributed sourcing &mdash; no single point of failure</li>
+          <li>Proprietary CRM with one-click share to any BM</li>
+          <li>Auto-replacement in 5&ndash;10 minutes</li>
+          <li>BM-level recovery (transfer all accounts to a new BM)</li>
+          <li>White-glove support</li>
+        </ul>
+        <div class="tier-meta">
+          <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+          <span class="tier-meta-pill warmup">&#9888; Warmup managed by us</span>
+          <span class="tier-meta-pill verticals">High-spend BH / GH</span>
+        </div>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Onyx BM2500</a>
+      </div>
+
+      <!-- Agency Unlimited -->
+      <div class="tier enterprise tilt">
+        <div class="tier-shine"></div>
+        <span class="tier-tag">Enterprise &middot; Unlimited</span>
+        <div class="enterprise-grid">
+          <div>
+            <div class="tier-name" style="font-size:28px;">Agency Unlimited</div>
+            <div class="tier-price">$35,000<small>/ month</small></div>
+            <p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for media buyers operating at the very top end of the volume curve.</p>
+            <div class="tier-meta">
+              <span class="tier-meta-pill warranty">&check; Free replace on $0 spend</span>
+              <span class="tier-meta-pill warmup">&#9888; Warmup handled white-glove</span>
+              <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
+            </div>
+          </div>
+          <div>
+            <ul class="tier-list">
+              <li><b>Unlimited</b> ad accounts</li>
+              <li><b>Unlimited</b> Business Managers</li>
+              <li>Dedicated account manager</li>
+              <li>Priority replacement queue</li>
+              <li>Custom infrastructure architecture</li>
+              <li>White-glove onboarding</li>
+              <li>Operational support 24/7</li>
+              <li>Use your own cards for ad spend</li>
+            </ul>
+            <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
 </section>
 
 <!-- SOCIAL / LIVE FEED -->
@@ -2169,6 +3140,36 @@ footer{
     <button class="faq-btn reveal" aria-expanded="false">
       <div class="faq-q">What is the Agency Unlimited package?</div>
       <div class="faq-a">$35,000/month enterprise tier with unlimited Business Managers and unlimited agency ad accounts. Includes a dedicated account manager, priority replacement queue, custom infrastructure architecture, and white-glove onboarding. Built for media buyers operating at the very top of the volume curve.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is Profile FB and what is it for?</div>
+      <div class="faq-a">$100 one-time. An aged Facebook profile with verified history and warm activity. Use it to spin up new BMs, claim assets, or be added as admin to existing Business Managers. Comes with verified email, 2FA-ready setup, and login + recovery details handed over securely. Free replacement if it dies before you use it.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What&rsquo;s the difference between BM3 and BM3 Verified?</div>
+      <div class="faq-a">Standard BM3 ($199/mo) is the cleanest entry point for testing. BM3 Verified ($200/mo) is the same 3-account structure but inside a verified Business Manager &mdash; stronger trust profile, better deliverability, higher account longevity, and less restrictive limits. The $1/mo difference is one of the easiest upgrades in the lineup.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What is Onyx BM2500 and how is it different from a normal BM2500?</div>
+      <div class="faq-a">Onyx BM2500 ($15,000/mo) gives you up to 2,500 ad accounts shared into a single high-trust Business Manager from <b>multiple different source BMs</b>. A traditional BM2500 owns all 2,500 accounts directly &mdash; if that BM dies, everything is gone. With Onyx, accounts come from distributed sources, our proprietary CRM lets you one-click share any account into any other BM (bypassing Meta&rsquo;s normal re-share limit), auto-replacement happens in 5&ndash;10 minutes, and if your BM gets restricted we transfer all accounts to a new BM. No single point of failure. See the dedicated Onyx section above for the full breakdown.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Do I need to warm up my accounts before scaling?</div>
+      <div class="faq-a">Yes &mdash; every ad account (and Profile FB) must be warmed up by spending a few dollars first. This builds trust signals on the asset, protects the account from early restriction, and ensures stable performance once you push real volume. We&rsquo;ll guide you through the right warm-up flow during onboarding.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">Which verticals do you actually support?</div>
+      <div class="faq-a">Nutra, iGaming, casinos, finance, peptides, crypto, sweepstakes, dating, and other policy-sensitive grey/blackhat verticals &mdash; plus all neutral verticals (e-com, lead gen, apps, content). Reliability and rapid replacement matter more in policy-sensitive niches, which is exactly where ScaleShield is built to perform.</div>
+    </button>
+
+    <button class="faq-btn reveal" aria-expanded="false">
+      <div class="faq-q">What happens if an account dies right after I buy it?</div>
+      <div class="faq-a">Every package (including the one-time BM10 within the first 24 hours) includes a free-replacement warranty if accounts get disabled with $0 or minimal spend. If you haven&rsquo;t had a real chance to use the account, you don&rsquo;t lose the asset.</div>
     </button>
 
     <button class="faq-btn reveal" aria-expanded="false">
@@ -2706,13 +3707,235 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
     }
   });
 
-  // Pricing tiers staggered reveal with subtle 3D
-  gsap.from('.pricing-grid > .tier', {
-    y: 60, opacity: 0, duration: 1, ease:'power3.out',
-    stagger: 0.08,
-    scrollTrigger: { trigger:'.pricing-grid', start:'top 80%' }
+  // Pricing tiers — animate per category grid so each one fires when scrolled to
+  gsap.utils.toArray('.pricing-grid').forEach(grid=>{
+    const tiers = grid.querySelectorAll('.tier');
+    if (!tiers.length) return;
+    gsap.from(tiers, {
+      y: 60, opacity: 0, duration: 1, ease:'power3.out',
+      stagger: 0.08,
+      scrollTrigger: { trigger:grid, start:'top 82%' }
+    });
+  });
+
+  // Onyx frame entrance
+  const onyxFrame = document.querySelector('.onyx-frame');
+  if (onyxFrame){
+    gsap.from(onyxFrame, {
+      y: 80, opacity: 0, duration: 1.2, ease:'power3.out',
+      scrollTrigger: { trigger:onyxFrame, start:'top 82%' }
+    });
+  }
+
+  // Onyx blocks staggered
+  gsap.utils.toArray('.onyx-block').forEach(block=>{
+    gsap.from(block, {
+      y: 50, opacity: 0, duration: 1, ease:'power3.out',
+      scrollTrigger: { trigger:block, start:'top 85%' }
+    });
+  });
+
+  // Architecture nodes pop in with stagger
+  const archNodes = document.querySelectorAll('.arch-node');
+  if (archNodes.length){
+    gsap.from(archNodes, {
+      scale: 0.6, opacity: 0, duration: .7, ease:'back.out(1.7)',
+      stagger: 0.06,
+      scrollTrigger: { trigger:'.onyx-arch', start:'top 75%' }
+    });
+  }
+  const archHub = document.querySelector('.arch-hub');
+  if (archHub){
+    gsap.from(archHub, {
+      scale: 0.5, opacity: 0, duration: .9, ease:'back.out(1.7)',
+      delay: .3,
+      scrollTrigger: { trigger:'.onyx-arch', start:'top 75%' }
+    });
+  }
+
+  // VS comparison cards
+  gsap.utils.toArray('.vs-card').forEach((card,i)=>{
+    gsap.from(card, {
+      x: i === 0 ? -40 : 40, opacity: 0, duration: 1, ease:'power3.out',
+      scrollTrigger: { trigger:card, start:'top 85%' }
+    });
   });
 }
+
+/* ====== CRM mockup live animation ====== */
+(function crmMockup(){
+  const table = document.getElementById('crmTable');
+  if (!table) return;
+
+  const sources = ['BM #1','BM #2','BM #3','BM #4','BM #5','BM #6','BM #7','BM #8'];
+  const seedRows = [
+    {id:'act_8847_2031', src:'BM #1', spend:'$2,840', status:'ok'},
+    {id:'act_8847_2032', src:'BM #3', spend:'$5,120', status:'ok'},
+    {id:'act_8847_2033', src:'BM #2', spend:'$1,940', status:'ok'},
+    {id:'act_8847_2034', src:'BM #5', spend:'$8,720', status:'ok'},
+    {id:'act_8847_2035', src:'BM #4', spend:'$3,610', status:'warn'},
+    {id:'act_8847_2036', src:'BM #6', spend:'$6,450', status:'ok'},
+    {id:'act_8847_2037', src:'BM #1', spend:'$4,180', status:'ok'},
+    {id:'act_8847_2038', src:'BM #8', spend:'$7,990', status:'ok'}
+  ];
+
+  function pillFor(status){
+    if (status === 'ok') return '<span class="pill ok"><span class="pulse-dot"></span>Active</span>';
+    if (status === 'warn') return '<span class="pill warn"><span class="pulse-dot"></span>Replacing</span>';
+    if (status === 'bad') return '<span class="pill bad"><span class="pulse-dot"></span>Disabled</span>';
+    return '';
+  }
+
+  function rowHTML(r){
+    return ''+
+      '<div class="id mono">'+r.id+'</div>'+
+      '<div class="src">'+r.src+'</div>'+
+      '<div class="spend">'+r.spend+'</div>'+
+      '<div>'+pillFor(r.status)+'</div>'+
+      '<div><button class="crm-share" data-id="'+r.id+'">Share &rarr;</button></div>';
+  }
+
+  function render(){
+    table.innerHTML = '';
+    seedRows.forEach((r)=>{
+      const div = document.createElement('div');
+      div.className = 'crm-row';
+      div.dataset.id = r.id;
+      div.innerHTML = rowHTML(r);
+      table.appendChild(div);
+    });
+    // bind share buttons
+    table.querySelectorAll('.crm-share').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        openModal(btn.getAttribute('data-id'));
+      });
+    });
+  }
+
+  /* === Modal === */
+  const overlay = document.getElementById('crmOverlay');
+  const modalInput = document.getElementById('crmModalInput');
+  const cancel = document.getElementById('crmModalCancel');
+  const confirm = document.getElementById('crmModalConfirm');
+  let activeShareId = null;
+  function openModal(id){
+    activeShareId = id;
+    if (modalInput) modalInput.value = '1247-' + Math.floor(8000 + Math.random()*1500);
+    overlay && overlay.classList.add('show');
+  }
+  function closeModal(){
+    overlay && overlay.classList.remove('show');
+    activeShareId = null;
+  }
+  cancel && cancel.addEventListener('click', closeModal);
+  overlay && overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeModal(); });
+  confirm && confirm.addEventListener('click', ()=>{
+    const target = (modalInput && modalInput.value) || '1247-XXXX';
+    closeModal();
+    showToast('Account shared', activeShareId + ' → BM ' + target);
+  });
+
+  /* === Toast === */
+  const toast = document.getElementById('crmToast');
+  const toastTitle = document.getElementById('crmToastTitle');
+  const toastBody = document.getElementById('crmToastBody');
+  let toastTimer = null;
+  function showToast(title, body){
+    if (!toast) return;
+    toastTitle.textContent = title;
+    toastBody.textContent = body;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 3800);
+  }
+
+  /* === Auto replacement loop (only runs when CRM is in view) === */
+  let inView = false;
+  let loopTimer = null;
+  function autoReplaceTick(){
+    if (!inView){ loopTimer = setTimeout(autoReplaceTick, 3000); return; }
+    // pick a random row
+    const idx = Math.floor(Math.random() * seedRows.length);
+    const row = seedRows[idx];
+    const oldId = row.id;
+    const rowEl = table.querySelector('[data-id="'+oldId+'"]');
+    if (!rowEl){ loopTimer = setTimeout(autoReplaceTick, 4000); return; }
+
+    // mark as bad
+    row.status = 'bad';
+    rowEl.innerHTML = rowHTML(row);
+    rowEl.classList.remove('flash-good');
+    rowEl.classList.add('flash-bad');
+    bindShare(rowEl);
+
+    setTimeout(()=>{
+      // mark as warn
+      row.status = 'warn';
+      rowEl.innerHTML = rowHTML(row);
+      bindShare(rowEl);
+    }, 1200);
+
+    setTimeout(()=>{
+      // replaced — new id, new src, fresh spend, ok
+      const newSeq = 2100 + Math.floor(Math.random()*500);
+      const newId = 'act_8847_' + newSeq;
+      const newSrc = sources[Math.floor(Math.random()*sources.length)];
+      row.id = newId;
+      row.src = newSrc;
+      row.spend = '$' + (100 + Math.floor(Math.random()*900)).toLocaleString();
+      row.status = 'ok';
+      rowEl.dataset.id = newId;
+      rowEl.classList.remove('flash-bad');
+      rowEl.innerHTML = rowHTML(row);
+      rowEl.classList.add('flash-good');
+      bindShare(rowEl);
+      showToast('Auto-replaced in 7 min', oldId + ' → ' + newId);
+      // bump replaced counter
+      const replacedEl = document.getElementById('crmReplaced');
+      if (replacedEl){
+        const n = parseInt(replacedEl.textContent.replace(/[^0-9]/g,''),10) || 0;
+        replacedEl.textContent = (n+1).toLocaleString();
+      }
+    }, 2800);
+
+    loopTimer = setTimeout(autoReplaceTick, 9500);
+  }
+
+  function bindShare(rowEl){
+    const btn = rowEl.querySelector('.crm-share');
+    if (btn){
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        openModal(btn.getAttribute('data-id'));
+      });
+    }
+  }
+
+  // Spend ticker — slowly increment the 24h spend stat
+  const spendEl = document.getElementById('crmSpend24');
+  if (spendEl){
+    let base = 184720;
+    setInterval(()=>{
+      if (!inView) return;
+      base += Math.floor(Math.random()*220 + 40);
+      spendEl.textContent = '$' + base.toLocaleString();
+    }, 1800);
+  }
+
+  // Init
+  render();
+
+  // Start loop when CRM mockup enters viewport
+  const mockupEl = document.querySelector('.crm-mockup');
+  if (mockupEl){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ inView = e.isIntersecting; });
+    }, { threshold: 0.2 });
+    io.observe(mockupEl);
+  }
+  loopTimer = setTimeout(autoReplaceTick, 2200);
+})();
 
 /* ====== Hero background image graceful fallback ====== */
 (function(){
