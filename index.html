@@ -297,6 +297,16 @@ p{
   color:transparent;
   animation:gradShift 6s ease-in-out infinite;
 }
+/* SplitType wraps inner content in .word spans which break background-clip
+   inheritance — re-apply the gradient to inner spans so .grad works
+   inside split text. */
+.grad .word, .grad .char, .grad span{
+  background:inherit !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  color:transparent !important;
+}
 @keyframes gradShift{
   0%,100%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -4299,47 +4309,81 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
     });
   });
 
-  // Onyx frame entrance
+  // Onyx frame entrance — use fromTo with toggleActions so it never gets
+  // stuck at opacity:0 if the trigger is scrolled past quickly.
   const onyxFrame = document.querySelector('.onyx-frame');
   if (onyxFrame){
-    gsap.from(onyxFrame, {
-      y: 80, opacity: 0, duration: 1.2, ease:'power3.out',
-      scrollTrigger: { trigger:onyxFrame, start:'top 82%' }
-    });
+    gsap.fromTo(onyxFrame,
+      { y: 80, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1.2, ease:'power3.out',
+        scrollTrigger: {
+          trigger: onyxFrame,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      }
+    );
   }
 
-  // Onyx blocks staggered
+  // Onyx blocks staggered (fromTo + once so they never get stuck)
   gsap.utils.toArray('.onyx-block').forEach(block=>{
-    gsap.from(block, {
-      y: 50, opacity: 0, duration: 1, ease:'power3.out',
-      scrollTrigger: { trigger:block, start:'top 85%' }
-    });
+    gsap.fromTo(block,
+      { y: 50, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        scrollTrigger: { trigger:block, start:'top 90%', once:true } }
+    );
   });
 
   // Architecture nodes pop in with stagger
   const archNodes = document.querySelectorAll('.arch-node');
   if (archNodes.length){
-    gsap.from(archNodes, {
-      scale: 0.6, opacity: 0, duration: .7, ease:'back.out(1.7)',
-      stagger: 0.06,
-      scrollTrigger: { trigger:'.onyx-arch', start:'top 75%' }
-    });
+    gsap.fromTo(archNodes,
+      { scale: 0.6, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: .7, ease:'back.out(1.7)',
+        stagger: 0.06,
+        scrollTrigger: { trigger:'.onyx-arch', start:'top 90%', once:true } }
+    );
   }
   const archHub = document.querySelector('.arch-hub');
   if (archHub){
-    gsap.from(archHub, {
-      scale: 0.5, opacity: 0, duration: .9, ease:'back.out(1.7)',
-      delay: .3,
-      scrollTrigger: { trigger:'.onyx-arch', start:'top 75%' }
-    });
+    gsap.fromTo(archHub,
+      { scale: 0.5, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: .9, ease:'back.out(1.7)', delay: .3,
+        scrollTrigger: { trigger:'.onyx-arch', start:'top 90%', once:true } }
+    );
   }
 
   // VS comparison cards
   gsap.utils.toArray('.vs-card').forEach((card,i)=>{
-    gsap.from(card, {
-      x: i === 0 ? -40 : 40, opacity: 0, duration: 1, ease:'power3.out',
-      scrollTrigger: { trigger:card, start:'top 85%' }
-    });
+    gsap.fromTo(card,
+      { x: i === 0 ? -40 : 40, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        scrollTrigger: { trigger:card, start:'top 90%', once:true } }
+    );
+  });
+
+  // After images load, refresh ScrollTrigger so triggers use correct positions.
+  // Images change the page height significantly.
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>ScrollTrigger.refresh(), 250);
+  });
+
+  // Failsafe: if any GSAP-controlled element is still at autoAlpha:0 after
+  // 4s past full page load, force it visible. Avoids stuck-invisible bugs.
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>{
+      const watched = ['.onyx-frame', '.onyx-block', '.arch-node', '.arch-hub', '.vs-card'];
+      watched.forEach(sel=>{
+        document.querySelectorAll(sel).forEach(el=>{
+          const cs = getComputedStyle(el);
+          if (parseFloat(cs.opacity) < 0.05 && cs.visibility !== 'hidden'){
+            // never animated → settle to visible
+            gsap.set(el, { autoAlpha: 1, y: 0, x: 0, scale: 1 });
+          }
+        });
+      });
+    }, 4000);
   });
 }
 
