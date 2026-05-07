@@ -239,6 +239,25 @@ section{
   position:relative;
   z-index:2;
 }
+/* Full-bleed sections — their backgrounds extend edge-to-edge.
+   Inner content blocks have their own max-width to stay readable. */
+.hero,
+.reality-section,
+.onyx-section,
+.pricing-section{
+  max-width:none;
+  width:100%;
+}
+/* Constrain inner content of full-bleed sections to a centered column */
+.hero > div,
+.reality-scene > .scene-text,
+.pricing-section > .reveal,
+.pricing-section > .warmup-note,
+.pricing-section > .pricing-cat{
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
 /* Center any section intro block — identified by containing a .kicker child.
    Uses :has() so it works regardless of preceding background-image divs. */
 section > .reveal:has(> .kicker){ text-align:center }
