@@ -75,7 +75,8 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:auto}
+html{scroll-behavior:auto; width:100%}
+html, body{ overflow-x:hidden }
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto !important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
@@ -579,18 +580,18 @@ p{
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:.45;
-  filter:blur(2px) saturate(115%);
+  opacity:.55;
+  filter:blur(2px) saturate(118%);
   mix-blend-mode:screen;
-  transform:scale(1.06);
+  transform:scale(1.08);
 }
 .hero-bg::after{
   content:"";
   position:absolute;
   inset:0;
   background:
-    radial-gradient(80% 60% at 50% 0%, rgba(5,5,7,.0), rgba(5,5,7,.55) 70%, rgba(5,5,7,.95) 100%),
-    linear-gradient(180deg, rgba(5,5,7,.35), transparent 35%);
+    radial-gradient(140% 90% at 50% 35%, rgba(5,5,7,.0), rgba(5,5,7,.25) 70%, rgba(5,5,7,.55) 100%),
+    linear-gradient(180deg, rgba(5,5,7,.18), transparent 30%);
 }
 .hero-orb{
   position:absolute;
