@@ -249,8 +249,9 @@ section{
   max-width:none;
   width:100%;
 }
-/* Constrain inner content of full-bleed sections to a centered column */
-.hero > div,
+/* Constrain inner content of full-bleed sections to a centered column.
+   Excludes background and decorative divs so they fill the viewport. */
+.hero > div:not(.hero-bg):not(.hero-orb):not(.hero-mouse-orb):not(.hero-ambient),
 .reality-scene > .scene-text,
 .pricing-section > .reveal,
 .pricing-section > .warmup-note,
@@ -258,6 +259,13 @@ section{
   max-width:1200px;
   margin-left:auto;
   margin-right:auto;
+}
+/* Belt-and-suspenders: explicitly force background/decorative divs to
+   span the full viewport in case any other rule narrows them. */
+.hero-bg, .hero-orb, .hero-mouse-orb, .hero-ambient,
+.pricing-bg, .reality-grid, .onyx-bg{
+  max-width:none !important;
+  width:auto !important;
 }
 /* Center any section intro block — identified by containing a .kicker child.
    Uses :has() so it works regardless of preceding background-image divs. */
