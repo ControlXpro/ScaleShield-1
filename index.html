@@ -239,15 +239,24 @@ section{
   position:relative;
   z-index:2;
 }
-/* Center the section intro (kicker + h2 + intro paragraph) for visual cohesion */
-section > .reveal:first-of-type{ text-align:center }
-section > .reveal:first-of-type .kicker{ display:inline-flex }
-section > .reveal:first-of-type > p{
+/* Center any section intro block — identified by containing a .kicker child.
+   Uses :has() so it works regardless of preceding background-image divs. */
+section > .reveal:has(> .kicker){ text-align:center }
+section > .reveal:has(> .kicker) .kicker{ display:inline-flex }
+section > .reveal:has(> .kicker) > p{
   max-width:64ch;
   margin-left:auto;
   margin-right:auto;
 }
-section > .reveal:first-of-type h2{ margin-left:auto; margin-right:auto }
+section > .reveal:has(> .kicker) > h2{ margin-left:auto; margin-right:auto }
+/* Same treatment for the contact/cards that act as section heads */
+section > .card.reveal > .kicker{ display:inline-flex }
+section > .card.reveal{ text-align:center }
+section > .card.reveal > p{
+  max-width:64ch;
+  margin-left:auto;
+  margin-right:auto;
+}
 
 h1,h2,h3{font-family:'Sora','Inter',system-ui,sans-serif}
 h1{
@@ -730,16 +739,20 @@ p{
 }
 .pricing-grid{
   margin-top:42px;
-  display:grid;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
   gap:22px;
   position:relative;
   z-index:1;
 }
-@media(min-width:780px){
-  .pricing-grid{ grid-template-columns:repeat(2,1fr) }
+.pricing-grid > .tier{
+  flex:1 1 300px;
+  max-width:380px;
 }
-@media(min-width:1100px){
-  .pricing-grid{ grid-template-columns:repeat(3,1fr) }
+.pricing-grid > .tier.enterprise{
+  flex-basis:100%;
+  max-width:100%;
 }
 .tier{
   position:relative;
@@ -2016,24 +2029,40 @@ footer{
 
 /* ====== Pricing categories + new tier meta pills ====== */
 .pricing-cat{
-  margin-top:48px;
+  margin-top:56px;
 }
 .pricing-cat-head{
-  display:flex; align-items:baseline; gap:14px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  margin-bottom:28px;
+  text-align:center;
 }
 .pricing-cat-title{
   font-family:'Sora',sans-serif;
-  font-size:22px; font-weight:900;
+  font-size:24px; font-weight:900;
   letter-spacing:-.01em;
   color:#fff;
+  position:relative;
+  padding-bottom:10px;
+}
+.pricing-cat-title::after{
+  content:"";
+  position:absolute;
+  bottom:0; left:50%;
+  transform:translateX(-50%);
+  width:42px; height:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-radius:2px;
+  box-shadow:0 0 12px rgba(214,177,94,.55);
 }
 .pricing-cat-sub{
   color:var(--muted);
   font-size:13.5px;
   font-weight:700;
 }
+/* (pricing-grid centering handled in main rule above via flex) */
 .pricing-cat .pricing-grid{ margin-top:0 }
 .warmup-note{
   margin-top:30px;
@@ -4216,15 +4245,17 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
     }
   });
 
-  // Pricing tiers — animate per category grid so each one fires when scrolled to
+  // Pricing tiers — fromTo + once so they always settle to visible
   gsap.utils.toArray('.pricing-grid').forEach(grid=>{
     const tiers = grid.querySelectorAll('.tier');
     if (!tiers.length) return;
-    gsap.from(tiers, {
-      y: 60, opacity: 0, duration: 1, ease:'power3.out',
-      stagger: 0.08,
-      scrollTrigger: { trigger:grid, start:'top 82%' }
-    });
+    gsap.fromTo(tiers,
+      { y: 40, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1, ease:'power3.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger:grid, start:'top 92%', once:true }
+      }
+    );
   });
 
   // Onyx frame entrance — use fromTo with toggleActions so it never gets
@@ -4291,7 +4322,7 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
   // 4s past full page load, force it visible. Avoids stuck-invisible bugs.
   window.addEventListener('load', ()=>{
     setTimeout(()=>{
-      const watched = ['.onyx-frame', '.onyx-block', '.arch-node', '.arch-hub', '.vs-card'];
+      const watched = ['.onyx-frame', '.onyx-block', '.arch-node', '.arch-hub', '.vs-card', '.tier'];
       watched.forEach(sel=>{
         document.querySelectorAll(sel).forEach(el=>{
           const cs = getComputedStyle(el);
