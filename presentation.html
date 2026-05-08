@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1650229346295373');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
+/></noscript>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="ScaleShield CRM Tour — animated walkthrough of every feature in the client panel.">
+<title>ScaleShield — CRM Tour</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+  --green:#2cd67c;
+  --red:#ff646e;
+  --blue:#49b2ff;
+  --violet:#a855f7;
+  --text:#fff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-back:cubic-bezier(.34,1.56,.64,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html, body{ height:100%; overflow:hidden; width:100% }
+
+body{
+  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -10%, rgba(214,177,94,.18), transparent 55%),
+    radial-gradient(800px circle at 85% 60%, rgba(73,178,255,.07), transparent 60%),
+    radial-gradient(700px circle at 15% 75%, rgba(168,85,247,.07), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+  position:relative;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(214,177,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,177,94,.04) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(60% 60% at 50% 50%, black, transparent);
+          mask-image:radial-gradient(60% 60% at 50% 50%, black, transparent);
+  z-index:0;
+  animation:gridDrift 22s linear infinite;
+}
+@keyframes gridDrift{ to{ background-position:48px 48px } }
+
+a{color:inherit;text-decoration:none}
+b{color:rgba(255,255,255,.92)}
+
+h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
+
+.grad{
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+@keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* TOP BAR */
+.topbar{
+  position:fixed; top:0; left:0; right:0;
+  z-index:50;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 22px;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(5,5,7,.55);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.topbar .logo img{ height:28px; display:block }
+.topbar .label{
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  font-weight:950; color:var(--muted2);
+}
+.topbar .label b{ color:#F2D27A; font-weight:950 }
+.topbar .actions{ display:flex; gap:8px; align-items:center }
+.topbar .btn{
+  padding:8px 14px; border-radius:10px;
+  font-weight:900; font-size:12px; cursor:pointer;
+  border:1px solid transparent; transition:.18s var(--ease);
+}
+.topbar .btn.ghost{
+  background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.12); color:#fff;
+}
+.topbar .btn.ghost:hover{ border-color:rgba(214,177,94,.35) }
+
+/* STAGE — full viewport area below topbar */
+.stage{
+  position:fixed;
+  top:60px; left:0; right:0; bottom:80px;
+  display:grid; place-items:center;
+  padding:24px;
+  z-index:1;
+}
+.stage-inner{
+  width:100%;
+  max-width:1100px;
+  position:relative;
+}
+
+/* SLIDE */
+.slide{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  opacity:0; pointer-events:none;
+  transform:translateY(24px) scale(.98);
+  transition:opacity .55s var(--ease), transform .65s var(--ease);
+}
+.slide.active{
+  opacity:1; pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+.slide-num{
+  font-family:'Sora',sans-serif;
+  font-size:13px; font-weight:950; letter-spacing:.22em;
+  color:var(--muted2);
+  margin-bottom:14px;
+}
+.slide-num span{ color:#F2D27A }
+.slide-title{
+  font-size:clamp(34px,5vw,58px); font-weight:950;
+  letter-spacing:-.03em; line-height:1.04;
+}
+.slide-desc{
+  margin-top:14px;
+  font-size:clamp(15px,1.4vw,18px);
+  color:var(--muted); line-height:1.65;
+  max-width:62ch;
+}
+.slide-bullets{
+  margin-top:22px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+}
+.bullet{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px; border-radius:999px;
+  border:1px solid rgba(214,177,94,.25);
+  background:rgba(214,177,94,.06);
+  color:var(--muted); font-size:12.5px; font-weight:800;
+  opacity:0; transform:translateY(8px);
+}
+.bullet::before{
+  content:""; width:6px; height:6px; border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+}
+.slide.active .bullet{ animation:bulletIn .55s var(--ease-back) forwards }
+.slide.active .bullet:nth-child(1){ animation-delay:.45s }
+.slide.active .bullet:nth-child(2){ animation-delay:.6s }
+.slide.active .bullet:nth-child(3){ animation-delay:.75s }
+.slide.active .bullet:nth-child(4){ animation-delay:.9s }
+@keyframes bulletIn{ to{ opacity:1; transform:translateY(0) } }
+
+/* Title and desc reveal */
+.slide-title, .slide-desc{
+  opacity:0; transform:translateY(16px);
+}
+.slide.active .slide-title{ animation:textIn .8s var(--ease-out) .1s forwards }
+.slide.active .slide-desc{  animation:textIn .8s var(--ease-out) .25s forwards }
+@keyframes textIn{ to{ opacity:1; transform:translateY(0) } }
+
+/* Mockup container */
+.mockup{
+  margin-top:26px;
+  width:100%; max-width:880px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(10,10,14,.94), rgba(8,8,11,.96));
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04);
+  overflow:hidden;
+  opacity:0; transform:scale(.94);
+}
+.slide.active .mockup{ animation:mockupIn .8s var(--ease-back) .3s forwards }
+@keyframes mockupIn{ to{ opacity:1; transform:scale(1) } }
+
+.mockup-bar{
+  display:flex; align-items:center; gap:8px;
+  padding:9px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+}
+.mockup-dot{ width:10px; height:10px; border-radius:999px }
+.mockup-dot.r{ background:#ff5f56 } .mockup-dot.y{ background:#ffbd2e } .mockup-dot.g{ background:#27c93f }
+.mockup-title{
+  margin-left:14px; font-size:11px;
+  font-family:'JetBrains Mono', monospace;
+  color:var(--muted);
+}
+.live-pulse{
+  margin-left:auto;
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted2); font-weight:900;
+}
+.live-pulse::before{
+  content:""; width:7px; height:7px; border-radius:999px;
+  background:#2cd67c; box-shadow:0 0 10px rgba(44,214,124,.7);
+  animation:livedot 1.4s ease-in-out infinite;
+}
+@keyframes livedot{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.85)} }
+
+/* Stats grid in mockup */
+.m-stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:rgba(255,255,255,.05);
+}
+.m-stat{ padding:14px 16px; background:rgba(8,8,11,.96) }
+.m-stat-l{
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted2); font-weight:900;
+}
+.m-stat-v{
+  margin-top:6px;
+  font-family:'Sora',sans-serif;
+  font-size:20px; font-weight:900;
+}
+.m-stat-v.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+@media(max-width:640px){
+  .m-stats{ grid-template-columns:repeat(2,1fr) }
+}
+
+/* Account row in mockup */
+.m-row{
+  display:grid; grid-template-columns:1.1fr .8fr 1fr 1fr .8fr;
+  gap:12px; padding:12px 16px;
+  border-bottom:1px dashed rgba(255,255,255,.05);
+  font-size:13px; align-items:center;
+  opacity:0; transform:translateY(8px);
+}
+.m-row.in{ opacity:1; transform:translateY(0); transition:.5s var(--ease-out) }
+.m-row .id{ font-family:'JetBrains Mono', monospace; font-size:12px }
+.m-row .src{
+  color:var(--muted2); font-size:10.5px; font-weight:800;
+  letter-spacing:.10em; text-transform:uppercase;
+}
+.m-row .spend{ font-family:'Sora',sans-serif; font-weight:900 }
+.m-row.flash-bad{ animation:flashBad 1.2s ease-out 1 }
+.m-row.flash-good{ animation:flashGood 1.4s ease-out 1 }
+@keyframes flashBad{ 0%{background:rgba(255,100,110,.18)} 100%{background:transparent} }
+@keyframes flashGood{ 0%{background:rgba(44,214,124,.18)} 100%{background:transparent} }
+.pill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 10px; border-radius:999px;
+  font-size:11px; font-weight:900;
+  border:1px solid rgba(255,255,255,.10);
+}
+.pill.ok{ color:#d7ffe8; border-color:rgba(44,214,124,.30); background:rgba(44,214,124,.10) }
+.pill.warn{ color:#fff2d3; border-color:rgba(255,203,107,.30); background:rgba(255,203,107,.10) }
+.pill.bad{ color:#ffd9dd; border-color:rgba(255,100,110,.30); background:rgba(255,100,110,.10) }
+.pill .dot{
+  display:inline-block; width:6px; height:6px; border-radius:999px;
+  background:currentColor; animation:livedot 1.4s ease-in-out infinite;
+}
+.bind-btn{
+  padding:5px 10px; border-radius:8px;
+  font-size:10.5px; font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; border:none; cursor:pointer;
+}
+
+/* Filter dropdown mockup */
+.dropdown-mock{
+  position:relative; display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px; border-radius:10px;
+  background:rgba(255,255,255,.05); border:1px solid rgba(214,177,94,.40);
+  font-size:13px; color:#fff; font-weight:700;
+  margin:0 6px;
+}
+.dropdown-mock::after{
+  content:"▾"; color:var(--muted2);
+}
+.dropdown-mock.open{ border-color:rgba(214,177,94,.65); box-shadow:0 0 24px rgba(214,177,94,.25) }
+.dropdown-options{
+  position:absolute; top:calc(100% + 8px); left:0; right:0;
+  background:#15161c; border:1px solid rgba(255,255,255,.10);
+  border-radius:10px; padding:6px;
+  display:none;
+  z-index:10;
+  text-align:left;
+}
+.dropdown-mock.open .dropdown-options{ display:block; animation:dropIn .25s var(--ease-out) }
+@keyframes dropIn{ from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)} }
+.dropdown-options .opt{
+  padding:8px 10px; border-radius:6px;
+  font-size:12px; color:var(--muted); cursor:pointer;
+}
+.dropdown-options .opt:hover{ background:rgba(214,177,94,.08); color:#fff }
+.dropdown-options .opt.selected{
+  background:rgba(214,177,94,.14); color:#F2D27A; font-weight:900;
+}
+
+/* Bind modal mockup */
+.bind-modal{
+  width:min(420px, 100%);
+  background:rgba(15,15,20,.97);
+  border:1px solid rgba(214,177,94,.40);
+  border-radius:18px;
+  padding:22px;
+  text-align:left;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85);
+  margin:0 auto;
+}
+.bind-modal h4{
+  font-size:17px; font-weight:900; color:#fff;
+}
+.bind-modal p{
+  font-size:13px; color:var(--muted); margin-top:6px; line-height:1.5;
+}
+.bind-input{
+  margin-top:14px; width:100%;
+  padding:11px 13px; border-radius:11px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:800;
+}
+.bind-input.focus{ border-color:rgba(214,177,94,.55); box-shadow:0 0 16px rgba(214,177,94,.20) }
+.bind-perms{ margin-top:14px; display:grid; gap:8px }
+.bind-perm{
+  display:flex; gap:10px; align-items:flex-start;
+  padding:9px 12px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  transition:.25s var(--ease);
+}
+.bind-perm.checked{
+  border-color:rgba(214,177,94,.55);
+  background:rgba(214,177,94,.08);
+}
+.bind-perm-cb{
+  width:14px; height:14px; flex:0 0 14px; margin-top:2px;
+  border:1.5px solid rgba(255,255,255,.30); border-radius:3px;
+  background:transparent; position:relative;
+}
+.bind-perm.checked .bind-perm-cb{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-color:transparent;
+}
+.bind-perm.checked .bind-perm-cb::after{
+  content:""; position:absolute; left:3px; top:0px;
+  width:5px; height:9px;
+  border:solid #111; border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+.bind-perm-t{ font-weight:800; font-size:12.5px; color:#fff }
+.bind-perm-d{ font-size:11px; color:var(--muted); margin-top:2px }
+.bind-actions{ margin-top:14px; display:flex; gap:10px; justify-content:flex-end }
+.bind-btn-mock{
+  padding:8px 14px; border-radius:10px;
+  font-size:12px; font-weight:900;
+  border:1px solid transparent; cursor:default;
+}
+.bind-btn-mock.ghost{
+  background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.12); color:#fff;
+}
+.bind-btn-mock.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#111;
+}
+.bind-btn-mock.gold.click{
+  animation:pressClick .35s var(--ease-out);
+}
+@keyframes pressClick{
+  0%{transform:scale(1)} 30%{transform:scale(.94)} 100%{transform:scale(1)}
+}
+
+/* Toast popup */
+.toast-mock{
+  margin:14px auto 0;
+  display:inline-flex; gap:10px; align-items:center;
+  padding:10px 16px; border-radius:12px;
+  border:1px solid rgba(214,177,94,.40);
+  background:linear-gradient(135deg, rgba(214,177,94,.20), rgba(214,177,94,.06));
+  font-size:12.5px; font-weight:800; color:#fff;
+  opacity:0; transform:translateY(8px);
+}
+.toast-mock.show{ animation:toastIn .55s var(--ease-back) forwards }
+@keyframes toastIn{ to{ opacity:1; transform:translateY(0) } }
+.toast-mock .icon{
+  width:24px; height:24px; border-radius:7px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; font-weight:900; font-size:13px;
+}
+
+/* Search box mockup */
+.search-mock{
+  position:relative;
+  margin:0 auto;
+  width:min(360px, 100%);
+}
+.search-mock input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:#fff; font-size:14px;
+  font-family:inherit;
+}
+.search-mock input:focus{ outline:none; border-color:rgba(214,177,94,.55) }
+.search-mock .caret{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  width:2px; height:18px; background:#F2D27A;
+  animation:blink 1s steps(2) infinite;
+}
+@keyframes blink{ 50%{opacity:0} }
+
+/* PDF flying icon */
+.pdf-fly{
+  width:64px; height:78px;
+  border-radius:8px;
+  background:linear-gradient(135deg, #fff, #e8e8e8);
+  position:relative;
+  display:grid; place-items:center;
+  font-family:'Sora',sans-serif; font-size:11px; font-weight:950;
+  color:#d62828;
+  box-shadow:0 20px 50px -10px rgba(0,0,0,.6);
+  margin:18px auto 0;
+}
+.pdf-fly::before{
+  content:""; position:absolute; top:0; right:0;
+  width:18px; height:18px;
+  background:linear-gradient(135deg, #d62828, #b51d1d);
+  clip-path:polygon(0 0, 100% 100%, 100% 0);
+}
+.slide.active .pdf-fly{ animation:pdfFly 1.3s var(--ease-back) .8s both }
+@keyframes pdfFly{
+  0%{ opacity:0; transform:scale(.5) translateY(20px) }
+  60%{ opacity:1; transform:scale(1.1) translateY(-10px) }
+  100%{ opacity:1; transform:scale(1) translateY(0) }
+}
+
+/* Welcome / final slides — typography focus */
+.slide.welcome .slide-title,
+.slide.finale .slide-title{
+  font-size:clamp(44px, 7vw, 84px);
+}
+.slide.finale .actions{
+  margin-top:30px;
+  display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+  opacity:0; transform:translateY(8px);
+}
+.slide.finale.active .actions{ animation:textIn .8s var(--ease-out) .6s forwards }
+.slide.finale .btn{
+  padding:14px 22px; border-radius:14px;
+  font-weight:900; font-size:14px;
+  text-decoration:none; cursor:pointer;
+  border:1px solid transparent;
+  transition:.25s var(--ease);
+}
+.slide.finale .btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#111;
+  box-shadow:0 0 30px rgba(214,177,94,.20);
+}
+.slide.finale .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 50px rgba(214,177,94,.32) }
+.slide.finale .btn-ghost{
+  background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.12); color:#fff;
+}
+.slide.finale .btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
+
+/* Hero glow orb on welcome */
+.welcome-orb{
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%, -50%);
+  width:600px; height:600px;
+  border-radius:999px;
+  background:radial-gradient(circle, rgba(214,177,94,.25), transparent 60%);
+  filter:blur(40px);
+  z-index:-1;
+  opacity:0;
+}
+.slide.welcome.active .welcome-orb{
+  animation:orbIn 1.4s ease-out forwards, orbDrift 8s ease-in-out 1.4s infinite;
+}
+@keyframes orbIn{ to{opacity:1} }
+@keyframes orbDrift{
+  0%,100%{ transform:translate(-50%,-50%) scale(1) }
+  50%{ transform:translate(-50%,-50%) scale(1.08) }
+}
+
+/* CONTROLS — bottom bar */
+.controls{
+  position:fixed; left:0; right:0; bottom:0;
+  z-index:50;
+  padding:16px 22px;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(5,5,7,.55);
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  justify-content:center;
+}
+.controls .dots{
+  display:flex; gap:6px; align-items:center;
+}
+.dots .dot{
+  width:8px; height:8px; border-radius:999px;
+  background:rgba(255,255,255,.16);
+  transition:.3s var(--ease);
+  cursor:pointer;
+}
+.dots .dot.active{
+  width:26px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 12px rgba(214,177,94,.6);
+}
+.controls .ctrl{
+  width:38px; height:38px; border-radius:11px;
+  display:grid; place-items:center;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff; cursor:pointer;
+  transition:.18s var(--ease);
+}
+.controls .ctrl:hover{ border-color:rgba(214,177,94,.40); transform:translateY(-1px) }
+.controls .label{
+  font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  font-weight:900; color:var(--muted2);
+  min-width:90px; text-align:center;
+}
+.progress-bar{
+  position:fixed; top:60px; left:0; right:0;
+  height:2px; background:transparent;
+  z-index:10; pointer-events:none;
+}
+.progress-bar::after{
+  content:""; display:block; height:100%; width:var(--p,0%);
+  background:linear-gradient(90deg, var(--gold), var(--gold2), #fff);
+  box-shadow:0 0 16px rgba(214,177,94,.6);
+  transition:width .12s linear;
+}
+
+@media(max-width:640px){
+  .topbar .label{ display:none }
+  .controls .label{ display:none }
+  .stage{ top:54px; bottom:90px; padding:14px }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo"><img src="logo.png" alt="ScaleShield"></a>
+  <div class="label">Client Panel <b>·</b> CRM Tour</div>
+  <div class="actions">
+    <a href="index.html" class="btn ghost">Close</a>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<div class="stage">
+  <div class="stage-inner">
+
+    <!-- ========== SLIDE 1 — WELCOME ========== -->
+    <div class="slide welcome active" data-step="1">
+      <div class="welcome-orb"></div>
+      <div class="slide-num">Slide <span>01 / 09</span></div>
+      <h2 class="slide-title">Welcome to the <span class="grad">ScaleShield</span> Client Panel.</h2>
+      <p class="slide-desc">A 60-second animated tour of every feature you'll use day to day. Sit back, autoplay is on — or use the dots / arrows below to step through manually.</p>
+      <div class="slide-bullets">
+        <span class="bullet">Live spend tracking</span>
+        <span class="bullet">Bind to any BM</span>
+        <span class="bullet">PDF reports</span>
+        <span class="bullet">24/7 support</span>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 2 — DASHBOARD ARRIVES ========== -->
+    <div class="slide" data-step="2">
+      <div class="slide-num">Slide <span>02 / 09</span></div>
+      <h2 class="slide-title">All your accounts <span class="grad">in one place</span>.</h2>
+      <p class="slide-desc">When you log in, the dashboard greets you with the live state of every ad account assigned to your client — counts, status, and aggregated spend.</p>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div>
+          <div class="mockup-title">scaleshield.crm — your client panel</div>
+          <div class="live-pulse">Live</div>
+        </div>
+        <div class="m-stats">
+          <div class="m-stat"><div class="m-stat-l">Your accounts</div><div class="m-stat-v gold" data-count="12">0</div></div>
+          <div class="m-stat"><div class="m-stat-l">Active right now</div><div class="m-stat-v" data-count="11">0</div></div>
+          <div class="m-stat"><div class="m-stat-l">Spend / 24h</div><div class="m-stat-v gold" data-count="184720" data-prefix="$">$0</div></div>
+          <div class="m-stat"><div class="m-stat-l">Replaced today</div><div class="m-stat-v" data-count="3">0</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 3 — ACCOUNT TABLE ========== -->
+    <div class="slide" data-step="3">
+      <div class="slide-num">Slide <span>03 / 09</span></div>
+      <h2 class="slide-title">Your account list, <span class="grad">live</span>.</h2>
+      <p class="slide-desc">Every assigned ad account shows up with its source BM, current spend, and status pill. Status updates in real-time — so you never have to refresh to know what's happening.</p>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div>
+          <div class="mockup-title">your assigned accounts</div>
+          <div class="live-pulse">Live</div>
+        </div>
+        <div id="rowsHost-3">
+          <div class="m-row" data-stagger><div class="id">act_8847_2031</div><div class="src">BM #1</div><div class="spend">$2,840</div><div><span class="pill ok"><span class="dot"></span>Active</span></div><div><button class="bind-btn">Bind New BM</button></div></div>
+          <div class="m-row" data-stagger><div class="id">act_8847_2032</div><div class="src">BM #3</div><div class="spend">$5,120</div><div><span class="pill ok"><span class="dot"></span>Active</span></div><div><button class="bind-btn">Bind New BM</button></div></div>
+          <div class="m-row" data-stagger><div class="id">act_8847_2033</div><div class="src">BM #2</div><div class="spend">$8.50</div><div><span class="pill warn"><span class="dot"></span>Warming up</span></div><div><button class="bind-btn">Bind New BM</button></div></div>
+          <div class="m-row" data-stagger><div class="id">act_8847_2034</div><div class="src">BM #5</div><div class="spend">$8,720</div><div><span class="pill ok"><span class="dot"></span>Active</span></div><div><button class="bind-btn">Bind New BM</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 4 — DATE FILTER ========== -->
+    <div class="slide" data-step="4">
+      <div class="slide-num">Slide <span>04 / 09</span></div>
+      <h2 class="slide-title">Filter spend by <span class="grad">any date range</span>.</h2>
+      <p class="slide-desc">Today, yesterday, last 7 / 14 / 30 days, this month, last month, all time, or pick a custom range — the spend column updates instantly with Meta data for that window.</p>
+      <div class="mockup" style="padding:20px;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;">
+          <span style="font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted2); font-weight:900;">Spend range</span>
+          <div class="dropdown-mock" id="dropdownMock4">
+            <span id="dropdownValue4">All time</span>
+            <div class="dropdown-options">
+              <div class="opt" data-v="today">Today</div>
+              <div class="opt" data-v="yesterday">Yesterday</div>
+              <div class="opt" data-v="last_7d">Last 7 days</div>
+              <div class="opt" data-v="last_30d">Last 30 days</div>
+              <div class="opt selected" data-v="maximum">All time</div>
+            </div>
+          </div>
+        </div>
+        <div class="m-stats" style="margin-top:20px;">
+          <div class="m-stat"><div class="m-stat-l">Showing</div><div class="m-stat-v" id="rangeLabel4">All time</div></div>
+          <div class="m-stat"><div class="m-stat-l">Total spend</div><div class="m-stat-v gold" id="rangeSpend4">$184,720</div></div>
+          <div class="m-stat"><div class="m-stat-l">Accounts</div><div class="m-stat-v">12</div></div>
+          <div class="m-stat"><div class="m-stat-l">Avg / account</div><div class="m-stat-v gold" id="rangeAvg4">$15,393</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 5 — SEARCH, SORT & STATUS ========== -->
+    <div class="slide" data-step="5">
+      <div class="slide-num">Slide <span>05 / 09</span></div>
+      <h2 class="slide-title">Search, sort, <span class="grad">filter by status</span>.</h2>
+      <p class="slide-desc">Type to search by ID, name or BM. Sort by spend low-to-high or high-to-low. Filter to just Active or Disabled accounts in one click.</p>
+      <div class="mockup" style="padding:24px;">
+        <div class="search-mock">
+          <input type="text" id="searchMock5" readonly placeholder="Search accounts…">
+          <span class="caret" id="caret5"></span>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap;">
+          <span class="bullet" style="opacity:1; transform:none;">Sort: Spend ↓</span>
+          <span class="bullet" style="opacity:1; transform:none; border-color:rgba(44,214,124,.35); background:rgba(44,214,124,.06);">Status: Active</span>
+          <span class="bullet" style="opacity:1; transform:none;">Reset</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 6 — BIND NEW BM ========== -->
+    <div class="slide" data-step="6">
+      <div class="slide-num">Slide <span>06 / 09</span></div>
+      <h2 class="slide-title">Bind any account to <span class="grad">a new BM</span>.</h2>
+      <p class="slide-desc">Click "Bind New BM" on any row, drop in the target BM ID, pick the exact permissions you want, and we handle the share — bypassing Meta's normal re-share limit.</p>
+      <div class="mockup" style="padding:24px;">
+        <div class="bind-modal" id="bindModal6">
+          <h4>Bind New BM</h4>
+          <p>Enter the target Business Manager ID and pick the permissions to grant.</p>
+          <input class="bind-input" id="bindInput6" type="text" value="" placeholder="1247-XXXX">
+          <div class="bind-perms">
+            <div class="bind-perm" data-perm><div class="bind-perm-cb"></div><div><div class="bind-perm-t">Manage campaigns</div><div class="bind-perm-d">Create and edit ads, access reports.</div></div></div>
+            <div class="bind-perm" data-perm><div class="bind-perm-cb"></div><div><div class="bind-perm-t">View performance</div><div class="bind-perm-d">Access reports and view ads.</div></div></div>
+            <div class="bind-perm" data-perm><div class="bind-perm-cb"></div><div><div class="bind-perm-t">Manage Creative Hub</div><div class="bind-perm-d">View, create and edit mockups.</div></div></div>
+            <div class="bind-perm" data-perm><div class="bind-perm-cb"></div><div><div class="bind-perm-t">Manage ad accounts</div><div class="bind-perm-d">Full account settings &amp; finances.</div></div></div>
+          </div>
+          <div class="bind-actions">
+            <div class="bind-btn-mock ghost">Cancel</div>
+            <div class="bind-btn-mock gold" id="bindSubmit6">Send Bind Request</div>
+          </div>
+        </div>
+        <div id="bindToast6"></div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 7 — AUTO REPLACEMENT ========== -->
+    <div class="slide" data-step="7">
+      <div class="slide-num">Slide <span>07 / 09</span></div>
+      <h2 class="slide-title">If something dies, <span class="grad">it gets replaced</span>.</h2>
+      <p class="slide-desc">Any account that goes down with $0 or minimal spend is replaced free, automatically. You'll see the row flash, change to "Replacing", then settle back as a fresh active account — typically within 5–10 minutes.</p>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div>
+          <div class="mockup-title">live replacement</div>
+          <div class="live-pulse">Live</div>
+        </div>
+        <div id="replaceRow7">
+          <div class="m-row" id="replaceTarget7" style="opacity:1;">
+            <div class="id" id="replaceId7">act_8847_2035</div>
+            <div class="src">BM #4</div>
+            <div class="spend">$3.10</div>
+            <div id="replacePill7"><span class="pill ok"><span class="dot"></span>Active</span></div>
+            <div><button class="bind-btn">Bind New BM</button></div>
+          </div>
+        </div>
+        <div id="replaceToast7"></div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 8 — PDF REPORT ========== -->
+    <div class="slide" data-step="8">
+      <div class="slide-num">Slide <span>08 / 09</span></div>
+      <h2 class="slide-title">One-click <span class="grad">PDF report</span>.</h2>
+      <p class="slide-desc">Click Download PDF and you get a clean, branded report of whatever's currently filtered — perfect for forwarding to clients, finance, or just keeping records.</p>
+      <div class="pdf-fly">PDF</div>
+      <div class="slide-bullets">
+        <span class="bullet">Branded header</span>
+        <span class="bullet">Date range + totals</span>
+        <span class="bullet">Per-account breakdown</span>
+        <span class="bullet">Auto-named file</span>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 9 — FINAL CTA ========== -->
+    <div class="slide finale" data-step="9">
+      <div class="slide-num">Slide <span>09 / 09</span></div>
+      <h2 class="slide-title">Ready to <span class="grad">scale</span>?</h2>
+      <p class="slide-desc">Tell us your vertical, your daily target, and we'll match you to the right tier within minutes. No upselling — just the right fit.</p>
+      <div class="actions">
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start on Telegram</a>
+        <a href="pricing.html" class="btn btn-ghost">See pricing</a>
+        <a href="onboarding.html" class="btn btn-ghost">How onboarding works</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="controls">
+  <div class="ctrl" id="prevBtn" title="Previous (←)">‹</div>
+  <div class="dots" id="dots"></div>
+  <div class="ctrl" id="nextBtn" title="Next (→)">›</div>
+  <div class="ctrl" id="playBtn" title="Pause / Play (Space)">⏸</div>
+  <div class="label" id="autoLabel">Auto-play on</div>
+</div>
+
+<script>
+/* ===== Slide manager ===== */
+const slides = Array.from(document.querySelectorAll(".slide"));
+const total = slides.length;
+const dotsHost = document.getElementById("dots");
+const progressBar = document.getElementById("progressBar");
+const playBtn = document.getElementById("playBtn");
+const autoLabel = document.getElementById("autoLabel");
+
+let current = 0;
+let autoplay = true;
+let autoTimer = null;
+let progressTimer = null;
+const SLIDE_MS = 7500;
+
+// Build dots
+slides.forEach((_, i) => {
+  const d = document.createElement("div");
+  d.className = "dot" + (i === 0 ? " active" : "");
+  d.addEventListener("click", () => goTo(i));
+  dotsHost.appendChild(d);
+});
+
+function setProgress(p){ progressBar.style.setProperty("--p", p + "%"); }
+
+function clearAuto(){
+  clearTimeout(autoTimer); clearInterval(progressTimer);
+  setProgress(0);
+}
+
+function startAuto(){
+  clearAuto();
+  if (!autoplay) return;
+  const start = Date.now();
+  progressTimer = setInterval(() => {
+    const pct = Math.min(100, ((Date.now() - start) / SLIDE_MS) * 100);
+    setProgress(pct);
+  }, 80);
+  autoTimer = setTimeout(() => goTo((current + 1) % total), SLIDE_MS);
+}
+
+function goTo(i){
+  if (i < 0) i = total - 1;
+  if (i >= total) i = 0;
+  if (i === current) return;
+  slides[current].classList.remove("active");
+  current = i;
+  slides[current].classList.add("active");
+  document.querySelectorAll("#dots .dot").forEach((d, idx) => {
+    d.classList.toggle("active", idx === current);
+  });
+  triggerSceneAnims(current);
+  startAuto();
+}
+
+document.getElementById("prevBtn").addEventListener("click", () => goTo(current - 1));
+document.getElementById("nextBtn").addEventListener("click", () => goTo(current + 1));
+playBtn.addEventListener("click", () => {
+  autoplay = !autoplay;
+  playBtn.textContent = autoplay ? "⏸" : "▶";
+  autoLabel.textContent = autoplay ? "Auto-play on" : "Paused";
+  if (autoplay) startAuto(); else clearAuto();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") goTo(current + 1);
+  else if (e.key === "ArrowLeft") goTo(current - 1);
+  else if (e.key === " ") { e.preventDefault(); playBtn.click(); }
+  else if (e.key === "Escape") window.location.href = "index.html";
+});
+
+/* ===== Per-slide animations ===== */
+function triggerSceneAnims(idx){
+  const slide = slides[idx];
+  // Reset any in-progress states
+  slide.querySelectorAll(".m-row").forEach(r => r.classList.remove("in"));
+  const step = slide.getAttribute("data-step");
+
+  if (step === "2") animateCounters(slide);
+  if (step === "3") animateRowsCascade(slide);
+  if (step === "4") animateDateFilter(slide);
+  if (step === "5") animateSearch(slide);
+  if (step === "6") animateBindModal(slide);
+  if (step === "7") animateReplacement(slide);
+}
+
+/* Slide 2 — counters */
+function animateCounters(slide){
+  slide.querySelectorAll(".m-stat-v[data-count]").forEach(el => {
+    const target = parseInt(el.dataset.count, 10);
+    const prefix = el.dataset.prefix || "";
+    const dur = 1400;
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(target * eased);
+      el.textContent = prefix + val.toLocaleString();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+/* Slide 3 — rows cascade */
+function animateRowsCascade(slide){
+  const rows = slide.querySelectorAll(".m-row");
+  rows.forEach((r, i) => {
+    setTimeout(() => r.classList.add("in"), 600 + i * 130);
+  });
+}
+
+/* Slide 4 — date filter dropdown */
+function animateDateFilter(slide){
+  const dd = document.getElementById("dropdownMock4");
+  const value = document.getElementById("dropdownValue4");
+  const rangeLabel = document.getElementById("rangeLabel4");
+  const rangeSpend = document.getElementById("rangeSpend4");
+  const rangeAvg = document.getElementById("rangeAvg4");
+  const presets = [
+    { v: "maximum", label: "All time", spend: 184720 },
+    { v: "last_30d", label: "Last 30 days", spend: 59110 },
+    { v: "last_7d", label: "Last 7 days", spend: 15700 },
+    { v: "today", label: "Today", spend: 2210 },
+  ];
+  let idx = 0;
+  function showOpen(){
+    dd.classList.add("open");
+    dd.querySelectorAll(".opt").forEach(o => o.classList.remove("selected"));
+    const next = presets[(idx + 1) % presets.length];
+    const optEl = dd.querySelector(`[data-v="${next.v}"]`);
+    if (optEl) optEl.classList.add("selected");
+  }
+  function selectNext(){
+    idx = (idx + 1) % presets.length;
+    const cur = presets[idx];
+    value.textContent = cur.label;
+    rangeLabel.textContent = cur.label;
+    rangeSpend.textContent = "$" + cur.spend.toLocaleString();
+    rangeAvg.textContent = "$" + Math.round(cur.spend / 12).toLocaleString();
+    dd.classList.remove("open");
+  }
+  // Reset baseline
+  idx = 0;
+  setTimeout(showOpen, 1200);
+  setTimeout(selectNext, 2400);
+  setTimeout(showOpen, 4000);
+  setTimeout(selectNext, 5000);
+}
+
+/* Slide 5 — search typing */
+function animateSearch(slide){
+  const input = document.getElementById("searchMock5");
+  const caret = document.getElementById("caret5");
+  if (!input) return;
+  input.value = "";
+  const queries = ["act_8847", "BM #1", "active"];
+  const q = queries[Math.floor(Math.random() * queries.length)];
+  let i = 0;
+  setTimeout(() => {
+    const typer = setInterval(() => {
+      if (i >= q.length) {
+        clearInterval(typer);
+        return;
+      }
+      input.value += q[i++];
+    }, 90);
+  }, 600);
+}
+
+/* Slide 6 — bind modal flow */
+function animateBindModal(slide){
+  const input = document.getElementById("bindInput6");
+  const perms = slide.querySelectorAll(".bind-perm");
+  const submit = document.getElementById("bindSubmit6");
+  const toastHost = document.getElementById("bindToast6");
+
+  // Reset
+  input.value = "";
+  perms.forEach(p => p.classList.remove("checked"));
+  toastHost.innerHTML = "";
+
+  // 1) Type BM ID
+  const bmId = "1247-9921";
+  let i = 0;
+  setTimeout(() => {
+    input.classList.add("focus");
+    const typer = setInterval(() => {
+      if (i >= bmId.length) { clearInterval(typer); return; }
+      input.value += bmId[i++];
+    }, 70);
+  }, 700);
+
+  // 2) Check permissions one-by-one
+  perms.forEach((p, idx) => {
+    setTimeout(() => p.classList.add("checked"), 1900 + idx * 280);
+  });
+
+  // 3) Click Send
+  setTimeout(() => {
+    submit.classList.add("click");
+    setTimeout(() => submit.classList.remove("click"), 350);
+    // Toast
+    toastHost.innerHTML = '<div class="toast-mock show"><div class="icon">↻</div><div>Bind request sent — admin notified on Telegram</div></div>';
+  }, 3300);
+}
+
+/* Slide 7 — replacement */
+function animateReplacement(slide){
+  const row = document.getElementById("replaceTarget7");
+  const idEl = document.getElementById("replaceId7");
+  const pill = document.getElementById("replacePill7");
+  const toastHost = document.getElementById("replaceToast7");
+
+  // Reset
+  row.classList.remove("flash-bad", "flash-good");
+  idEl.textContent = "act_8847_2035";
+  pill.innerHTML = '<span class="pill ok"><span class="dot"></span>Active</span>';
+  toastHost.innerHTML = "";
+
+  // 1) Disabled
+  setTimeout(() => {
+    row.classList.add("flash-bad");
+    pill.innerHTML = '<span class="pill bad"><span class="dot"></span>Disabled</span>';
+  }, 700);
+
+  // 2) Replacing
+  setTimeout(() => {
+    pill.innerHTML = '<span class="pill warn"><span class="dot"></span>Replacing</span>';
+  }, 2100);
+
+  // 3) Replaced
+  setTimeout(() => {
+    row.classList.remove("flash-bad");
+    void row.offsetWidth;
+    row.classList.add("flash-good");
+    idEl.textContent = "act_8847_2178";
+    pill.innerHTML = '<span class="pill ok"><span class="dot"></span>Active</span>';
+    toastHost.innerHTML = '<div class="toast-mock show"><div class="icon">↻</div><div>Auto-replaced in 7 min — act_8847_2035 → act_8847_2178</div></div>';
+  }, 3500);
+}
+
+/* Trigger first slide animations + start autoplay */
+triggerSceneAnims(0);
+startAuto();
+
+/* Pause autoplay on hover, resume on leave */
+document.querySelector(".stage").addEventListener("mouseenter", () => {
+  if (autoplay) clearAuto();
+});
+document.querySelector(".stage").addEventListener("mouseleave", () => {
+  if (autoplay) startAuto();
+});
+</script>
+</body>
+</html>
