@@ -129,12 +129,23 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 /* SLIDE */
 .slide{
   position:absolute; inset:0;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  display:flex; flex-direction:column; align-items:center;
+  /* "safe center" falls back to flex-start when content overflows the
+     container, so the top of the slide never gets clipped on shorter
+     viewports the way pure 'center' does. */
+  justify-content:safe center;
   text-align:center;
+  padding:20px 16px 20px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.18) transparent;
   opacity:0; pointer-events:none;
   transform:translateY(24px) scale(.98);
   transition:opacity .55s var(--ease), transform .65s var(--ease);
 }
+.slide::-webkit-scrollbar{ width:6px }
+.slide::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:3px }
 .slide.active{
   opacity:1; pointer-events:auto;
   transform:translateY(0) scale(1);
@@ -563,6 +574,49 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
   .topbar .label{ display:none }
   .controls .label{ display:none }
   .stage{ top:54px; bottom:90px; padding:14px }
+}
+
+/* Height-based downscaling — shorter screens get smaller text + mockups
+   so all slide content fits without being clipped. */
+@media(max-height:880px){
+  .stage{ top:56px; bottom:74px; padding:14px }
+  .slide-num{ font-size:11px; margin-bottom:8px }
+  .slide-title{ font-size:clamp(28px, 4vw, 46px) !important }
+  .slide-desc{ font-size:14px !important; margin-top:10px }
+  .slide-bullets{ margin-top:14px }
+  .bullet{ padding:6px 12px; font-size:11.5px }
+  .mockup{ margin-top:16px; max-width:780px }
+  .m-stat{ padding:10px 14px }
+  .m-stat-v{ font-size:16px }
+  .m-row{ padding:9px 14px; font-size:12px }
+  .pdf-fly{ width:54px; height:66px; font-size:10px; margin-top:14px }
+  .bind-modal{ padding:16px; max-width:380px }
+  .bind-modal h4{ font-size:15px }
+  .bind-modal p{ font-size:12px }
+  .bind-input{ padding:9px 11px; font-size:12px; margin-top:10px }
+  .bind-perms{ margin-top:10px; gap:6px }
+  .bind-perm{ padding:7px 10px }
+  .bind-perm-t{ font-size:11.5px }
+  .bind-perm-d{ font-size:10.5px }
+  .bind-actions{ margin-top:10px }
+  .welcome-orb{ width:460px; height:460px; filter:blur(30px) }
+}
+@media(max-height:720px){
+  .slide-title{ font-size:clamp(22px, 3.5vw, 34px) !important }
+  .slide.welcome .slide-title,
+  .slide.finale .slide-title{ font-size:clamp(28px, 4.5vw, 44px) !important }
+  .slide-desc{ font-size:13px !important; line-height:1.5 }
+  .mockup{ max-width:680px }
+  .m-stats{ grid-template-columns:repeat(2,1fr) }
+  .m-stat{ padding:8px 12px }
+  .m-stat-v{ font-size:14px }
+  .m-row{ padding:8px 12px; font-size:11.5px; gap:8px }
+  .m-row .id{ font-size:11px }
+  .pill{ padding:3px 8px; font-size:10px }
+  .bind-btn{ padding:4px 8px; font-size:9.5px }
+  .bind-modal{ max-width:340px }
+  .pdf-fly{ width:46px; height:56px; font-size:9px }
+  .welcome-orb{ width:340px; height:340px }
 }
 </style>
 </head>
