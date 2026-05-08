@@ -29,6 +29,9 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+<!-- jsPDF for the Download PDF demo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
 
 <style>
 :root{
@@ -618,6 +621,207 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
   .pdf-fly{ width:46px; height:56px; font-size:9px }
   .welcome-orb{ width:340px; height:340px }
 }
+
+/* ===== Interactive demo on final slide ===== */
+.slide.try-it{ padding:18px 18px 18px }
+.slide.try-it .slide-title{ font-size:clamp(28px, 3.6vw, 42px) }
+.slide.try-it .slide-desc{ font-size:14px; max-width:60ch; margin-top:8px }
+
+.live-demo{
+  position:relative; isolation:isolate;
+  margin-top:18px; width:100%; max-width:920px;
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(214,177,94,.32);
+  background:linear-gradient(180deg, rgba(10,10,14,.94), rgba(8,8,11,.96));
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 60px rgba(214,177,94,.10);
+  text-align:left;
+}
+.live-demo-bar{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  padding:11px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+}
+.live-demo-bar input[type="search"],
+.live-demo-bar select{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:9px; padding:6px 10px;
+  color:#fff; font:inherit; font-size:12px;
+}
+.live-demo-bar input[type="search"]{ width:140px }
+.live-demo-bar input[type="search"]::placeholder{ color:rgba(255,255,255,.4) }
+.live-demo-bar select option{ background:#15161c; color:#fff }
+.live-demo-bar .grow{ flex:1 }
+.live-demo-bar .demo-btn{
+  padding:6px 11px; border-radius:9px;
+  font-weight:900; font-size:11.5px; cursor:pointer;
+  border:1px solid transparent; transition:.18s var(--ease);
+}
+.live-demo-bar .demo-btn.primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#111;
+  box-shadow:0 0 12px rgba(214,177,94,.20);
+}
+.live-demo-bar .demo-btn.primary:hover{ transform:translateY(-1px) }
+.live-demo-bar .demo-btn.ghost{
+  background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.12); color:#fff;
+}
+.live-demo-bar .demo-btn.ghost:hover{ border-color:rgba(214,177,94,.40) }
+
+.live-demo-stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:rgba(255,255,255,.05);
+}
+.live-demo-stat{ padding:10px 12px; background:rgba(8,8,11,.96) }
+.live-demo-stat-l{
+  font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted2); font-weight:900;
+}
+.live-demo-stat-v{
+  margin-top:4px;
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:900;
+}
+.live-demo-stat-v.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+@media(max-width:640px){ .live-demo-stats{ grid-template-columns:repeat(2,1fr) } }
+
+.live-demo-rangebar{
+  padding:6px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:10.5px; color:var(--muted);
+  background:rgba(255,255,255,.015);
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+}
+.live-demo-rangebar b{ color:var(--gold2) }
+.live-demo-rangebar .lp{
+  display:inline-block; width:6px; height:6px; border-radius:999px;
+  background:#2cd67c; box-shadow:0 0 8px rgba(44,214,124,.7);
+  animation:livedot 1.4s ease-in-out infinite; margin-right:5px;
+}
+
+.live-demo-table{
+  max-height:240px; overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.18) transparent;
+}
+.live-demo-table::-webkit-scrollbar{ width:6px }
+.live-demo-table::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:3px }
+.live-demo-row{
+  display:grid; grid-template-columns:1.1fr .8fr 1fr 1fr .8fr;
+  gap:10px; padding:9px 14px;
+  border-bottom:1px dashed rgba(255,255,255,.05);
+  font-size:12px; align-items:center;
+  transition:background .25s var(--ease);
+}
+.live-demo-row:hover{ background:rgba(214,177,94,.04) }
+.live-demo-row .id{ font-family:'JetBrains Mono', monospace; font-size:11.5px; opacity:.92 }
+.live-demo-row .src{
+  color:var(--muted2); font-size:10px; font-weight:800;
+  letter-spacing:.10em; text-transform:uppercase;
+}
+.live-demo-row .spend{ font-family:'Sora',sans-serif; font-weight:900 }
+.live-demo-row.flash-bad{ animation:flashBad 1.4s ease-out 1 }
+.live-demo-row.flash-good{ animation:flashGood 1.4s ease-out 1 }
+.live-demo-row .bind-btn{
+  padding:4px 9px; border-radius:7px;
+  font-size:10px; font-weight:900; cursor:pointer;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; border:none;
+  transition:.18s var(--ease);
+}
+.live-demo-row .bind-btn:hover{ transform:translateY(-1px); box-shadow:0 5px 14px rgba(214,177,94,.32) }
+
+/* Bind modal — overlays the demo */
+.live-overlay{
+  position:absolute; inset:0;
+  background:rgba(8,8,11,.78); backdrop-filter:blur(6px);
+  display:none; place-items:center;
+  z-index:50; padding:14px;
+}
+.live-overlay.show{ display:grid; animation:liveFade .3s var(--ease-out) }
+@keyframes liveFade{ from{opacity:0} to{opacity:1} }
+.live-modal{
+  width:min(380px,100%);
+  background:rgba(15,15,20,.97);
+  border:1px solid rgba(214,177,94,.40);
+  border-radius:16px; padding:18px;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85);
+  text-align:left;
+  animation:liveModalIn .35s var(--ease-out) both;
+}
+@keyframes liveModalIn{ from{transform:translateY(20px); opacity:0} to{transform:translateY(0); opacity:1} }
+.live-modal h4{ font-size:15px; font-weight:900; color:#fff }
+.live-modal p{ font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5 }
+.live-modal-input{
+  margin-top:12px; width:100%;
+  padding:9px 12px; border-radius:9px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:800;
+}
+.live-modal-input:focus{ outline:none; border-color:rgba(214,177,94,.55) }
+.live-perms{ margin-top:12px; display:grid; gap:6px }
+.live-perm{
+  display:flex; gap:9px; align-items:flex-start;
+  padding:7px 10px; border-radius:9px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  cursor:pointer; transition:.18s var(--ease);
+}
+.live-perm:hover{ border-color:rgba(214,177,94,.35) }
+.live-perm input{
+  width:14px !important; height:14px !important;
+  margin:2px 0 0 0; flex:0 0 14px; accent-color:#D6B15E;
+}
+.live-perm .pt{ font-weight:800; font-size:12px; color:#fff }
+.live-perm .pd{ font-size:10.5px; color:var(--muted); margin-top:1px; line-height:1.4 }
+.live-perm:has(input:checked){ border-color:rgba(214,177,94,.55); background:rgba(214,177,94,.08) }
+.live-modal-actions{ margin-top:12px; display:flex; gap:8px; justify-content:flex-end }
+
+.live-toast{
+  position:absolute; left:14px; right:14px; bottom:14px;
+  padding:10px 14px; border-radius:11px;
+  border:1px solid rgba(214,177,94,.40);
+  background:linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.06));
+  backdrop-filter:blur(8px);
+  display:flex; gap:10px; align-items:center;
+  font-size:11.5px; color:#fff; font-weight:700;
+  transform:translateY(120%); opacity:0;
+  transition:.45s var(--ease-out); z-index:5;
+}
+.live-toast.show{ transform:translateY(0); opacity:1 }
+.live-toast .icon{
+  width:22px; height:22px; border-radius:7px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; font-weight:900; flex:0 0 auto;
+}
+
+.try-it .actions{
+  margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  opacity:0; transform:translateY(8px);
+}
+.slide.try-it.active .actions{
+  animation:textIn .8s var(--ease-out) .5s forwards;
+}
+.try-it .btn{
+  padding:11px 18px; border-radius:11px;
+  font-weight:900; font-size:13px;
+  text-decoration:none; cursor:pointer;
+  border:1px solid transparent; transition:.25s var(--ease);
+}
+.try-it .btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#111;
+  box-shadow:0 0 22px rgba(214,177,94,.20);
+}
+.try-it .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 36px rgba(214,177,94,.30) }
+.try-it .btn-ghost{
+  background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.12); color:#fff;
+}
+.try-it .btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
 </style>
 </head>
 
@@ -799,11 +1003,103 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
       </div>
     </div>
 
-    <!-- ========== SLIDE 9 — FINAL CTA ========== -->
-    <div class="slide finale" data-step="9">
+    <!-- ========== SLIDE 9 — TRY IT YOURSELF (interactive demo) ========== -->
+    <div class="slide try-it" data-step="9">
       <div class="slide-num">Slide <span>09 / 09</span></div>
-      <h2 class="slide-title">Ready to <span class="grad">scale</span>?</h2>
-      <p class="slide-desc">Tell us your vertical, your daily target, and we'll match you to the right tier within minutes. No upselling — just the right fit.</p>
+      <h2 class="slide-title">Now <span class="grad">try it yourself</span>.</h2>
+      <p class="slide-desc">Real working demo — click around. Search, sort, change the date range, click <b>Bind New BM</b>, download a PDF report. The autoplay is paused so you can take your time.</p>
+
+      <div class="live-demo" id="liveDemo">
+        <div class="live-demo-bar">
+          <input type="search" id="lvSearch" placeholder="Search accounts…">
+          <select id="lvRange" title="Spend range">
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="last_7d">Last 7 days</option>
+            <option value="last_30d">Last 30 days</option>
+            <option value="maximum" selected>All time</option>
+          </select>
+          <select id="lvStatus" title="Filter status">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="warming">Warming up</option>
+            <option value="disabled">Disabled</option>
+          </select>
+          <select id="lvSort" title="Sort">
+            <option value="">Sort</option>
+            <option value="name_az">Name: A-Z</option>
+            <option value="name_za">Name: Z-A</option>
+            <option value="spend_lh">Spend: Low → High</option>
+            <option value="spend_hl">Spend: High → Low</option>
+          </select>
+          <span class="grow"></span>
+          <button class="demo-btn ghost" id="lvReset">Reset</button>
+          <button class="demo-btn primary" id="lvPdf">Download PDF</button>
+        </div>
+
+        <div class="live-demo-stats">
+          <div class="live-demo-stat">
+            <div class="live-demo-stat-l">Your accounts</div>
+            <div class="live-demo-stat-v gold" id="lvTotal">12</div>
+          </div>
+          <div class="live-demo-stat">
+            <div class="live-demo-stat-l">Active right now</div>
+            <div class="live-demo-stat-v" id="lvActive">11</div>
+          </div>
+          <div class="live-demo-stat">
+            <div class="live-demo-stat-l">Spend / range</div>
+            <div class="live-demo-stat-v gold" id="lvSpend">$0</div>
+          </div>
+          <div class="live-demo-stat">
+            <div class="live-demo-stat-l">Replaced today</div>
+            <div class="live-demo-stat-v" id="lvReplaced">1</div>
+          </div>
+        </div>
+
+        <div class="live-demo-rangebar">
+          <span><span class="lp"></span>Live demo</span>
+          <span>Showing spend for <b id="lvRangeLabel">all time</b></span>
+          <span style="opacity:.55">— synthetic data, identical UI to the real CRM</span>
+        </div>
+
+        <div class="live-demo-table" id="lvTable"></div>
+
+        <div class="live-overlay" id="lvOverlay">
+          <div class="live-modal">
+            <h4>Bind New BM</h4>
+            <p>Enter the target Business Manager ID and pick the permissions to grant.</p>
+            <input class="live-modal-input" id="lvBmInput" type="text" value="1247-9921" autocomplete="off" spellcheck="false">
+            <div class="live-perms">
+              <label class="live-perm">
+                <input type="checkbox" class="lv-perm" value="manage_campaigns" checked>
+                <div><div class="pt">Manage campaigns</div><div class="pd">Create and edit ads, access reports.</div></div>
+              </label>
+              <label class="live-perm">
+                <input type="checkbox" class="lv-perm" value="view_performance">
+                <div><div class="pt">View performance</div><div class="pd">Access reports and view ads.</div></div>
+              </label>
+              <label class="live-perm">
+                <input type="checkbox" class="lv-perm" value="manage_creative_hub">
+                <div><div class="pt">Manage Creative Hub</div><div class="pd">View, create and edit mockups.</div></div>
+              </label>
+              <label class="live-perm">
+                <input type="checkbox" class="lv-perm" value="manage_ad_accounts">
+                <div><div class="pt">Manage ad accounts</div><div class="pd">Full account settings &amp; finances.</div></div>
+              </label>
+            </div>
+            <div class="live-modal-actions">
+              <button class="demo-btn ghost" id="lvCancel">Cancel</button>
+              <button class="demo-btn primary" id="lvConfirm">Send Bind Request</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="live-toast" id="lvToast">
+          <div class="icon">↻</div>
+          <div><strong id="lvToastTitle">Auto-replaced</strong><br><span id="lvToastBody" style="color:rgba(255,255,255,.75)"></span></div>
+        </div>
+      </div>
+
       <div class="actions">
         <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start on Telegram</a>
         <a href="pricing.html" class="btn btn-ghost">See pricing</a>
@@ -906,6 +1202,17 @@ function triggerSceneAnims(idx){
   if (step === "5") animateSearch(slide);
   if (step === "6") animateBindModal(slide);
   if (step === "7") animateReplacement(slide);
+
+  // Final slide is the interactive demo — pause autoplay so the user
+  // can click around without the slideshow advancing under them.
+  if (slide.classList.contains("try-it")){
+    if (autoplay){
+      autoplay = false;
+      playBtn.textContent = "▶";
+      autoLabel.textContent = "Paused (interactive)";
+      clearAuto();
+    }
+  }
 }
 
 /* Slide 2 — counters */
@@ -1075,6 +1382,222 @@ document.querySelector(".stage").addEventListener("mouseenter", () => {
 document.querySelector(".stage").addEventListener("mouseleave", () => {
   if (autoplay) startAuto();
 });
+
+/* ============ INTERACTIVE LIVE DEMO (final slide) ============ */
+(function liveDemo(){
+  const root = document.getElementById("liveDemo");
+  if (!root) return;
+
+  let accounts = [
+    { id: "act_8847_2031", name: "Ren 81",   bm: "BM #1", baseSpend: 12480.55, status: "active"  },
+    { id: "act_8847_2032", name: "Ren 49",   bm: "BM #3", baseSpend: 8120.30,  status: "active"  },
+    { id: "act_8847_2033", name: "Ren 60",   bm: "BM #2", baseSpend: 940.10,   status: "warming" },
+    { id: "act_8847_2034", name: "Ren 44",   bm: "BM #5", baseSpend: 23720.00, status: "active"  },
+    { id: "act_8847_2035", name: "Ren 54",   bm: "BM #4", baseSpend: 4610.75,  status: "active"  },
+    { id: "act_8847_2036", name: "Ren 99",   bm: "BM #6", baseSpend: 18450.00, status: "active"  },
+    { id: "act_8847_2037", name: "Ren 89",   bm: "BM #1", baseSpend: 6180.20,  status: "active"  },
+    { id: "act_8847_2038", name: "Ren 95",   bm: "BM #8", baseSpend: 11990.00, status: "active"  },
+    { id: "act_8847_2039", name: "Bm10 37z", bm: "BM #2", baseSpend: 7240.00,  status: "active"  },
+    { id: "act_8847_2040", name: "Ren 39",   bm: "BM #3", baseSpend: 3140.45,  status: "active"  },
+    { id: "act_8847_2041", name: "Ren 43",   bm: "BM #7", baseSpend: 5390.00,  status: "active"  },
+    { id: "act_8847_2042", name: "Ver 138",  bm: "BM #1", baseSpend: 12.40,    status: "warming" }
+  ];
+  const RANGE_FACTORS = { today:0.012, yesterday:0.014, last_7d:0.085, last_30d:0.32, maximum:1.00 };
+  const RANGE_LABEL = { today:"today", yesterday:"yesterday", last_7d:"last 7 days", last_30d:"last 30 days", maximum:"all time" };
+
+  let currentRange = "maximum";
+  let replacedToday = 1;
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    search: $("lvSearch"), range: $("lvRange"), status: $("lvStatus"), sort: $("lvSort"),
+    reset: $("lvReset"), pdf: $("lvPdf"),
+    total: $("lvTotal"), active: $("lvActive"), spend: $("lvSpend"), replaced: $("lvReplaced"),
+    rangeLabel: $("lvRangeLabel"), table: $("lvTable"),
+    overlay: $("lvOverlay"), bmInput: $("lvBmInput"),
+    cancel: $("lvCancel"), confirm: $("lvConfirm"),
+    toast: $("lvToast"), tT: $("lvToastTitle"), tB: $("lvToastBody")
+  };
+
+  function spendFor(a){ return a.baseSpend * (RANGE_FACTORS[currentRange] || 1) }
+  function fmt(n){ return "$" + (Number(n)||0).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }) }
+  function pillFor(s){
+    if (s === "active")    return '<span class="pill ok"><span class="dot"></span>Active</span>';
+    if (s === "warming")   return '<span class="pill warn"><span class="dot"></span>Warming up</span>';
+    if (s === "disabled")  return '<span class="pill bad"><span class="dot"></span>Disabled</span>';
+    if (s === "replacing") return '<span class="pill warn"><span class="dot"></span>Replacing</span>';
+    return "";
+  }
+
+  function applyFilters(){
+    const q = (els.search.value||"").trim().toLowerCase();
+    const sf = els.status.value;
+    const ss = els.sort.value;
+    let list = accounts.slice();
+    if (q){
+      list = list.filter(a =>
+        a.name.toLowerCase().includes(q) ||
+        a.id.toLowerCase().includes(q) ||
+        a.bm.toLowerCase().includes(q)
+      );
+    }
+    if (sf) list = list.filter(a => a.status === sf);
+    if (ss === "name_az") list.sort((a,b) => a.name.localeCompare(b.name));
+    else if (ss === "name_za") list.sort((a,b) => b.name.localeCompare(a.name));
+    else if (ss === "spend_lh") list.sort((a,b) => spendFor(a) - spendFor(b));
+    else if (ss === "spend_hl") list.sort((a,b) => spendFor(b) - spendFor(a));
+    return list;
+  }
+
+  function render(){
+    const list = applyFilters();
+    if (!list.length){
+      els.table.innerHTML = '<div style="padding:18px;color:var(--muted);font-size:12px;text-align:center;">No matching accounts.</div>';
+    } else {
+      els.table.innerHTML = list.map(a => `
+        <div class="live-demo-row" data-id="${a.id}">
+          <div class="id">${a.name}</div>
+          <div class="src">${a.bm}</div>
+          <div class="spend">${fmt(spendFor(a))}</div>
+          <div>${pillFor(a.status)}</div>
+          <div><button class="bind-btn" data-bind="${a.id}">Bind New BM</button></div>
+        </div>
+      `).join("");
+      els.table.querySelectorAll("[data-bind]").forEach(btn => {
+        btn.addEventListener("click", () => openModal(btn.getAttribute("data-bind")));
+      });
+    }
+    els.total.textContent = accounts.length;
+    els.active.textContent = accounts.filter(a => a.status === "active").length;
+    els.spend.textContent = fmt(accounts.reduce((s,a) => s + spendFor(a), 0));
+    els.replaced.textContent = replacedToday;
+    els.rangeLabel.textContent = RANGE_LABEL[currentRange];
+  }
+
+  els.search.addEventListener("input", render);
+  els.status.addEventListener("change", render);
+  els.sort.addEventListener("change", render);
+  els.range.addEventListener("change", () => {
+    currentRange = els.range.value;
+    els.spend.animate([{opacity:.3},{opacity:1}], {duration:280, easing:"ease-out"});
+    render();
+  });
+  els.reset.addEventListener("click", () => {
+    els.search.value = ""; els.status.value = ""; els.sort.value = ""; els.range.value = "maximum";
+    currentRange = "maximum"; render();
+  });
+
+  /* Modal */
+  let activeShare = null;
+  function openModal(id){
+    activeShare = id;
+    els.bmInput.value = "1247-" + Math.floor(8000 + Math.random()*1500);
+    els.overlay.classList.add("show");
+  }
+  function closeModal(){ els.overlay.classList.remove("show"); activeShare = null; }
+  els.cancel.addEventListener("click", closeModal);
+  els.overlay.addEventListener("click", (e) => { if (e.target === els.overlay) closeModal(); });
+  els.confirm.addEventListener("click", () => {
+    const target = els.bmInput.value || "1247-XXXX";
+    const perms = root.querySelectorAll(".lv-perm:checked").length;
+    closeModal();
+    showToast("Bind request sent", `${activeShare} → BM ${target} (${perms} permission${perms===1?"":"s"})`);
+  });
+
+  /* Toast */
+  let toastTimer = null;
+  function showToast(t, b){
+    els.tT.textContent = t; els.tB.textContent = b;
+    els.toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => els.toast.classList.remove("show"), 3600);
+  }
+
+  /* Auto-replacement loop — only runs when the demo slide is active */
+  let inView = false;
+  let loopT = null;
+  function isOnDemoSlide(){
+    return slides[current] && slides[current].classList.contains("try-it");
+  }
+  function autoReplaceTick(){
+    if (!inView || !isOnDemoSlide()){ loopT = setTimeout(autoReplaceTick, 4000); return; }
+    const candidates = accounts.filter(a => a.status === "active");
+    if (!candidates.length){ loopT = setTimeout(autoReplaceTick, 8000); return; }
+    const victim = candidates[Math.floor(Math.random() * candidates.length)];
+    const oldName = victim.name;
+
+    victim.status = "disabled"; render();
+    flashRow(victim.id, "flash-bad");
+
+    setTimeout(() => { victim.status = "replacing"; render(); }, 1200);
+
+    setTimeout(() => {
+      victim.id = "act_8847_" + (2100 + Math.floor(Math.random()*500));
+      victim.name = "Ren " + (40 + Math.floor(Math.random()*60));
+      victim.baseSpend = 800 + Math.random()*400;
+      victim.status = "active";
+      replacedToday += 1;
+      render();
+      flashRow(victim.id, "flash-good");
+      showToast("Auto-replaced in 7 min", `${oldName} → ${victim.name}`);
+    }, 2800);
+
+    loopT = setTimeout(autoReplaceTick, 12000);
+  }
+  function flashRow(id, cls){
+    const row = els.table.querySelector(`[data-id="${id}"]`);
+    if (!row) return;
+    row.classList.remove("flash-bad","flash-good");
+    void row.offsetWidth;
+    row.classList.add(cls);
+  }
+
+  /* Spend ticker */
+  setInterval(() => {
+    if (!inView || !isOnDemoSlide()) return;
+    accounts.forEach(a => { if (a.status === "active") a.baseSpend += Math.random()*4 + 1; });
+    els.spend.textContent = fmt(accounts.reduce((s,a) => s + spendFor(a), 0));
+  }, 2400);
+
+  /* Mark inView when demo slide is active */
+  const ioDemo = new IntersectionObserver(entries => {
+    entries.forEach(e => { inView = e.isIntersecting; });
+  }, { threshold: 0.2 });
+  ioDemo.observe(root);
+  loopT = setTimeout(autoReplaceTick, 5000);
+
+  /* PDF download */
+  els.pdf.addEventListener("click", () => {
+    try {
+      if (!window.jspdf || !window.jspdf.jsPDF){ alert("PDF library still loading."); return; }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "landscape" });
+      doc.setFontSize(18); doc.setFont("helvetica","bold");
+      doc.text("ScaleShield — Spend Report (Demo)", 14, 16);
+      doc.setFontSize(10); doc.setFont("helvetica","normal");
+      doc.text(`Range: ${RANGE_LABEL[currentRange]}`, 14, 23);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+      const totalSpend = accounts.reduce((s,a) => s + spendFor(a), 0);
+      doc.setFont("helvetica","bold");
+      doc.text(`Total spend: ${fmt(totalSpend)}    Accounts: ${accounts.length}`, 14, 35);
+      doc.setFont("helvetica","normal");
+      const filtered = applyFilters();
+      doc.autoTable({
+        head: [["Name","Account ID","BM","Status","Spend"]],
+        body: filtered.map(a => [a.name, a.id, a.bm, a.status, fmt(spendFor(a))]),
+        startY: 42,
+        theme: "grid",
+        styles: { fontSize: 9, cellPadding: 3 },
+        headStyles: { fillColor: [33,33,38], textColor: [255,255,255], fontStyle: "bold" },
+        alternateRowStyles: { fillColor: [248,248,250] }
+      });
+      doc.save(`scaleshield-demo-${currentRange}-${new Date().toISOString().slice(0,10)}.pdf`);
+      showToast("PDF downloaded", `${RANGE_LABEL[currentRange]} report ready`);
+    } catch (err){ console.error(err); alert("PDF generation failed: " + (err.message || err)); }
+  });
+
+  render();
+})();
 </script>
 </body>
 </html>
