@@ -404,10 +404,257 @@ footer{
 /* Reveal */
 .reveal{ opacity:0; transform:translateY(28px); transition:.85s var(--ease-out) }
 .reveal.active{ opacity:1; transform:none }
+
+/* ===== INTERACTIVE DEMO STYLING ===== */
+.demo-toolbar{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+}
+.demo-toolbar input[type="search"],
+.demo-toolbar select{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:10px; padding:7px 10px;
+  color:#fff; font:inherit; font-size:12.5px;
+}
+.demo-toolbar select option,
+.demo-toolbar select optgroup{ background:#15161c; color:#fff }
+.demo-toolbar input[type="search"]{ width:160px; }
+.demo-toolbar input[type="search"]::placeholder{ color:rgba(255,255,255,.4) }
+.demo-toolbar .gap-grow{ flex:1 }
+.demo-toolbar .demo-btn{
+  padding:7px 12px; border-radius:10px;
+  font-weight:900; font-size:12px;
+  cursor:pointer; border:1px solid transparent;
+  transition:.18s var(--ease);
+}
+.demo-toolbar .demo-btn.primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; box-shadow:0 0 16px rgba(214,177,94,.20);
+}
+.demo-toolbar .demo-btn.primary:hover{ transform:translateY(-1px); box-shadow:0 6px 22px rgba(214,177,94,.32) }
+.demo-toolbar .demo-btn.ghost{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.12);
+  color:#fff;
+}
+.demo-toolbar .demo-btn.ghost:hover{ border-color:rgba(214,177,94,.40) }
+
+.demo-rangebar{
+  padding:8px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:11.5px; color:var(--muted);
+  background:rgba(255,255,255,.015);
+  display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+}
+.demo-rangebar b{ color:var(--gold2) }
+.demo-rangebar .live-dot{
+  display:inline-block; width:7px; height:7px; border-radius:999px;
+  background:#2cd67c; box-shadow:0 0 10px rgba(44,214,124,.7);
+  animation:liveDot 1.4s ease-in-out infinite; margin-right:6px;
+}
+@keyframes liveDot{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+/* Mockup row enhancements */
+.mockup-row{
+  grid-template-columns:1.1fr .8fr 1fr 1fr .8fr !important;
+  transition:background .28s var(--ease), transform .28s var(--ease);
+  cursor:default;
+}
+.mockup-row:hover{ background:rgba(214,177,94,.04) }
+.mockup-row.flash-bad{ animation:flashBad 1.4s ease-out 1 }
+.mockup-row.flash-good{ animation:flashGood 1.4s ease-out 1 }
+@keyframes flashBad{
+  0%{ background:rgba(255,100,110,.18) }
+  100%{ background:transparent }
+}
+@keyframes flashGood{
+  0%{ background:rgba(44,214,124,.18) }
+  100%{ background:transparent }
+}
+.pill.bad{ color:#ffd9dd; border-color:rgba(255,100,110,.30); background:rgba(255,100,110,.10) }
+.pill .pulse-dot{
+  display:inline-block; width:6px; height:6px; border-radius:999px;
+  background:currentColor;
+  animation:liveDot 1.4s ease-in-out infinite;
+}
+.bind-btn{
+  padding:6px 10px; border-radius:8px;
+  font-size:11px; font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; border:none; cursor:pointer;
+  transition:.18s var(--ease);
+}
+.bind-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(214,177,94,.35) }
+
+/* Bind modal (in-demo) */
+.demo-modal-overlay{
+  position:absolute; inset:0;
+  background:rgba(8,8,11,.78);
+  backdrop-filter:blur(6px);
+  display:none; place-items:center;
+  z-index:50; padding:14px;
+}
+.demo-modal-overlay.show{ display:grid; animation:fadeIn .3s var(--ease-out) }
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+.demo-modal{
+  width:min(420px,100%);
+  background:rgba(15,15,20,.96);
+  border:1px solid rgba(214,177,94,.30);
+  border-radius:18px;
+  padding:20px;
+  text-align:left;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85);
+  animation:modalIn .35s var(--ease-out) both;
+}
+@keyframes modalIn{
+  from{ transform:translateY(20px); opacity:0 }
+  to{ transform:translateY(0); opacity:1 }
+}
+.demo-modal h4{
+  font-family:'Sora',sans-serif; font-size:16px; font-weight:900; color:#fff;
+}
+.demo-modal p{ margin-top:6px; font-size:13px }
+.demo-modal-input{
+  margin-top:14px; width:100%;
+  padding:11px 13px; border-radius:11px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:800;
+}
+.demo-perms{ margin-top:14px; display:grid; gap:8px; }
+.demo-perm{
+  display:flex; gap:10px; align-items:flex-start;
+  padding:9px 12px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  cursor:pointer; transition:.18s var(--ease);
+}
+.demo-perm:hover{ border-color:rgba(214,177,94,.35) }
+.demo-perm input{ width:16px !important; height:16px !important; margin:2px 0 0 0; flex:0 0 16px; accent-color:#D6B15E }
+.demo-perm .perm-t{ font-weight:800; font-size:13px; color:#fff }
+.demo-perm .perm-d{ font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4 }
+.demo-perm:has(input:checked){ border-color:rgba(214,177,94,.55); background:rgba(214,177,94,.08) }
+.demo-modal-actions{
+  margin-top:14px; display:flex; gap:10px; justify-content:flex-end;
+}
+
+/* Toast (in-demo) */
+.demo-toast{
+  position:absolute; left:14px; right:14px; bottom:14px;
+  padding:12px 16px; border-radius:12px;
+  border:1px solid rgba(214,177,94,.40);
+  background:linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.06));
+  backdrop-filter:blur(8px);
+  display:flex; gap:12px; align-items:center;
+  font-size:12.5px; color:#fff; font-weight:700;
+  transform:translateY(120%); opacity:0;
+  transition:.45s var(--ease-out);
+  z-index:5;
+}
+.demo-toast.show{ transform:translateY(0); opacity:1 }
+.demo-toast .icon{
+  width:26px; height:26px; border-radius:8px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111; font-weight:900; flex:0 0 auto;
+}
+
+.mockup-wrap{ position:relative; isolation:isolate; }
+
+/* Demo focus glow */
+.mockup-wrap{
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04);
+  transition:box-shadow .5s var(--ease), transform .5s var(--ease);
+}
+.mockup-wrap:hover{
+  box-shadow:0 40px 100px -30px rgba(0,0,0,.8),
+             0 0 0 1px rgba(214,177,94,.20),
+             0 0 60px rgba(214,177,94,.10);
+}
+
+/* ===== Extra page animations ===== */
+/* Alternating step slide-in */
+.step{ will-change:transform,opacity }
+.step.reveal{ opacity:0; transform:translateY(28px) }
+.step.reveal.active{ opacity:1; transform:none }
+.timeline > .step:nth-child(odd).reveal:not(.active){ transform:translateY(28px) translateX(-24px); }
+.timeline > .step:nth-child(even).reveal:not(.active){ transform:translateY(28px) translateX(24px); }
+.timeline > .step.reveal.active{ transform:none }
+
+/* Number badge pop on enter */
+.step::before{
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+}
+.step.reveal:not(.active)::before{ transform:translateX(-50%) scale(.4); opacity:0 }
+.step.reveal.active::before{ transform:translateX(-50%) scale(1); opacity:1 }
+.step:hover::before{
+  box-shadow:0 0 30px rgba(214,177,94,.6), 0 0 0 6px rgba(214,177,94,.10);
+}
+
+/* Feature cards lift */
+.feature{ transition:transform .28s var(--ease), border-color .28s var(--ease), background .28s var(--ease) }
+.feature:hover{
+  transform:translateY(-3px);
+  border-color:rgba(214,177,94,.40);
+  background:rgba(214,177,94,.04);
+}
+
+/* Ad cards lift */
+.ad-card{ transition:transform .28s var(--ease), border-color .28s var(--ease) }
+.ad-card:hover{ transform:translateY(-3px); border-color:rgba(73,178,255,.40) }
+
+/* Counter for before/after — animate on view */
+.ba-card .num{
+  background-size:200% 200%;
+  animation:gradShift 7s ease-in-out infinite;
+}
+.ba-card.after .num{
+  font-variant-numeric:tabular-nums;
+}
+
+/* Hero ambient particles */
+.hero{ position:relative; overflow:hidden }
+.hero-particles{
+  position:absolute; inset:0;
+  pointer-events:none; z-index:-1;
+}
+.hero-particle{
+  position:absolute;
+  width:4px; height:4px; border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 14px rgba(214,177,94,.55);
+  opacity:0;
+  animation:hpRise linear infinite;
+}
+@keyframes hpRise{
+  0%{ opacity:0; transform:translateY(0) scale(.4) }
+  10%{ opacity:1 }
+  100%{ opacity:0; transform:translateY(-180px) scale(1) }
+}
+
+/* Scroll progress */
+.scroll-progress{
+  position:fixed; top:0; left:0; right:0;
+  height:2px; background:transparent;
+  z-index:200; pointer-events:none;
+}
+.scroll-progress::after{
+  content:""; display:block; height:100%; width:var(--p,0%);
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#fff);
+  box-shadow:0 0 18px rgba(214,177,94,.6);
+  transition:width .12s linear;
+}
 </style>
 </head>
 
 <body>
+
+<!-- scroll progress strip -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <div class="nav">
   <div class="nav-inner">
@@ -432,10 +679,12 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
+  <!-- ambient gold particles drifting up -->
+  <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
   <div class="reveal">
     <div class="kicker"><span class="kdot"></span> Onboarding</div>
-    <h1 style="margin-top:18px;">From sign-up to <span class="grad">scaling</span> — the exact flow.</h1>
-    <p>Here's how a new ScaleShield account moves from a Telegram message all the way to live, scaling campaigns. No surprises, no jargon — just the steps in order.</p>
+    <h1 style="margin-top:18px;">From sign-up to <span class="grad">scaling</span> &mdash; the exact flow.</h1>
+    <p>Here's how a new ScaleShield account moves from a Telegram message all the way to live, scaling campaigns. No surprises, no jargon &mdash; just the steps in order.</p>
   </div>
 </section>
 
@@ -475,50 +724,108 @@ footer{
       <h3>Use the CRM &mdash; here's what you actually get</h3>
       <p>Inside the Client Panel you have the full live picture of every account assigned to you. This is what it looks like:</p>
 
-      <div class="mockup-wrap">
+      <p style="margin-top:6px; font-size:13px; color:var(--muted2);"><b style="color:#F2D27A">Try the demo below ↓</b> — change filters, search, click <b>Bind New BM</b> on any account, download a PDF report. It's a real working interface (with sample data).</p>
+
+      <div class="mockup-wrap" id="crmDemo">
         <div class="mockup-bar">
           <div class="mockup-dot r"></div>
           <div class="mockup-dot y"></div>
           <div class="mockup-dot g"></div>
-          <span class="mockup-title">scaleshield.crm &mdash; your client panel</span>
+          <span class="mockup-title">scaleshield.crm &mdash; your client panel (demo)</span>
         </div>
+
+        <!-- Toolbar with working filters -->
+        <div class="demo-toolbar">
+          <input type="search" id="demoSearch" placeholder="Search accounts…">
+          <select id="demoRange" title="Spend range">
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="last_7d">Last 7 days</option>
+            <option value="last_30d">Last 30 days</option>
+            <option value="maximum" selected>All time</option>
+          </select>
+          <select id="demoStatus" title="Filter status">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="warming">Warming up</option>
+            <option value="disabled">Disabled</option>
+          </select>
+          <select id="demoSort" title="Sort">
+            <option value="">Sort</option>
+            <option value="name_az">Name: A-Z</option>
+            <option value="name_za">Name: Z-A</option>
+            <option value="spend_lh">Spend: Low → High</option>
+            <option value="spend_hl">Spend: High → Low</option>
+          </select>
+          <span class="gap-grow"></span>
+          <button class="demo-btn ghost" id="demoResetBtn">Reset</button>
+          <button class="demo-btn primary" id="demoPdfBtn">Download PDF</button>
+        </div>
+
+        <!-- Stats bar with live counters + range label -->
+        <div class="demo-stats" style="display:contents;"></div>
         <div class="mockup-stats">
           <div class="mockup-stat">
             <div class="mockup-stat-label">Your accounts</div>
-            <div class="mockup-stat-val gold">12</div>
+            <div class="mockup-stat-val gold" id="demoTotal">12</div>
           </div>
           <div class="mockup-stat">
-            <div class="mockup-stat-label">Active</div>
-            <div class="mockup-stat-val">11</div>
+            <div class="mockup-stat-label">Active right now</div>
+            <div class="mockup-stat-val" id="demoActive">11</div>
           </div>
           <div class="mockup-stat">
-            <div class="mockup-stat-label">Spend / 24h</div>
-            <div class="mockup-stat-val gold">$8,420</div>
+            <div class="mockup-stat-label">Spend / range</div>
+            <div class="mockup-stat-val gold" id="demoSpend24">$0</div>
           </div>
           <div class="mockup-stat">
             <div class="mockup-stat-label">Replaced today</div>
-            <div class="mockup-stat-val">1</div>
+            <div class="mockup-stat-val" id="demoReplaced">1</div>
           </div>
         </div>
-        <div>
-          <div class="mockup-row">
-            <div class="id">act_8847_2031</div>
-            <div class="src">BM #1</div>
-            <div class="spend">$2,840</div>
-            <div><span class="pill ok">&middot; Active</span></div>
+        <div class="demo-rangebar">
+          <span><span class="live-dot"></span>Live demo</span>
+          <span>Showing spend for <b id="demoRangeLabel">all time</b></span>
+          <span style="opacity:.55">— synthetic data, identical UI to the real CRM</span>
+        </div>
+
+        <!-- Live account table -->
+        <div id="demoTable"></div>
+
+        <!-- Bind New BM modal -->
+        <div class="demo-modal-overlay" id="demoOverlay">
+          <div class="demo-modal">
+            <h4>Bind New BM</h4>
+            <p>Enter the target Business Manager ID and pick the permissions to grant.</p>
+            <input class="demo-modal-input" id="demoBmId" type="text" value="1247-9921" autocomplete="off" spellcheck="false">
+            <div class="demo-perms">
+              <label class="demo-perm">
+                <input type="checkbox" class="demo-perm-cb" value="manage_campaigns" checked>
+                <div><div class="perm-t">Manage campaigns</div><div class="perm-d">Create and edit ads, access reports and view ads.</div></div>
+              </label>
+              <label class="demo-perm">
+                <input type="checkbox" class="demo-perm-cb" value="view_performance">
+                <div><div class="perm-t">View performance</div><div class="perm-d">Access reports and view ads.</div></div>
+              </label>
+              <label class="demo-perm">
+                <input type="checkbox" class="demo-perm-cb" value="manage_creative_hub">
+                <div><div class="perm-t">Manage Creative Hub</div><div class="perm-d">View, create and edit mockups in Creative Hub.</div></div>
+              </label>
+              <label class="demo-perm">
+                <input type="checkbox" class="demo-perm-cb" value="manage_ad_accounts">
+                <div><div class="perm-t">Manage ad accounts</div><div class="perm-d">Full account settings, finances and permissions.</div></div>
+              </label>
+            </div>
+            <div class="demo-modal-actions">
+              <button class="demo-btn ghost" id="demoCancel">Cancel</button>
+              <button class="demo-btn primary" id="demoConfirm">Send Bind Request</button>
+            </div>
           </div>
-          <div class="mockup-row">
-            <div class="id">act_8847_2032</div>
-            <div class="src">BM #3</div>
-            <div class="spend">$5,120</div>
-            <div><span class="pill ok">&middot; Active</span></div>
-          </div>
-          <div class="mockup-row">
-            <div class="id">act_8847_2033</div>
-            <div class="src">BM #2</div>
-            <div class="spend">$8.50</div>
-            <div><span class="pill warn">&middot; Warming up</span></div>
-          </div>
+        </div>
+
+        <!-- Toast for replacement / share confirmation -->
+        <div class="demo-toast" id="demoToast">
+          <div class="icon">&#8635;</div>
+          <div><strong id="demoToastTitle">Auto-replaced</strong><br><span id="demoToastBody" style="color:rgba(255,255,255,.75)"></span></div>
         </div>
       </div>
 
@@ -662,10 +969,14 @@ footer{
 &copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
 </footer>
 
+<!-- jsPDF for the Download PDF demo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* Reveal on scroll */
+/* ========== Reveal on scroll ========== */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -675,6 +986,331 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.14 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* ========== Scroll progress bar ========== */
+(function scrollProgress(){
+  const el = document.getElementById("scrollProgress");
+  if (!el) return;
+  function update(){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? (window.scrollY / max) * 100 : 0;
+    el.style.setProperty("--p", p + "%");
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+})();
+
+/* ========== Hero ambient particles ========== */
+(function heroParticles(){
+  const wrap = document.getElementById("heroParticles");
+  if (!wrap) return;
+  for (let i = 0; i < 14; i++){
+    const p = document.createElement("span");
+    p.className = "hero-particle";
+    p.style.left = (Math.random() * 100) + "%";
+    p.style.bottom = (-10 - Math.random() * 60) + "px";
+    p.style.animationDuration = (5 + Math.random() * 6).toFixed(2) + "s";
+    p.style.animationDelay = (Math.random() * 6).toFixed(2) + "s";
+    wrap.appendChild(p);
+  }
+})();
+
+/* ========== Number counter animation for before/after cards ========== */
+(function counterAnim(){
+  const targets = document.querySelectorAll(".ba-card .num");
+  if (!targets.length) return;
+  const seenMap = new WeakSet();
+  const cobs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !seenMap.has(e.target)){
+        seenMap.add(e.target);
+        // Light pulse on enter
+        e.target.animate(
+          [{ transform: "scale(.85)" }, { transform: "scale(1.05)" }, { transform: "scale(1)" }],
+          { duration: 700, easing: "cubic-bezier(.34,1.56,.64,1)" }
+        );
+      }
+    });
+  }, { threshold: 0.4 });
+  targets.forEach(t => cobs.observe(t));
+})();
+
+/* ========== INTERACTIVE CRM DEMO ========== */
+(function crmDemo(){
+  const root = document.getElementById("crmDemo");
+  if (!root) return;
+
+  // Sample data — looks realistic, never hits a server
+  let accounts = [
+    { id: "act_8847_2031", name: "Ren 81",  bm: "BM #1", baseSpend: 12480.55, status: "active"  },
+    { id: "act_8847_2032", name: "Ren 49",  bm: "BM #3", baseSpend: 8120.30,  status: "active"  },
+    { id: "act_8847_2033", name: "Ren 60",  bm: "BM #2", baseSpend: 940.10,   status: "warming" },
+    { id: "act_8847_2034", name: "Ren 44",  bm: "BM #5", baseSpend: 23720.00, status: "active"  },
+    { id: "act_8847_2035", name: "Ren 54",  bm: "BM #4", baseSpend: 4610.75,  status: "active"  },
+    { id: "act_8847_2036", name: "Ren 99",  bm: "BM #6", baseSpend: 18450.00, status: "active"  },
+    { id: "act_8847_2037", name: "Ren 89",  bm: "BM #1", baseSpend: 6180.20,  status: "active"  },
+    { id: "act_8847_2038", name: "Ren 95",  bm: "BM #8", baseSpend: 11990.00, status: "active"  },
+    { id: "act_8847_2039", name: "Bm10 37z", bm: "BM #2", baseSpend: 7240.00, status: "active"  },
+    { id: "act_8847_2040", name: "Ren 39",  bm: "BM #3", baseSpend: 3140.45,  status: "active"  },
+    { id: "act_8847_2041", name: "Ren 43",  bm: "BM #7", baseSpend: 5390.00,  status: "active"  },
+    { id: "act_8847_2042", name: "Ver 138", bm: "BM #1", baseSpend: 12.40,    status: "warming" }
+  ];
+  // Range factor: roughly what fraction of all-time spend falls in each window
+  const RANGE_FACTORS = {
+    today:     0.012,
+    yesterday: 0.014,
+    last_7d:   0.085,
+    last_30d:  0.32,
+    maximum:   1.00
+  };
+  const RANGE_LABEL = {
+    today: "today",
+    yesterday: "yesterday",
+    last_7d: "last 7 days",
+    last_30d: "last 30 days",
+    maximum: "all time"
+  };
+
+  let currentRange = "maximum";
+  let replacedToday = 1;
+
+  function spendFor(acc, range){
+    const f = RANGE_FACTORS[range] || 1;
+    return acc.baseSpend * f;
+  }
+  function fmtMoney(n){
+    return "$" + (Number(n)||0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function pillFor(status){
+    if (status === "active")   return '<span class="pill ok"><span class="pulse-dot"></span>Active</span>';
+    if (status === "warming")  return '<span class="pill warn"><span class="pulse-dot"></span>Warming up</span>';
+    if (status === "disabled") return '<span class="pill bad"><span class="pulse-dot"></span>Disabled</span>';
+    if (status === "replacing")return '<span class="pill warn"><span class="pulse-dot"></span>Replacing</span>';
+    return "";
+  }
+
+  const search = document.getElementById("demoSearch");
+  const rangeSel = document.getElementById("demoRange");
+  const statusSel = document.getElementById("demoStatus");
+  const sortSel = document.getElementById("demoSort");
+  const resetBtn = document.getElementById("demoResetBtn");
+  const pdfBtn = document.getElementById("demoPdfBtn");
+  const tableEl = document.getElementById("demoTable");
+  const totalEl = document.getElementById("demoTotal");
+  const activeEl = document.getElementById("demoActive");
+  const spendEl = document.getElementById("demoSpend24");
+  const replacedEl = document.getElementById("demoReplaced");
+  const rangeLabelEl = document.getElementById("demoRangeLabel");
+
+  function applyFilters(){
+    const q = (search.value || "").trim().toLowerCase();
+    const sf = statusSel.value;
+    const ss = sortSel.value;
+    let list = accounts.slice();
+    if (q){
+      list = list.filter(a =>
+        a.name.toLowerCase().includes(q) ||
+        a.id.toLowerCase().includes(q) ||
+        a.bm.toLowerCase().includes(q)
+      );
+    }
+    if (sf) list = list.filter(a => a.status === sf);
+    if (ss === "name_az") list.sort((a,b) => a.name.localeCompare(b.name));
+    else if (ss === "name_za") list.sort((a,b) => b.name.localeCompare(a.name));
+    else if (ss === "spend_lh") list.sort((a,b) => spendFor(a,currentRange) - spendFor(b,currentRange));
+    else if (ss === "spend_hl") list.sort((a,b) => spendFor(b,currentRange) - spendFor(a,currentRange));
+    return list;
+  }
+
+  function render(){
+    const filtered = applyFilters();
+    if (!filtered.length){
+      tableEl.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px;text-align:center;">No matching accounts.</div>';
+    } else {
+      tableEl.innerHTML = filtered.map(acc => `
+        <div class="mockup-row" data-id="${acc.id}">
+          <div class="id" style="font-family:'JetBrains Mono', monospace; font-size:12.5px;">${acc.name}</div>
+          <div class="src">${acc.bm}</div>
+          <div class="spend">${fmtMoney(spendFor(acc, currentRange))}</div>
+          <div>${pillFor(acc.status)}</div>
+          <div><button class="bind-btn" data-bind="${acc.id}">Bind New BM</button></div>
+        </div>
+      `).join("");
+      tableEl.querySelectorAll("[data-bind]").forEach(btn => {
+        btn.addEventListener("click", () => openBindModal(btn.getAttribute("data-bind")));
+      });
+    }
+
+    // Stats
+    totalEl.textContent = accounts.length;
+    activeEl.textContent = accounts.filter(a => a.status === "active").length;
+    const totalSpend = accounts.reduce((s,a) => s + spendFor(a, currentRange), 0);
+    spendEl.textContent = fmtMoney(totalSpend);
+    replacedEl.textContent = replacedToday;
+    rangeLabelEl.textContent = RANGE_LABEL[currentRange];
+  }
+
+  search.addEventListener("input", render);
+  statusSel.addEventListener("change", render);
+  sortSel.addEventListener("change", render);
+  rangeSel.addEventListener("change", () => {
+    currentRange = rangeSel.value;
+    // small fade for the spend numbers as they update
+    [spendEl].forEach(el => {
+      el.animate([{opacity:.3}, {opacity:1}], {duration:280, easing:"ease-out"});
+    });
+    render();
+  });
+  resetBtn.addEventListener("click", () => {
+    search.value = ""; statusSel.value = ""; sortSel.value = ""; rangeSel.value = "maximum";
+    currentRange = "maximum";
+    render();
+  });
+
+  /* ----- Bind New BM modal ----- */
+  const overlay = document.getElementById("demoOverlay");
+  const bmInput = document.getElementById("demoBmId");
+  const cancelBtn = document.getElementById("demoCancel");
+  const confirmBtn = document.getElementById("demoConfirm");
+  let activeShare = null;
+  function openBindModal(id){
+    activeShare = id;
+    bmInput.value = "1247-" + Math.floor(8000 + Math.random()*1500);
+    overlay.classList.add("show");
+  }
+  function closeBindModal(){
+    overlay.classList.remove("show");
+    activeShare = null;
+  }
+  cancelBtn.addEventListener("click", closeBindModal);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeBindModal(); });
+  confirmBtn.addEventListener("click", () => {
+    const target = bmInput.value || "1247-XXXX";
+    const perms = Array.from(document.querySelectorAll(".demo-perm-cb:checked")).length;
+    closeBindModal();
+    showToast("Bind request sent", `${activeShare} → BM ${target} (${perms} permission${perms===1?"":"s"})`);
+  });
+
+  /* ----- Toast ----- */
+  const toast = document.getElementById("demoToast");
+  const toastTitle = document.getElementById("demoToastTitle");
+  const toastBody = document.getElementById("demoToastBody");
+  let toastTimer = null;
+  function showToast(title, body){
+    toastTitle.textContent = title;
+    toastBody.textContent = body;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3600);
+  }
+
+  /* ----- Auto-replacement loop (only while demo is in viewport) ----- */
+  let inView = false;
+  let loopT = null;
+  function autoReplaceTick(){
+    if (!inView){ loopT = setTimeout(autoReplaceTick, 4000); return; }
+    // Pick a random ACTIVE row to "die"
+    const candidates = accounts.filter(a => a.status === "active");
+    if (!candidates.length){ loopT = setTimeout(autoReplaceTick, 8000); return; }
+    const victim = candidates[Math.floor(Math.random() * candidates.length)];
+    const oldId = victim.id;
+    const oldName = victim.name;
+
+    // 1) Mark disabled
+    victim.status = "disabled";
+    render();
+    flashRow(oldId, "flash-bad");
+
+    // 2) Mark replacing after 1.2s
+    setTimeout(() => {
+      victim.status = "replacing";
+      render();
+    }, 1200);
+
+    // 3) Replace with new id/name after 2.8s
+    setTimeout(() => {
+      const newSeq = 2100 + Math.floor(Math.random() * 500);
+      victim.id = "act_8847_" + newSeq;
+      victim.name = "Ren " + (40 + Math.floor(Math.random() * 60));
+      victim.baseSpend = 800 + Math.random() * 400; // fresh account, low spend
+      victim.status = "active";
+      replacedToday += 1;
+      render();
+      flashRow(victim.id, "flash-good");
+      showToast("Auto-replaced in 7 min", `${oldName} → ${victim.name}`);
+    }, 2800);
+
+    loopT = setTimeout(autoReplaceTick, 12000);
+  }
+  function flashRow(id, cls){
+    const row = tableEl.querySelector(`[data-id="${id}"]`);
+    if (!row) return;
+    row.classList.remove("flash-bad", "flash-good");
+    void row.offsetWidth; // restart animation
+    row.classList.add(cls);
+  }
+
+  // Spend ticker — slowly increment the all-time totals
+  setInterval(() => {
+    if (!inView) return;
+    accounts.forEach(a => {
+      if (a.status === "active") a.baseSpend += Math.random() * 4 + 1;
+    });
+    // Only update spend display, don't re-render full table (keeps your scroll position)
+    const totalSpend = accounts.reduce((s,a) => s + spendFor(a, currentRange), 0);
+    spendEl.textContent = fmtMoney(totalSpend);
+  }, 2400);
+
+  // Start the replacement loop when the demo enters view
+  const ioDemo = new IntersectionObserver(entries => {
+    entries.forEach(e => { inView = e.isIntersecting; });
+  }, { threshold: 0.2 });
+  ioDemo.observe(root);
+  loopT = setTimeout(autoReplaceTick, 5000);
+
+  /* ----- PDF export (real, generated client-side) ----- */
+  pdfBtn.addEventListener("click", () => {
+    try {
+      if (!window.jspdf || !window.jspdf.jsPDF){
+        alert("PDF library still loading — give it a second and try again.");
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "landscape" });
+      doc.setFontSize(18); doc.setFont("helvetica", "bold");
+      doc.text("ScaleShield — Spend Report (Demo)", 14, 16);
+      doc.setFontSize(10); doc.setFont("helvetica", "normal");
+      doc.text(`Range: ${RANGE_LABEL[currentRange]}`, 14, 23);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+      const totalSpend = accounts.reduce((s,a) => s + spendFor(a, currentRange), 0);
+      doc.setFont("helvetica", "bold");
+      doc.text(`Total spend: ${fmtMoney(totalSpend)}    Accounts: ${accounts.length}`, 14, 35);
+      doc.setFont("helvetica", "normal");
+
+      const filtered = applyFilters();
+      doc.autoTable({
+        head: [["Name", "Account ID", "BM", "Status", "Spend"]],
+        body: filtered.map(a => [
+          a.name, a.id, a.bm, a.status,
+          fmtMoney(spendFor(a, currentRange))
+        ]),
+        startY: 42,
+        theme: "grid",
+        styles: { fontSize: 9, cellPadding: 3 },
+        headStyles: { fillColor: [33,33,38], textColor: [255,255,255], fontStyle: "bold" },
+        alternateRowStyles: { fillColor: [248,248,250] }
+      });
+      doc.save(`scaleshield-demo-${currentRange}-${new Date().toISOString().slice(0,10)}.pdf`);
+      showToast("PDF downloaded", `${RANGE_LABEL[currentRange]} report ready`);
+    } catch (err) {
+      console.error(err);
+      alert("PDF generation failed: " + (err.message || err));
+    }
+  });
+
+  // First render
+  render();
+})();
 </script>
 </body>
 </html>
