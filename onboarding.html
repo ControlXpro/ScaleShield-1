@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1650229346295373');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
+/></noscript>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="ScaleShield Onboarding — exactly how the process works step by step, from picking a plan through scaling.">
+<title>ScaleShield — Onboarding</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#07080B;
+  --bg2:#0D0F18;
+  --panel:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.08);
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+  --green:#2cd67c;
+  --red:#ff646e;
+  --blue:#49b2ff;
+  --radius:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html, body{ overflow-x:hidden; width:100% }
+html{ scroll-behavior:smooth }
+
+body{
+  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -10%, rgba(214,177,94,.18), transparent 55%),
+    radial-gradient(800px circle at 80% 30%, rgba(73,178,255,.06), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+  min-height:100vh;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(600px circle at 15% 10%, rgba(214,177,94,.07), transparent 60%),
+    radial-gradient(800px circle at 85% 20%, rgba(73,178,255,.06), transparent 60%);
+  mix-blend-mode:screen; z-index:0;
+}
+
+a{color:inherit;text-decoration:none}
+b{color:rgba(255,255,255,.92)}
+section{ max-width:1200px; margin:auto; padding:88px 24px; position:relative; z-index:2 }
+
+h1,h2,h3{ font-family:'Sora','Inter',system-ui,sans-serif }
+h1{ font-size:clamp(38px,5.6vw,64px); font-weight:950; letter-spacing:-.035em; line-height:1.05 }
+h2{ font-size:clamp(26px,3.4vw,40px); font-weight:850; letter-spacing:-.02em; line-height:1.1 }
+h3{ font-size:20px; font-weight:850 }
+
+p{ color:var(--muted); line-height:1.7; margin-top:14px }
+
+.kicker{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 14px; border-radius:999px;
+  border:1px solid rgba(214,177,94,.20);
+  background:rgba(214,177,94,.06);
+  color:var(--muted); font-size:11px;
+  letter-spacing:.22em; font-weight:950;
+  text-transform:uppercase; backdrop-filter:blur(8px);
+}
+.kdot{
+  width:8px; height:8px; border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.35);
+  animation:dotBlink 1.6s ease-in-out infinite;
+}
+@keyframes dotBlink{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.85)} }
+
+.grad{
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+@keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* NAV */
+.nav{
+  position:fixed; top:0; left:0; right:0;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(5,5,7,.72);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:100;
+}
+.nav-inner{
+  max-width:1200px; margin:auto;
+  padding:12px 24px;
+  display:flex; justify-content:space-between; align-items:center; gap:14px;
+}
+.logo img{ height:30px; display:block }
+.nav-links{ display:none; gap:18px; align-items:center; flex-wrap:nowrap; white-space:nowrap }
+.nav-links a{
+  font-size:13px; font-weight:750; color:var(--muted);
+  transition:color .18s var(--ease);
+}
+.nav-links a:hover{ color:#fff }
+.nav-links a.active{ color:#F2D27A }
+@media(min-width:1080px){ .nav-links{display:flex} }
+.nav-actions{ display:flex; gap:10px; flex-wrap:nowrap; align-items:center }
+
+.btn{
+  padding:13px 18px; border-radius:14px;
+  font-weight:900; font-size:13.5px;
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid transparent; cursor:pointer;
+  transition:.25s var(--ease); white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;
+  box-shadow:0 0 30px rgba(214,177,94,.20);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(214,177,94,.32) }
+.btn-ghost{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.12);
+  color:#fff; backdrop-filter:blur(6px);
+}
+.btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
+
+/* HERO */
+.hero{
+  padding-top:148px; padding-bottom:36px;
+  text-align:center;
+  max-width:none; width:100%;
+}
+.hero > div{ max-width:1100px; margin:auto }
+.hero p{ max-width:64ch; margin:18px auto 0 auto; font-size:clamp(15px,1.3vw,18px) }
+
+/* TIMELINE */
+.timeline{
+  position:relative;
+  margin-top:40px;
+  padding-left:28px;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:7px; top:8px; bottom:8px;
+  width:2px;
+  background:linear-gradient(180deg,
+    rgba(214,177,94,.55) 0%,
+    rgba(214,177,94,.20) 50%,
+    rgba(214,177,94,.55) 100%);
+  border-radius:2px;
+}
+.step{
+  position:relative;
+  padding:26px 28px;
+  margin-bottom:18px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  transition:.28s var(--ease);
+}
+.step:hover{
+  border-color:rgba(214,177,94,.40);
+  transform:translateY(-2px);
+  box-shadow:0 24px 70px -30px rgba(214,177,94,.22);
+}
+.step::before{
+  content:attr(data-num);
+  position:absolute;
+  left:-28px; top:18px;
+  width:34px; height:34px;
+  border-radius:999px;
+  display:grid; place-items:center;
+  font-family:'Sora',sans-serif;
+  font-weight:950; font-size:13px;
+  color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 20px rgba(214,177,94,.40);
+  transform:translateX(-50%);
+}
+.step .step-eyebrow{
+  font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+  font-weight:950; color:var(--muted2);
+}
+.step h3{ margin-top:6px; font-size:22px }
+.step p{ margin-top:10px }
+.step-extra{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(214,177,94,.06);
+  border:1px solid rgba(214,177,94,.18);
+  font-size:13.5px;
+  color:rgba(255,255,255,.85);
+}
+.step-extra strong{ color:#F2D27A }
+
+/* CRM mockup card */
+.mockup-wrap{
+  margin-top:18px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(10,10,14,.92), rgba(8,8,11,.95));
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+}
+.mockup-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+}
+.mockup-dot{ width:10px; height:10px; border-radius:999px }
+.mockup-dot.r{ background:#ff5f56 } .mockup-dot.y{ background:#ffbd2e } .mockup-dot.g{ background:#27c93f }
+.mockup-title{
+  margin-left:14px; font-size:11.5px; opacity:.65;
+  font-family:'JetBrains Mono', monospace;
+}
+.mockup-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.05);
+}
+.mockup-stat{
+  padding:14px 16px;
+  background:rgba(8,8,11,.95);
+}
+.mockup-stat-label{
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted2); font-weight:900;
+}
+.mockup-stat-val{
+  margin-top:6px;
+  font-family:'Sora',sans-serif;
+  font-size:18px; font-weight:900;
+}
+.mockup-stat-val.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+.mockup-row{
+  display:grid;
+  grid-template-columns:1.1fr .8fr 1fr 1fr;
+  gap:12px;
+  padding:11px 16px;
+  border-bottom:1px dashed rgba(255,255,255,.05);
+  font-size:13px; align-items:center;
+}
+.mockup-row .id{ font-family:'JetBrains Mono', monospace; opacity:.85 }
+.mockup-row .src{ color:var(--muted2); font-size:11px; font-weight:800; letter-spacing:.10em; text-transform:uppercase }
+.mockup-row .spend{ font-family:'Sora',sans-serif; font-weight:900 }
+.pill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 10px; border-radius:999px;
+  font-size:11px; font-weight:900;
+  border:1px solid rgba(255,255,255,.10);
+}
+.pill.ok{ color:#d7ffe8; border-color:rgba(44,214,124,.30); background:rgba(44,214,124,.10) }
+.pill.warn{ color:#fff2d3; border-color:rgba(255,203,107,.30); background:rgba(255,203,107,.10) }
+@media(max-width:780px){
+  .mockup-stats{ grid-template-columns:repeat(2,1fr) }
+  .mockup-row{ grid-template-columns:1fr 1fr; gap:8px }
+}
+
+/* Feature highlight chips */
+.feature-grid{
+  display:grid; gap:14px; margin-top:18px;
+}
+@media(min-width:780px){ .feature-grid{ grid-template-columns:repeat(2,1fr) } }
+.feature{
+  padding:16px 18px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+}
+.feature .icon{
+  width:34px; height:34px; border-radius:11px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(214,177,94,.20), rgba(214,177,94,.04));
+  border:1px solid rgba(214,177,94,.25);
+  font-size:16px;
+}
+.feature h4{
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:900;
+  margin-top:10px; color:#fff;
+}
+.feature p{ margin-top:4px; font-size:13px; line-height:1.5 }
+
+/* Warmup ad examples */
+.ad-examples{
+  display:grid; gap:14px; margin-top:18px;
+}
+@media(min-width:680px){ .ad-examples{ grid-template-columns:repeat(2,1fr) } }
+.ad-card{
+  padding:16px 18px; border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+}
+.ad-card .ad-meta{
+  font-size:10.5px; letter-spacing:.18em; text-transform:uppercase;
+  font-weight:950; color:var(--muted2);
+}
+.ad-card .ad-headline{
+  font-family:'Sora',sans-serif; font-size:16px; font-weight:900;
+  color:#fff; margin-top:8px;
+}
+.ad-card .ad-body{
+  margin-top:6px; font-size:13px; color:var(--muted); line-height:1.5;
+}
+.ad-card .ad-cta{
+  margin-top:10px;
+  display:inline-block; padding:6px 12px;
+  border-radius:8px;
+  background:rgba(73,178,255,.10);
+  border:1px solid rgba(73,178,255,.25);
+  color:#cfe9ff;
+  font-size:11px; font-weight:900;
+}
+
+/* Spend-limit explainer */
+.before-after{
+  display:grid; gap:18px; margin-top:18px;
+}
+@media(min-width:780px){ .before-after{ grid-template-columns:1fr 1fr } }
+.ba-card{
+  padding:20px 22px; border-radius:18px;
+}
+.ba-card.before{
+  border:1px solid rgba(255,100,110,.22);
+  background:linear-gradient(135deg, rgba(255,100,110,.06), rgba(255,100,110,.02));
+}
+.ba-card.after{
+  border:1px solid rgba(214,177,94,.35);
+  background:linear-gradient(135deg, rgba(214,177,94,.10), rgba(214,177,94,.04));
+}
+.ba-card .label{
+  font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; font-weight:950;
+}
+.ba-card.before .label{ color:#ffb3b8 }
+.ba-card.after .label{ color:#F2D27A }
+.ba-card .num{
+  margin-top:10px;
+  font-family:'Sora',sans-serif;
+  font-size:36px; font-weight:950; letter-spacing:-.02em;
+}
+.ba-card.before .num{ color:#ff646e }
+.ba-card.after .num{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+.ba-card .copy{ margin-top:8px; font-size:13.5px; color:var(--muted); line-height:1.55 }
+
+/* CTA */
+.cta-card{
+  margin-top:36px;
+  padding:32px;
+  border-radius:24px;
+  border:1px solid rgba(214,177,94,.30);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.16), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  text-align:center;
+}
+.cta-card .actions{
+  margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+}
+
+footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:42px 24px; text-align:center; color:var(--muted);
+}
+
+/* Reveal */
+.reveal{ opacity:0; transform:translateY(28px); transition:.85s var(--ease-out) }
+.reveal.active{ opacity:1; transform:none }
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <a href="index.html"><img src="logo.png" alt="ScaleShield"></a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#verticals">Verticals</a>
+      <a href="index.html#onyx" style="color:#F2D27A">Onyx</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="onboarding.html" class="active">Onboarding</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost">Telegram</a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Contact Now</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> Onboarding</div>
+    <h1 style="margin-top:18px;">From sign-up to <span class="grad">scaling</span> — the exact flow.</h1>
+    <p>Here's how a new ScaleShield account moves from a Telegram message all the way to live, scaling campaigns. No surprises, no jargon — just the steps in order.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section style="padding-top:0">
+  <div class="timeline">
+
+    <div class="step reveal" data-num="1">
+      <div class="step-eyebrow">Step 1 &middot; You</div>
+      <h3>Pick the plan that fits your scale</h3>
+      <p>Tell us your vertical, your daily spend target, and how many accounts you actually need. We'll point you at the right tier — Profile FB ($100), BM3 Verified ($200), BM10 ($550 one-time), Single ($450/mo), Dual ($850/mo), Top Agency ($1,950/mo), Onyx BM2500 ($15,000 one-time), or Agency Unlimited ($35,000/mo). No upselling — just the right fit.</p>
+    </div>
+
+    <div class="step reveal" data-num="2">
+      <div class="step-eyebrow">Step 2 &middot; Us</div>
+      <h3>We share the ad accounts to your BM</h3>
+      <p>Once payment is in and we've confirmed your target Business Manager, our team shares the ad accounts directly into your BM with the permissions you requested (Manage campaigns, View performance, Manage Creative Hub, or full Manage ad accounts). No back-and-forth — just a clean handoff.</p>
+    </div>
+
+    <div class="step reveal" data-num="3">
+      <div class="step-eyebrow">Step 3 &middot; You</div>
+      <h3>Receive access in your Business Manager</h3>
+      <p>You'll see the new accounts appear inside your BM under the permissions you picked. You also get login credentials to your ScaleShield Client Panel CRM — that's where the day-to-day work happens.</p>
+    </div>
+
+    <div class="step reveal" data-num="4">
+      <div class="step-eyebrow">Step 4 &middot; System</div>
+      <h3>First sync into the CRM &mdash; <span class="grad">~1&ndash;2 hours</span></h3>
+      <p>The first time we pull your accounts into the CRM dashboard, expect <b>1&ndash;2 hours</b> for everything to populate. We're talking to Meta in batches and writing the live state into the dashboard. Once the first sync is done, every subsequent refresh is fast (every 5 minutes).</p>
+      <div class="step-extra">
+        <strong>Heads up:</strong> if the CRM looks half-empty for the first hour, that's expected — it's syncing. Don't trigger anything urgent, just give it a beat.
+      </div>
+    </div>
+
+    <div class="step reveal" data-num="5">
+      <div class="step-eyebrow">Step 5 &middot; You + CRM</div>
+      <h3>Use the CRM &mdash; here's what you actually get</h3>
+      <p>Inside the Client Panel you have the full live picture of every account assigned to you. This is what it looks like:</p>
+
+      <div class="mockup-wrap">
+        <div class="mockup-bar">
+          <div class="mockup-dot r"></div>
+          <div class="mockup-dot y"></div>
+          <div class="mockup-dot g"></div>
+          <span class="mockup-title">scaleshield.crm &mdash; your client panel</span>
+        </div>
+        <div class="mockup-stats">
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Your accounts</div>
+            <div class="mockup-stat-val gold">12</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Active</div>
+            <div class="mockup-stat-val">11</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Spend / 24h</div>
+            <div class="mockup-stat-val gold">$8,420</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Replaced today</div>
+            <div class="mockup-stat-val">1</div>
+          </div>
+        </div>
+        <div>
+          <div class="mockup-row">
+            <div class="id">act_8847_2031</div>
+            <div class="src">BM #1</div>
+            <div class="spend">$2,840</div>
+            <div><span class="pill ok">&middot; Active</span></div>
+          </div>
+          <div class="mockup-row">
+            <div class="id">act_8847_2032</div>
+            <div class="src">BM #3</div>
+            <div class="spend">$5,120</div>
+            <div><span class="pill ok">&middot; Active</span></div>
+          </div>
+          <div class="mockup-row">
+            <div class="id">act_8847_2033</div>
+            <div class="src">BM #2</div>
+            <div class="spend">$8.50</div>
+            <div><span class="pill warn">&middot; Warming up</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="icon">&#x1F4CA;</div>
+          <h4>Live spend per account &amp; total</h4>
+          <p>Live spend on each ad account, plus a grand total across everything you have assigned.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">&#x1F4C5;</div>
+          <h4>Date-filtered reports</h4>
+          <p>Today, yesterday, last 7 / 30 days, this month, custom range — pick a window and the dashboard shows spend just for that period.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">&#x1F4C4;</div>
+          <h4>One-click PDF download</h4>
+          <p>Generate a clean, branded PDF of your spend report at any range. Forward to clients, finance, or save for records.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">&#x1F517;</div>
+          <h4>Bind New BM (with permissions)</h4>
+          <p>Need an account shared into a different BM you control? One click, pick the exact permissions, our system handles the share — bypassing Meta&rsquo;s normal re-share limit.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">&#x1F50D;</div>
+          <h4>Filter &amp; sort</h4>
+          <p>Sort by name or spend, filter by Active / Disabled status, search by ID or BM name.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">&#x1F4AC;</div>
+          <h4>24/7 support</h4>
+          <p>Telegram &amp; WhatsApp support are linked from inside the panel. Real humans, real fast.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal" data-num="6">
+      <div class="step-eyebrow">Step 6 &middot; You</div>
+      <h3>Warm up each account &mdash; <span class="grad">$2&ndash;5 on 5 white-hat ads</span></h3>
+      <p>Before you push real volume, every ad account needs a warm-up. The recipe is simple:</p>
+
+      <div class="step-extra">
+        <strong>The warm-up recipe:</strong> launch <b>5 simple, white-hat / neutral ads</b> per account with a tiny budget — <b>$2&ndash;5 total</b> spend across them. Let them deliver. This builds trust signals on the asset so Meta doesn't flag your real campaigns later.
+      </div>
+
+      <p style="margin-top:14px;">Examples of safe warm-up ad creative — keep it boring on purpose:</p>
+
+      <div class="ad-examples">
+        <div class="ad-card">
+          <div class="ad-meta">Warm-up ad &middot; example 1</div>
+          <div class="ad-headline">Discover comfortable everyday running shoes</div>
+          <div class="ad-body">Lightweight, breathable, made for daily wear. Free shipping on first orders.</div>
+          <div class="ad-cta">Shop now</div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-meta">Warm-up ad &middot; example 2</div>
+          <div class="ad-headline">Free guide: 5 productivity tips for remote teams</div>
+          <div class="ad-body">Download our short PDF guide. No spam, no signup wall, just five tips.</div>
+          <div class="ad-cta">Download</div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-meta">Warm-up ad &middot; example 3</div>
+          <div class="ad-headline">New season cookware collection</div>
+          <div class="ad-body">Non-stick pans, ceramic pots, and starter kits — built to last.</div>
+          <div class="ad-cta">Browse</div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-meta">Warm-up ad &middot; example 4</div>
+          <div class="ad-headline">Beginner yoga at home &mdash; free first class</div>
+          <div class="ad-body">15-minute routine, follow along on any device. Sign up free.</div>
+          <div class="ad-cta">Try class</div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-meta">Warm-up ad &middot; example 5</div>
+          <div class="ad-headline">Affordable home office desk lamps</div>
+          <div class="ad-body">Adjustable, USB-C charging, modern minimal design. Ships next day.</div>
+          <div class="ad-cta">See lamps</div>
+        </div>
+        <div class="ad-card" style="border-color:rgba(214,177,94,.35); background:linear-gradient(135deg, rgba(214,177,94,.06), rgba(214,177,94,.02));">
+          <div class="ad-meta" style="color:#F2D27A">Why these work</div>
+          <div class="ad-headline">Boring is the point</div>
+          <div class="ad-body">White-hat creative + tiny budget = clean signal. Meta sees a normal advertiser, your account gets trusted, your real campaigns survive.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal" data-num="7">
+      <div class="step-eyebrow">Step 7 &middot; You</div>
+      <h3>Slowly start scaling your real offers (BH / GH)</h3>
+      <p>Once warm-up has run and the account has a few dollars of clean spend on it, start launching your real campaigns &mdash; BH, GH, nutra, iGaming, finance, peptides, casinos, whatever you actually run. Push the budget up gradually over a few days, not in one jump. Meta is still watching for sudden behavior changes during the first week.</p>
+    </div>
+
+    <div class="step reveal" data-num="8">
+      <div class="step-eyebrow">Step 8 &middot; ScaleShield</div>
+      <h3>If something dies with little spend &mdash; <span class="grad">we replace it free</span></h3>
+      <p>Sometimes Meta still kills an account early, even with proper warm-up. If an account goes down with <b>$0 or minimal spend</b>, you get a free replacement &mdash; just message support. (Subscriptions also include unlimited replacements throughout the billing period regardless of spend.)</p>
+    </div>
+
+    <div class="step reveal" data-num="9">
+      <div class="step-eyebrow">Step 9 &middot; Important</div>
+      <h3>About the low spend limits &mdash; don't freak out</h3>
+      <p>When you first see your accounts, the daily spend limit will look <b>tiny</b> — like $50, $100, sometimes lower. That's normal. It's how Meta protects new assets.</p>
+
+      <div class="before-after">
+        <div class="ba-card before">
+          <div class="label">Day 0 &middot; before warm-up</div>
+          <div class="num">$50&ndash;$100</div>
+          <div class="copy">Low daily spend cap on a fresh account. Meta is watching everything you do for trust signals.</div>
+        </div>
+        <div class="ba-card after">
+          <div class="label">After $2&ndash;5 warm-up</div>
+          <div class="num">$1,000s/day</div>
+          <div class="copy">After a clean warm-up and a few days of normal delivery, the cap typically jumps to thousands per day. Don't push the limit on day 1 &mdash; let it grow.</div>
+        </div>
+      </div>
+
+      <div class="step-extra" style="margin-top:18px;">
+        <strong>TL;DR:</strong> the low limit you see at first <b>is not the limit you'll actually run at</b>. Warm up properly, and the ceiling lifts itself.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0">
+  <div class="cta-card reveal">
+    <div class="kicker"><span class="kdot"></span> Ready to start</div>
+    <h2 style="margin-top:14px;">Talk to ScaleShield support and we&rsquo;ll set you up.</h2>
+    <p style="max-width:60ch; margin:14px auto 0;">Tell us your vertical, GEO, and rough daily spend &mdash; we'll match you to the right tier and have you live within the day.</p>
+    <div class="actions">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start on Telegram</a>
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
+      <a href="index.html#pricing" class="btn btn-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+&copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Reveal on scroll */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("active");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.14 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
