@@ -192,13 +192,19 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 .slide.active .bullet:nth-child(4){ animation-delay:.9s }
 @keyframes bulletIn{ to{ opacity:1; transform:translateY(0) } }
 
-/* Title and desc reveal */
+/* Title and desc reveal — use transitions instead of @keyframes
+   animations. Animations use 'forwards' to retain end state, but if
+   the slide swaps before the animation completes (or browser drops
+   the keyframe binding), the elements get stuck at opacity:0 — which
+   is what was happening on slides 4+. Transitions just respond to
+   state changes, so the inactive→active flip is always rendered. */
 .slide-title, .slide-desc{
   opacity:0; transform:translateY(16px);
+  transition:opacity .8s var(--ease-out), transform .8s var(--ease-out);
 }
-.slide.active .slide-title{ animation:textIn .8s var(--ease-out) .1s forwards }
-.slide.active .slide-desc{  animation:textIn .8s var(--ease-out) .25s forwards }
-@keyframes textIn{ to{ opacity:1; transform:translateY(0) } }
+.slide.active .slide-title{ opacity:1; transform:translateY(0); transition-delay:.1s }
+.slide.active .slide-desc{  opacity:1; transform:translateY(0); transition-delay:.25s }
+@keyframes textIn{ to{ opacity:1; transform:translateY(0) } } /* still used by .actions */
 
 /* Mockup container */
 .mockup{
@@ -210,8 +216,9 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
   box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04);
   overflow:hidden;
   opacity:0; transform:scale(.94);
+  transition:opacity .8s var(--ease-out), transform .8s var(--ease-back);
 }
-.slide.active .mockup{ animation:mockupIn .8s var(--ease-back) .3s forwards }
+.slide.active .mockup{ opacity:1; transform:scale(1); transition-delay:.3s }
 @keyframes mockupIn{ to{ opacity:1; transform:scale(1) } }
 
 .mockup-bar{
@@ -622,6 +629,85 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
   .welcome-orb{ width:340px; height:340px }
 }
 
+/* ===== Bell notification mockup (slide 8) ===== */
+.bell-btn-mock{
+  width:38px; height:38px; border-radius:10px;
+  display:grid; place-items:center;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff; cursor:pointer; position:relative;
+}
+.bell-btn-mock svg{ display:block }
+.bell-dot-mock{
+  position:absolute; top:7px; right:7px;
+  width:9px; height:9px; border-radius:999px;
+  background:#ff4d57;
+  box-shadow:0 0 0 2px #0c0c10, 0 0 12px rgba(255,77,87,.65);
+  opacity:0;
+}
+.slide.active .bell-dot-mock{
+  animation:bellDotIn .55s var(--ease-back) .9s forwards, bellPulseM 1.6s ease-in-out 1.6s infinite;
+}
+@keyframes bellDotIn{ to{ opacity:1 } }
+@keyframes bellPulseM{
+  0%,100%{ transform:scale(1) } 50%{ transform:scale(.8) }
+}
+.bell-panel-mock{
+  margin-top:14px;
+  border-radius:12px;
+  background:rgba(15,15,20,.96);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  opacity:0; transform:translateY(-8px) scale(.97);
+  transition:opacity .55s var(--ease-out), transform .55s var(--ease-back);
+  transition-delay:1.2s;
+}
+.slide.active .bell-panel-mock{
+  opacity:1; transform:translateY(0) scale(1);
+}
+.bell-panel-mock-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+}
+.bell-panel-mock-head strong{ font-size:13px; font-weight:900 }
+.bell-panel-mock-mark{
+  background:rgba(214,177,94,.10);
+  border:1px solid rgba(214,177,94,.30);
+  color:#F2D27A; font-size:10.5px; font-weight:900;
+  padding:4px 9px; border-radius:7px;
+}
+.bell-mock-item{
+  display:flex; gap:10px; padding:10px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  align-items:flex-start; text-align:left;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .5s var(--ease-out), transform .5s var(--ease-out);
+}
+.bell-mock-item:last-child{ border-bottom:none }
+.slide.active .bell-mock-item{ opacity:1; transform:translateY(0) }
+.slide.active .bell-mock-item:nth-child(1){ transition-delay:1.45s }
+.slide.active .bell-mock-item:nth-child(2){ transition-delay:1.6s }
+.slide.active .bell-mock-item:nth-child(3){ transition-delay:1.75s }
+.slide.active .bell-mock-item:nth-child(4){ transition-delay:1.9s }
+.bell-mock-icon{
+  flex:0 0 28px; width:28px; height:28px;
+  border-radius:9px;
+  display:grid; place-items:center;
+  font-size:13px;
+}
+.bell-mock-icon.status_change{ background:rgba(255,100,110,.12); color:#ff646e; border:1px solid rgba(255,100,110,.30) }
+.bell-mock-icon.new_account{ background:rgba(44,214,124,.12); color:#2cd67c; border:1px solid rgba(44,214,124,.30) }
+.bell-mock-icon.bind_submitted,
+.bell-mock-icon.bind_approved{ background:rgba(214,177,94,.14); color:#F2D27A; border:1px solid rgba(214,177,94,.30) }
+.bell-mock-icon.replacement{ background:rgba(73,178,255,.12); color:#49b2ff; border:1px solid rgba(73,178,255,.30) }
+.bell-mock-title{
+  font-size:12.5px; font-weight:800; color:#fff; line-height:1.35;
+}
+.bell-mock-sub{ margin-top:3px; font-size:11.5px; color:rgba(255,255,255,.6); line-height:1.4 }
+.bell-mock-time{ margin-top:4px; font-size:10px; opacity:.5; letter-spacing:.05em }
+
 /* ===== Interactive demo on final slide ===== */
 .slide.try-it{ padding:18px 18px 18px }
 .slide.try-it .slide-title{ font-size:clamp(28px, 3.6vw, 42px) }
@@ -843,7 +929,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
     <!-- ========== SLIDE 1 — WELCOME ========== -->
     <div class="slide welcome active" data-step="1">
       <div class="welcome-orb"></div>
-      <div class="slide-num">Slide <span>01 / 09</span></div>
+      <div class="slide-num">Slide <span>01 / 10</span></div>
       <h2 class="slide-title">Welcome to the <span class="grad">ScaleShield</span> Client Panel.</h2>
       <p class="slide-desc">A 60-second animated tour of every feature you'll use day to day. Sit back, autoplay is on — or use the dots / arrows below to step through manually.</p>
       <div class="slide-bullets">
@@ -856,7 +942,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 2 — DASHBOARD ARRIVES ========== -->
     <div class="slide" data-step="2">
-      <div class="slide-num">Slide <span>02 / 09</span></div>
+      <div class="slide-num">Slide <span>02 / 10</span></div>
       <h2 class="slide-title">All your accounts <span class="grad">in one place</span>.</h2>
       <p class="slide-desc">When you log in, the dashboard greets you with the live state of every ad account assigned to your client — counts, status, and aggregated spend.</p>
       <div class="mockup">
@@ -876,7 +962,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 3 — ACCOUNT TABLE ========== -->
     <div class="slide" data-step="3">
-      <div class="slide-num">Slide <span>03 / 09</span></div>
+      <div class="slide-num">Slide <span>03 / 10</span></div>
       <h2 class="slide-title">Your account list, <span class="grad">live</span>.</h2>
       <p class="slide-desc">Every assigned ad account shows up with its source BM, current spend, and status pill. Status updates in real-time — so you never have to refresh to know what's happening.</p>
       <div class="mockup">
@@ -896,7 +982,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 4 — DATE FILTER ========== -->
     <div class="slide" data-step="4">
-      <div class="slide-num">Slide <span>04 / 09</span></div>
+      <div class="slide-num">Slide <span>04 / 10</span></div>
       <h2 class="slide-title">Filter spend by <span class="grad">any date range</span>.</h2>
       <p class="slide-desc">Today, yesterday, last 7 / 14 / 30 days, this month, last month, all time, or pick a custom range — the spend column updates instantly with Meta data for that window.</p>
       <div class="mockup" style="padding:20px;">
@@ -924,7 +1010,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 5 — SEARCH, SORT & STATUS ========== -->
     <div class="slide" data-step="5">
-      <div class="slide-num">Slide <span>05 / 09</span></div>
+      <div class="slide-num">Slide <span>05 / 10</span></div>
       <h2 class="slide-title">Search, sort, <span class="grad">filter by status</span>.</h2>
       <p class="slide-desc">Type to search by ID, name or BM. Sort by spend low-to-high or high-to-low. Filter to just Active or Disabled accounts in one click.</p>
       <div class="mockup" style="padding:24px;">
@@ -942,7 +1028,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 6 — BIND NEW BM ========== -->
     <div class="slide" data-step="6">
-      <div class="slide-num">Slide <span>06 / 09</span></div>
+      <div class="slide-num">Slide <span>06 / 10</span></div>
       <h2 class="slide-title">Bind any account to <span class="grad">a new BM</span>.</h2>
       <p class="slide-desc">Click "Bind New BM" on any row, drop in the target BM ID, pick the exact permissions you want, and we handle the share — bypassing Meta's normal re-share limit.</p>
       <div class="mockup" style="padding:24px;">
@@ -967,7 +1053,7 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
     <!-- ========== SLIDE 7 — AUTO REPLACEMENT ========== -->
     <div class="slide" data-step="7">
-      <div class="slide-num">Slide <span>07 / 09</span></div>
+      <div class="slide-num">Slide <span>07 / 10</span></div>
       <h2 class="slide-title">If something dies, <span class="grad">it gets replaced</span>.</h2>
       <p class="slide-desc">Any account that goes down with $0 or minimal spend is replaced free, automatically. You'll see the row flash, change to "Replacing", then settle back as a fresh active account — typically within 5–10 minutes.</p>
       <div class="mockup">
@@ -989,9 +1075,72 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
       </div>
     </div>
 
-    <!-- ========== SLIDE 8 — PDF REPORT ========== -->
+    <!-- ========== SLIDE 8 — NOTIFICATIONS BELL ========== -->
     <div class="slide" data-step="8">
-      <div class="slide-num">Slide <span>08 / 09</span></div>
+      <div class="slide-num">Slide <span>08 / 10</span></div>
+      <h2 class="slide-title">Never miss a <span class="grad">change</span>.</h2>
+      <p class="slide-desc">A bell icon sits top-right with a red dot whenever you have unread updates — status changes, new accounts assigned, bind requests, replacements. Click it for the full feed.</p>
+
+      <div class="mockup" style="padding:24px; max-width:680px;">
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:14px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02); border-radius:10px;">
+          <div style="font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted2); font-weight:900; margin-right:auto;">Ad Accounts page header</div>
+          <div class="bell-mock" id="bellMock8">
+            <button class="bell-btn-mock" id="bellBtnMock8" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="bell-dot-mock" id="bellDotMock8"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bell-panel-mock" id="bellPanelMock8">
+          <div class="bell-panel-mock-head">
+            <strong>Notifications</strong>
+            <span class="bell-panel-mock-mark">Mark all read</span>
+          </div>
+          <div id="bellListMock8">
+            <div class="bell-mock-item" data-stagger>
+              <div class="bell-mock-icon status_change">⚠</div>
+              <div>
+                <div class="bell-mock-title">Ren 49: Active → Disabled</div>
+                <div class="bell-mock-sub">BM: Desikart X Splius</div>
+                <div class="bell-mock-time">just now</div>
+              </div>
+            </div>
+            <div class="bell-mock-item" data-stagger>
+              <div class="bell-mock-icon new_account">✓</div>
+              <div>
+                <div class="bell-mock-title">New ad account assigned: Ren 89</div>
+                <div class="bell-mock-sub">Account ID: act_8847_2178 · BM: BM #1</div>
+                <div class="bell-mock-time">3m ago</div>
+              </div>
+            </div>
+            <div class="bell-mock-item" data-stagger>
+              <div class="bell-mock-icon bind_submitted">↻</div>
+              <div>
+                <div class="bell-mock-title">Bind request sent: Ren 81 → BM 1247-9921</div>
+                <div class="bell-mock-sub">3 permissions requested · Status: pending</div>
+                <div class="bell-mock-time">12m ago</div>
+              </div>
+            </div>
+            <div class="bell-mock-item" data-stagger>
+              <div class="bell-mock-icon replacement">↻</div>
+              <div>
+                <div class="bell-mock-title">Auto-replaced in 7 min</div>
+                <div class="bell-mock-sub">act_8847_2035 → act_8847_2178</div>
+                <div class="bell-mock-time">28m ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 9 — PDF REPORT ========== -->
+    <div class="slide" data-step="9">
+      <div class="slide-num">Slide <span>09 / 10</span></div>
       <h2 class="slide-title">One-click <span class="grad">PDF report</span>.</h2>
       <p class="slide-desc">Click Download PDF and you get a clean, branded report of whatever's currently filtered — perfect for forwarding to clients, finance, or just keeping records.</p>
       <div class="pdf-fly">PDF</div>
@@ -1003,9 +1152,9 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
       </div>
     </div>
 
-    <!-- ========== SLIDE 9 — TRY IT YOURSELF (interactive demo) ========== -->
-    <div class="slide try-it" data-step="9">
-      <div class="slide-num">Slide <span>09 / 09</span></div>
+    <!-- ========== SLIDE 10 — TRY IT YOURSELF (interactive demo) ========== -->
+    <div class="slide try-it" data-step="10">
+      <div class="slide-num">Slide <span>10 / 10</span></div>
       <h2 class="slide-title">Now <span class="grad">try it yourself</span>.</h2>
       <p class="slide-desc">Real working demo — click around. Search, sort, change the date range, click <b>Bind New BM</b>, download a PDF report. The autoplay is paused so you can take your time.</p>
 
