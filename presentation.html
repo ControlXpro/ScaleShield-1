@@ -115,15 +115,21 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 }
 .topbar .btn.ghost:hover{ border-color:rgba(214,177,94,.35) }
 
-/* STAGE — full viewport area below topbar */
+/* STAGE — full viewport area below topbar.
+   Uses flex with align-items:stretch so .stage-inner gets the full
+   stage height. Without this, .stage-inner had 0 height (only absolute
+   children) and the slides inside it inherited 0×0 — overflow:hidden
+   then clipped everything except text that happened to render outside
+   the box. That's what caused the half-clipped title bug. */
 .stage{
   position:fixed;
   top:60px; left:0; right:0; bottom:80px;
-  display:grid; place-items:center;
+  display:flex; align-items:stretch; justify-content:center;
   padding:24px;
   z-index:1;
 }
 .stage-inner{
+  flex:1;
   width:100%;
   max-width:1100px;
   position:relative;
@@ -1276,6 +1282,7 @@ const autoLabel = document.getElementById("autoLabel");
 
 let current = 0;
 let autoplay = true;
+let pausedByInteractive = false; /* set when try-it slide auto-pauses; cleared on leave so autoplay resumes */
 let autoTimer = null;
 let progressTimer = null;
 const SLIDE_MS = 7500;
@@ -1310,6 +1317,13 @@ function goTo(i){
   if (i < 0) i = total - 1;
   if (i >= total) i = 0;
   if (i === current) return;
+  /* Leaving the try-it slide: if autoplay was auto-paused by it, restore. */
+  if (slides[current].classList.contains("try-it") && pausedByInteractive){
+    autoplay = true;
+    pausedByInteractive = false;
+    playBtn.textContent = "⏸";
+    autoLabel.textContent = "Auto-play on";
+  }
   slides[current].classList.remove("active");
   current = i;
   slides[current].classList.add("active");
@@ -1324,6 +1338,7 @@ document.getElementById("prevBtn").addEventListener("click", () => goTo(current 
 document.getElementById("nextBtn").addEventListener("click", () => goTo(current + 1));
 playBtn.addEventListener("click", () => {
   autoplay = !autoplay;
+  pausedByInteractive = false; /* user manually toggled — drop the auto-pause flag */
   playBtn.textContent = autoplay ? "⏸" : "▶";
   autoLabel.textContent = autoplay ? "Auto-play on" : "Paused";
   if (autoplay) startAuto(); else clearAuto();
@@ -1352,9 +1367,11 @@ function triggerSceneAnims(idx){
 
   // Final slide is the interactive demo — pause autoplay so the user
   // can click around without the slideshow advancing under them.
+  // Mark pausedByInteractive so it gets auto-restored when they navigate away.
   if (slide.classList.contains("try-it")){
     if (autoplay){
       autoplay = false;
+      pausedByInteractive = true;
       playBtn.textContent = "▶";
       autoLabel.textContent = "Paused (interactive)";
       clearAuto();
