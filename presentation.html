@@ -133,45 +133,41 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 .slide{
   position:absolute; inset:0;
   display:flex; flex-direction:column; align-items:center;
-  /* "safe center" falls back to flex-start when content overflows the
-     container, so the top of the slide never gets clipped on shorter
-     viewports the way pure 'center' does. */
-  justify-content:safe center;
+  justify-content:center;
   text-align:center;
-  padding:20px 16px 20px;
-  overflow-y:auto;
-  overflow-x:hidden;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(255,255,255,.18) transparent;
+  padding:18px 16px;
+  overflow:hidden; /* no scrollbar — content must always fit the stage */
   opacity:0; pointer-events:none;
   transform:translateY(24px) scale(.98);
   transition:opacity .55s var(--ease), transform .65s var(--ease);
 }
-.slide::-webkit-scrollbar{ width:6px }
-.slide::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:3px }
 .slide.active{
   opacity:1; pointer-events:auto;
   transform:translateY(0) scale(1);
 }
 .slide-num{
   font-family:'Sora',sans-serif;
-  font-size:13px; font-weight:950; letter-spacing:.22em;
+  font-size:12px; font-weight:950; letter-spacing:.22em;
   color:var(--muted2);
-  margin-bottom:14px;
+  margin-bottom:10px;
 }
 .slide-num span{ color:#F2D27A }
 .slide-title{
-  font-size:clamp(34px,5vw,58px); font-weight:950;
+  /* Scale with the smaller of viewport-width (5vw) and viewport-height
+     (5vh) so it never blows past the stage on either axis. */
+  font-size:clamp(22px, min(4.4vw, 5.4vh), 48px);
+  font-weight:950;
   letter-spacing:-.03em; line-height:1.04;
+  max-width:90vw;
 }
 .slide-desc{
-  margin-top:14px;
-  font-size:clamp(15px,1.4vw,18px);
-  color:var(--muted); line-height:1.65;
-  max-width:62ch;
+  margin-top:10px;
+  font-size:clamp(13px, 1.25vw, 16px);
+  color:var(--muted); line-height:1.55;
+  max-width:60ch;
 }
 .slide-bullets{
-  margin-top:22px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
 }
 .bullet{
   display:inline-flex; align-items:center; gap:8px;
@@ -208,9 +204,9 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 
 /* Mockup container */
 .mockup{
-  margin-top:26px;
-  width:100%; max-width:880px;
-  border-radius:16px;
+  margin-top:14px;
+  width:100%; max-width:760px;
+  border-radius:14px;
   border:1px solid rgba(255,255,255,.10);
   background:linear-gradient(180deg, rgba(10,10,14,.94), rgba(8,8,11,.96));
   box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04);
@@ -481,10 +477,11 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
   100%{ opacity:1; transform:scale(1) translateY(0) }
 }
 
-/* Welcome / final slides — typography focus */
+/* Welcome / final slides — typography focus, but capped so they never
+   exceed the stage height. */
 .slide.welcome .slide-title,
 .slide.finale .slide-title{
-  font-size:clamp(44px, 7vw, 84px);
+  font-size:clamp(28px, min(5.6vw, 7vh), 60px);
 }
 .slide.finale .actions{
   margin-top:30px;
@@ -509,16 +506,17 @@ h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
 }
 .slide.finale .btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
 
-/* Hero glow orb on welcome */
+/* Hero glow orb on welcome — purely decorative, must not affect layout. */
 .welcome-orb{
   position:absolute; left:50%; top:50%;
   transform:translate(-50%, -50%);
-  width:600px; height:600px;
+  width:min(60vw, 60vh, 480px); height:min(60vw, 60vh, 480px);
   border-radius:999px;
   background:radial-gradient(circle, rgba(214,177,94,.25), transparent 60%);
   filter:blur(40px);
   z-index:-1;
   opacity:0;
+  pointer-events:none;
 }
 .slide.welcome.active .welcome-orb{
   animation:orbIn 1.4s ease-out forwards, orbDrift 8s ease-in-out 1.4s infinite;
