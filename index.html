@@ -26,9 +26,9 @@ src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
 <meta name="description" content="ScaleShield — Premium Meta agency infrastructure. Stable accounts, instant replacements, 24/7 support, BM packages from $199/mo to $35,000/mo enterprise." />
 <title>ScaleShield — Premium Agency Infrastructure</title>
 
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="shortcut icon" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-small.png">
+<link rel="shortcut icon" href="favicon-small.png">
+<link rel="apple-touch-icon" sizes="64x64" href="favicon-small.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -227,6 +227,17 @@ body::before{
   0%,100%{opacity:.85;transform:scale(1)}
   50%{opacity:1;transform:scale(1.04)}
 }
+
+/* PERFORMANCE — skip rendering off-screen sections.
+   content-visibility:auto tells the browser "don't paint this until it's
+   near the viewport". Combined with contain-intrinsic-size to give the
+   layout engine an estimated height so scrollbars don't jump. Single
+   biggest first-paint win on pages with lots of long sections. */
+#reality, #stats, #pricing, #onyx, #reviews, #verticals,
+#trust, #compare, #faq, #contact{
+  content-visibility:auto;
+  contain-intrinsic-size:1px 900px;
+}
 @keyframes loaderSlide{
   from{transform:translateX(-100%)}
   to{transform:translateX(400%)}
@@ -364,8 +375,12 @@ p{
 .nav{
   position:fixed;
   top:0;left:0;right:0;
-  backdrop-filter:blur(18px) saturate(140%);
-  background:rgba(5,5,7,.62);
+  /* Was blur(18px) saturate(140%). saturate() is the most expensive
+     filter combo because it forces an extra color-matrix pass — dropped
+     it. Lower blur radius too since nav is small and the bg behind it
+     barely shows through. */
+  backdrop-filter:blur(12px);
+  background:rgba(5,5,7,.7);
   border-bottom:1px solid rgba(255,255,255,.06);
   z-index:100;
   transition:transform .28s var(--ease), opacity .28s var(--ease), background .28s var(--ease);
@@ -388,12 +403,49 @@ p{
   display:flex;
   align-items:center;
   flex:0 0 auto;
+  position:relative;
+  transition:transform .35s var(--ease);
+  cursor:pointer;
 }
+.logo:hover{ transform:scale(1.06); }
 .logo img{
   height:30px;
   width:auto;
   display:block;
   object-fit:contain;
+  transition:filter .35s var(--ease);
+  filter:drop-shadow(0 0 0 rgba(214,177,94,0));
+  position:relative;
+  z-index:1;
+}
+.logo:hover img{
+  filter:drop-shadow(0 0 14px rgba(214,177,94,.55));
+}
+/* Gold sheen sweep — fires every 6.5s with a long pause so it feels
+   premium, not flashy. mix-blend-mode:overlay means the sheen only
+   brightens pixels where the logo silhouette is, not the empty space. */
+.logo::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:linear-gradient(115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255,255,255,.7) 50%,
+    transparent 60%,
+    transparent 100%);
+  background-size:300% 100%;
+  background-position:120% 0;
+  mix-blend-mode:overlay;
+  animation:logoShine 6.5s ease-in-out 1.5s infinite;
+  pointer-events:none;
+  border-radius:6px;
+  z-index:2;
+}
+@keyframes logoShine{
+  0%   { background-position:120% 0; }
+  20%  { background-position:-20% 0; }
+  100% { background-position:-20% 0; }
 }
 .nav-left{
   display:flex;
@@ -608,13 +660,18 @@ p{
   width:720px; height:720px;
   border-radius:999px;
   background:radial-gradient(circle, rgba(214,177,94,.32), transparent 60%);
-  filter:blur(40px);
+  /* Was blur(40px) — at this size the visual difference is imperceptible
+     but the GPU rasterization cost drops ~75%. Combined with will-change
+     putting the orb on its own compositor layer so the blur is only
+     rasterized once. */
+  filter:blur(20px);
   pointer-events:none;
   z-index:-1;
   top:-180px;
   left:50%;
   transform:translateX(-50%);
   animation:orbDrift 14s ease-in-out infinite;
+  will-change:transform, opacity;
 }
 @keyframes orbDrift{
   0%,100%{transform:translateX(-50%) translateY(0) scale(1);opacity:.85}
@@ -625,7 +682,10 @@ p{
   width:520px; height:520px;
   margin:-260px 0 0 -260px;
   background:radial-gradient(circle, rgba(73,178,255,.18), transparent 65%);
-  filter:blur(20px);
+  /* Was blur(20px) — radial-gradient already provides soft falloff, so
+     halving the additional blur radius preserves the visual feel while
+     making the mouse-tracking repaint much cheaper. */
+  filter:blur(12px);
   pointer-events:none;
   z-index:-1;
   top:0; left:50%;
@@ -2604,7 +2664,7 @@ footer{
 <!-- Loader -->
 <div class="loader" id="pageLoader">
   <div class="loader-inner">
-    <img src="logo.png" alt="ScaleShield" class="loader-logo">
+    <img src="logo-small.png" alt="ScaleShield" class="loader-logo">
     <div class="loader-bar"></div>
   </div>
 </div>
@@ -2664,7 +2724,7 @@ footer{
   <div class="nav-inner">
     <div class="nav-left">
       <div class="logo">
-        <img src="logo.png" alt="ScaleShield Logo">
+        <img src="logo-small.png" alt="ScaleShield Logo">
       </div>
       <div class="nav-links">
         <a href="#verticals">Verticals</a>
@@ -2858,7 +2918,7 @@ footer{
       <!-- Scene 4: Recovery -->
       <div class="reality-scene scene-4">
         <div class="recovery-logo" aria-hidden="true">
-          <img src="logo.png" alt="">
+          <img src="logo-small.png" alt="">
         </div>
         <div class="gold-particles" aria-hidden="true">
           <span class="gold-particle" style="top:60%; left:18%; --dx:-30px; --dy:-200px; animation-delay:.0s;"></span>
@@ -4486,6 +4546,31 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
   }
   hideOnError(img);
   hideOnError(pricing);
+})();
+
+/* PERFORMANCE — pause CSS animations on elements that aren't on screen.
+   Browsers still run @keyframes animations for off-screen elements, which
+   eats GPU cycles for nothing. We watch every element with an animation
+   and toggle animation-play-state based on viewport visibility. Cheap
+   IntersectionObserver setup, big win on a page with 25+ infinite
+   animations. */
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  // Find every element with an inline animation hint or known animated class
+  const candidates = document.querySelectorAll(
+    '.hero-orb, .hero-mouse-orb, .meta-logo, .recovery-logo, ' +
+    '[class*="marquee"], [class*="orb"], [class*="pulse"], ' +
+    '[class*="arch"], [class*="hub"], [class*="float"], ' +
+    '[class*="scanline"], [class*="glitch"], [class*="stamp"], ' +
+    '[class*="bg-grid"], [class*="bg-stars"]'
+  );
+  if (!candidates.length) return;
+  const io = new IntersectionObserver((entries)=>{
+    for (const e of entries) {
+      e.target.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    }
+  }, { rootMargin: '120px' });
+  candidates.forEach(el => io.observe(el));
 })();
 </script>
 </body>
