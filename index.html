@@ -4700,31 +4700,45 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
 
 /* Contact modal — intercepts clicks on any [data-contact-product] link
    and presents WhatsApp / Telegram choice instead of going straight to
-   Telegram. The original href stays as a no-JS fallback. */
+   Telegram. The original href stays as a no-JS fallback.
+
+   IMPORTANT: this script runs BEFORE the modal HTML is parsed (modal
+   sits below this script). The delegated click handler is attached to
+   `document` immediately so it works for any click after DOM parsing
+   completes; the modal element lookup is done lazily inside the
+   handler so we don't depend on order. */
 (function(){
-  const modal = document.getElementById('contactModal');
-  if (!modal) return;
-  const productLabel = document.getElementById('contactModalProduct');
+  let modal = null;
+  let productLabel = null;
+  function ensureRefs(){
+    if (!modal) modal = document.getElementById('contactModal');
+    if (!productLabel) productLabel = document.getElementById('contactModalProduct');
+    return !!modal;
+  }
 
   function openModal(productName){
-    if (productName && productLabel) {
+    if (!ensureRefs()) return;
+    if (productName) {
       productLabel.innerHTML =
         'Talk to our team about <strong>' + productName + '</strong>.';
-    } else if (productLabel) {
+    } else {
       productLabel.innerHTML = 'Talk to our team — we typically reply within minutes.';
     }
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
   function closeModal(){
+    if (!ensureRefs()) return;
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
+  // Capture phase so we beat any other click handler on the page.
   document.addEventListener('click', function(e){
     const trigger = e.target.closest('[data-contact-product]');
     if (trigger) {
       e.preventDefault();
+      e.stopPropagation();
       openModal(trigger.getAttribute('data-contact-product'));
       return;
     }
@@ -4732,10 +4746,10 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
       e.preventDefault();
       closeModal();
     }
-  });
+  }, true);
 
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+    if (e.key === 'Escape' && modal && modal.getAttribute('aria-hidden') === 'false') {
       closeModal();
     }
   });
