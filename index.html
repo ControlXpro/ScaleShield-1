@@ -246,6 +246,134 @@ body::before{
 a{color:inherit;text-decoration:none}
 b{color:rgba(255,255,255,.92)}
 
+/* ============================================================
+   CONTACT MODAL — opens when a Get-X tier CTA is clicked,
+   gives the user a choice between WhatsApp + Telegram
+   ============================================================ */
+.contact-modal{
+  position:fixed; inset:0; z-index:10000;
+  display:none;
+  align-items:center; justify-content:center;
+  padding:24px;
+}
+.contact-modal[aria-hidden="false"]{
+  display:flex;
+  animation:contactModalFadeIn .25s ease-out;
+}
+.contact-modal-backdrop{
+  position:absolute; inset:0;
+  background:rgba(5,5,7,.78);
+  backdrop-filter:blur(8px);
+}
+.contact-modal-card{
+  position:relative;
+  width:100%; max-width:440px;
+  background:linear-gradient(180deg, rgba(26,18,7,.96), rgba(15,11,7,.96));
+  border:1px solid rgba(214,177,94,.32);
+  border-radius:18px;
+  padding:36px 28px 26px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(214,177,94,.08), 0 0 80px rgba(214,177,94,.06);
+  text-align:center;
+}
+.contact-modal-close{
+  position:absolute; top:12px; right:14px;
+  width:36px; height:36px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:50%;
+  color:#fff; font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .25s ease-out;
+}
+.contact-modal-close:hover{ background:rgba(255,255,255,.1); transform:rotate(90deg); }
+.contact-modal-icon{
+  width:64px; height:64px;
+  margin:0 auto 14px;
+  background:radial-gradient(circle, rgba(214,177,94,.3), transparent 70%);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:30px;
+}
+.contact-modal-card h3{
+  font-size:22px; margin:0 0 6px;
+  background:linear-gradient(135deg, #F2D27A, #D6B15E);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+#contactModalProduct{
+  opacity:.75; font-size:14px; margin:0 0 22px;
+}
+#contactModalProduct strong{ color:#F2D27A; font-weight:600; }
+.contact-options{
+  display:flex; flex-direction:column; gap:12px;
+}
+.contact-option{
+  display:flex; align-items:center; gap:14px;
+  padding:14px 18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  text-decoration:none; color:#fff;
+  transition:all .25s ease-out;
+  text-align:left;
+}
+.contact-option:hover{
+  background:rgba(214,177,94,.08);
+  border-color:rgba(214,177,94,.45);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(214,177,94,.15);
+}
+.contact-option-icon{
+  width:36px; height:36px; flex:0 0 36px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+  background:rgba(255,255,255,.04);
+}
+.contact-wa .contact-option-icon{ background:rgba(37,211,102,.12); color:#25D366; }
+.contact-tg .contact-option-icon{ background:rgba(38,165,228,.12); color:#26A5E4; }
+.contact-option-text{ flex:1; }
+.contact-option-label{ font-weight:700; font-size:15px; line-height:1.2; }
+.contact-option-sub{ font-size:12px; opacity:.6; margin-top:2px; }
+.contact-option-arrow{ opacity:.4; font-size:18px; }
+.contact-foot{
+  margin:18px 0 0; font-size:11.5px; opacity:.55;
+}
+@keyframes contactModalFadeIn{
+  from{ opacity:0; transform:scale(.94); }
+  to{ opacity:1; transform:scale(1); }
+}
+
+/* ============================================================
+   LOGIN BUTTON — make it stand out (gold gradient + pulse glow)
+   ============================================================ */
+.btn-login{
+  display:inline-flex !important;
+  align-items:center; gap:6px;
+  padding:8px 18px !important;
+  background:linear-gradient(135deg, #D6B15E, #F2D27A) !important;
+  color:#0a0708 !important;
+  font-weight:700 !important;
+  font-size:13.5px !important;
+  border-radius:999px !important;
+  border:none !important;
+  letter-spacing:.02em;
+  box-shadow:0 0 0 1px rgba(214,177,94,.4), 0 6px 22px rgba(214,177,94,.28);
+  transition:transform .25s ease-out, box-shadow .25s ease-out;
+  position:relative;
+  overflow:visible;
+  animation:loginPulse 2.6s ease-in-out infinite;
+}
+.btn-login:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 0 0 1px rgba(242,210,122,.6), 0 10px 30px rgba(214,177,94,.48);
+}
+.btn-login small{ font-size:11px; opacity:.7; }
+@keyframes loginPulse{
+  0%,100% { box-shadow:0 0 0 1px rgba(214,177,94,.4), 0 6px 22px rgba(214,177,94,.28); }
+  50%     { box-shadow:0 0 0 1px rgba(242,210,122,.6), 0 10px 32px rgba(214,177,94,.55); }
+}
+
 section{
   max-width:1200px;
   margin:auto;
@@ -2735,7 +2863,7 @@ footer{
     <a href="#reviews" class="mnav">Reviews <small>&rarr;</small></a>
     <a href="#faq" class="mnav">FAQ <small>&rarr;</small></a>
     <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>&#8599;</small></a>
-    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in <small>&#8599;</small></a>
+    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>&#8599;</small></a>
     <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>&#8599;</small></a>
     <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>&#8599;</small></a>
     <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>&#8599;</small></a>
@@ -2757,7 +2885,7 @@ footer{
         <a href="presentation.html">CRM Tour</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
+        <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -3090,7 +3218,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="BM3 Verified" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM3 Verified</a>
       </div>
 
       <!-- BM10 (UPDATED PRICE $550) -->
@@ -3111,7 +3239,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="BM10 Instant" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get BM10</a>
       </div>
     </div>
   </div>
@@ -3142,7 +3270,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Single Agency" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Single</a>
       </div>
 
       <!-- Dual Agency -->
@@ -3163,7 +3291,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Dual Agency" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Get Dual</a>
       </div>
 
       <!-- Top Agency (Most Popular) -->
@@ -3185,7 +3313,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">BH / GH friendly</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Top Agency" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Top Agency</a>
       </div>
     </div>
   </div>
@@ -3216,7 +3344,7 @@ footer{
           <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
           <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Custom Plan" class="btn btn-ghost tier-cta magnetic" data-mag="0.3">Talk to Sales</a>
       </div>
 
       <!-- Onyx BM2500 (link to dedicated section above) -->
@@ -3238,7 +3366,7 @@ footer{
           <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
                     <span class="tier-meta-pill verticals">High-spend BH / GH</span>
         </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Onyx BM2500</a>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Onyx BM2500" class="btn btn-primary tier-cta magnetic" data-mag="0.45">Get Onyx BM2500</a>
       </div>
 
       <!-- Agency Unlimited -->
@@ -3266,7 +3394,7 @@ footer{
               <li>Operational support 24/7</li>
               <li>Use your own cards for ad spend</li>
             </ul>
-            <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
+            <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Agency Unlimited (Enterprise)" class="btn btn-primary tier-cta magnetic" data-mag="0.45" style="margin-top:18px;">Talk to Enterprise</a>
           </div>
         </div>
       </div>
@@ -3415,7 +3543,7 @@ footer{
     </div>
 
     <div class="onyx-cta-row">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-mag="0.45">Get Onyx BM2500</a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" data-contact-product="Onyx BM2500" class="btn btn-primary magnetic" data-mag="0.45">Get Onyx BM2500</a>
       <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost btn-wa magnetic" data-mag="0.35">Talk on WhatsApp</a>
       <span class="badge"><strong>Built for</strong>&nbsp;high-spend nutra, iGaming, finance, casinos, peptides &amp; gray verticals</span>
     </div>
@@ -3716,7 +3844,7 @@ footer{
       </a>
 
       <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Payment Details</a>
-      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Log in</a>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-login magnetic" data-mag="0.3">Log in</a>
     </div>
   </div>
 </section>
@@ -4569,6 +4697,82 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
   }, { rootMargin: '120px' });
   candidates.forEach(el => io.observe(el));
 })();
+
+/* Contact modal — intercepts clicks on any [data-contact-product] link
+   and presents WhatsApp / Telegram choice instead of going straight to
+   Telegram. The original href stays as a no-JS fallback. */
+(function(){
+  const modal = document.getElementById('contactModal');
+  if (!modal) return;
+  const productLabel = document.getElementById('contactModalProduct');
+
+  function openModal(productName){
+    if (productName && productLabel) {
+      productLabel.innerHTML =
+        'Talk to our team about <strong>' + productName + '</strong>.';
+    } else if (productLabel) {
+      productLabel.innerHTML = 'Talk to our team — we typically reply within minutes.';
+    }
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', function(e){
+    const trigger = e.target.closest('[data-contact-product]');
+    if (trigger) {
+      e.preventDefault();
+      openModal(trigger.getAttribute('data-contact-product'));
+      return;
+    }
+    if (e.target.closest('[data-contact-modal-close]')) {
+      e.preventDefault();
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+      closeModal();
+    }
+  });
+})();
 </script>
+
+<!-- Contact Sales Modal — choose WhatsApp or Telegram -->
+<div class="contact-modal" id="contactModal" aria-hidden="true" role="dialog" aria-labelledby="contactModalTitle">
+  <div class="contact-modal-backdrop" data-contact-modal-close></div>
+  <div class="contact-modal-card">
+    <button class="contact-modal-close" data-contact-modal-close aria-label="Close">×</button>
+    <div class="contact-modal-icon">&#128640;</div>
+    <h3 id="contactModalTitle">Contact Sales</h3>
+    <p id="contactModalProduct">Talk to our team — we typically reply within minutes.</p>
+    <div class="contact-options">
+      <!-- TODO: replace <YOUR_NUMBER> with your real WhatsApp number (digits only, with country code, no + or spaces)
+           Example: https://wa.me/15551234567 -->
+      <a href="https://wa.me/YOUR_NUMBER" target="_blank" rel="noopener" class="contact-option contact-wa">
+        <span class="contact-option-icon">&#128241;</span>
+        <span class="contact-option-text">
+          <span class="contact-option-label">WhatsApp</span>
+          <span class="contact-option-sub">Fastest reply &middot; same number for all regions</span>
+        </span>
+        <span class="contact-option-arrow">&rarr;</span>
+      </a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="contact-option contact-tg">
+        <span class="contact-option-icon">&#9992;</span>
+        <span class="contact-option-text">
+          <span class="contact-option-label">Telegram</span>
+          <span class="contact-option-sub">@scaleshieldsupport</span>
+        </span>
+        <span class="contact-option-arrow">&rarr;</span>
+      </a>
+    </div>
+    <p class="contact-foot">We typically reply within 5 minutes during business hours.</p>
+  </div>
+</div>
+
 </body>
 </html>
