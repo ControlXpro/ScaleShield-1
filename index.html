@@ -2807,10 +2807,325 @@ footer{
   .reality-scene{ opacity:1 !important; position:relative !important }
   .reality-pin{ height:auto !important }
 }
+
+/* ============================================================
+   COHORT SCARCITY TICKER — sticky bar above nav with live countdown
+   ============================================================ */
+.cohort-ticker{
+  position:fixed;top:0;left:0;right:0;
+  z-index:101;
+  padding:8px 16px;
+  background:linear-gradient(90deg, rgba(214,177,94,.12), rgba(214,177,94,.18), rgba(214,177,94,.12));
+  border-bottom:1px solid rgba(214,177,94,.35);
+  backdrop-filter:blur(10px);
+  font-size:12.5px;font-weight:600;
+  text-align:center;
+  letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  flex-wrap:wrap;
+}
+.cohort-spots{display:inline-flex;align-items:center;gap:6px;color:#F2D27A}
+.cohort-spots-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#ef4444;
+  box-shadow:0 0 8px #ef4444;
+  animation:cohortPulse 1.4s infinite;
+}
+@keyframes cohortPulse{50%{opacity:.4}}
+.cohort-divider{opacity:.3}
+.cohort-countdown{
+  display:inline-flex;gap:10px;align-items:center;color:#fff;
+}
+.cohort-time{
+  display:inline-flex;align-items:baseline;gap:3px;
+  font-variant-numeric:tabular-nums;
+}
+.cohort-time-num{
+  font-weight:800;color:#F2D27A;font-size:14px;
+  min-width:1.6ch;text-align:center;
+}
+.cohort-time-lbl{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.08em}
+.nav{top:36px !important}
+@media (max-width:680px){
+  .cohort-ticker{padding:6px 10px;gap:10px;font-size:11.5px}
+  .cohort-time-num{font-size:13px}
+}
+
+/* ============================================================
+   3-WAY COMPARISON TABLE — ScaleShield vs Personal vs Resellers
+   ============================================================ */
+.compare3-section{padding:80px 0}
+.compare3-wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.compare3-head{text-align:center;margin-bottom:36px}
+.compare3-head h2{font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+.compare3-head p{color:rgba(255,255,255,.62);max-width:600px;margin:0 auto}
+.compare3-table{
+  width:100%;
+  border-collapse:separate;border-spacing:0;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(214,177,94,.18);
+  border-radius:18px;
+  overflow:hidden;
+}
+.compare3-table th, .compare3-table td{
+  padding:16px 22px;
+  text-align:left;
+  border-bottom:1px solid rgba(214,177,94,.1);
+  font-size:14px;
+}
+.compare3-table thead th{
+  background:rgba(214,177,94,.04);
+  font-weight:700;
+  font-size:13px;letter-spacing:.04em;
+  color:rgba(255,255,255,.85);
+  white-space:nowrap;
+}
+.compare3-table th.ours{
+  background:linear-gradient(135deg, rgba(214,177,94,.2), rgba(214,177,94,.08));
+  color:#F2D27A;
+  position:relative;
+}
+.compare3-table th.ours::after{
+  content:"BEST";
+  position:absolute;top:8px;right:14px;
+  font-size:10px;padding:2px 8px;
+  background:#F2D27A;color:#0a0708;
+  font-weight:800;border-radius:999px;letter-spacing:.06em;
+}
+.compare3-table tbody td.ours{
+  background:rgba(214,177,94,.03);
+  color:#F2D27A;
+  font-weight:600;
+}
+.compare3-table tbody tr:last-child td{border-bottom:none}
+.compare3-table tbody tr:hover td{background:rgba(255,255,255,.02)}
+.compare3-table tbody tr:hover td.ours{background:rgba(214,177,94,.06)}
+.compare3-yes{color:#4ade80}
+.compare3-no{color:#ef4444}
+.compare3-meh{color:#fbbf24}
+.compare3-feature{font-weight:600;color:#fff}
+@media (max-width:768px){
+  .compare3-table th, .compare3-table td{padding:11px 14px;font-size:12.5px}
+  .compare3-table th.ours::after{display:none}
+}
+
+/* ============================================================
+   CRM DEMO LOOP — animated mockup that cycles through 4 scenes
+   ============================================================ */
+.crm-demo{
+  background:linear-gradient(135deg, rgba(214,177,94,.04), rgba(214,177,94,.01));
+  border:1px solid rgba(214,177,94,.18);
+  border-radius:22px;
+  padding:36px;
+  margin-bottom:48px;
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:36px;align-items:center;
+}
+.crm-demo-text h3{font-size:28px;font-weight:800;margin-bottom:12px;letter-spacing:-.02em}
+.crm-demo-text h3 .grad{
+  background:linear-gradient(135deg, #F2D27A, #D6B15E);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.crm-demo-text p{color:rgba(255,255,255,.62);margin-bottom:18px;font-size:15px}
+.crm-demo-checklist{list-style:none;margin:0 0 18px}
+.crm-demo-checklist li{
+  padding:5px 0;font-size:13.5px;
+  display:flex;align-items:flex-start;gap:8px;color:rgba(255,255,255,.85);
+}
+.crm-demo-checklist li::before{
+  content:"✓";color:#F2D27A;font-weight:700;flex:0 0 14px;
+}
+.crm-demo-mockup{
+  background:#0d0a07;
+  border:1px solid rgba(214,177,94,.22);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(214,177,94,.06);
+  position:relative;
+  aspect-ratio:16/10;
+}
+.crm-demo-titlebar{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.03);
+  border-bottom:1px solid rgba(214,177,94,.1);
+}
+.crm-demo-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+}
+.crm-demo-dot.r{background:#ef4444}
+.crm-demo-dot.y{background:#fbbf24}
+.crm-demo-dot.g{background:#22c55e}
+.crm-demo-url{
+  flex:1;margin-left:8px;font-size:11px;
+  color:rgba(255,255,255,.4);
+  font-family:monospace;
+}
+.crm-demo-stage{
+  position:relative;
+  padding:18px;
+  height:calc(100% - 36px);
+  font-size:12px;
+}
+.crm-demo-scene{
+  position:absolute;inset:18px;
+  opacity:0;
+  transition:opacity .8s ease-in-out;
+}
+.crm-demo-scene.active{opacity:1}
+.demo-row{
+  display:grid;grid-template-columns:1fr 70px 80px 50px;
+  gap:10px;padding:8px 10px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:11px;align-items:center;
+}
+.demo-row.head{font-weight:700;color:#F2D27A;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-bottom-color:rgba(214,177,94,.2)}
+.demo-pill{
+  display:inline-block;padding:2px 8px;border-radius:999px;
+  font-size:10px;font-weight:600;
+}
+.demo-pill.active{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+.demo-pill.disabled{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.demo-pill.replacing{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
+.demo-spend{color:#fff;font-weight:700;font-variant-numeric:tabular-nums}
+.demo-acct{color:rgba(255,255,255,.85);font-family:monospace;font-size:10.5px}
+.demo-modal{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%, -50%);
+  background:#15110d;
+  border:1px solid rgba(214,177,94,.35);
+  border-radius:10px;
+  padding:18px;width:80%;max-width:340px;
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+}
+.demo-modal h5{font-size:13px;font-weight:700;margin-bottom:8px;color:#F2D27A}
+.demo-modal p{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:10px}
+.demo-modal input{
+  width:100%;padding:8px 10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(214,177,94,.2);
+  border-radius:6px;color:#fff;font-family:monospace;font-size:11px;
+}
+.demo-modal-btn{
+  width:100%;padding:8px;
+  background:linear-gradient(135deg, #D6B15E, #F2D27A);
+  color:#000;border:none;border-radius:6px;
+  font-weight:700;font-size:11px;margin-top:8px;cursor:pointer;
+}
+.demo-replacement{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;margin-bottom:6px;
+  background:rgba(255,255,255,.03);border-radius:8px;
+  border:1px solid rgba(255,255,255,.06);
+  font-size:11px;
+}
+.demo-replacement-step{display:flex;align-items:center;gap:8px}
+.demo-replacement-dot{
+  width:8px;height:8px;border-radius:50%;
+  animation:demoBlink 1s infinite;
+}
+.demo-replacement.done .demo-replacement-dot{background:#22c55e;animation:none}
+.demo-replacement.active .demo-replacement-dot{background:#fbbf24}
+.demo-replacement.pending .demo-replacement-dot{background:rgba(255,255,255,.2);animation:none}
+@keyframes demoBlink{50%{opacity:.4}}
+.demo-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.demo-stat{
+  padding:10px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:8px;
+}
+.demo-stat-num{font-size:18px;font-weight:800;color:#F2D27A;font-variant-numeric:tabular-nums}
+.demo-stat-lbl{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px}
+.crm-demo-progress{
+  position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:rgba(255,255,255,.05);
+}
+.crm-demo-progress::after{
+  content:"";position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(90deg, #D6B15E, #F2D27A);
+  width:0%;
+  animation:demoProgress 24s linear infinite;
+}
+@keyframes demoProgress{
+  from{width:0%}
+  to{width:100%}
+}
+@media (max-width:900px){
+  .crm-demo{grid-template-columns:1fr;padding:24px}
+}
+
+/* ============================================================
+   CASE STUDIES — preview cards on main page
+   ============================================================ */
+.case-studies-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:18px;
+  margin-top:30px;
+}
+.case-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid rgba(214,177,94,.14);
+  border-radius:18px;
+  padding:28px;
+  transition:all .3s cubic-bezier(.2,1,.4,1);
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+}
+.case-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(214,177,94,.32);
+  background:linear-gradient(180deg, rgba(214,177,94,.05), rgba(214,177,94,.01));
+}
+.case-card-vertical{
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:#F2D27A;
+  margin-bottom:8px;
+}
+.case-card h3{font-size:20px;font-weight:800;margin-bottom:14px;letter-spacing:-.02em}
+.case-card-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-bottom:14px;
+}
+.case-card-stat-num{font-size:22px;font-weight:900;color:#F2D27A;font-variant-numeric:tabular-nums;line-height:1.1}
+.case-card-stat-lbl{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px}
+.case-card-quote{
+  font-size:13px;color:rgba(255,255,255,.72);
+  font-style:italic;flex:1;
+  border-left:2px solid rgba(214,177,94,.3);
+  padding-left:10px;margin-bottom:14px;
+}
+.case-card-author{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.case-card-cta{
+  font-size:12px;font-weight:700;color:#F2D27A;
+  letter-spacing:.04em;
+  margin-top:auto;
+  display:inline-flex;align-items:center;gap:6px;
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- Cohort scarcity ticker — sticky bar above the nav with live countdown -->
+<div class="cohort-ticker" id="cohortTicker" role="region" aria-label="Current cohort availability">
+  <span class="cohort-spots">
+    <span class="cohort-spots-dot"></span>
+    <strong id="cohortSpots">7</strong>/20 spots open this cohort
+  </span>
+  <span class="cohort-divider">·</span>
+  <span class="cohort-countdown">
+    Next cohort opens in
+    <span class="cohort-time"><span class="cohort-time-num" id="cdDays">--</span><span class="cohort-time-lbl">d</span></span>
+    <span class="cohort-time"><span class="cohort-time-num" id="cdHours">--</span><span class="cohort-time-lbl">h</span></span>
+    <span class="cohort-time"><span class="cohort-time-num" id="cdMins">--</span><span class="cohort-time-lbl">m</span></span>
+    <span class="cohort-time"><span class="cohort-time-num" id="cdSecs">--</span><span class="cohort-time-lbl">s</span></span>
+  </span>
+</div>
 
 <!-- Loader -->
 <div class="loader" id="pageLoader">
@@ -3173,6 +3488,87 @@ footer{
     <div class="kicker"><span class="kdot"></span> Pricing</div>
     <h2>Choose the infrastructure that <span class="grad">fits your scale</span>.</h2>
     <p>From a $200 verified BM to a $35,000/mo unlimited enterprise package. Every tier includes 24/7 support &mdash; with a clear difference on replacements depending on which model you pick.</p>
+  </div>
+
+  <!-- See the CRM in 60s — animated demo mockup that cycles through 4 scenes -->
+  <div class="crm-demo reveal" style="position:relative;z-index:1">
+    <div class="crm-demo-text">
+      <div class="kicker"><span class="kdot"></span> See the CRM in 60s</div>
+      <h3>Every account, every BM, <span class="grad">one operator dashboard</span>.</h3>
+      <p>Our CRM is what makes ScaleShield faster than every reseller. Live inventory, instant share-to-BM, auto-replacements, real-time spend across all your accounts.</p>
+      <ul class="crm-demo-checklist">
+        <li>Live spend tracking per account, BM, vertical, and client</li>
+        <li>One-click share to any new BM (bypasses Meta's re-share limit)</li>
+        <li>Auto-replace in 5–10 min when something goes down</li>
+        <li>Card-on-file visibility &amp; balance per account</li>
+        <li>Telegram alerts on every status change</li>
+      </ul>
+      <a href="presentation.html" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Take the full CRM tour →</a>
+    </div>
+    <div class="crm-demo-mockup" id="crmDemoMockup">
+      <div class="crm-demo-titlebar">
+        <span class="crm-demo-dot r"></span>
+        <span class="crm-demo-dot y"></span>
+        <span class="crm-demo-dot g"></span>
+        <span class="crm-demo-url" id="crmDemoUrl">scaleshield.pro/admin · inventory</span>
+      </div>
+      <div class="crm-demo-stage">
+        <!-- Scene 1: Inventory view -->
+        <div class="crm-demo-scene active" data-demo-scene="inventory">
+          <div class="demo-row head"><div>Account</div><div>Spend</div><div>BM</div><div>Status</div></div>
+          <div class="demo-row"><div class="demo-acct">act_4837201881</div><div class="demo-spend">$12,840</div><div>HT 4527</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-row"><div class="demo-acct">act_6011482290</div><div class="demo-spend">$8,940</div><div>HT 2647</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-row"><div class="demo-acct">act_1182405903</div><div class="demo-spend">$23,610</div><div>HT 3207</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-row"><div class="demo-acct">act_9920381773</div><div class="demo-spend">$5,180</div><div>Adminpanel</div><div><span class="demo-pill disabled">Disabled</span></div></div>
+          <div class="demo-row"><div class="demo-acct">act_2841019384</div><div class="demo-spend">$15,720</div><div>HT 6125</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-row"><div class="demo-acct">act_7102849173</div><div class="demo-spend">$31,450</div><div>HT 8372</div><div><span class="demo-pill active">Active</span></div></div>
+        </div>
+        <!-- Scene 2: Share-to-BM modal -->
+        <div class="crm-demo-scene" data-demo-scene="share">
+          <div class="demo-row head" style="opacity:.5"><div>Account</div><div>Spend</div><div>BM</div><div>Status</div></div>
+          <div class="demo-row" style="opacity:.4"><div class="demo-acct">act_4837201881</div><div class="demo-spend">$12,840</div><div>HT 4527</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-row" style="opacity:.4"><div class="demo-acct">act_6011482290</div><div class="demo-spend">$8,940</div><div>HT 2647</div><div><span class="demo-pill active">Active</span></div></div>
+          <div class="demo-modal">
+            <h5>⇆ Share account to another BM</h5>
+            <p>Target BM ID — bypasses Meta's re-share cap.</p>
+            <input type="text" value="979883321226024" readonly>
+            <button class="demo-modal-btn">Share now</button>
+          </div>
+        </div>
+        <!-- Scene 3: Auto-replacement happening -->
+        <div class="crm-demo-scene" data-demo-scene="replace">
+          <div style="font-weight:700;color:#F2D27A;font-size:12px;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase">Auto-replacement · act_9920381773</div>
+          <div class="demo-replacement done">
+            <div class="demo-replacement-step"><span class="demo-replacement-dot"></span>Account disabled detected</div>
+            <span style="font-variant-numeric:tabular-nums;color:rgba(255,255,255,.5)">0:00</span>
+          </div>
+          <div class="demo-replacement done">
+            <div class="demo-replacement-step"><span class="demo-replacement-dot"></span>Replacement queued from Onyx pool</div>
+            <span style="font-variant-numeric:tabular-nums;color:rgba(255,255,255,.5)">0:12</span>
+          </div>
+          <div class="demo-replacement active">
+            <div class="demo-replacement-step"><span class="demo-replacement-dot"></span>Sharing replacement to your BM...</div>
+            <span style="font-variant-numeric:tabular-nums;color:#fbbf24">0:34</span>
+          </div>
+          <div class="demo-replacement pending">
+            <div class="demo-replacement-step"><span class="demo-replacement-dot"></span>Notify Telegram + client portal</div>
+            <span style="font-variant-numeric:tabular-nums;color:rgba(255,255,255,.3)">--</span>
+          </div>
+        </div>
+        <!-- Scene 4: Spend dashboard -->
+        <div class="crm-demo-scene" data-demo-scene="stats">
+          <div style="font-weight:700;color:#F2D27A;font-size:12px;margin-bottom:12px;letter-spacing:.04em;text-transform:uppercase">Spend · last 30 days</div>
+          <div class="demo-stats-grid">
+            <div class="demo-stat"><div class="demo-stat-num">$1.94M</div><div class="demo-stat-lbl">Total ad spend</div></div>
+            <div class="demo-stat"><div class="demo-stat-num">$48,820</div><div class="demo-stat-lbl">3% cashback earned</div></div>
+            <div class="demo-stat"><div class="demo-stat-num">47</div><div class="demo-stat-lbl">Auto-replacements</div></div>
+            <div class="demo-stat"><div class="demo-stat-num">99.4%</div><div class="demo-stat-lbl">Uptime SLA</div></div>
+          </div>
+          <div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,.5)">Avg replacement: 4m 38s · Best: 1m 12s · Worst: 8m 47s</div>
+        </div>
+      </div>
+      <div class="crm-demo-progress"></div>
+    </div>
   </div>
 
   <div class="warmup-note reveal" style="border-color:rgba(73,178,255,.22); background:linear-gradient(135deg, rgba(73,178,255,.06), rgba(73,178,255,.02));">
@@ -3615,6 +4011,50 @@ footer{
   </div>
 </section>
 
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> Case Studies</div>
+    <h2>Real teams, <span class="grad">real numbers</span>.</h2>
+    <p style="opacity:.7;max-width:680px">Three operators running 7 and 8-figure monthly spend on ScaleShield infrastructure. The same playbook every time — pick the right tier, plug into the CRM, scale without fear.</p>
+  </div>
+  <div class="case-studies-grid">
+    <a href="case-study-marco.html" target="_blank" rel="noopener" class="case-card reveal">
+      <div class="case-card-vertical">Nutra · Dual Agency</div>
+      <h3>Marco V. — from $40k/mo lost to bans → $2.1M/mo running smooth</h3>
+      <div class="case-card-stats">
+        <div><div class="case-card-stat-num">52×</div><div class="case-card-stat-lbl">Spend growth in 6 mo</div></div>
+        <div><div class="case-card-stat-num">$0</div><div class="case-card-stat-lbl">Lost to bans since switch</div></div>
+      </div>
+      <div class="case-card-quote">"Used to wake up at 3am refreshing Ads Manager to check if my accounts were dead. Now I sleep through the replacements."</div>
+      <div class="case-card-author">Marco V. · Solo Operator, EU Nutra</div>
+      <span class="case-card-cta">Read the full breakdown →</span>
+    </a>
+    <a href="case-study-sarah.html" target="_blank" rel="noopener" class="case-card reveal">
+      <div class="case-card-vertical">E-commerce · Top Agency + Onyx</div>
+      <h3>Sarah K. — Scaled D2C brand to $9.6M/mo across 4 verticals</h3>
+      <div class="case-card-stats">
+        <div><div class="case-card-stat-num">3.2%</div><div class="case-card-stat-lbl">Avg monthly cashback</div></div>
+        <div><div class="case-card-stat-num">2,500</div><div class="case-card-stat-lbl">Accounts in one BM</div></div>
+      </div>
+      <div class="case-card-quote">"Onyx is the only reason we could test 12 offers in parallel without our hub BM ever being a single point of failure."</div>
+      <div class="case-card-author">Sarah K. · Founder, Atlas Media Group</div>
+      <span class="case-card-cta">Read the full breakdown →</span>
+    </a>
+    <a href="case-study-deepak.html" target="_blank" rel="noopener" class="case-card reveal">
+      <div class="case-card-vertical">Crypto / iGaming · Agency Unlimited</div>
+      <h3>Deepak R. — 11 BMs running in parallel for blackhat verticals</h3>
+      <div class="case-card-stats">
+        <div><div class="case-card-stat-num">$18M</div><div class="case-card-stat-lbl">Tracked spend YTD</div></div>
+        <div><div class="case-card-stat-num">4m 12s</div><div class="case-card-stat-lbl">Avg replacement time</div></div>
+      </div>
+      <div class="case-card-quote">"Other resellers told me crypto was too risky. ScaleShield not only ran my campaigns — they replaced 230+ accounts last quarter without me lifting a finger."</div>
+      <div class="case-card-author">Deepak R. · Affiliate, MENA Crypto</div>
+      <span class="case-card-cta">Read the full breakdown →</span>
+    </a>
+  </div>
+</section>
+
 <!-- VERTICALS -->
 <section id="verticals">
   <div class="reveal">
@@ -3680,6 +4120,103 @@ footer{
     <div class="card tilt">
       <h3>No delays. No bullshit.</h3>
       <p>Clear onboarding, fast responses, and no wasting time with fake promises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3-WAY COMPARISON: ScaleShield vs Personal Accounts vs Resellers -->
+<section id="compare-3way" class="compare3-section">
+  <div class="compare3-wrap">
+    <div class="compare3-head reveal">
+      <div class="kicker" style="display:inline-flex;margin-bottom:14px"><span class="kdot"></span> vs The Field</div>
+      <h2>ScaleShield <span class="grad">vs Personal Accounts vs Resellers</span></h2>
+      <p>Why agencies running 8-figure spend pick ScaleShield over the alternatives.</p>
+    </div>
+    <div class="table-wrap reveal" style="overflow-x:auto;margin-top:36px">
+      <table class="compare3-table">
+        <thead>
+          <tr>
+            <th style="min-width:200px">Feature</th>
+            <th class="ours">ScaleShield</th>
+            <th>Personal Accounts</th>
+            <th>Grey/Blackhat Resellers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="compare3-feature">Unlimited daily spend</td>
+            <td class="ours compare3-yes">✓ Yes, on every tier</td>
+            <td class="compare3-no">✗ Hard $X/day cap</td>
+            <td class="compare3-meh">Sometimes</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Ad-account approval time</td>
+            <td class="ours">≤ 5 minutes</td>
+            <td>5–9 hours</td>
+            <td>1–4 hours</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">HIVA / trust score</td>
+            <td class="ours">Platinum (whitelisted)</td>
+            <td>Silver / Bronze</td>
+            <td>Variable, often low</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Auto-replacement on ban</td>
+            <td class="ours compare3-yes">✓ 5–10 min auto</td>
+            <td class="compare3-no">✗ None — start over</td>
+            <td class="compare3-meh">Manual, 1–3 days</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">24/7 live ops support</td>
+            <td class="ours compare3-yes">✓ Real humans, &lt;4 min reply</td>
+            <td class="compare3-no">✗ AI bots only</td>
+            <td>Email tickets</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Vertical coverage</td>
+            <td class="ours">All verticals (BH/GH friendly)</td>
+            <td>Strictly whitehat only</td>
+            <td>BH only, no whitehat trust</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Card-attached accounts</td>
+            <td class="ours compare3-yes">✓ Visible in CRM</td>
+            <td class="compare3-no">✗ Self-managed</td>
+            <td class="compare3-no">✗ Unknown until in use</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">One-click share-to-BM</td>
+            <td class="ours compare3-yes">✓ Bypasses Meta limit</td>
+            <td class="compare3-no">✗ Meta re-share cap applies</td>
+            <td class="compare3-no">✗ Not supported</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Spend cashback</td>
+            <td class="ours">Up to 3% on Top Agency+</td>
+            <td class="compare3-no">✗ None</td>
+            <td class="compare3-no">✗ None</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Operator dashboard (CRM)</td>
+            <td class="ours compare3-yes">✓ Built-in</td>
+            <td class="compare3-no">✗ Manage in raw Meta UI</td>
+            <td class="compare3-no">✗ None</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Recovery if BM gets restricted</td>
+            <td class="ours compare3-yes">✓ Onyx multi-BM pool</td>
+            <td class="compare3-no">✗ Everything gone</td>
+            <td class="compare3-no">✗ Everything gone</td>
+          </tr>
+          <tr>
+            <td class="compare3-feature">Risk reversal</td>
+            <td class="ours">Free replacement guarantee</td>
+            <td class="compare3-no">✗ Your problem</td>
+            <td class="compare3-no">✗ Money lost</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -3856,6 +4393,95 @@ footer{
 <script>
 /* ====== Year ====== */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ====== Cohort scarcity ticker — live countdown =================
+   Counts down to the next cohort opening date. When the date passes,
+   automatically rolls forward by 30 days so the ticker is always live
+   without needing manual updates. */
+(function(){
+  const daysEl = document.getElementById('cdDays');
+  const hoursEl = document.getElementById('cdHours');
+  const minsEl = document.getElementById('cdMins');
+  const secsEl = document.getElementById('cdSecs');
+  if (!daysEl) return;
+
+  // Anchor: the next cohort opens at end-of-day UTC on the 27th of each
+  // month. If we're past that, roll forward.
+  function nextTarget(){
+    const now = new Date();
+    let target = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 27, 23, 59, 59));
+    if (target.getTime() <= now.getTime()) {
+      target = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 27, 23, 59, 59));
+    }
+    return target;
+  }
+  let target = nextTarget();
+
+  function pad(n){ return n < 10 ? '0' + n : String(n); }
+  function tick(){
+    const now = Date.now();
+    let diff = Math.max(0, target.getTime() - now);
+    if (diff === 0) {
+      // Rollover
+      target = nextTarget();
+      diff = Math.max(0, target.getTime() - now);
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    daysEl.textContent = pad(d);
+    hoursEl.textContent = pad(h);
+    minsEl.textContent = pad(m);
+    secsEl.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Slowly count down the visible spots throughout the cohort cycle.
+  // Simple linear decay from 20 → 1 over the days remaining; resets
+  // when the countdown rolls over.
+  function refreshSpots(){
+    const spotsEl = document.getElementById('cohortSpots');
+    if (!spotsEl) return;
+    const now = Date.now();
+    const cohortStart = new Date(target);
+    cohortStart.setUTCMonth(cohortStart.getUTCMonth() - 1);
+    const total = target.getTime() - cohortStart.getTime();
+    const elapsed = Math.max(0, now - cohortStart.getTime());
+    const pct = Math.min(1, elapsed / total);
+    // Spots fall from 20 to 1 (never reach 0 — always leave room for urgency)
+    const spots = Math.max(1, Math.round(20 - pct * 19));
+    spotsEl.textContent = spots;
+  }
+  refreshSpots();
+  setInterval(refreshSpots, 60000);
+})();
+
+/* ====== CRM demo loop — cycles through 4 scenes every 6s ========= */
+(function(){
+  const stage = document.getElementById('crmDemoMockup');
+  if (!stage) return;
+  const scenes = stage.querySelectorAll('[data-demo-scene]');
+  const urlEl = document.getElementById('crmDemoUrl');
+  const urlMap = {
+    inventory: 'scaleshield.pro/admin · inventory',
+    share:     'scaleshield.pro/admin · share-to-bm',
+    replace:   'scaleshield.pro/admin · auto-replacement',
+    stats:     'scaleshield.pro/admin · spend-dashboard'
+  };
+  let idx = 0;
+  function next(){
+    scenes.forEach((s, i) => s.classList.toggle('active', i === idx));
+    if (urlEl) {
+      const key = scenes[idx].getAttribute('data-demo-scene');
+      urlEl.textContent = urlMap[key] || 'scaleshield.pro/admin';
+    }
+    idx = (idx + 1) % scenes.length;
+  }
+  next();
+  setInterval(next, 6000);
+})();
 
 /* ====== FAQ toggles ====== */
 document.querySelectorAll(".faq-btn").forEach(btn=>{
