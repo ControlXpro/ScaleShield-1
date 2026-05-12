@@ -4032,9 +4032,31 @@ if (heroCanvas){
     line(2.1, "rgba(44,214,124,.55)", 10, .65);
 
     heroT += 0.015;
-    requestAnimationFrame(drawHeroLines);
+    rafId = requestAnimationFrame(drawHeroLines);
   }
-  drawHeroLines();
+  let rafId = null;
+  // Start rendering only while hero is on screen — saves 60fps of
+  // canvas work when the user scrolls past.
+  if ('IntersectionObserver' in window) {
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+      const heroIO = new IntersectionObserver((entries)=>{
+        for (const ent of entries) {
+          if (ent.isIntersecting && !rafId) {
+            rafId = requestAnimationFrame(drawHeroLines);
+          } else if (!ent.isIntersecting && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        }
+      }, { rootMargin: '50px' });
+      heroIO.observe(heroSection);
+    } else {
+      drawHeroLines();
+    }
+  } else {
+    drawHeroLines();
+  }
 }
 
 /* ====== Mobile menu ====== */
@@ -4056,30 +4078,37 @@ document.querySelectorAll(".mnav").forEach(a=>{
   a.addEventListener("click", ()=>closeMenu());
 });
 
-/* ====== Hide header on scroll + scrolled state ====== */
+/* ====== Hide header on scroll + scrolled state ======
+   rAF-throttled: was running the full body of work on EVERY scroll
+   event (~hundreds per second when fast-scrolling), causing 3 separate
+   classList / style writes per event. Now batches into one frame. */
 const siteNav = document.getElementById("siteNav");
 const mobileMenu = document.getElementById("mobileMenu");
+const scrollProgressEl = document.getElementById('scrollProgress');
 let lastScrollY = window.scrollY;
+let scrollPending = false;
 window.addEventListener("scroll", ()=>{
-  const y = window.scrollY;
-  if (siteNav){
-    siteNav.classList.toggle('scrolled', y > 20);
-    if (y > lastScrollY && y > 80) siteNav.classList.add("hidden");
-    else siteNav.classList.remove("hidden");
-  }
-  if (mobileMenu){
-    if (y > lastScrollY && y > 80) mobileMenu.classList.add("hidden");
-    else mobileMenu.classList.remove("hidden");
-  }
-  lastScrollY = y;
-
-  // scroll progress
-  const sp = document.getElementById('scrollProgress');
-  if (sp){
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const p = max > 0 ? (y / max) * 100 : 0;
-    sp.style.setProperty('--p', p + '%');
-  }
+  if (scrollPending) return;
+  scrollPending = true;
+  requestAnimationFrame(()=>{
+    scrollPending = false;
+    const y = window.scrollY;
+    if (siteNav){
+      siteNav.classList.toggle('scrolled', y > 20);
+      if (y > lastScrollY && y > 80) siteNav.classList.add("hidden");
+      else siteNav.classList.remove("hidden");
+    }
+    if (mobileMenu){
+      if (y > lastScrollY && y > 80) mobileMenu.classList.add("hidden");
+      else mobileMenu.classList.remove("hidden");
+    }
+    lastScrollY = y;
+    if (scrollProgressEl){
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? (y / max) * 100 : 0;
+      scrollProgressEl.style.setProperty('--p', p + '%');
+    }
+  });
 }, { passive:true });
 
 /* ====== Live replacement demo ====== */
@@ -4237,21 +4266,49 @@ const heroMouseOrb = document.getElementById('heroMouseOrb');
 const isTouch = matchMedia('(hover:none)').matches;
 if (!isTouch && cursorDot && cursorRing){
   let mx=0,my=0, rx=0,ry=0;
+  let pendingTransform = false;
+  let ringRunning = false;
+  let lastMoveAt = 0;
+
+  // rAF-throttled mousemove: store coords on the event, but batch ALL
+  // transform writes into a single frame. Was firing 3 separate style
+  // updates per mousemove (~100/sec) — now caps at 60fps total.
   document.addEventListener('mousemove', (e)=>{
     mx = e.clientX; my = e.clientY;
-    cursorDot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
-    if (spotlight){
-      spotlight.classList.add('on');
-      spotlight.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+    lastMoveAt = performance.now();
+    if (!pendingTransform) {
+      pendingTransform = true;
+      requestAnimationFrame(()=>{
+        pendingTransform = false;
+        cursorDot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+        if (spotlight){
+          spotlight.classList.add('on');
+          spotlight.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+        }
+        if (heroMouseOrb){
+          heroMouseOrb.style.transform = 'translate3d('+(mx-window.innerWidth/2)+'px,'+(my)+'px,0)';
+        }
+      });
     }
-    if (heroMouseOrb){
-      heroMouseOrb.style.transform = 'translate3d('+(mx-window.innerWidth/2)+'px,'+(my)+'px,0)';
+    // Kick the ring catch-up loop if it's stopped
+    if (!ringRunning) {
+      ringRunning = true;
+      requestAnimationFrame(ringLoop);
     }
-  });
+  }, { passive: true });
+
+  // Ring catches up to mouse, then STOPS once close enough + idle for
+  // 400ms. Previously ran at 60fps forever, even with mouse motionless.
   function ringLoop(){
     rx += (mx - rx) * 0.18;
     ry += (my - ry) * 0.18;
     cursorRing.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)';
+    const dist = Math.abs(mx - rx) + Math.abs(my - ry);
+    const idle = performance.now() - lastMoveAt;
+    if (dist < 0.5 && idle > 400) {
+      ringRunning = false;   // converged + mouse idle → stop the loop
+      return;
+    }
     requestAnimationFrame(ringLoop);
   }
   ringLoop();
