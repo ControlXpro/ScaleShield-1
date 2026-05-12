@@ -3177,7 +3177,6 @@ footer{
     <a href="#trust" class="mnav">Trust <small>&rarr;</small></a>
     <a href="#reviews" class="mnav">Reviews <small>&rarr;</small></a>
     <a href="#faq" class="mnav">FAQ <small>&rarr;</small></a>
-    <a href="payment-details.html" target="_blank" rel="noopener">Payment Details <small>&#8599;</small></a>
     <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>&#8599;</small></a>
     <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>&#8599;</small></a>
     <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener">WhatsApp <small>&#8599;</small></a>
@@ -3189,9 +3188,9 @@ footer{
 <div class="nav" id="siteNav">
   <div class="nav-inner">
     <div class="nav-left">
-      <div class="logo">
+      <a href="#top" class="logo" id="logoScrollTop" aria-label="Scroll to top">
         <img src="logo-small.png" alt="ScaleShield Logo">
-      </div>
+      </a>
       <div class="nav-links">
         <a href="#verticals">Verticals</a>
         <a href="#onyx" style="color:#F2D27A">Onyx</a>
@@ -4368,7 +4367,6 @@ footer{
         Instagram
       </a>
 
-      <a href="payment-details.html" target="_blank" rel="noopener" class="btn btn-ghost magnetic" data-mag="0.3">Payment Details</a>
       <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-login magnetic" data-mag="0.3">Log in</a>
     </div>
   </div>
@@ -4381,6 +4379,20 @@ footer{
 <script>
 /* ====== Year ====== */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ====== Logo → smooth scroll to top ============================ */
+(function(){
+  const logo = document.getElementById('logoScrollTop');
+  if (!logo) return;
+  logo.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+      window.lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+})();
 
 /* ====== Cohort scarcity ticker — live countdown =================
    Counts down to the next cohort opening date. When the date passes,
@@ -4489,6 +4501,8 @@ if (window.Lenis && !reduceMotion){
     smoothWheel:true,
     smoothTouch:false,
   });
+  // Expose globally so isolated IIFEs (like the logo→top handler) can use it
+  window.lenis = lenis;
   function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
 
