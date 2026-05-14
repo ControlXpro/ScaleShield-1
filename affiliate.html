@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1650229346295373');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
+/></noscript>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="ScaleShield Affiliate Program — earn 15% recurring commission on every client you refer. Monthly plans pay you every month for as long as the client stays.">
+<title>ScaleShield &mdash; Affiliate Program</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#07080B;
+  --bg2:#0D0F18;
+  --panel:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.08);
+  --gold:#D6B15E;
+  --gold2:#F2D27A;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.65);
+  --muted2:rgba(255,255,255,.45);
+  --green:#2cd67c;
+  --red:#ff646e;
+  --blue:#49b2ff;
+  --radius:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html, body{ overflow-x:hidden; width:100% }
+html{ scroll-behavior:smooth }
+
+body{
+  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px circle at 50% -10%, rgba(214,177,94,.18), transparent 55%),
+    radial-gradient(800px circle at 80% 30%, rgba(73,178,255,.06), transparent 60%),
+    linear-gradient(135deg,#050507,#0b0d14,#090a10);
+  color:var(--text);
+  min-height:100vh;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(600px circle at 15% 10%, rgba(214,177,94,.07), transparent 60%),
+    radial-gradient(800px circle at 85% 20%, rgba(73,178,255,.06), transparent 60%);
+  mix-blend-mode:screen; z-index:0;
+}
+
+a{color:inherit;text-decoration:none}
+b{color:rgba(255,255,255,.92)}
+section{ max-width:1200px; margin:auto; padding:88px 24px; position:relative; z-index:2 }
+
+h1,h2,h3{ font-family:'Sora','Inter',system-ui,sans-serif }
+h1{ font-size:clamp(38px,5.6vw,64px); font-weight:950; letter-spacing:-.035em; line-height:1.05 }
+h2{ font-size:clamp(26px,3.4vw,40px); font-weight:850; letter-spacing:-.02em; line-height:1.1 }
+h3{ font-size:20px; font-weight:850 }
+
+p{ color:var(--muted); line-height:1.7; margin-top:14px }
+
+.kicker{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 14px; border-radius:999px;
+  border:1px solid rgba(214,177,94,.20);
+  background:rgba(214,177,94,.06);
+  color:var(--muted); font-size:11px;
+  letter-spacing:.22em; font-weight:950;
+  text-transform:uppercase; backdrop-filter:blur(8px);
+}
+.kdot{
+  width:8px; height:8px; border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 18px rgba(214,177,94,.35);
+  animation:dotBlink 1.6s ease-in-out infinite;
+}
+@keyframes dotBlink{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.85)} }
+
+.grad{
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+@keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* NAV */
+.nav{
+  position:fixed; top:0; left:0; right:0;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(5,5,7,.72);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:100;
+}
+.nav-inner{
+  max-width:1200px; margin:auto;
+  padding:12px 24px;
+  display:flex; justify-content:space-between; align-items:center; gap:14px;
+}
+.logo img{ height:30px; display:block }
+.nav-links{ display:none; gap:18px; align-items:center; flex-wrap:nowrap; white-space:nowrap }
+.nav-links a{
+  font-size:13px; font-weight:750; color:var(--muted);
+  transition:color .18s var(--ease);
+}
+.nav-links a:hover{ color:#fff }
+.nav-links a.active{ color:#F2D27A }
+@media(min-width:1080px){ .nav-links{display:flex} }
+.nav-actions{ display:flex; gap:10px; flex-wrap:nowrap; align-items:center }
+
+.btn{
+  padding:13px 18px; border-radius:14px;
+  font-weight:900; font-size:13.5px;
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid transparent; cursor:pointer;
+  transition:.25s var(--ease); white-space:nowrap;
+  text-decoration:none;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;
+  box-shadow:0 0 30px rgba(214,177,94,.20);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(214,177,94,.32) }
+.btn-ghost{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.12);
+  color:#fff; backdrop-filter:blur(6px);
+}
+.btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
+.btn-icon{ width:16px; height:16px }
+
+/* HERO */
+.hero{
+  padding-top:148px; padding-bottom:36px;
+  text-align:center;
+  max-width:none; width:100%;
+}
+.hero > div{ max-width:1100px; margin:auto }
+.hero p{ max-width:64ch; margin:18px auto 0 auto; font-size:clamp(15px,1.3vw,18px) }
+
+/* Big number callout in hero */
+.hero-number{
+  margin-top:36px;
+  display:inline-flex; align-items:baseline; gap:14px;
+  padding:24px 34px;
+  border-radius:24px;
+  border:1px solid rgba(214,177,94,.35);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.16), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+}
+.hero-number .num{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(64px,9vw,108px);
+  font-weight:950; letter-spacing:-.04em; line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
+  background-size:200% 200%;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  animation:gradShift 6s ease-in-out infinite;
+}
+.hero-number .lbl{
+  font-family:'Sora',sans-serif;
+  font-size:14px; font-weight:900; letter-spacing:.04em;
+  color:var(--muted); text-transform:uppercase;
+}
+
+/* TIMELINE */
+.timeline{
+  position:relative;
+  margin-top:40px;
+  padding-left:28px;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:7px; top:8px; bottom:8px;
+  width:2px;
+  background:linear-gradient(180deg,
+    rgba(214,177,94,.55) 0%,
+    rgba(214,177,94,.20) 50%,
+    rgba(214,177,94,.55) 100%);
+  border-radius:2px;
+}
+.step{
+  position:relative;
+  padding:26px 28px;
+  margin-bottom:18px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  transition:.28s var(--ease);
+}
+.step:hover{
+  border-color:rgba(214,177,94,.40);
+  transform:translateY(-2px);
+  box-shadow:0 24px 70px -30px rgba(214,177,94,.22);
+}
+.step::before{
+  content:attr(data-num);
+  position:absolute;
+  left:-28px; top:18px;
+  width:34px; height:34px;
+  border-radius:999px;
+  display:grid; place-items:center;
+  font-family:'Sora',sans-serif;
+  font-weight:950; font-size:13px;
+  color:#111;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  box-shadow:0 0 20px rgba(214,177,94,.40);
+  transform:translateX(-50%);
+}
+.step .step-eyebrow{
+  font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+  font-weight:950; color:var(--muted2);
+}
+.step h3{ margin-top:6px; font-size:22px }
+.step p{ margin-top:10px }
+.step-extra{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(214,177,94,.06);
+  border:1px solid rgba(214,177,94,.18);
+  font-size:13.5px;
+  color:rgba(255,255,255,.85);
+}
+.step-extra strong{ color:#F2D27A }
+
+/* Commission table */
+.section-head{
+  text-align:center; margin-bottom:36px;
+}
+.section-head p{ max-width:62ch; margin:14px auto 0; }
+
+.payout-grid{
+  display:grid; gap:14px;
+  margin-top:24px;
+}
+@media(min-width:780px){ .payout-grid{ grid-template-columns:repeat(2,1fr) } }
+@media(min-width:1080px){ .payout-grid{ grid-template-columns:repeat(3,1fr) } }
+.payout-card{
+  padding:22px 24px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  transition:.28s var(--ease);
+}
+.payout-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(214,177,94,.40);
+  background:rgba(214,177,94,.04);
+}
+.payout-card .ptier{
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  font-weight:950; color:var(--muted2);
+}
+.payout-card h4{
+  font-family:'Sora',sans-serif; font-size:18px; font-weight:900;
+  margin-top:8px; color:#fff;
+}
+.payout-card .pprice{
+  font-family:'Sora',sans-serif;
+  font-size:13px; font-weight:800; color:var(--muted);
+  margin-top:4px;
+}
+.payout-card .pcommish{
+  margin-top:18px;
+  font-family:'Sora',sans-serif;
+  font-size:36px; font-weight:950; letter-spacing:-.025em;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+.payout-card .pcommish-sub{
+  font-size:12px; font-weight:800; color:var(--muted2);
+  letter-spacing:.04em;
+}
+.payout-card .recurring-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:14px;
+  padding:5px 10px; border-radius:999px;
+  font-size:10.5px; font-weight:900;
+  letter-spacing:.10em; text-transform:uppercase;
+  color:#d7ffe8; border:1px solid rgba(44,214,124,.30); background:rgba(44,214,124,.10);
+}
+.payout-card.onetime .recurring-pill{
+  color:#cfe9ff; border-color:rgba(73,178,255,.30); background:rgba(73,178,255,.10);
+}
+
+/* Rules grid */
+.rules-grid{
+  display:grid; gap:14px; margin-top:24px;
+}
+@media(min-width:780px){ .rules-grid{ grid-template-columns:repeat(2,1fr) } }
+.rule{
+  padding:18px 20px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  transition:.28s var(--ease);
+}
+.rule:hover{
+  transform:translateY(-2px);
+  border-color:rgba(214,177,94,.30);
+  background:rgba(214,177,94,.04);
+}
+.rule .ricon{
+  width:34px; height:34px; border-radius:11px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(214,177,94,.20), rgba(214,177,94,.04));
+  border:1px solid rgba(214,177,94,.25);
+  font-size:16px;
+}
+.rule h4{
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:900;
+  margin-top:12px; color:#fff;
+}
+.rule p{ margin-top:6px; font-size:13.5px; line-height:1.55 }
+
+/* CTA */
+.cta-card{
+  margin-top:36px;
+  padding:38px 32px;
+  border-radius:24px;
+  border:1px solid rgba(214,177,94,.30);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.16), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  text-align:center;
+}
+.cta-card h2{ font-size:clamp(24px,3vw,34px) }
+.cta-card .actions{
+  margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+}
+
+footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:42px 24px; text-align:center; color:var(--muted);
+}
+
+/* Scroll progress */
+.scroll-progress{
+  position:fixed; top:0; left:0; right:0;
+  height:2px; background:transparent;
+  z-index:200; pointer-events:none;
+}
+.scroll-progress::after{
+  content:""; display:block; height:100%; width:var(--p,0%);
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#fff);
+  box-shadow:0 0 18px rgba(214,177,94,.6);
+  transition:width .12s linear;
+}
+
+/* Reveal */
+.reveal{ opacity:0; transform:translateY(28px); transition:.85s var(--ease-out) }
+.reveal.active{ opacity:1; transform:none }
+.timeline > .step:nth-child(odd).reveal:not(.active){ transform:translateY(28px) translateX(-24px); }
+.timeline > .step:nth-child(even).reveal:not(.active){ transform:translateY(28px) translateX(24px); }
+.timeline > .step.reveal.active{ transform:none }
+.step.reveal:not(.active)::before{ transform:translateX(-50%) scale(.4); opacity:0 }
+.step.reveal.active::before{ transform:translateX(-50%) scale(1); opacity:1 }
+.step::before{
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+}
+.step:hover::before{
+  box-shadow:0 0 30px rgba(214,177,94,.6), 0 0 0 6px rgba(214,177,94,.10);
+}
+</style>
+</head>
+
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <a href="index.html"><img src="logo.png" alt="ScaleShield"></a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#verticals">Verticals</a>
+      <a href="index.html#onyx" style="color:#F2D27A">Onyx</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="affiliate.html" class="active">Affiliate</a>
+      <a href="presentation.html">CRM Tour</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost">Telegram</a>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Apply Now</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="reveal">
+    <div class="kicker"><span class="kdot"></span> Affiliate Program</div>
+    <h1 style="margin-top:18px;">Refer media buyers. Earn <span class="grad">15% recurring.</span></h1>
+    <p>Send us clients who need premium ad accounts and BMs &mdash; we pay you <b>15% of every dollar they spend with ScaleShield</b>. Monthly plans pay you every single month for as long as the client stays active. No volume caps. No expiry.</p>
+
+    <div class="hero-number">
+      <span class="num">15%</span>
+      <span class="lbl">commission<br/>on every sale</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="padding-top:0">
+  <div class="section-head reveal">
+    <div class="kicker"><span class="kdot"></span> How it works</div>
+    <h2 style="margin-top:18px;">Four steps. Zero friction.</h2>
+    <p>The whole thing runs over Telegram. No dashboards to set up, no tracking pixels to install &mdash; we attribute every referral manually and the receipts are clear.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="step reveal" data-num="1">
+      <div class="step-eyebrow">Step 1 &middot; You apply</div>
+      <h3>Message us on Telegram or WhatsApp</h3>
+      <p>Send us a quick intro &mdash; who you are, what audience you have (media buyers, agencies, affiliates, BH/GH community, etc.), and how you plan to refer. We'll approve you and issue a unique <b>referral code</b> tied to your name. Approval usually takes under an hour.</p>
+    </div>
+
+    <div class="step reveal" data-num="2">
+      <div class="step-eyebrow">Step 2 &middot; You refer</div>
+      <h3>Send your referral code with every intro</h3>
+      <p>When a prospect contacts us, they include your code (or you intro them directly via Telegram). We log them against your account the moment they reach out. No 30-day cookies, no &ldquo;last-touch&rdquo; games &mdash; once they're attributed to you, they stay attributed to you.</p>
+      <div class="step-extra">
+        <strong>Pro tip:</strong> The simplest move is to make the intro yourself &mdash; add us to a Telegram chat with the prospect. That way the attribution is instant and unambiguous.
+      </div>
+    </div>
+
+    <div class="step reveal" data-num="3">
+      <div class="step-eyebrow">Step 3 &middot; They buy</div>
+      <h3>Client pays us, we log the sale</h3>
+      <p>The client pays ScaleShield directly (USDT, BTC, or bank wire for big tickets). The moment we log the purchase against your referral, you can see it in your affiliate ledger. We tell you every time a referred client buys &mdash; not just at month-end.</p>
+    </div>
+
+    <div class="step reveal" data-num="4">
+      <div class="step-eyebrow">Step 4 &middot; You get paid</div>
+      <h3>Commission paid out every month in crypto</h3>
+      <p>We close out commissions on the <b>1st of every month</b>. Payouts go out in <b>USDT (TRC20 or ERC20)</b> by default &mdash; or BTC / LTC / ETH if you prefer. Minimum payout is <b>$50</b>; if your month is smaller, it rolls into the next one. No fees on our side.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT YOU EARN -->
+<section>
+  <div class="section-head reveal">
+    <div class="kicker"><span class="kdot"></span> What you earn</div>
+    <h2 style="margin-top:18px;">15% on every plan. Including the big ones.</h2>
+    <p>Here's exactly what each referred sale pays you. Monthly plans (badged <b style="color:#2cd67c;">RECURRING</b>) pay you that commission <b>every month</b> for as long as the client stays subscribed.</p>
+  </div>
+
+  <div class="payout-grid">
+    <div class="payout-card onetime reveal">
+      <div class="ptier">One-time</div>
+      <h4>BM3 Verified</h4>
+      <div class="pprice">$200 one-time</div>
+      <div class="pcommish">$30</div>
+      <div class="pcommish-sub">per referred sale</div>
+      <div class="recurring-pill">&bull; One-time payout</div>
+    </div>
+
+    <div class="payout-card onetime reveal">
+      <div class="ptier">One-time</div>
+      <h4>BM10</h4>
+      <div class="pprice">$550 one-time</div>
+      <div class="pcommish">$82.50</div>
+      <div class="pcommish-sub">per referred sale</div>
+      <div class="recurring-pill">&bull; One-time payout</div>
+    </div>
+
+    <div class="payout-card reveal">
+      <div class="ptier">Monthly</div>
+      <h4>Single Plan</h4>
+      <div class="pprice">$450 / month</div>
+      <div class="pcommish">$67.50<small style="font-size:18px;opacity:.7">/mo</small></div>
+      <div class="pcommish-sub">every month they stay</div>
+      <div class="recurring-pill">&bull; Recurring</div>
+    </div>
+
+    <div class="payout-card reveal">
+      <div class="ptier">Monthly</div>
+      <h4>Dual Plan</h4>
+      <div class="pprice">$850 / month</div>
+      <div class="pcommish">$127.50<small style="font-size:18px;opacity:.7">/mo</small></div>
+      <div class="pcommish-sub">every month they stay</div>
+      <div class="recurring-pill">&bull; Recurring</div>
+    </div>
+
+    <div class="payout-card reveal">
+      <div class="ptier">Monthly</div>
+      <h4>Top Agency</h4>
+      <div class="pprice">$1,950 / month</div>
+      <div class="pcommish">$292.50<small style="font-size:18px;opacity:.7">/mo</small></div>
+      <div class="pcommish-sub">every month they stay</div>
+      <div class="recurring-pill">&bull; Recurring</div>
+    </div>
+
+    <div class="payout-card onetime reveal">
+      <div class="ptier">Onyx &middot; One-time</div>
+      <h4>Onyx BM2500</h4>
+      <div class="pprice">$15,000 one-time</div>
+      <div class="pcommish">$2,250</div>
+      <div class="pcommish-sub">per referred sale</div>
+      <div class="recurring-pill">&bull; One-time payout</div>
+    </div>
+
+    <div class="payout-card reveal" style="grid-column:1/-1;">
+      <div class="ptier">Top tier &middot; Monthly</div>
+      <h4>Agency Unlimited</h4>
+      <div class="pprice">$35,000 / month</div>
+      <div class="pcommish">$5,250<small style="font-size:18px;opacity:.7">/mo</small></div>
+      <div class="pcommish-sub">every month they stay &mdash; this is your best lead to chase</div>
+      <div class="recurring-pill">&bull; Recurring</div>
+    </div>
+  </div>
+
+  <div class="step-extra" style="margin-top:22px; text-align:center;">
+    <strong>Example:</strong> Refer one agency on the Top Agency monthly plan &mdash; they stay 8 months &mdash; you earn <b style="color:#F2D27A">$2,340</b>. Refer them on Agency Unlimited for 12 months &mdash; you earn <b style="color:#F2D27A">$63,000</b>. No caps.
+  </div>
+</section>
+
+<!-- RULES + WHY -->
+<section>
+  <div class="section-head reveal">
+    <div class="kicker"><span class="kdot"></span> The fine print</div>
+    <h2 style="margin-top:18px;">Clear rules. No gotchas.</h2>
+    <p>What we ask from you, what we promise back. Read this once and you'll never have a question about how the program works.</p>
+  </div>
+
+  <div class="rules-grid">
+    <div class="rule reveal">
+      <div class="ricon">&#x2713;</div>
+      <h4>Lifetime attribution</h4>
+      <p>Once a client is logged against your code, they're yours forever. No 30/60/90-day cookie windows. If they upgrade two years from now, you still get paid on the upgrade.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x21BB;</div>
+      <h4>Recurring on monthly plans</h4>
+      <p>Single, Dual, Top Agency, and Agency Unlimited all pay you 15% <b>every month</b> the client renews. Stop chasing one-time payouts &mdash; build a portfolio.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x20BF;</div>
+      <h4>Paid in crypto, monthly</h4>
+      <p>USDT (TRC20/ERC20) by default. BTC, LTC, ETH on request. Payouts close on the 1st of every month. $50 minimum &mdash; smaller months roll forward, never expire.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x1F4DC;</div>
+      <h4>Transparent ledger</h4>
+      <p>You'll get a private link to your live commission ledger. Every referred client, every purchase they make, the exact commission you've earned, what's been paid, what's pending. Updated in real time.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x26A0;</div>
+      <h4>No spam, no fraud</h4>
+      <p>No mass email/DM spam, no impersonating ScaleShield, no fake testimonials. Self-referrals (buying through your own code) are not allowed. Both = instant ban + forfeit of unpaid commissions.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x1F91D;</div>
+      <h4>We handle the rest</h4>
+      <p>You don't sell, close, or support &mdash; we do. You just send qualified intros. We respond fast, we deliver on time, and we make sure your referrals stick around. The longer they stay, the more you make.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section>
+  <div class="section-head reveal">
+    <div class="kicker"><span class="kdot"></span> Who this is for</div>
+    <h2 style="margin-top:18px;">If your audience runs paid ads &mdash; you're our affiliate.</h2>
+    <p>You don't need a million-follower channel. You need access to people who actually spend money on Meta. Quality &gt; quantity, every single time.</p>
+  </div>
+
+  <div class="rules-grid">
+    <div class="rule reveal">
+      <div class="ricon">&#x1F4F1</div>
+      <h4>Media buyer communities</h4>
+      <p>Discord servers, Telegram groups, Skool / private masterminds where media buyers hang out. A single intro in the right room can be worth five figures over a year.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x1F3AF;</div>
+      <h4>Agencies &amp; consultants</h4>
+      <p>You already advise brands or agencies on paid social. When they need accounts, refer them to us. You get paid every month for solving a problem you didn't have to solve yourself.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x1F4FA;</div>
+      <h4>Content creators in the ads space</h4>
+      <p>YouTube, X, TikTok, newsletter writers covering Facebook ads, performance marketing, ecom, affiliate marketing. We're a clean monetization angle for your audience.</p>
+    </div>
+
+    <div class="rule reveal">
+      <div class="ricon">&#x1F30D;</div>
+      <h4>BH / GH operators</h4>
+      <p>You operate in nutra, crypto, gambling, dating, or other high-velocity verticals. You know exactly which accounts survive and which don't. Send those buyers our way &mdash; we run hot accounts daily, we know what works.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY CTA -->
+<section style="padding-top:0">
+  <div class="cta-card reveal">
+    <div class="kicker" style="margin-bottom:14px;"><span class="kdot"></span> Apply now</div>
+    <h2>Ready to start earning?</h2>
+    <p style="max-width:62ch; margin:14px auto 0;">Message us on Telegram or WhatsApp with a quick intro. We'll approve you and send your unique referral code within the hour. No application form, no waiting list &mdash; just a short conversation.</p>
+
+    <div class="actions">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
+          <path d="M8 13l14-9"></path>
+        </svg>
+        Apply via Telegram
+      </a>
+      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 11.5a7.5 7.5 0 0 1-11.9 6.1L4 18l.7-4.1A7.5 7.5 0 1 1 20 11.5z"></path>
+          <path d="M9.5 9.5c.5 2 2.5 4 4.5 4.5"></path>
+        </svg>
+        Apply via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+&copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Reveal-on-scroll */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("active");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.14, rootMargin: "0px 0px -40px 0px" });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* Scroll progress */
+const progress = document.getElementById("scrollProgress");
+const onScroll = () => {
+  const h = document.documentElement;
+  const p = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight) * 100;
+  progress.style.setProperty("--p", p + "%");
+};
+document.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+</script>
+
+</body>
+</html>
