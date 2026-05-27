@@ -5526,37 +5526,39 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
 <div id="google_translate_element"></div>
 
 <script>
+/* Cookie-driven approach: Google Translate auto-translates the page
+   on load if the `googtrans` cookie is set. We just set the cookie
+   and reload — far more reliable than trying to drive the .goog-te-combo
+   <select> after the engine loads (which had race conditions where the
+   page rendered before the engine was ready). */
+function setGoogTransCookie(target) {
+  // Try every cookie scope Google looks at: bare path, current host,
+  // and parent ".host". Belt + suspenders so it always sticks.
+  const value = target ? ("/en/" + target) : "";
+  const exp = "max-age=" + (target ? 60*60*24*365 : 0);
+  const paths = ["/"];
+  const hosts = [location.hostname, "." + location.hostname.replace(/^www\./, "")];
+  paths.forEach(p => {
+    document.cookie = "googtrans=" + value + ";path=" + p + ";" + exp;
+    hosts.forEach(h => {
+      document.cookie = "googtrans=" + value + ";path=" + p + ";domain=" + h + ";" + exp;
+    });
+  });
+}
+function getGoogTransCookie() {
+  const m = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : "";
+}
+
 // Google Translate's required init callback. We pass includedLanguages
-// to limit what loads. layout=SIMPLE produces the smallest engine.
+// so only PT + zh-CN get loaded.
 function googleTranslateElementInit() {
   new google.translate.TranslateElement(
     { pageLanguage: "en", includedLanguages: "pt,zh-CN", autoDisplay: false },
     "google_translate_element"
   );
-  // Once the engine is up, restore saved language if any.
-  setTimeout(restoreSavedLang, 600);
 }
-function restoreSavedLang() {
-  try {
-    const saved = localStorage.getItem("ssLang") || "en";
-    if (saved !== "en") triggerLang(saved);
-    paintSwitcher(saved);
-  } catch (_) {}
-}
-function triggerLang(code) {
-  // Map our codes to Google's
-  const map = { en: "", pt: "pt", zh: "zh-CN" };
-  const target = map[code] || "";
-  // Google's widget exposes a hidden <select> at .goog-te-combo we can drive.
-  const sel = document.querySelector("select.goog-te-combo");
-  if (!sel) {
-    // Engine not ready yet — retry shortly.
-    setTimeout(() => triggerLang(code), 250);
-    return;
-  }
-  sel.value = target;
-  sel.dispatchEvent(new Event("change"));
-}
+
 function paintSwitcher(code) {
   document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
     const active = b.dataset.lang === code;
@@ -5566,25 +5568,52 @@ function paintSwitcher(code) {
 }
 
 (function() {
-  // Wire our pill switcher to drive Google's engine.
+  // Map our codes to Google's
+  const TARGET = { en: "", pt: "pt", zh: "zh-CN" };
+
+  // Sync localStorage <-> cookie on initial load. If the user previously
+  // chose PT, the cookie is what actually drives Google's translation,
+  // so we make sure it's set before the engine boots.
+  try {
+    const saved = localStorage.getItem("ssLang") || "en";
+    const cookie = getGoogTransCookie();
+    const desired = TARGET[saved] || "";
+    const expected = desired ? "/en/" + desired : "";
+    if (cookie !== expected) {
+      setGoogTransCookie(desired);
+      // Cookie didn't match localStorage — silent reload so Google picks it up
+      if (sessionStorage.getItem("ssLangBoot") !== "1") {
+        sessionStorage.setItem("ssLangBoot", "1");
+        location.reload();
+        return;
+      }
+    } else {
+      sessionStorage.setItem("ssLangBoot", "1");
+    }
+    document.documentElement.setAttribute("lang", saved === "zh" ? "zh-CN" : saved);
+    paintSwitcher(saved);
+  } catch (_) {}
+
+  // Wire pill switcher: write cookie + localStorage, then reload.
   document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
     b.addEventListener("click", () => {
       const code = b.dataset.lang;
+      const target = TARGET[code] || "";
       try { localStorage.setItem("ssLang", code); } catch (_) {}
-      triggerLang(code);
+      setGoogTransCookie(target);
+      // Clear the boot guard so the reload actually applies the new value
+      sessionStorage.removeItem("ssLangBoot");
+      // Tiny visual feedback so the user knows the click registered
       paintSwitcher(code);
-      document.documentElement.setAttribute(
-        "lang",
-        code === "zh" ? "zh-CN" : code
-      );
+      // Reload — Google's script reads the cookie on the fresh load and
+      // translates every text node on the page before render.
+      setTimeout(() => location.reload(), 80);
     });
   });
-  // Initial paint while Google loads.
-  paintSwitcher((function(){ try { return localStorage.getItem("ssLang") || "en"; } catch(_) { return "en"; } })());
 })();
 </script>
 
-<!-- Load Google's translate engine. Defer + async = doesn't block the page. -->
+<!-- Load Google's translate engine. async+defer = doesn't block initial render. -->
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 
 </body>
