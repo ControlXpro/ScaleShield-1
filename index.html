@@ -3193,15 +3193,21 @@ footer{
         <img src="logo-small.png" alt="ScaleShield Logo">
       </a>
       <div class="nav-links">
-        <a href="#verticals">Verticals</a>
-        <a href="#onyx" style="color:#F2D27A">Onyx</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="onboarding.html">Onboarding</a>
-        <a href="affiliate.html" style="color:#F2D27A">Affiliate</a>
-        <a href="presentation.html">CRM Tour</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#faq">FAQ</a>
-        <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in</a>
+        <a href="#verticals" data-i18n="nav.verticals">Verticals</a>
+        <a href="#onyx" style="color:#F2D27A" data-i18n="nav.onyx">Onyx</a>
+        <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+        <a href="onboarding.html" data-i18n="nav.onboarding">Onboarding</a>
+        <a href="affiliate.html" style="color:#F2D27A" data-i18n="nav.affiliate">Affiliate</a>
+        <a href="presentation.html" data-i18n="nav.crmTour">CRM Tour</a>
+        <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login" data-i18n="nav.login">Log in</a>
+        <!-- Language switcher injected by ssLang.js -->
+        <div class="lang-switcher" id="langSwitcher" style="display:inline-flex;gap:4px;align-items:center;margin-left:10px;border:1px solid rgba(214,177,94,.20);border-radius:6px;padding:3px;background:rgba(0,0,0,.20);">
+          <button type="button" data-lang="en" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;letter-spacing:.08em;">EN</button>
+          <button type="button" data-lang="pt" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;letter-spacing:.08em;">PT</button>
+          <button type="button" data-lang="zh" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;">中文</button>
+        </div>
       </div>
     </div>
 
@@ -3222,7 +3228,7 @@ footer{
         WhatsApp
       </a>
 
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4" data-i18n="cta.contactNow">
         Contact Now
       </a>
     </div>
@@ -5485,6 +5491,114 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
     <p class="contact-foot">We typically reply within 5 minutes during business hours.</p>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     ScaleShield landing-page i18n — EN / PT / 中文
+     Translates [data-i18n="key"] elements. Choice persists in
+     localStorage. Adds active-state styling to the language switcher.
+     ════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  const I18N = {
+    en: {
+      "nav.verticals":"Verticals","nav.onyx":"Onyx","nav.pricing":"Pricing",
+      "nav.onboarding":"Onboarding","nav.affiliate":"Affiliate","nav.crmTour":"CRM Tour",
+      "nav.reviews":"Reviews","nav.faq":"FAQ","nav.login":"Log in",
+      "cta.contactNow":"Contact Now",
+      "hero.kicker":"Premium Whitelisted Agency Accounts",
+      "hero.bookCall":"📅 Book Discovery Call",
+      "hero.seePricing":"See Pricing →",
+      "section.verticals":"Built for serious media buyers",
+      "section.onyx":"Onyx — Our Tier-1 BM",
+      "section.pricing":"Pricing",
+      "section.faq":"Frequently asked questions",
+      "section.reviews":"What our partners say"
+    },
+    pt: {
+      "nav.verticals":"Verticais","nav.onyx":"Onyx","nav.pricing":"Preços",
+      "nav.onboarding":"Onboarding","nav.affiliate":"Afiliados","nav.crmTour":"Tour do CRM",
+      "nav.reviews":"Avaliações","nav.faq":"FAQ","nav.login":"Entrar",
+      "cta.contactNow":"Falar Agora",
+      "hero.kicker":"Contas de Agência Premium Whitelisted",
+      "hero.bookCall":"📅 Agendar Reunião",
+      "hero.seePricing":"Ver Preços →",
+      "section.verticals":"Feito para media buyers de verdade",
+      "section.onyx":"Onyx — Nosso BM Tier-1",
+      "section.pricing":"Preços",
+      "section.faq":"Perguntas frequentes",
+      "section.reviews":"O que dizem nossos parceiros"
+    },
+    zh: {
+      "nav.verticals":"行业垂直","nav.onyx":"Onyx","nav.pricing":"价格",
+      "nav.onboarding":"入驻流程","nav.affiliate":"合作伙伴","nav.crmTour":"CRM 导览",
+      "nav.reviews":"评价","nav.faq":"常见问题","nav.login":"登录",
+      "cta.contactNow":"立即联系",
+      "hero.kicker":"高级白名单代理账户",
+      "hero.bookCall":"📅 预约咨询",
+      "hero.seePricing":"查看价格 →",
+      "section.verticals":"专为严肃媒体投放者打造",
+      "section.onyx":"Onyx — 我们的一级 BM",
+      "section.pricing":"价格",
+      "section.faq":"常见问题",
+      "section.reviews":"合作伙伴评价"
+    }
+  };
+
+  function getLang() {
+    try { return localStorage.getItem("ssLang") || "en"; } catch (_) { return "en"; }
+  }
+  function setLang(code) {
+    if (!I18N[code]) return;
+    try { localStorage.setItem("ssLang", code); } catch (_) {}
+    apply(code);
+    paintSwitcher(code);
+    // Reflect choice in <html lang="...">
+    document.documentElement.setAttribute("lang", code === "zh" ? "zh-Hans" : code);
+  }
+  function t(code, key, fallback) {
+    return (I18N[code] && I18N[code][key]) || fallback || key;
+  }
+  function apply(code) {
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      const fallback = el.getAttribute("data-i18n-fallback") || el.textContent;
+      if (!el.hasAttribute("data-i18n-fallback")) el.setAttribute("data-i18n-fallback", el.textContent);
+      const txt = t(code, key, el.getAttribute("data-i18n-fallback"));
+      // For elements with child icons/svg, just replace the last text node
+      const hasSvg = el.querySelector("svg");
+      if (hasSvg) {
+        // Find last text node and update it; otherwise append
+        let updated = false;
+        for (let i = el.childNodes.length - 1; i >= 0; i--) {
+          const n = el.childNodes[i];
+          if (n.nodeType === 3 && n.textContent.trim()) { n.textContent = " " + txt; updated = true; break; }
+        }
+        if (!updated) el.appendChild(document.createTextNode(" " + txt));
+      } else {
+        el.textContent = txt;
+      }
+    });
+  }
+  function paintSwitcher(code) {
+    document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
+      const active = b.dataset.lang === code;
+      b.style.background = active ? "linear-gradient(135deg,#D6B15E,#F2D27A)" : "transparent";
+      b.style.color = active ? "#1a140a" : "rgba(255,255,255,.55)";
+    });
+  }
+
+  // Wire switcher
+  document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
+    b.addEventListener("click", () => setLang(b.dataset.lang));
+  });
+
+  // Boot
+  const initial = getLang();
+  apply(initial);
+  paintSwitcher(initial);
+  if (initial !== "en") document.documentElement.setAttribute("lang", initial === "zh" ? "zh-Hans" : initial);
+})();
+</script>
 
 </body>
 </html>
