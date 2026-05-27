@@ -363,6 +363,11 @@ b{color:rgba(255,255,255,.92)}
   position:relative;
   overflow:visible;
   animation:loginPulse 2.6s ease-in-out infinite;
+  flex-shrink:0;
+  /* Right-gap so the gold pill never gets visually crushed by the
+     Telegram/WhatsApp/Contact-Now button group on the right. */
+  margin-left:auto !important;
+  margin-right:14px !important;
 }
 .btn-login:hover{
   transform:translateY(-2px) scale(1.03);
@@ -3205,7 +3210,7 @@ footer{
       </div>
     </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:nowrap;align-items:center;white-space:nowrap;">
+    <div style="display:flex;gap:10px;flex-wrap:nowrap;align-items:center;white-space:nowrap;flex-shrink:0;margin-left:8px;">
       <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-tg small magnetic" data-mag="0.3">
         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 4L2 11l6 2 2 6 3-4 5 4 4-15z"></path>
