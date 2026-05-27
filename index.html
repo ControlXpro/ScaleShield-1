@@ -5499,112 +5499,93 @@ if (window.gsap && window.ScrollTrigger && !reduceMotion){
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     ScaleShield landing-page i18n — EN / PT / 中文
-     Translates [data-i18n="key"] elements. Choice persists in
-     localStorage. Adds active-state styling to the language switcher.
+     ScaleShield landing-page i18n — full-page translation via the
+     free Google Translate engine. Hand-translating every paragraph
+     across the ~5,500-line landing page is infeasible, so we drive
+     Google's machine-translation widget from our custom EN / PT / 中
+     pill switcher and hide all of Google's branded UI. The widget's
+     translation engine still runs and rewrites every text node on
+     the page server-side via Google's CDN.
      ════════════════════════════════════════════════════════════════ -->
+
+<!-- Hide every piece of Google's branded UI but keep the engine alive. -->
+<style>
+  /* The translate banner Google injects at the top */
+  .skiptranslate, .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate { display: none !important; }
+  /* Restore body offset that the banner pushes down */
+  body { top: 0 !important; position: static !important; }
+  /* Google's inline highlight + tooltip artifacts */
+  .goog-te-gadget, .goog-te-gadget-simple, .goog-tooltip, .goog-tooltip-frame,
+  .goog-text-highlight, .goog-te-balloon-frame { display: none !important; }
+  font[style*="background-color"], font[style*="vertical-align"] { background: transparent !important; box-shadow: none !important; }
+  /* Hide the hidden mount-point div */
+  #google_translate_element { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+</style>
+
+<!-- Hidden mount point Google needs (we never show its widget) -->
+<div id="google_translate_element"></div>
+
 <script>
-(function() {
-  const I18N = {
-    en: {
-      "nav.verticals":"Verticals","nav.onyx":"Onyx","nav.pricing":"Pricing",
-      "nav.onboarding":"Onboarding","nav.affiliate":"Affiliate","nav.crmTour":"CRM Tour",
-      "nav.reviews":"Reviews","nav.faq":"FAQ","nav.login":"Log in",
-      "cta.contactNow":"Contact Now",
-      "hero.kicker":"Premium Whitelisted Agency Accounts",
-      "hero.bookCall":"📅 Book Discovery Call",
-      "hero.seePricing":"See Pricing →",
-      "section.verticals":"Built for serious media buyers",
-      "section.onyx":"Onyx — Our Tier-1 BM",
-      "section.pricing":"Pricing",
-      "section.faq":"Frequently asked questions",
-      "section.reviews":"What our partners say"
-    },
-    pt: {
-      "nav.verticals":"Verticais","nav.onyx":"Onyx","nav.pricing":"Preços",
-      "nav.onboarding":"Onboarding","nav.affiliate":"Afiliados","nav.crmTour":"Tour do CRM",
-      "nav.reviews":"Avaliações","nav.faq":"FAQ","nav.login":"Entrar",
-      "cta.contactNow":"Falar Agora",
-      "hero.kicker":"Contas de Agência Premium Whitelisted",
-      "hero.bookCall":"📅 Agendar Reunião",
-      "hero.seePricing":"Ver Preços →",
-      "section.verticals":"Feito para media buyers de verdade",
-      "section.onyx":"Onyx — Nosso BM Tier-1",
-      "section.pricing":"Preços",
-      "section.faq":"Perguntas frequentes",
-      "section.reviews":"O que dizem nossos parceiros"
-    },
-    zh: {
-      "nav.verticals":"行业垂直","nav.onyx":"Onyx","nav.pricing":"价格",
-      "nav.onboarding":"入驻流程","nav.affiliate":"合作伙伴","nav.crmTour":"CRM 导览",
-      "nav.reviews":"评价","nav.faq":"常见问题","nav.login":"登录",
-      "cta.contactNow":"立即联系",
-      "hero.kicker":"高级白名单代理账户",
-      "hero.bookCall":"📅 预约咨询",
-      "hero.seePricing":"查看价格 →",
-      "section.verticals":"专为严肃媒体投放者打造",
-      "section.onyx":"Onyx — 我们的一级 BM",
-      "section.pricing":"价格",
-      "section.faq":"常见问题",
-      "section.reviews":"合作伙伴评价"
-    }
-  };
-
-  function getLang() {
-    try { return localStorage.getItem("ssLang") || "en"; } catch (_) { return "en"; }
+// Google Translate's required init callback. We pass includedLanguages
+// to limit what loads. layout=SIMPLE produces the smallest engine.
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    { pageLanguage: "en", includedLanguages: "pt,zh-CN", autoDisplay: false },
+    "google_translate_element"
+  );
+  // Once the engine is up, restore saved language if any.
+  setTimeout(restoreSavedLang, 600);
+}
+function restoreSavedLang() {
+  try {
+    const saved = localStorage.getItem("ssLang") || "en";
+    if (saved !== "en") triggerLang(saved);
+    paintSwitcher(saved);
+  } catch (_) {}
+}
+function triggerLang(code) {
+  // Map our codes to Google's
+  const map = { en: "", pt: "pt", zh: "zh-CN" };
+  const target = map[code] || "";
+  // Google's widget exposes a hidden <select> at .goog-te-combo we can drive.
+  const sel = document.querySelector("select.goog-te-combo");
+  if (!sel) {
+    // Engine not ready yet — retry shortly.
+    setTimeout(() => triggerLang(code), 250);
+    return;
   }
-  function setLang(code) {
-    if (!I18N[code]) return;
-    try { localStorage.setItem("ssLang", code); } catch (_) {}
-    apply(code);
-    paintSwitcher(code);
-    // Reflect choice in <html lang="...">
-    document.documentElement.setAttribute("lang", code === "zh" ? "zh-Hans" : code);
-  }
-  function t(code, key, fallback) {
-    return (I18N[code] && I18N[code][key]) || fallback || key;
-  }
-  function apply(code) {
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      const fallback = el.getAttribute("data-i18n-fallback") || el.textContent;
-      if (!el.hasAttribute("data-i18n-fallback")) el.setAttribute("data-i18n-fallback", el.textContent);
-      const txt = t(code, key, el.getAttribute("data-i18n-fallback"));
-      // For elements with child icons/svg, just replace the last text node
-      const hasSvg = el.querySelector("svg");
-      if (hasSvg) {
-        // Find last text node and update it; otherwise append
-        let updated = false;
-        for (let i = el.childNodes.length - 1; i >= 0; i--) {
-          const n = el.childNodes[i];
-          if (n.nodeType === 3 && n.textContent.trim()) { n.textContent = " " + txt; updated = true; break; }
-        }
-        if (!updated) el.appendChild(document.createTextNode(" " + txt));
-      } else {
-        el.textContent = txt;
-      }
-    });
-  }
-  function paintSwitcher(code) {
-    document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
-      const active = b.dataset.lang === code;
-      b.style.background = active ? "linear-gradient(135deg,#D6B15E,#F2D27A)" : "transparent";
-      b.style.color = active ? "#1a140a" : "rgba(255,255,255,.55)";
-    });
-  }
-
-  // Wire switcher
+  sel.value = target;
+  sel.dispatchEvent(new Event("change"));
+}
+function paintSwitcher(code) {
   document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
-    b.addEventListener("click", () => setLang(b.dataset.lang));
+    const active = b.dataset.lang === code;
+    b.style.background = active ? "linear-gradient(135deg,#D6B15E,#F2D27A)" : "transparent";
+    b.style.color = active ? "#1a140a" : "rgba(255,255,255,.6)";
   });
+}
 
-  // Boot
-  const initial = getLang();
-  apply(initial);
-  paintSwitcher(initial);
-  if (initial !== "en") document.documentElement.setAttribute("lang", initial === "zh" ? "zh-Hans" : initial);
+(function() {
+  // Wire our pill switcher to drive Google's engine.
+  document.querySelectorAll("#langSwitcher .lang-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      const code = b.dataset.lang;
+      try { localStorage.setItem("ssLang", code); } catch (_) {}
+      triggerLang(code);
+      paintSwitcher(code);
+      document.documentElement.setAttribute(
+        "lang",
+        code === "zh" ? "zh-CN" : code
+      );
+    });
+  });
+  // Initial paint while Google loads.
+  paintSwitcher((function(){ try { return localStorage.getItem("ssLang") || "en"; } catch(_) { return "en"; } })());
 })();
 </script>
+
+<!-- Load Google's translate engine. Defer + async = doesn't block the page. -->
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 
 </body>
 </html>
