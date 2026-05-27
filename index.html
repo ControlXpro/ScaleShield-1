@@ -3202,12 +3202,6 @@ footer{
         <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
         <a href="#faq" data-i18n="nav.faq">FAQ</a>
         <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login" data-i18n="nav.login">Log in</a>
-        <!-- Language switcher injected by ssLang.js -->
-        <div class="lang-switcher" id="langSwitcher" style="display:inline-flex;gap:4px;align-items:center;margin-left:10px;border:1px solid rgba(214,177,94,.20);border-radius:6px;padding:3px;background:rgba(0,0,0,.20);">
-          <button type="button" data-lang="en" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;letter-spacing:.08em;">EN</button>
-          <button type="button" data-lang="pt" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;letter-spacing:.08em;">PT</button>
-          <button type="button" data-lang="zh" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.55);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:4px;">中文</button>
-        </div>
       </div>
     </div>
 
@@ -3231,6 +3225,14 @@ footer{
       <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary small magnetic" data-mag="0.4" data-i18n="cta.contactNow">
         Contact Now
       </a>
+
+      <!-- Language switcher — sits in the right-side group so it doesn't
+           collide with the nav-links flex layout above. -->
+      <div class="lang-switcher" id="langSwitcher" style="display:inline-flex;align-items:center;gap:2px;margin-left:6px;border:1px solid rgba(214,177,94,.28);border-radius:8px;padding:3px;background:rgba(0,0,0,.45);flex-shrink:0;">
+        <button type="button" data-lang="en" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.6);font:inherit;font-size:11px;font-weight:800;cursor:pointer;padding:5px 9px;border-radius:5px;letter-spacing:.05em;transition:all .15s;">EN</button>
+        <button type="button" data-lang="pt" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.6);font:inherit;font-size:11px;font-weight:800;cursor:pointer;padding:5px 9px;border-radius:5px;letter-spacing:.05em;transition:all .15s;">PT</button>
+        <button type="button" data-lang="zh" class="lang-btn" style="background:transparent;border:none;color:rgba(255,255,255,.6);font:inherit;font-size:13px;font-weight:800;cursor:pointer;padding:4px 9px;border-radius:5px;transition:all .15s;">中</button>
+      </div>
     </div>
   </div>
 </div>
