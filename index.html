@@ -3107,6 +3107,127 @@ footer{
   display:inline-flex;align-items:center;gap:6px;
 }
 
+/* ============================================================
+   🏁 RACING NUDGES — subtle motorsport accents
+   ============================================================ */
+.race-checker{
+  position:relative;
+  height:14px;
+  background:
+    linear-gradient(45deg, rgba(255,255,255,.85) 25%, transparent 25%) 0 0/14px 14px,
+    linear-gradient(-45deg, rgba(255,255,255,.85) 25%, transparent 25%) 0 0/14px 14px,
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,.85) 75%) 0 0/14px 14px,
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.85) 75%) 0 0/14px 14px;
+  opacity:.06;
+  pointer-events:none;
+  z-index:3;
+  mask-image:linear-gradient(to right, transparent, #000 25%, #000 75%, transparent);
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 25%, #000 75%, transparent);
+}
+.race-silhouette, .race-bike{
+  position:absolute;
+  pointer-events:none;
+  z-index:1;
+  opacity:.05;
+  background-size:contain;background-repeat:no-repeat;
+}
+.race-silhouette{
+  width:520px;height:200px;
+  bottom:-20px;right:-40px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 200'><path fill='%23D6B15E' d='M48 142q12-38 42-58 18-12 42-14h70l10-26q4-10 18-12h60q24 0 32 14l16 38h82q42 0 66 24 22 22 24 50 0 6-6 8H402q-4-30-30-42-24-10-46 2-22 12-26 40H172q-4-30-30-42-24-10-46 2-22 12-26 40H56q-10 0-8-10z M126 130q-18 0-32 14-14 14-14 32 0 18 14 32 14 14 32 14 18 0 32-14 14-14 14-32 0-18-14-32-14-14-32-14zm0 26q12 0 20 8 8 8 8 20 0 12-8 20-8 8-20 8-12 0-20-8-8-8-8-20 0-12 8-20 8-8 20-8z M356 130q-18 0-32 14-14 14-14 32 0 18 14 32 14 14 32 14 18 0 32-14 14-14 14-32 0-18-14-32-14-14-32-14zm0 26q12 0 20 8 8 8 8 20 0 12-8 20-8 8-20 8-12 0-20-8-8-8-8-20 0-12 8-20 8-8 20-8z'/></svg>");
+  animation:raceCarSlide 18s ease-in-out infinite;
+}
+.race-bike{
+  width:380px;height:180px;
+  top:80px;left:-30px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 180'><path fill='%23D6B15E' d='M70 132q-18 0-30 14-12 14-12 30 0 18 12 30 12 14 30 14 18 0 30-14 12-12 12-30 0-16-12-30-12-14-30-14zm0 16q12 0 20 8 8 10 8 20 0 12-8 20-8 10-20 10-12 0-20-10-8-8-8-20 0-10 8-20 8-8 20-8z M290 132q-18 0-30 14-12 14-12 30 0 18 12 30 12 14 30 14 18 0 30-14 12-12 12-30 0-16-12-30-12-14-30-14zm0 16q12 0 20 8 8 10 8 20 0 12-8 20-8 10-20 10-12 0-20-10-8-8-8-20 0-10 8-20 8-8 20-8z M180 60l40 60h-18l-30-50zm-50 32 60 64-12 8-58-62zm150-30 30 30-8 12-32-30zm-50-22h40q8 0 10 8l6 30-50-10z'/></svg>");
+  animation:raceBikeSlide 20s ease-in-out infinite;
+}
+@keyframes raceCarSlide{ 0%,100%{transform:translateX(0)} 50%{transform:translateX(-30px)} }
+@keyframes raceBikeSlide{ 0%,100%{transform:translateX(0)} 50%{transform:translateX(20px)} }
+
+.speed-lines{ position:relative; height:80px; overflow:hidden; pointer-events:none; margin:-20px 0 0; }
+.speed-lines::before, .speed-lines::after, .speed-lines span{
+  content:""; position:absolute; height:1.5px;
+  background:linear-gradient(90deg, transparent, rgba(214,177,94,.6), transparent);
+}
+.speed-lines::before{ width:240px; top:18px; left:10%; animation:speedStreak 3s linear infinite; }
+.speed-lines::after{ width:180px; top:42px; left:35%; animation:speedStreak 2.4s linear .4s infinite; }
+.speed-lines span{ width:300px; top:62px; left:55%; animation:speedStreak 3.6s linear .8s infinite; display:block; }
+@keyframes speedStreak{
+  0%{transform:translateX(-100vw); opacity:0}
+  10%{opacity:1} 90%{opacity:1}
+  100%{transform:translateX(100vw); opacity:0}
+}
+
+.pole-badge{
+  position:fixed; bottom:18px; right:18px; z-index:60;
+  display:flex; align-items:center; gap:10px;
+  padding:10px 16px;
+  background:linear-gradient(135deg, rgba(20,16,8,.96), rgba(30,22,10,.96));
+  border:1.5px solid rgba(214,177,94,.5);
+  border-radius:999px;
+  box-shadow:0 12px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(214,177,94,.15);
+  color:#fff; font-size:12.5px; font-weight:700; letter-spacing:.04em;
+  cursor:pointer; text-decoration:none;
+  transition:.25s ease;
+  animation:poleFadeIn .6s ease-out .8s both, polePulse 2.6s ease-in-out 2s infinite;
+}
+.pole-badge:hover{
+  transform:translateY(-2px) scale(1.03);
+  border-color:rgba(214,177,94,.85);
+  box-shadow:0 18px 40px rgba(214,177,94,.25);
+}
+.pole-badge .flag{ font-size:16px; line-height:1; }
+.pole-badge .grad-text{
+  background:linear-gradient(135deg, #F2D27A, #D6B15E);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.pole-badge .close{ margin-left:4px; padding:0 2px; color:rgba(255,255,255,.4); font-size:14px; cursor:pointer; }
+.pole-badge .close:hover{ color:#fff; }
+@keyframes poleFadeIn{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes polePulse{
+  0%,100%{ box-shadow:0 12px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(214,177,94,.15); }
+  50%{ box-shadow:0 12px 36px rgba(0,0,0,.5), 0 0 0 6px rgba(214,177,94,.18); }
+}
+
+.speedo{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 12px;
+  background:rgba(214,177,94,.08);
+  border:1px solid rgba(214,177,94,.3);
+  border-radius:999px;
+  font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:#F2D27A;
+  margin:12px auto 0;
+}
+.speedo .dial{
+  position:relative; width:16px; height:8px;
+  border-top-left-radius:16px; border-top-right-radius:16px;
+  background:conic-gradient(from -90deg at 50% 100%,
+    #ef4444 0deg, #f59e0b 25deg, #22c55e 60deg, transparent 90deg);
+  overflow:hidden;
+}
+.speedo .needle{
+  position:absolute; bottom:0; left:50%;
+  width:1.5px; height:8px; background:#fff;
+  transform-origin:50% 100%;
+  animation:needleSweep 2.4s ease-in-out infinite;
+}
+@keyframes needleSweep{ 0%,100%{transform:rotate(-65deg)} 50%{transform:rotate(75deg)} }
+
+@media (prefers-reduced-motion: reduce){
+  .race-silhouette, .race-bike, .speed-lines::before, .speed-lines::after, .speed-lines span,
+  .pole-badge, .speedo .needle{ animation:none !important; }
+}
+@media (max-width: 768px){
+  .race-silhouette{ width:280px; height:120px; bottom:0; right:-30px; opacity:.04; }
+  .race-bike{ width:220px; height:100px; top:50px; left:-20px; opacity:.04; }
+  .pole-badge{ font-size:11px; padding:8px 12px; bottom:80px; right:12px; }
+  .pole-badge .close{ display:none; }
+}
+
 </style>
 </head>
 
@@ -3248,13 +3369,22 @@ footer{
   </div>
   <div class="hero-orb"></div>
   <div class="hero-mouse-orb" id="heroMouseOrb"></div>
+  <!-- Racing silhouettes — faint, decorative, motorsport-themed -->
+  <div class="race-silhouette" aria-hidden="true"></div>
+  <div class="race-bike" aria-hidden="true"></div>
 
   <div>
-    <div class="kicker reveal"><span class="kdot"></span> Reliable Meta Infrastructure</div>
+    <div class="kicker reveal"><span class="kdot"></span> 🏁 Pole Position for Media Buyers</div>
     <h1 class="hero-title">Scale Meta with <span class="grad">premium</span><br>agency infrastructure.</h1>
     <p class="hero-sub reveal">
-      Stable access, fast onboarding, and <b>unlimited replacements</b> &mdash; built for teams that don&rsquo;t want downtime.
+      🏎 0–60 in 5 minutes. Stable access, fast onboarding, and <b>unlimited replacements</b> &mdash; built for teams that don&rsquo;t want downtime.
     </p>
+    <div style="text-align:center;">
+      <span class="speedo" title="Live spend velocity">
+        <span class="dial"><span class="needle"></span></span>
+        <span>Spend velocity · LIVE</span>
+      </span>
+    </div>
 
     <div class="hero-actions reveal">
       <a href="#pricing" class="btn btn-primary magnetic" data-mag="0.45">View Pricing</a>
@@ -3286,9 +3416,9 @@ footer{
     </div>
 
     <div class="hero-strip reveal">
-      <div class="chip"><span class="dot"></span> Launch without delays</div>
+      <div class="chip"><span class="dot"></span> 🚦 Launch without delays</div>
       <div class="chip"><span class="dot"></span> Always-on support (24/7)</div>
-      <div class="chip"><span class="dot"></span> Replacement-ready</div>
+      <div class="chip"><span class="dot"></span> 🛞 Replacement-ready · Zero flat tires</div>
       <div class="chip"><span class="dot"></span> Secure onboarding</div>
     </div>
   </div>
@@ -3296,6 +3426,8 @@ footer{
   <div class="hero-ambient"></div>
   <canvas class="bg-canvas" id="heroCanvas"></canvas>
 </section>
+<!-- Checkered-flag accent below the hero -->
+<div class="race-checker" aria-hidden="true"></div>
 
 <!-- MARQUEE -->
 <div class="marquee" aria-hidden="true">
@@ -3489,6 +3621,9 @@ footer{
     </div>
   </div>
 </section>
+
+<!-- Speed-lines accent — racing transition into the pricing section -->
+<div class="speed-lines" aria-hidden="true"><span></span></div>
 
 <!-- PRICING (RESTRUCTURED, 10 TIERS, 3 CATEGORIES) -->
 <section id="pricing" class="pricing-section">
@@ -5615,6 +5750,30 @@ function paintSwitcher(code) {
 
 <!-- Load Google's translate engine. async+defer = doesn't block initial render. -->
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+
+<!-- 🏁 Pole-position floating CTA — racing-themed nudge, dismissible per session. -->
+<script>
+(function poleBadge(){
+  if (sessionStorage.getItem("polePosBadgeDismissed") === "1") return;
+  var a = document.createElement("a");
+  a.className = "pole-badge";
+  a.href = "https://t.me/scaleshieldsupport";
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.innerHTML =
+    '<span class="flag">🏁</span>' +
+    '<span><span class="grad-text">Lights out</span> &amp; away we go — start scaling</span>' +
+    '<span class="close" title="dismiss" role="button" aria-label="dismiss">×</span>';
+  a.querySelector(".close").addEventListener("click", function(e){
+    e.preventDefault(); e.stopPropagation();
+    sessionStorage.setItem("polePosBadgeDismissed", "1");
+    a.style.transition = "opacity .25s, transform .25s";
+    a.style.opacity = "0"; a.style.transform = "translateY(20px)";
+    setTimeout(function(){ a.remove(); }, 260);
+  });
+  document.body.appendChild(a);
+})();
+</script>
 
 </body>
 </html>
