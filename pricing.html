@@ -1,665 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1650229346295373');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1650229346295373&ev=PageView&noscript=1"
-/></noscript>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="ScaleShield pricing — BM3 Verified \$200, BM10 \$550, Single \$450/mo, Dual \$850/mo, Top Agency \$1,950/mo, Onyx BM2500 \$15,000, Agency Unlimited \$35,000/mo.">
-<title>ScaleShield — Pricing</title>
-
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
-
+<title>ScaleShield — Pricing & Packages</title>
+<meta name="description" content="ScaleShield pricing — from a $200 one-time verified BM to $35,000/mo Agency Unlimited. Every tier: 24/7 support, replacements, use your own cards. No questions asked." />
+<link rel="icon" href="favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ss.css">
 <style>
-:root{
-  --bg:#07080B;
-  --gold:#D6B15E;
-  --gold2:#F2D27A;
-  --text:#fff;
-  --muted:rgba(255,255,255,.65);
-  --muted2:rgba(255,255,255,.45);
-  --green:#2cd67c;
-  --blue:#49b2ff;
-  --violet:#a855f7;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --ease-out:cubic-bezier(.16,1,.3,1);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-html, body{ overflow-x:hidden; width:100% }
-html{ scroll-behavior:smooth }
-
-body{
-  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:
-    radial-gradient(900px circle at 50% -10%, rgba(214,177,94,.16), transparent 55%),
-    radial-gradient(800px circle at 80% 30%, rgba(73,178,255,.07), transparent 60%),
-    linear-gradient(135deg,#050507,#0b0d14,#090a10);
-  color:var(--text);
-  min-height:100vh;
-}
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none;
-  background:
-    radial-gradient(600px circle at 15% 10%, rgba(214,177,94,.07), transparent 60%),
-    radial-gradient(800px circle at 85% 20%, rgba(73,178,255,.06), transparent 60%);
-  mix-blend-mode:screen; z-index:0;
-}
-
-a{color:inherit;text-decoration:none}
-b{color:rgba(255,255,255,.92)}
-
-h1,h2,h3,h4{ font-family:'Sora','Inter',system-ui,sans-serif }
-h1{ font-size:clamp(38px,5.6vw,68px); font-weight:950; letter-spacing:-.035em; line-height:1.04 }
-h2{ font-size:clamp(26px,3.4vw,40px); font-weight:850; letter-spacing:-.02em; line-height:1.1 }
-
-p{ color:var(--muted); line-height:1.7 }
-
-section{ max-width:1200px; margin:auto; padding:96px 24px; position:relative; z-index:2 }
-section.full-bleed{ max-width:none; width:100% }
-
-.kicker{
-  display:inline-flex; align-items:center; gap:10px;
-  padding:8px 14px; border-radius:999px;
-  border:1px solid rgba(214,177,94,.22);
-  background:rgba(214,177,94,.06);
-  color:var(--muted); font-size:11px;
-  letter-spacing:.22em; font-weight:950; text-transform:uppercase;
-  backdrop-filter:blur(8px);
-}
-.kdot{
-  width:8px; height:8px; border-radius:999px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 18px rgba(214,177,94,.35);
-  animation:dotBlink 1.6s ease-in-out infinite;
-}
-@keyframes dotBlink{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.85)} }
-
-.grad{
-  background:linear-gradient(135deg,var(--gold),var(--gold2),#fff,var(--gold));
-  background-size:200% 200%;
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation:gradShift 6s ease-in-out infinite;
-}
-@keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-
-/* NAV */
-.nav{
-  position:fixed; top:0; left:0; right:0;
-  backdrop-filter:blur(14px) saturate(140%);
-  background:rgba(5,5,7,.72);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  z-index:100;
-}
-.nav-inner{
-  max-width:1200px; margin:auto; padding:12px 24px;
-  display:flex; justify-content:space-between; align-items:center; gap:14px;
-}
-.logo img{ height:30px; display:block }
-.nav-links{ display:none; gap:18px; align-items:center; flex-wrap:nowrap; white-space:nowrap }
-.nav-links a{ font-size:13px; font-weight:750; color:var(--muted); transition:color .18s }
-.nav-links a:hover{ color:#fff }
-.nav-links a.active{ color:#F2D27A }
-@media(min-width:1080px){ .nav-links{display:flex} }
-.nav-actions{ display:flex; gap:10px; flex-wrap:nowrap; align-items:center }
-
-/* Buttons */
-.btn{
-  padding:13px 18px; border-radius:14px;
-  font-weight:900; font-size:13.5px;
-  display:inline-flex; align-items:center; gap:10px;
-  border:1px solid transparent; cursor:pointer;
-  transition:.25s var(--ease); white-space:nowrap;
-}
-.btn-primary{
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;
-  box-shadow:0 0 30px rgba(214,177,94,.20);
-}
-.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(214,177,94,.32) }
-.btn-ghost{
-  background:rgba(255,255,255,.05);
-  border-color:rgba(255,255,255,.12);
-  color:#fff; backdrop-filter:blur(6px);
-}
-.btn-ghost:hover{ transform:translateY(-2px); border-color:rgba(214,177,94,.35) }
-
-/* HERO */
-.hero{
-  padding-top:148px; padding-bottom:36px;
-  text-align:center; max-width:none; width:100%;
-}
-.hero > div{ max-width:1100px; margin:auto }
-.hero p{ max-width:64ch; margin:18px auto 0 auto; font-size:clamp(15px,1.3vw,18px) }
-
-/* Replacement policy + warmup callouts */
-.note-callout{
-  margin-top:30px;
-  padding:18px 22px; border-radius:18px;
-  display:flex; gap:14px; align-items:flex-start;
-  font-size:13.5px; color:rgba(255,255,255,.85);
-  position:relative; z-index:1;
-}
-.note-callout .icon{
-  width:38px; height:38px; flex:0 0 auto;
-  border-radius:12px; display:grid; place-items:center;
-  font-size:18px;
-}
-.note-callout strong{
-  letter-spacing:.06em; text-transform:uppercase;
-  font-size:11px; font-weight:950; display:block;
-}
-.note-callout p{ margin-top:4px; color:rgba(255,255,255,.78); line-height:1.55 }
-.note-callout.policy{
-  border:1px solid rgba(73,178,255,.22);
-  background:linear-gradient(135deg, rgba(73,178,255,.06), rgba(73,178,255,.02));
-}
-.note-callout.policy .icon{
-  background:linear-gradient(135deg, rgba(73,178,255,.20), rgba(73,178,255,.06));
-  border:1px solid rgba(73,178,255,.25); color:#cfe9ff;
-}
-.note-callout.policy strong{ color:#cfe9ff }
-.note-callout.warmup{
-  border:1px solid rgba(255,203,107,.22);
-  background:linear-gradient(135deg, rgba(255,203,107,.06), rgba(255,203,107,.02));
-}
-.note-callout.warmup .icon{
-  background:linear-gradient(135deg, rgba(255,203,107,.20), rgba(255,203,107,.08));
-  border:1px solid rgba(255,203,107,.25);
-}
-.note-callout.warmup strong{ color:#ffcb6b }
-
-/* Pricing categories + tiers */
-.pricing-cat{ margin-top:56px }
-.pricing-cat-head{
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-  margin-bottom:28px; text-align:center;
-}
-.pricing-cat-title{
-  font-size:24px; font-weight:900; letter-spacing:-.01em;
-  color:#fff; position:relative; padding-bottom:10px;
-}
-.pricing-cat-title::after{
-  content:""; position:absolute; bottom:0; left:50%;
-  transform:translateX(-50%); width:42px; height:2px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  border-radius:2px; box-shadow:0 0 12px rgba(214,177,94,.55);
-}
-.pricing-cat-sub{ color:var(--muted); font-size:13.5px; font-weight:700 }
-
-.pricing-grid{
-  margin-top:24px;
-  display:flex; flex-wrap:wrap; gap:22px;
-  justify-content:center;
-}
-.tier{
-  flex:1 1 300px; max-width:380px;
-  position:relative;
-  padding:30px 26px; border-radius:24px;
-  border:1px solid rgba(255,255,255,.10);
-  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
-  transition:.35s var(--ease);
-  display:flex; flex-direction:column;
-  overflow:hidden; isolation:isolate;
-  backdrop-filter:blur(10px);
-}
-.tier::before{
-  content:""; position:absolute; inset:0;
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%), rgba(214,177,94,.12), transparent 55%);
-  opacity:0; transition:opacity .3s var(--ease); z-index:-1;
-}
-.tier:hover::before{ opacity:1 }
-.tier:hover{
-  transform:translateY(-6px);
-  border-color:rgba(214,177,94,.40);
-  box-shadow:0 30px 80px -30px rgba(214,177,94,.20);
-}
-.tier-tag{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 12px; border-radius:999px;
-  font-size:11px; font-weight:950;
-  letter-spacing:.16em; text-transform:uppercase;
-  color:var(--muted2);
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
-  align-self:flex-start;
-}
-.tier-name{
-  font-family:'Sora',sans-serif;
-  font-size:22px; font-weight:900; letter-spacing:-.01em;
-  margin-top:14px;
-}
-.tier-price{
-  font-family:'Sora',sans-serif;
-  font-size:46px; font-weight:950; letter-spacing:-.02em;
-  margin-top:14px; line-height:1;
-}
-.tier-price small{
-  font-family:'Inter',sans-serif;
-  font-size:14px; font-weight:700; color:var(--muted);
-  margin-left:4px;
-}
-.tier-desc{
-  margin-top:8px; color:var(--muted);
-  font-size:14px; line-height:1.6; min-height:42px;
-}
-.tier-list{
-  margin-top:18px; display:grid; gap:10px;
-  list-style:none; padding:0; flex:1;
-}
-.tier-list li{
-  display:flex; gap:10px; align-items:flex-start;
-  font-size:13.5px; color:var(--muted); line-height:1.5;
-}
-.tier-list li::before{
-  content:""; width:18px; height:18px;
-  border-radius:999px; flex:0 0 auto;
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'><path d='M2 6 L5 9 L10 3' stroke='%23F2D27A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"),
-    linear-gradient(135deg, rgba(214,177,94,.18), rgba(214,177,94,.04));
-  background-repeat:no-repeat; background-position:center;
-  border:1px solid rgba(214,177,94,.35); margin-top:1px;
-}
-.tier-meta{ margin-top:14px; display:flex; flex-wrap:wrap; gap:6px }
-.tier-meta-pill{
-  display:inline-flex; align-items:center; gap:6px;
-  padding:5px 9px; border-radius:999px;
-  font-size:10.5px; font-weight:900; letter-spacing:.04em;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-  color:var(--muted);
-}
-.tier-meta-pill.warranty{ color:#d7ffe8; border-color:rgba(44,214,124,.30); background:rgba(44,214,124,.08) }
-.tier-meta-pill.warmup{ color:#fff2d3; border-color:rgba(255,203,107,.30); background:rgba(255,203,107,.06) }
-.tier-meta-pill.verticals{ color:#cfe9ff; border-color:rgba(73,178,255,.25); background:rgba(73,178,255,.06) }
-
-.tier-cta{
-  margin-top:22px; width:100%; justify-content:center;
-}
-.tier.popular{
-  border-color:rgba(214,177,94,.55);
-  background:
-    radial-gradient(120% 100% at 50% 0%, rgba(214,177,94,.16), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  box-shadow:0 30px 90px -30px rgba(214,177,94,.30);
-}
-.tier.popular .tier-tag{
-  color:#111; border-color:rgba(214,177,94,.55);
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 20px rgba(214,177,94,.30);
-}
-.tier.onetime{ border-color:rgba(73,178,255,.35) }
-.tier.onetime .tier-tag{
-  color:#cfe9ff; border-color:rgba(73,178,255,.40); background:rgba(73,178,255,.10);
-}
-.tier.onyx{
-  border-color:rgba(214,177,94,.55);
-  background:
-    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.18), transparent 55%),
-    radial-gradient(120% 100% at 100% 100%, rgba(168,85,247,.10), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-}
-.tier.onyx .tier-tag{
-  color:#111; border-color:rgba(214,177,94,.55);
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  box-shadow:0 0 22px rgba(214,177,94,.30);
-}
-.tier.enterprise{
-  flex:1 1 100%; max-width:100%;
-  border-color:rgba(168,85,247,.35);
-  background:
-    radial-gradient(120% 100% at 0% 0%, rgba(168,85,247,.15), transparent 55%),
-    radial-gradient(120% 100% at 100% 100%, rgba(214,177,94,.18), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-}
-.tier.enterprise .tier-tag{
-  color:#e9d5ff; border-color:rgba(168,85,247,.45); background:rgba(168,85,247,.12);
-}
-.tier.enterprise .enterprise-grid{ display:grid; gap:24px; margin-top:20px }
-@media(min-width:900px){ .tier.enterprise .enterprise-grid{ grid-template-columns:1.1fr .9fr; align-items:end } }
-.tier.enterprise .tier-list{ grid-template-columns:repeat(2,1fr); gap:10px 22px }
-.tier.enterprise .tier-cta{ margin-top:0 }
-
-/* CTA section */
-.cta-card{
-  margin-top:36px; padding:32px;
-  border-radius:24px;
-  border:1px solid rgba(214,177,94,.30);
-  background:
-    radial-gradient(120% 100% at 0% 0%, rgba(214,177,94,.16), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  text-align:center;
-}
-.cta-card .actions{ margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center }
-
-footer{
-  border-top:1px solid rgba(255,255,255,.06);
-  padding:42px 24px; text-align:center; color:var(--muted);
-}
-
-/* Reveal */
-.reveal{ opacity:0; transform:translateY(28px); transition:.85s var(--ease-out) }
-.reveal.active{ opacity:1; transform:none }
+.pcat{margin-bottom:60px}.pcat-head{text-align:center;margin-bottom:30px}
+.pcat-head .t{font-family:'Sora';font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2)}
+.pcat-head .s{color:var(--mut);font-size:15px;margin-top:8px}
+.tier.enterprise{grid-column:1/-1;background:linear-gradient(120deg,rgba(214,177,94,.08),rgba(120,90,255,.06))}
+.ent-grid{display:grid;grid-template-columns:1fr;gap:24px}@media(min-width:860px){.ent-grid{grid-template-columns:1.1fr .9fr;align-items:center}}
+.guar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}@media(max-width:820px){.guar{grid-template-columns:repeat(2,1fr)}}
+.guar .g{text-align:center;padding:24px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
+.guar .g .ic{font-size:26px}.guar .g h4{font-size:14px;margin:10px 0 6px}.guar .g p{font-size:12.5px;color:var(--mut)}
+.cmp{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.cmp-row:last-child{border-bottom:none}
+.cmp-row>div{padding:15px 16px;font-size:13px;display:flex;align-items:center}.cmp-row.head>div{font-weight:800;font-family:'Sora'}.cmp-row.head .ss{color:var(--gold2)}
+.cmp-row>div:first-child{color:var(--mut)}.cmp .ss-col{background:rgba(214,177,94,.05)}.cmp .yes{color:var(--green);font-weight:700}.cmp .no{color:var(--red)}
+@media(max-width:760px){.cmp-row>div{padding:10px 7px;font-size:11px}}
 </style>
 </head>
-
 <body>
-
-<div class="nav">
-  <div class="nav-inner">
-    <div class="logo">
-      <a href="index.html"><img src="logo.png" alt="ScaleShield"></a>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#verticals">Verticals</a>
-      <a href="index.html#onyx" style="color:#F2D27A">Onyx</a>
-      <a href="pricing.html" class="active">Pricing</a>
-      <a href="onboarding.html">Onboarding</a>
-      <a href="presentation.html">CRM Tour</a>
-      <a href="index.html#faq">FAQ</a>
-      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in</a>
-    </div>
-    <div class="nav-actions">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost">Telegram</a>
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Contact Now</a>
-    </div>
-  </div>
+<div class="ticker"><div class="ticker-track">
+  <span><b>Cohort closing soon</b> · limited onboarding slots this week</span><span><b>5–10 min</b> avg replacement</span><span><b>$200M+</b> managed</span><span><b>24/7</b> support</span>
+  <span><b>Cohort closing soon</b> · limited onboarding slots this week</span><span><b>5–10 min</b> avg replacement</span><span><b>$200M+</b> managed</span><span><b>24/7</b> support</span>
+</div></div>
+<nav class="nav" id="nav"><div class="wrap nav-inner">
+  <a href="index.html" class="brand"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></a>
+  <div class="nav-links"><a href="presentation.html">CRM Tour</a><a href="case-studies.html">Case Studies</a><a href="pricing.html" style="color:var(--gold2)">Pricing</a><a href="index.html#onyx">Onyx</a><a href="onboarding.html">Onboarding</a><a href="affiliate.html">Affiliate</a></div>
+  <div class="nav-cta"><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-sm btn-wa">WhatsApp</a><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Telegram</a><a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a><div class="burger" id="burger"><span></span><span></span><span></span></div></div>
+</div></nav>
+<div class="drawer" id="drawer"><div class="drawer-close" id="drawerClose">×</div>
+  <a href="index.html">Home <small>→</small></a><a href="index.html#how">How it works <small>→</small></a><a href="index.html#demo">Live demo <small>→</small></a><a href="pricing.html" style="color:var(--gold2)">Pricing <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="onboarding.html">Onboarding <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a><a href="presentation.html">CRM Tour <small>→</small></a>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="reveal">
-    <div class="kicker"><span class="kdot"></span> Pricing</div>
-    <h1 style="margin-top:18px;">Choose the infrastructure that <span class="grad">fits your scale</span>.</h1>
-    <p>From a $100 Facebook profile to a $35,000/mo unlimited enterprise package. Every tier includes 24/7 support &mdash; with a clear difference on replacements depending on which model you pick.</p>
+<header class="phero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
+  <div class="reveal"><span class="eyebrow"><span class="dot"></span> Pricing &amp; packages</span></div>
+  <h1 class="reveal">Pick the tier. <span class="grad">Start spending today.</span></h1>
+  <p class="reveal">From a $200 one-time verified BM to a $35,000/mo unlimited agency layer. Every package: 24/7 support, replacements, and your own cards for ad spend. No questions asked.</p>
+  <div class="phero-cta reveal"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to an operator →</a><a href="#compare" class="btn btn-ghost btn-lg">Compare tiers</a></div>
+</div></header>
+
+<section class="sec" style="padding-top:60px"><div class="wrap">
+  <div class="guar reveal">
+    <div class="g"><div class="ic">⚡</div><h4>5–10 min replacements</h4><p>Dead account swapped before you lose momentum.</p></div>
+    <div class="g"><div class="ic">🤐</div><h4>No questions asked</h4><p>Your offer is your business. Gray / BH welcome.</p></div>
+    <div class="g"><div class="ic">💳</div><h4>Use your own cards</h4><p>Full control of your ad-spend billing.</p></div>
+    <div class="g"><div class="ic">🛎️</div><h4>24/7 real humans</h4><p>Telegram support that moves at operator speed.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- POLICY + WARMUP CALLOUTS -->
-<section style="padding-top:0">
-  <div class="note-callout policy reveal">
-    <div class="icon">&#x21BB;</div>
-    <div>
-      <strong>Replacement policy &mdash; subscription vs one-time</strong>
-      <p><b style="color:#fff">Subscriptions:</b> unlimited replacements throughout the billing period &mdash; if any account dies, we swap it. <b style="color:#fff">One-time purchases (BM3 Verified, BM10):</b> free replacement only if the account goes down with $0 or minimal spend. Once you&rsquo;ve actually used the asset, the one-time warranty ends &mdash; that&rsquo;s the trade-off for the lower entry price and no commitment.</p>
-    </div>
-  </div>
-
-  <div class="note-callout warmup reveal" style="margin-top:18px;">
-    <div class="icon">&#9888;</div>
-    <div>
-      <strong>Important &mdash; warm-up required</strong>
-      <p>All ad accounts must be warmed up by spending a few dollars first to build trust signals on the asset before scaling. This protects the account and ensures stable performance once you push real volume. We&rsquo;ll guide you through the right warm-up flow during onboarding.</p>
-    </div>
-  </div>
-
-  <!-- ===== Quick Start ===== -->
-  <div class="pricing-cat">
-    <div class="pricing-cat-head reveal">
-      <div class="pricing-cat-title">Quick Start &middot; One-Time</div>
-      <div class="pricing-cat-sub">Pay once, get access &mdash; no subscription.</div>
-    </div>
-
-    <div class="pricing-grid">
-      <!-- BM3 Verified -->
-      <div class="tier onetime reveal">
-        <span class="tier-tag">Verified &middot; One-Time</span>
-        <div class="tier-name">BM3 Verified</div>
-        <div class="tier-price">$200<small>/ one-time</small></div>
-        <p class="tier-desc">Verified Business Manager with 3 agency ad accounts &mdash; one-time purchase. Stronger trust profile and verified business status mean better deliverability and account longevity.</p>
-        <ul class="tier-list">
-          <li>Verified Business Manager status</li>
-          <li>3 ad accounts inside one BM</li>
-          <li>Higher trust + better limits</li>
-          <li>One payment, no subscription</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Replace on $0 / minimal spend</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta">Get BM3 Verified</a>
-      </div>
-
-      <!-- BM10 -->
-      <div class="tier onetime reveal">
-        <span class="tier-tag">Instant Access &middot; One-Time</span>
-        <div class="tier-name">BM10 Instant</div>
-        <div class="tier-price">$550<small>/ one-time</small></div>
-        <p class="tier-desc">Buy a Business Manager with 10 ad accounts in a single transaction. No subscription, instant delivery via wallet top-up in CRM.</p>
-        <ul class="tier-list">
-          <li>1 BM containing 10 ad accounts</li>
-          <li>One payment, no commitment</li>
-          <li>Wallet top-up &amp; auto-delivery in CRM</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Replace on $0 / minimal spend (24h)</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta">Get BM10</a>
-      </div>
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="pcat">
+    <div class="pcat-head reveal"><div class="t">Quick Start · One-Time</div><div class="s">Pay once, get access — no subscription.</div></div>
+    <div class="pgrid stagger">
+      <div class="tier tilt burst"><span class="tier-tag">Verified · One-Time</span><div class="tier-name">BM3 Verified</div><div class="tier-price">$200<small> / one-time</small></div><p class="tier-desc">Verified Business Manager with 3 agency ad accounts. Stronger trust profile means better deliverability and longevity.</p><ul class="tier-list"><li>Verified Business Manager status</li><li>3 ad accounts inside one BM</li><li>Higher trust + better limits</li><li>One payment, no subscription</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal spend</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM3 Verified</a></div>
+      <div class="tier tilt burst"><span class="tier-tag">Instant · One-Time</span><div class="tier-name">BM10 Instant</div><div class="tier-price">$550<small> / one-time</small></div><p class="tier-desc">A Business Manager with 10 ad accounts in a single transaction. Instant delivery via wallet top-up in the CRM.</p><ul class="tier-list"><li>1 BM containing 10 ad accounts</li><li>One payment, no commitment</li><li>Wallet top-up &amp; auto-delivery in CRM</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal (24h)</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM10</a></div>
+      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-style:dashed"><div style="font-size:30px">🛟</div><div class="tier-name" style="margin:14px 0 8px">Not sure which?</div><p class="tier-desc" style="min-height:auto">Tell us your vertical, GEOs, and spend — we'll recommend the right structure in minutes.</p><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" style="margin-top:14px">Ask an operator</a></div>
     </div>
   </div>
-
-  <!-- ===== Subscriptions ===== -->
-  <div class="pricing-cat">
-    <div class="pricing-cat-head reveal">
-      <div class="pricing-cat-title">Monthly Subscriptions</div>
-      <div class="pricing-cat-sub">Long-term stable infrastructure with unlimited replacements.</div>
-    </div>
-
-    <div class="pricing-grid">
-      <!-- Single -->
-      <div class="tier reveal">
-        <span class="tier-tag">Solo</span>
-        <div class="tier-name">Single Agency Account</div>
-        <div class="tier-price">$450<small>/ month</small></div>
-        <p class="tier-desc">One stable agency ad account &mdash; ideal when you need predictable single-account spend with higher daily ceilings.</p>
-        <ul class="tier-list">
-          <li>1 agency ad account</li>
-          <li>Higher trust + higher daily caps</li>
-          <li>24/7 support &amp; unlimited replacements</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta">Get Single</a>
-      </div>
-
-      <!-- Dual -->
-      <div class="tier reveal">
-        <span class="tier-tag">Scale</span>
-        <div class="tier-name">Dual Agency Accounts</div>
-        <div class="tier-price">$850<small>/ month</small></div>
-        <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p>
-        <ul class="tier-list">
-          <li>2 agency ad accounts</li>
-          <li>Better for higher volume</li>
-          <li>24/7 support &amp; unlimited replacements</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta">Get Dual</a>
-      </div>
-
-      <!-- Top Agency -->
-      <div class="tier popular reveal">
-        <span class="tier-tag">Most Popular</span>
-        <div class="tier-name">Top Agency Package</div>
-        <div class="tier-price">$1,950<small>/ month</small></div>
-        <p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling. Priority response from support.</p>
-        <ul class="tier-list">
-          <li>Top-tier agency BM setup</li>
-          <li>Priority 24/7 support</li>
-          <li>Unlimited replacements</li>
-          <li>Aggressive scaling-ready</li>
-          <li>Use your own cards for ad spend</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">BH / GH friendly</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta">Get Top Agency</a>
-      </div>
+  <div class="pcat">
+    <div class="pcat-head reveal"><div class="t">Monthly Subscriptions</div><div class="s">Long-term stable infrastructure with unlimited replacements.</div></div>
+    <div class="pgrid stagger">
+      <div class="tier tilt burst"><span class="tier-tag">Solo</span><div class="tier-name">Single Agency Account</div><div class="tier-price">$450<small> / month</small></div><p class="tier-desc">One stable agency ad account — ideal for predictable single-account spend with higher daily ceilings.</p><ul class="tier-list"><li>1 agency ad account</li><li>Higher trust + higher daily caps</li><li>24/7 support &amp; unlimited replacements</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Single</a></div>
+      <div class="tier popular tilt burst"><span class="tier-tag">Most Popular</span><div class="tier-name">Top Agency Package</div><div class="tier-price">$1,950<small> / month</small></div><p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling. Priority response.</p><ul class="tier-list"><li>Top-tier agency BM setup</li><li>Priority 24/7 support</li><li>Unlimited replacements</li><li>Aggressive scaling-ready</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Top Agency</a></div>
+      <div class="tier tilt burst"><span class="tier-tag">Scale</span><div class="tier-name">Dual Agency Accounts</div><div class="tier-price">$850<small> / month</small></div><p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p><ul class="tier-list"><li>2 agency ad accounts</li><li>Better for higher volume</li><li>24/7 support &amp; unlimited replacements</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Dual</a></div>
     </div>
   </div>
-
-  <!-- ===== Enterprise ===== -->
-  <div class="pricing-cat">
-    <div class="pricing-cat-head reveal">
-      <div class="pricing-cat-title">Enterprise</div>
-      <div class="pricing-cat-sub">Custom architecture for high-spend operators &amp; agencies.</div>
+  <div class="pcat" style="margin-bottom:0">
+    <div class="pcat-head reveal"><div class="t">Enterprise</div><div class="s">Custom architecture for high-spend operators &amp; agencies.</div></div>
+    <div class="pgrid stagger" style="margin-bottom:20px">
+      <div class="tier tilt burst"><span class="tier-tag">Custom</span><div class="tier-name">Custom Package</div><div class="tier-price">Quote<small> / tailored</small></div><p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we'll architect the right structure.</p><ul class="tier-list"><li>Custom BM &amp; account structure</li><li>Vertical-specific setup</li><li>24/7 support &amp; unlimited replacements</li><li>Bespoke onboarding plan</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Talk to Sales</a></div>
+      <div class="tier tilt burst" style="border-color:var(--line2);background:linear-gradient(180deg,rgba(214,177,94,.09),rgba(255,255,255,.01))"><span class="tier-tag">Onyx · Exclusive</span><div class="tier-name">Onyx BM2500</div><div class="tier-price">$15,000<small> / one-time</small></div><p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources. <a href="index.html#onyx" style="color:var(--gold2);text-decoration:underline">Full details →</a></p><ul class="tier-list"><li>Up to 2,500 accounts in one hub BM</li><li>Distributed sourcing</li><li>One-click share to any BM</li><li>Auto-replacement in 5–10 minutes</li><li>BM-level recovery</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Onyx BM2500</a></div>
+      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;text-align:center"><div style="font-size:30px">♾️</div><div class="tier-name" style="margin:12px 0 4px">Need unlimited?</div><p class="tier-desc" style="min-height:auto">The full agency layer is below — unlimited BMs, unlimited accounts, dedicated management.</p><a href="#enterprise" class="btn btn-ghost tier-cta" style="margin-top:12px">See Agency Unlimited ↓</a></div>
     </div>
-
-    <div class="pricing-grid">
-      <!-- Custom -->
-      <div class="tier reveal">
-        <span class="tier-tag">Custom</span>
-        <div class="tier-name">Custom Package</div>
-        <div class="tier-price">Quote<small>/ tailored</small></div>
-        <p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we&rsquo;ll architect the right structure for your offer.</p>
-        <ul class="tier-list">
-          <li>Custom BM &amp; account structure</li>
-          <li>Vertical-specific setup</li>
-          <li>24/7 support &amp; unlimited replacements</li>
-          <li>Bespoke onboarding plan</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-          <span class="tier-meta-pill warmup">&#9888; Warm up first</span>
-          <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta">Talk to Sales</a>
-      </div>
-
-      <!-- Onyx BM2500 -->
-      <div class="tier onyx reveal">
-        <span class="tier-tag">Onyx &middot; Exclusive</span>
-        <div class="tier-name">Onyx BM2500</div>
-        <div class="tier-price">$15,000<small>/ one-time</small></div>
-        <p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources. Distributed sourcing, proprietary CRM, BM-level recovery. <a href="index.html#onyx" style="color:#F2D27A;text-decoration:underline;">See full details &uarr;</a></p>
-        <ul class="tier-list">
-          <li>Up to 2,500 ad accounts in one hub BM</li>
-          <li>Distributed sourcing &mdash; no single point of failure</li>
-          <li>Proprietary CRM with one-click share to any BM</li>
-          <li>Auto-replacement in 5&ndash;10 minutes</li>
-          <li>BM-level recovery (transfer accounts to a new BM)</li>
-          <li>White-glove support</li>
-        </ul>
-        <div class="tier-meta">
-          <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-          <span class="tier-meta-pill warmup">&#9888; Warmup managed by us</span>
-          <span class="tier-meta-pill verticals">High-spend BH / GH</span>
-        </div>
-        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta">Get Onyx BM2500</a>
-      </div>
-
-      <!-- Agency Unlimited -->
-      <div class="tier enterprise reveal">
-        <span class="tier-tag">Enterprise &middot; Unlimited</span>
-        <div class="enterprise-grid">
-          <div>
-            <div class="tier-name" style="font-size:28px;">Agency Unlimited</div>
-            <div class="tier-price">$35,000<small>/ month</small></div>
-            <p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for media buyers operating at the very top end of the volume curve.</p>
-            <div class="tier-meta">
-              <span class="tier-meta-pill warranty">&check; Unlimited replacements</span>
-              <span class="tier-meta-pill warmup">&#9888; Warmup handled white-glove</span>
-              <span class="tier-meta-pill verticals">All verticals incl. BH / GH</span>
-            </div>
-          </div>
-          <div>
-            <ul class="tier-list">
-              <li><b>Unlimited</b> ad accounts</li>
-              <li><b>Unlimited</b> Business Managers</li>
-              <li>Dedicated account manager</li>
-              <li>Priority replacement queue</li>
-              <li>Custom infrastructure architecture</li>
-              <li>White-glove onboarding</li>
-              <li>Operational support 24/7</li>
-              <li>Use your own cards for ad spend</li>
-            </ul>
-            <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta" style="margin-top:18px;">Talk to Enterprise</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="tier enterprise reveal" id="enterprise"><div class="ent-grid">
+      <div><span class="tier-tag">Enterprise · Unlimited</span><div class="tier-name" style="font-size:30px">Agency Unlimited</div><div class="tier-price">$35,000<small> / month</small></div><p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for buyers at the very top end of the volume curve.</p></div>
+      <div><ul class="tier-list"><li><b>Unlimited</b> ad accounts</li><li><b>Unlimited</b> Business Managers</li><li>Dedicated account manager</li><li>Priority replacement queue</li><li>Custom infrastructure architecture</li><li>White-glove onboarding</li><li>Operational support 24/7</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" style="margin-top:14px">Talk to Enterprise</a></div>
+    </div></div>
   </div>
-</section>
+</div></section>
 
-<!-- CTA -->
-<section style="padding-top:0">
-  <div class="cta-card reveal">
-    <div class="kicker"><span class="kdot"></span> Not sure which tier?</div>
-    <h2 style="margin-top:14px;">Tell us your vertical and spend &mdash; we&rsquo;ll match you.</h2>
-    <p style="max-width:60ch; margin:14px auto 0;">Most clients reach support, describe what they're running, and get pointed at the right tier within minutes. No upselling.</p>
-    <div class="actions">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start on Telegram</a>
-      <a href="https://wa.me/qr/ED5IWY7RKNSPC1" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
-      <a href="onboarding.html" class="btn btn-ghost">See how onboarding works</a>
-    </div>
+<section class="sec" id="compare" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>How tiers <span class="grad">stack up</span>.</h2></div>
+  <div class="cmp reveal">
+    <div class="cmp-row head"><div></div><div>One-Time BMs</div><div>Monthly</div><div class="ss">Enterprise / Onyx</div></div>
+    <div class="cmp-row"><div>Replacements</div><div>On $0 / minimal</div><div class="yes">Unlimited</div><div class="ss-col yes">Unlimited · priority</div></div>
+    <div class="cmp-row"><div>Support</div><div>24/7</div><div>24/7</div><div class="ss-col yes">24/7 + dedicated AM</div></div>
+    <div class="cmp-row"><div>Best for</div><div>Testing / starting</div><div>Steady scaling</div><div class="ss-col">$2M+/mo operators</div></div>
+    <div class="cmp-row"><div>Gray / BH</div><div class="yes">✓</div><div class="yes">✓</div><div class="ss-col yes">✓</div></div>
+    <div class="cmp-row"><div>Use your own cards</div><div class="yes">✓</div><div class="yes">✓</div><div class="ss-col yes">✓</div></div>
   </div>
-</section>
+</div></section>
 
-<footer>
-&copy; <span id="year"></span> ScaleShield &mdash; All rights reserved.
-</footer>
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>Pricing <span class="grad">questions</span>.</h2></div>
+  <div class="faq reveal">
+    <details class="qa"><summary>Is it really no questions asked?<span class="pl">+</span></summary><div class="a">Yes. We provide infrastructure. What you run on it is your business — gray and blackhat verticals included.</div></details>
+    <details class="qa"><summary>Do one-time packages include replacements?<span class="pl">+</span></summary><div class="a">One-time BMs are replaced if they arrive on $0 / minimal spend (within 24h for BM10). Monthly and enterprise tiers add unlimited replacements for the life of the subscription.</div></details>
+    <details class="qa"><summary>Can I upgrade later?<span class="pl">+</span></summary><div class="a">Anytime. Start on a one-time BM, move to monthly, then scale to Onyx or Agency Unlimited as your volume grows. We migrate your setup.</div></details>
+    <details class="qa"><summary>How do I pay?<span class="pl">+</span></summary><div class="a">Message us on Telegram and we'll set up wallet top-up in the CRM. Crypto and other methods supported — ask support.</div></details>
+  </div>
+</div></section>
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
+<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta-band reveal">
+  <span class="eyebrow"><span class="dot"></span> Ready when you are</span>
+  <h2 style="margin-top:16px">Stop losing accounts. <span class="grad">Start today.</span></h2>
+  <p>Tell us your vertical, GEOs, and monthly spend. We'll recommend the right tier and get you live the same day.</p>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to ScaleShield →</a>
+</div></div></section>
 
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("active");
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.14 });
-document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+<footer class="foot"><div class="wrap">
+  <div class="foot-grid">
+    <div><div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div><p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers.</p></div>
+    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="presentation.html">CRM Tour</a><a href="onboarding.html">Onboarding</a></div>
+    <div><h5>Proof</h5><a href="case-study-marco.html">Marco — $2.1M/mo</a><a href="case-study-sarah.html">Sarah — $9.6M/mo</a><a href="case-study-deepak.html">Deepak — $18M YTD</a></div>
+    <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a></div>
+  </div>
+  <div class="foot-bottom"><div>© 2026 ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
+</div></footer>
 
-// Mouse-follow gradient on tier cards
-document.querySelectorAll(".tier").forEach(t => {
-  t.addEventListener("mousemove", (e) => {
-    const r = t.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width) * 100;
-    const y = ((e.clientY - r.top)  / r.height) * 100;
-    t.style.setProperty("--mx", x + "%");
-    t.style.setProperty("--my", y + "%");
-  });
-});
-</script>
+<a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="float-tg" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
+<script src="ss.js"></script>
 </body>
 </html>
