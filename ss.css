@@ -191,6 +191,29 @@ section{position:relative}
 /* draft banner */
 .draft-bar{position:fixed;bottom:0;left:0;right:0;z-index:310;background:linear-gradient(90deg,#1a1206,#241803);border-top:1px solid var(--line2);padding:9px 18px;text-align:center;font-size:12.5px;color:#F2D27A;font-weight:600}
 
+/* contact-choice modal (WhatsApp / Telegram) */
+.cmodal{position:fixed;inset:0;z-index:400;background:rgba(7,8,11,.84);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.cmodal.open{opacity:1;pointer-events:auto}
+.cmodal-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);border-radius:22px;padding:34px 30px;max-width:430px;width:calc(100% - 40px);text-align:center;transform:translateY(18px) scale(.96);transition:transform .35s var(--ease);box-shadow:0 40px 100px rgba(0,0,0,.6);position:relative;overflow:hidden}
+.cmodal-card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.cmodal.open .cmodal-card{transform:none}
+.cmodal-ey{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:14px}
+.cmodal-card h3{font-family:'Sora';font-size:26px;font-weight:900}
+.cmodal-card .sub{color:var(--mut);font-size:14px;margin:10px 0 26px}
+.cmodal-opts{display:grid;gap:12px}
+.cmodal-opt{display:flex;align-items:center;gap:15px;padding:16px 20px;border-radius:14px;font-weight:800;font-size:16px;text-align:left;transition:transform .2s,filter .2s,box-shadow .2s}
+.cmodal-opt svg{width:30px;height:30px;flex-shrink:0}
+.cmodal-opt span{display:flex;flex-direction:column;line-height:1.25}
+.cmodal-opt small{font-size:12px;font-weight:500;opacity:.78}
+.cmodal-opt .arr{margin-left:auto;font-size:20px;opacity:.6}
+.cmodal-opt.tg{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a140a}
+.cmodal-opt.tg svg{fill:#1a140a}
+.cmodal-opt.wa{background:linear-gradient(135deg,#25D366,#1aae53);color:#fff}
+.cmodal-opt.wa svg{fill:#fff}
+.cmodal-opt:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.cmodal-close{margin-top:20px;font-size:13px;color:var(--mut);cursor:pointer;background:none;border:none;font:inherit;font-size:13px;transition:color .2s}
+.cmodal-close:hover{color:var(--ink)}
+
 ::selection{background:rgba(214,177,94,.3);color:#fff}
 ::-webkit-scrollbar{width:11px}
 ::-webkit-scrollbar-track{background:var(--bg)}

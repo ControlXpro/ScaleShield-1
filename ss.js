@@ -173,13 +173,49 @@
   });
 
   /* ---- inject floating WhatsApp button on every page (sits above Telegram) ---- */
+  var WA_ICON = '<svg viewBox="0 0 32 32"><path d="M16.04 4C9.96 4 5.02 8.94 5.02 15.02c0 2.12.62 4.1 1.68 5.78L5 27l6.36-1.66c1.6.88 3.44 1.38 5.4 1.38h.01c6.07 0 11.01-4.94 11.01-11.02C28.79 8.94 22.12 4 16.04 4zm6.45 15.6c-.27.76-1.58 1.46-2.18 1.5-.58.05-1.06.27-3.58-.75-3.02-1.22-4.94-4.3-5.1-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.2 1.04-2.5.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.18.01.44-.07.68.52.27.66.92 2.27.99 2.43.07.16.12.35.02.55-.1.2-.15.32-.3.5-.15.18-.32.4-.46.53-.15.15-.3.3-.13.6.17.3.76 1.25 1.63 2.03 1.12.99 2.06 1.3 2.36 1.45.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 2 .95.3.15.5.22.57.34.07.12.07.7-.2 1.46z"/></svg>';
+  var TG_ICON = '<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>';
+  var TG_URL = "https://t.me/scaleshieldsupport", WA_URL = "https://wa.me/447412860721";
   if(!document.querySelector(".float-wa")){
     var wa = document.createElement("a");
-    wa.className = "float-wa";
-    wa.href = "https://wa.me/447412860721";
-    wa.target = "_blank"; wa.rel = "noopener";
-    wa.setAttribute("aria-label", "WhatsApp");
-    wa.innerHTML = '<svg viewBox="0 0 32 32"><path d="M16.04 4C9.96 4 5.02 8.94 5.02 15.02c0 2.12.62 4.1 1.68 5.78L5 27l6.36-1.66c1.6.88 3.44 1.38 5.4 1.38h.01c6.07 0 11.01-4.94 11.01-11.02C28.79 8.94 22.12 4 16.04 4zm6.45 15.6c-.27.76-1.58 1.46-2.18 1.5-.58.05-1.06.27-3.58-.75-3.02-1.22-4.94-4.3-5.1-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.2 1.04-2.5.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.18.01.44-.07.68.52.27.66.92 2.27.99 2.43.07.16.12.35.02.55-.1.2-.15.32-.3.5-.15.18-.32.4-.46.53-.15.15-.3.3-.13.6.17.3.76 1.25 1.63 2.03 1.12.99 2.06 1.3 2.36 1.45.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 2 .95.3.15.5.22.57.34.07.12.07.7-.2 1.46z"/></svg>';
+    wa.className = "float-wa"; wa.href = WA_URL;
+    wa.target = "_blank"; wa.rel = "noopener"; wa.setAttribute("aria-label", "WhatsApp");
+    wa.innerHTML = WA_ICON;
     document.body.appendChild(wa);
+  }
+
+  /* ---- contact-choice modal: any GENERIC contact CTA opens "WhatsApp or Telegram?" ----
+     Explicit channel buttons (labelled "Telegram"/"WhatsApp", the floating buttons,
+     and the labelled contact cards) pass straight through. */
+  if(!document.querySelector(".cmodal")){
+    var m = document.createElement("div");
+    m.className = "cmodal";
+    m.innerHTML =
+      '<div class="cmodal-card">'+
+        '<div class="cmodal-ey"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold2);display:inline-block"></span> Talk to ScaleShield</div>'+
+        '<h3>How do you want to reach us?</h3>'+
+        '<p class="sub">Real operators, 24/7. We reply fast on both — pick whichever you prefer.</p>'+
+        '<div class="cmodal-opts">'+
+          '<a class="cmodal-opt tg" href="'+TG_URL+'" target="_blank" rel="noopener">'+TG_ICON+'<span>Telegram <small>@scaleshieldsupport · fastest reply</small></span><span class="arr">→</span></a>'+
+          '<a class="cmodal-opt wa" href="'+WA_URL+'" target="_blank" rel="noopener">'+WA_ICON+'<span>WhatsApp <small>Message our team directly</small></span><span class="arr">→</span></a>'+
+        '</div>'+
+        '<button class="cmodal-close" type="button">Maybe later</button>'+
+      '</div>';
+    document.body.appendChild(m);
+    function closeC(){ m.classList.remove("open"); }
+    m.addEventListener("click", function(e){ if(e.target===m) closeC(); });
+    m.querySelector(".cmodal-close").onclick = closeC;
+    m.querySelectorAll(".cmodal-opt").forEach(function(a){ a.addEventListener("click", closeC); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeC(); });
+
+    document.querySelectorAll('a[href*="t.me/scaleshieldsupport"],a[href*="wa.me/447412860721"]').forEach(function(a){
+      var label = (a.textContent||"").trim().toLowerCase();
+      var explicit = label==="telegram" || label==="whatsapp"
+        || a.classList.contains("float-tg") || a.classList.contains("float-wa")
+        || a.classList.contains("cc") || a.classList.contains("cmodal-opt")
+        || a.hasAttribute("data-direct");
+      if(explicit) return;
+      a.addEventListener("click", function(e){ e.preventDefault(); m.classList.add("open"); });
+    });
   }
 })();
