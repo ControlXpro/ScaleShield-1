@@ -218,4 +218,60 @@
       a.addEventListener("click", function(e){ e.preventDefault(); m.classList.add("open"); });
     });
   }
+
+  /* ---- site-wide language switcher: English <-> Brazilian Portuguese (pt-BR) ----
+     Auto-translates every page via Google Translate, persisted across all pages
+     with the `googtrans` cookie. Google's own banner/gadget is hidden (ss.css) and
+     we expose a clean on-brand EN | PT toggle in the nav + mobile drawer. */
+  (function(){
+    function readLang(){ return /googtrans=\/en\/[\w-]+/.test(document.cookie) ? "pt" : "en"; }
+    function setLang(lang){
+      var host = location.hostname;
+      var kill = "googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+      document.cookie = kill;
+      document.cookie = kill + "domain=" + host + ";";
+      document.cookie = kill + "domain=." + host + ";";
+      if(lang === "pt"){
+        var v = "googtrans=/en/pt;path=/;";
+        document.cookie = v;
+        document.cookie = v + "domain=" + host + ";";
+        document.cookie = v + "domain=." + host + ";";
+      }
+      location.reload();
+    }
+    var cur = readLang();
+    function makePill(extra){
+      var w = document.createElement("div");
+      w.className = "lang-sw" + (extra ? " " + extra : "");
+      w.setAttribute("role", "group");
+      w.setAttribute("aria-label", "Language");
+      w.innerHTML = '<span class="lang-globe" aria-hidden="true">🌐</span>' +
+                    '<button type="button" data-l="en">EN</button>' +
+                    '<button type="button" data-l="pt">PT</button>';
+      w.querySelectorAll("button").forEach(function(b){
+        if(b.dataset.l === cur) b.classList.add("on");
+        b.addEventListener("click", function(){ if(b.dataset.l !== cur) setLang(b.dataset.l); });
+      });
+      return w;
+    }
+    var navCta = document.querySelector(".nav-cta");
+    if(navCta && !navCta.querySelector(".lang-sw")) navCta.insertBefore(makePill(), navCta.firstChild);
+    if(drawer && !drawer.querySelector(".lang-sw")) drawer.appendChild(makePill("lang-sw-drawer"));
+
+    /* hidden Google Translate mount + loader (once) — translation is driven by the
+       googtrans cookie above, so the gadget UI itself stays off-screen/hidden */
+    if(!document.getElementById("google_translate_element")){
+      var mount = document.createElement("div");
+      mount.id = "google_translate_element";
+      mount.setAttribute("aria-hidden", "true");
+      document.body.appendChild(mount);
+      window.googleTranslateElementInit = function(){
+        try{ new google.translate.TranslateElement({ pageLanguage:"en", includedLanguages:"en,pt", autoDisplay:false }, "google_translate_element"); }catch(e){}
+      };
+      var gs = document.createElement("script");
+      gs.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      gs.async = true;
+      document.body.appendChild(gs);
+    }
+  })();
 })();

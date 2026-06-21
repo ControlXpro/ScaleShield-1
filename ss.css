@@ -219,3 +219,18 @@ section{position:relative}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(214,177,94,.3);border-radius:6px}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}.reveal,.reveal-l,.reveal-r,.reveal-sc,.stagger>*{opacity:1!important;transform:none!important}}
+
+/* ---- language switcher (EN | Brazilian Portuguese) ---- */
+.lang-sw{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,.04);flex-shrink:0}
+.lang-sw .lang-globe{display:flex;align-items:center;padding:0 2px 0 9px;font-size:12px;line-height:1}
+.lang-sw button{font:700 12px/1 'Inter',sans-serif;letter-spacing:.04em;color:var(--mut);background:transparent;border:0;padding:8px 10px;cursor:pointer;transition:color .2s,background .2s}
+.lang-sw button.on{color:#1a140a;background:linear-gradient(135deg,var(--gold),var(--gold2))}
+.lang-sw button:not(.on):hover{color:var(--ink)}
+.lang-sw-drawer{margin-top:20px;align-self:flex-start;transform:scale(1.12);transform-origin:left}
+/* below the desktop breakpoint the burger/drawer is the nav — show the language toggle there, not in the crowded top bar */
+@media(max-width:1039px){.nav-cta .lang-sw{display:none}}
+/* Google Translate injects its own banner/gadget/tooltip — translation is driven from our toggle, so hide all of Google's chrome and neutralise the body push */
+.goog-te-banner-frame,.goog-te-banner-frame.skiptranslate,iframe.skiptranslate,#goog-gt-tt,.goog-te-balloon-frame,.goog-tooltip,.goog-tooltip:hover{display:none!important}
+#google_translate_element{position:absolute!important;left:-9999px!important;top:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+body{top:0!important;position:static!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}

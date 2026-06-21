@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ScaleShield — Policy, Warranty &amp; How to Start</title>
+<meta name="description" content="How ScaleShield works: what each BM package includes, our free + unlimited replacement warranty, and the exact safe-usage playbook — warm-up, naming rules, and how to scale without red flags." />
+<link rel="icon" href="favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ss.css">
+<style>
+/* includes visual: BMx -> x accounts */
+.incl{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media(max-width:820px){.incl{grid-template-columns:1fr}}
+.incl .i{border:1px solid var(--line);border-radius:16px;padding:26px 22px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));text-align:center}
+.incl .i .bm{font-family:'Sora';font-weight:900;font-size:30px;color:var(--gold2)}
+.incl .i .arw{color:var(--mut2);font-size:20px;margin:6px 0}
+.incl .i .acc{font-family:'Sora';font-weight:800;font-size:18px}
+.incl .i p{font-size:13px;color:var(--mut);margin-top:10px}
+/* do / don't rule columns */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:820px){.rules{grid-template-columns:1fr}}
+.rcol{border:1px solid var(--line);border-radius:18px;padding:26px}
+.rcol.do{border-color:rgba(67,224,139,.28);background:linear-gradient(180deg,rgba(67,224,139,.06),transparent)}
+.rcol.dont{border-color:rgba(255,100,110,.28);background:linear-gradient(180deg,rgba(255,100,110,.06),transparent)}
+.rcol h3{font-size:19px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.rcol ul{list-style:none}
+.rcol li{position:relative;padding:9px 0 9px 28px;font-size:14.5px;color:var(--mut);border-bottom:1px solid var(--line)}
+.rcol li:last-child{border-bottom:none}
+.rcol li::before{position:absolute;left:0;top:9px;font-weight:800}
+.rcol.do li::before{content:"\2713";color:var(--green)}
+.rcol.dont li::before{content:"\2715";color:var(--red)}
+/* warm-up spec chips */
+.specs{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:8px}
+.spec{border:1px solid var(--line2);border-radius:14px;padding:16px 22px;text-align:center;background:rgba(214,177,94,.05);min-width:160px}
+.spec .v{font-family:'Sora';font-weight:900;font-size:24px;color:var(--gold2)}
+.spec .k{font-size:12px;color:var(--mut);letter-spacing:.03em;margin-top:4px}
+/* highlighted callout */
+.callout{border:1px solid var(--line2);border-radius:18px;padding:26px 28px;background:linear-gradient(120deg,rgba(214,177,94,.08),rgba(122,90,255,.05));display:flex;gap:20px;align-items:flex-start}
+.callout .cic{font-size:28px;flex-shrink:0;line-height:1.2}
+.callout h3{font-size:19px;margin-bottom:7px}
+.callout p{font-size:14.5px;color:var(--mut)}
+.callout p b{color:var(--ink)}
+/* timeline (shared with onboarding) */
+.timeline{max-width:760px;margin:0 auto;position:relative;padding-left:46px}
+.timeline::before{content:"";position:absolute;left:16px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold),var(--gold2),transparent)}
+.tl-step{position:relative;margin-bottom:30px}
+.tl-step .dot{position:absolute;left:-46px;top:0;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a140a;font-family:'Sora';font-weight:900;display:flex;align-items:center;justify-content:center}
+.tl-step .box{border:1px solid var(--line);border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008))}
+.tl-step .t{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);font-weight:800}
+.tl-step h3{font-size:21px;margin:8px 0 8px}
+.tl-step p{font-size:14.5px;color:var(--mut)}
+.tl-step .when{display:inline-block;margin-top:10px;font-size:12px;color:var(--green);font-weight:700;background:rgba(67,224,139,.08);border:1px solid rgba(67,224,139,.3);padding:4px 12px;border-radius:999px}
+</style>
+</head>
+<body>
+<div class="ticker"><div class="ticker-track">
+  <span><b>Unlimited replacements</b> on monthly plans</span><span><b>Free replacement</b> on any $0 / dead account</span><span><b>No questions asked</b></span><span><b>24/7</b> support</span>
+  <span><b>Unlimited replacements</b> on monthly plans</span><span><b>Free replacement</b> on any $0 / dead account</span><span><b>No questions asked</b></span><span><b>24/7</b> support</span>
+</div></div>
+<nav class="nav" id="nav"><div class="wrap nav-inner">
+  <a href="index.html" class="brand"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></a>
+  <div class="nav-links"><a href="presentation.html">CRM Tour</a><a href="case-studies.html">Case Studies</a><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx</a><a href="onboarding.html">Onboarding</a><a href="policy.html" style="color:var(--gold2)">Policy</a><a href="affiliate.html">Affiliate</a></div>
+  <div class="nav-cta"><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-sm btn-wa">WhatsApp</a><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Telegram</a><a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a><div class="burger" id="burger"><span></span><span></span><span></span></div></div>
+</div></nav>
+<div class="drawer" id="drawer"><div class="drawer-close" id="drawerClose">×</div>
+  <a href="index.html">Home <small>→</small></a><a href="pricing.html">Pricing <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="onboarding.html">Onboarding <small>→</small></a><a href="policy.html" style="color:var(--gold2)">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a><a href="presentation.html">CRM Tour <small>→</small></a>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
+</div>
+
+<header class="phero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
+  <div class="reveal"><span class="eyebrow"><span class="dot"></span> Policy · Warranty · How to start</span></div>
+  <h1 class="reveal">The playbook that keeps your <span class="grad">accounts alive</span>.</h1>
+  <p class="reveal">Everything you get, everything we replace, and the exact way to run your ScaleShield structure — so your accounts warm up clean, dodge red flags, and scale without surprises.</p>
+  <div class="phero-cta reveal"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to an operator →</a><a href="#rules" class="btn btn-ghost btn-lg">Jump to the rules ↓</a></div>
+</div></header>
+
+<!-- WHAT'S INCLUDED -->
+<section class="sec" id="included" style="padding-top:64px"><div class="wrap">
+  <div class="sec-head reveal"><h2>What's <span class="grad">included</span>.</h2><p>Every Business Manager package ships with ad accounts inside it. The number in the package name is the number of ad accounts you get.</p></div>
+  <div class="incl stagger">
+    <div class="i tilt burst"><div class="bm">BM3</div><div class="arw">↓</div><div class="acc">3 ad accounts</div><p>A verified Business Manager with 3 agency ad accounts inside.</p></div>
+    <div class="i tilt burst"><div class="bm">BM10</div><div class="arw">↓</div><div class="acc">10 ad accounts</div><p>One Business Manager containing 10 ad accounts — ready to share out.</p></div>
+    <div class="i tilt burst"><div class="bm">BM<span style="color:var(--mut2)">x</span></div><div class="arw">↓</div><div class="acc"><span style="color:var(--mut2)">x</span> ad accounts</div><p>The rule is simple: the number on the BM is the number of accounts inside it.</p></div>
+  </div>
+  <div class="callout reveal" style="margin-top:24px"><div class="cic">📦</div><div><h3>Simple rule</h3><p>A <b>BM10</b> is a Business Manager that comes with <b>10 ad accounts</b>. A BM3 comes with 3, and so on — the count in the name is always the number of ad accounts you receive inside that BM.</p></div></div>
+</div></section>
+
+<!-- WARRANTY & REPLACEMENTS -->
+<section class="sec" id="warranty" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>Warranty &amp; <span class="grad">replacements</span>.</h2><p>If an account doesn't perform, you don't eat the loss — we replace it.</p></div>
+  <div class="grid-3 stagger">
+    <div class="card tilt burst"><div class="ic">🆓</div><h3>Dies on $0 spend</h3><p>If an ad account arrives dead or dies before it spends, you get a free replacement — no charge, no hassle.</p></div>
+    <div class="card tilt burst"><div class="ic">🛠️</div><h3>Any issue or disable</h3><p>Disabled, restricted, or acting up? Flag it and we swap in a fresh account so you keep moving.</p><p style="margin-top:12px;font-size:12.5px;color:var(--gold-warm);background:rgba(214,177,94,.07);border:1px solid var(--line2);border-radius:10px;padding:9px 12px">⚠ Applies only while the account has <b style="color:var(--ink)">no spend</b> on it — once an account has spent, it's no longer eligible for free replacement.</p></div>
+    <div class="card tilt burst"><div class="ic">♾️</div><h3>Monthly = unlimited</h3><p>On any monthly subscription, replacements are <b>unlimited and unconditional</b> — whatever happens to an account, we replace it. No questions asked.</p></div>
+  </div>
+  <div class="callout reveal" style="margin-top:24px"><div class="cic">🛡️</div><div><h3>The monthly promise</h3><p>For monthly plans, the policy is the same regardless of what happens to an ad account: <b>we replace it.</b> Unlimited replacements, no questions asked — your job is to run offers, ours is to keep live accounts under you.</p></div></div>
+</div></section>
+
+<!-- HOW THE STRUCTURE WORKS -->
+<section class="sec" id="structure" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>How the <span class="grad">structure</span> works.</h2><p>We hand you a dedicated profile — think of it as an ad-account distributor, not your operating workspace.</p></div>
+  <div class="callout reveal" style="margin-bottom:24px"><div class="cic">⚠️</div><div><h3>The one rule inside the profile we give you</h3><p>We create a profile for you on <b>AdsPower</b> and hand you access. Inside that profile, <b>do not perform any actions except sharing assets out to your own profile.</b> Don't run campaigns, edit settings, or operate inside it. Treat it purely as a <b>distributor</b>: share the BM and ad accounts into your own AdsPower profile and work from there. This keeps the source clean and avoids bans and red flags.</p></div></div>
+  <div class="grid-3 stagger">
+    <div class="card tilt burst"><div class="ic">🔑</div><h3>1 · You get the distributor</h3><p>We share a ready AdsPower profile to you, loaded with your BM and ad accounts.</p></div>
+    <div class="card tilt burst"><div class="ic">📤</div><h3>2 · Share assets out</h3><p>From that profile, share the ad accounts / BM into <b>your own</b> profile. That's the only action you take inside it.</p></div>
+    <div class="card tilt burst"><div class="ic">🚀</div><h3>3 · Operate from yours</h3><p>Run everything from your own profile. The distributor stays untouched, so the assets stay clean.</p></div>
+  </div>
+</div></section>
+
+<!-- FIRST 24-48 HOURS -->
+<section class="sec" id="warmup" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>Your first <span class="grad">24–48 hours</span>.</h2><p>Warm up clean and the account rewards you. Rush it and you invite scrutiny.</p></div>
+  <div class="specs reveal">
+    <div class="spec"><div class="v">$5–15</div><div class="k">Warm-up daily spend</div></div>
+    <div class="spec"><div class="v">24–48h</div><div class="k">No renaming BM / accounts</div></div>
+    <div class="spec"><div class="v">Low → High</div><div class="k">Daily limits climb fast</div></div>
+  </div>
+  <div class="callout reveal" style="margin:20px 0 24px"><div class="cic">📈</div><div><h3>Don't panic about the low daily limit</h3><p>Ad-account daily limits <b>start low on purpose</b>. Don't worry about it — we have a system behind the accounts that <b>skyrockets those limits</b> once you start using them. Warm up clean and the ceiling climbs on its own.</p></div></div>
+  <div class="rules" id="rules">
+    <div class="rcol do reveal-l"><h3>✅ Do</h3><ul>
+      <li>Run only warm-up ads at <b>$5–15/day</b> for the first 24–48 hours</li>
+      <li>Keep the BM name and ad-account names <b>exactly as delivered</b> at first</li>
+      <li>Use the profile we give you only to <b>share assets to your own profile</b></li>
+      <li>Operate from <b>your own</b> AdsPower profile</li>
+      <li>Let the account sit and build trust before scaling</li>
+    </ul></div>
+    <div class="rcol dont reveal-r"><h3>⛔ Don't</h3><ul>
+      <li>Change the BM name or ad-account name in the first 24–48 hours</li>
+      <li>Run campaigns or change settings inside the distributor profile</li>
+      <li>Push big spend on day one</li>
+      <li>Spike straight to your daily limit before the account is warm</li>
+      <li>Panic about the low starting limit — it lifts fast with usage</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<!-- SAFEST WAY TO SCALE -->
+<section class="sec" id="scaling" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>The safest way to <span class="grad">scale</span>.</h2><p>Four steps, in order. This is the structure that builds trust before volume.</p></div>
+  <div class="timeline">
+    <div class="tl-step reveal-l"><div class="dot">1</div><div class="box"><div class="t">Step one</div><h3>Add one card — then wait</h3><p>Attach a single payment card and let it sit for 5–6 hours before you launch anything. No rush, no multiple cards.</p><span class="when">Wait 5–6 hours</span></div></div>
+    <div class="tl-step reveal-l"><div class="dot">2</div><div class="box"><div class="t">Step two</div><h3>Initial engagement campaign</h3><p>Launch one soft engagement campaign first — low spend, simple creative — to register clean, normal activity on the account.</p><span class="when">Day 1</span></div></div>
+    <div class="tl-step reveal-l"><div class="dot">3</div><div class="box"><div class="t">Step three</div><h3>Scale gradually</h3><p>Step spend up in stages instead of spiking. Let each increase settle before the next one — steady beats sudden.</p><span class="when">Days 2–5</span></div></div>
+    <div class="tl-step reveal-l"><div class="dot">4</div><div class="box"><div class="t">Step four</div><h3>Build full account trust first</h3><p>Don't chase maximum spend until the account has earned trust. Trust first, volume second — that's what keeps it alive long-term.</p><span class="when">Then go big</span></div></div>
+  </div>
+</div></section>
+
+<!-- CREATIVE BEST PRACTICES -->
+<section class="sec" id="approvals" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>Better ad <span class="grad">approval rates</span>.</h2><p>Meta reviews every creative closely — frames, audio, text, and composition — so re-uploading the identical file usually gets the identical result. The fix is two-pronged: appeal genuine mistakes, and keep a steady flow of fresh, varied creative (free editors like CapCut make spinning up new versions quick) so you never depend on a single asset.</p></div>
+  <div class="grid-3 stagger">
+    <div class="card tilt burst"><div class="ic">📹</div><h3>Video variations</h3><p>Cut several genuinely different versions — new hooks, opening frames, pacing, and edits — so you're testing real variety, not one asset.</p></div>
+    <div class="card tilt burst"><div class="ic">🎨</div><h3>Color grading</h3><p>Experiment with new color grades and visual styles so each version has its own look and feel.</p></div>
+    <div class="card tilt burst"><div class="ic">🎙️</div><h3>Audio adjustments</h3><p>Swap in different voiceovers, music, or audio mixes — audio is half the creative and half the test.</p></div>
+    <div class="card tilt burst"><div class="ic">✨</div><h3>Graphics &amp; icons</h3><p>Add branding, icons, graphics, captions, and overlays to make each version genuinely unique and on-brand.</p></div>
+    <div class="card tilt burst"><div class="ic">🖼️</div><h3>New thumbnails</h3><p>Refresh thumbnails, text placement, and transitions to change the first impression and the scroll-stop.</p></div>
+    <div class="card tilt burst"><div class="ic">📈</div><h3>Creative testing</h3><p>Run multiple variations in parallel instead of relying on one — let the data surface your highest-converting creative.</p></div>
+  </div>
+  <div class="callout reveal" style="margin-top:24px"><div class="cic">📩</div><div><h3>Think a rejection was a mistake?</h3><p>Meta's review isn't perfect — false positives happen. The right fix is <b>Request Review / appeal</b> on the rejected ad, not another upload of the same file. Appealing is what actually overturns a bad call and cuts your downtime. If an appeal stalls, our team can help you escalate.</p></div></div>
+  <div class="callout reveal" style="margin-top:16px"><div class="cic">💡</div><div><h3>Pro tip — never ride one creative</h3><p>Top advertisers rarely rely on a single asset. They continuously test new angles, visuals, hooks, and layouts — which lifts approval odds, fights creative fatigue, and gives Meta's delivery system more options to optimize toward your best performer.</p></div></div>
+</div></section>
+
+<!-- FAQ -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><h2>Policy <span class="grad">questions</span>.</h2></div>
+  <div class="faq reveal">
+    <details class="qa"><summary>What does a BM10 actually include?<span class="pl">+</span></summary><div class="a">A Business Manager with 10 ad accounts inside. The number in the package name is the number of ad accounts — BM3 = 3 accounts, BM10 = 10 accounts, and so on.</div></details>
+    <details class="qa"><summary>When do you replace an account?<span class="pl">+</span></summary><div class="a">Any account that dies on $0 / minimal spend or runs into issues is replaced free. On monthly subscriptions, replacements are unlimited and unconditional — whatever happens, we replace it, no questions asked.</div></details>
+    <details class="qa"><summary>What am I allowed to do in the profile you give me?<span class="pl">+</span></summary><div class="a">Only one thing: share the assets out to your own profile. Don't run campaigns or change settings inside it — it's a distributor, not your workspace. Operating only from your own profile is what protects the source from bans and red flags.</div></details>
+    <details class="qa"><summary>Why can't I rename the BM or ad accounts at first?<span class="pl">+</span></summary><div class="a">Renaming in the first 24–48 hours is a classic suspicion trigger. Keep names exactly as delivered during warm-up; you can adjust later once the account has built trust.</div></details>
+    <details class="qa"><summary>My daily limit is tiny — is something wrong?<span class="pl">+</span></summary><div class="a">No. Limits start low by design. Our system behind the accounts raises them quickly as you spend — warm up clean and the ceiling climbs on its own.</div></details>
+    <details class="qa"><summary>What's the safest way to scale?<span class="pl">+</span></summary><div class="a">Add one card and wait 5–6 hours, run a soft initial engagement campaign, then scale spend gradually in stages. Build full account trust before pushing maximum volume.</div></details>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta-band reveal">
+  <span class="eyebrow"><span class="dot"></span> Still have questions?</span>
+  <h2 style="margin-top:16px">Not sure about a rule? <span class="grad">Just ask.</span></h2>
+  <p>Our operators are on Telegram 24/7. Walk through your setup, warm-up plan, or a replacement with a real human — same-day, every day.</p>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to ScaleShield →</a>
+</div></div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-grid">
+    <div><div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div><p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers.</p></div>
+    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="presentation.html">CRM Tour</a><a href="onboarding.html">Onboarding</a><a href="policy.html">Policy &amp; Warranty</a></div>
+    <div><h5>Proof</h5><a href="case-study-marco.html">Marco — $2.1M/mo</a><a href="case-study-sarah.html">Sarah — $9.6M/mo</a><a href="case-study-deepak.html">Deepak — $18M YTD</a></div>
+    <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a></div>
+  </div>
+  <div class="foot-bottom"><div>© 2026 ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
+</div></footer>
+
+<a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="float-tg" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
+<script src="ss.js"></script>
+</body>
+</html>
