@@ -50,3 +50,27 @@
   /* footer year */
   var y=$('#year'); if(y) y.textContent=new Date().getFullYear();
 })();
+
+/* ---- Contact chooser: contact CTAs offer WhatsApp + Telegram ---- */
+(function(){
+  var WA='https://wa.me/447412860721', TG='https://t.me/scaleshieldsupport', modal;
+  function build(){
+    modal=document.createElement('div'); modal.className='contact-ov';
+    modal.innerHTML='<div class="contact-box"><button class="contact-x" aria-label="Close">×</button>'
+      +'<div class="contact-h">Contact <span class="grad">ScaleShield</span></div>'
+      +'<p class="contact-p">Pick how you’d like to reach us — an operator replies fast on both, 24/7.</p>'
+      +'<a class="contact-opt" href="'+WA+'" target="_blank" rel="noopener"><span class="ci wa">💬</span><span class="ct"><b>WhatsApp</b><small>Chat on WhatsApp</small></span><span class="cg">→</span></a>'
+      +'<a class="contact-opt" href="'+TG+'" target="_blank" rel="noopener"><span class="ci tg">✈️</span><span class="ct"><b>Telegram</b><small>Message @scaleshieldsupport</small></span><span class="cg">→</span></a>'
+      +'</div>';
+    document.body.appendChild(modal);
+    modal.addEventListener('click',function(e){ if(e.target===modal||e.target.closest('.contact-x')) closeC(); });
+  }
+  function openC(){ if(!modal) build(); modal.classList.add('show'); document.body.style.overflow='hidden'; }
+  function closeC(){ if(modal){ modal.classList.remove('show'); document.body.style.overflow=''; } }
+  window.openContact=openC;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href*="t.me/scaleshieldsupport"], a[href*="wa.me/447412860721"]');
+    if(a && !a.classList.contains('float-tg') && !a.classList.contains('btn-wa') && !a.closest('.drawer') && !a.closest('.nav')){ e.preventDefault(); openC(); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeC(); });
+})();
