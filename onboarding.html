@@ -3,94 +3,105 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ScaleShield — Onboarding · Live in Under an Hour</title>
-<meta name="description" content="How to get started with ScaleShield: message us, pick a tier, get your BM and CRM access, warm up, and scale. Most operators are live the same day." />
+<title>ScaleShield — Onboarding</title>
+<meta name="description" content="From first message to first spend in a day. The ScaleShield onboarding process — how we get you set up, warmed up, and scaling with replacements on standby." />
 <link rel="icon" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ss.css">
+<link rel="stylesheet" href="sx.css">
 <style>
-.timeline{max-width:760px;margin:0 auto;position:relative;padding-left:46px}
-.timeline::before{content:"";position:absolute;left:16px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold),var(--gold2),transparent)}
-.tl-step{position:relative;margin-bottom:30px}
-.tl-step .dot{position:absolute;left:-46px;top:0;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a140a;font-family:'Sora';font-weight:900;display:flex;align-items:center;justify-content:center}
-.tl-step .box{border:1px solid var(--line);border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008))}
-.tl-step .t{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);font-weight:800}
-.tl-step h3{font-size:21px;margin:8px 0 8px}
-.tl-step p{font-size:14.5px;color:var(--mut)}
-.tl-step .when{display:inline-block;margin-top:10px;font-size:12px;color:var(--green);font-weight:700;background:rgba(67,224,139,.08);border:1px solid rgba(67,224,139,.3);padding:4px 12px;border-radius:999px}
+  .steps{position:relative;padding-left:46px;max-width:860px;margin:0 auto}
+  .steps::before{content:"";position:absolute;left:16px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold),var(--gold2),transparent)}
+  .stp{position:relative;margin-bottom:16px}
+  .stp .dot{position:absolute;left:-46px;top:0;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1206;font-family:var(--disp);font-weight:900;display:flex;align-items:center;justify-content:center}
+  .stp .box{border:1px solid var(--line);border-radius:14px;padding:22px;background:linear-gradient(180deg,rgba(255,255,255,.035),transparent)}
+  .stp .t{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);font-weight:800}
+  .stp h3{font-size:20px;margin:5px 0 7px}.stp p{font-size:14.5px;color:var(--mut)}
+  .stp .when{display:inline-block;margin-top:10px;font-size:11.5px;color:var(--green);font-weight:700;background:rgba(67,224,139,.08);border:1px solid rgba(67,224,139,.3);padding:3px 12px;border-radius:999px}
 </style>
 </head>
 <body>
+
 <div class="ticker"><div class="ticker-track">
-  <span><b>Same-day onboarding</b> · most operators live in under an hour</span><span><b>5–10 min</b> replacements</span><span><b>No questions asked</b></span><span><b>24/7</b> support</span>
-  <span><b>Same-day onboarding</b> · most operators live in under an hour</span><span><b>5–10 min</b> replacements</span><span><b>No questions asked</b></span><span><b>24/7</b> support</span>
+  <span><b>Same-day</b> setup</span><span><b>5–10 min</b> replacements</span><span><b>24/7</b> operator support</span><span><b>No questions asked</b></span>
+  <span><b>Same-day</b> setup</span><span><b>5–10 min</b> replacements</span><span><b>24/7</b> operator support</span><span><b>No questions asked</b></span>
 </div></div>
+
 <nav class="nav" id="nav"><div class="wrap nav-inner">
   <a href="index.html" class="brand"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></a>
-  <div class="nav-links"><a href="presentation.html">CRM Tour</a><a href="case-studies.html">Case Studies</a><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx</a><a href="onboarding.html" style="color:var(--gold2)">Onboarding</a><a href="policy.html">Policy</a><a href="affiliate.html">Affiliate</a></div>
-  <div class="nav-cta"><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-sm btn-wa">WhatsApp</a><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Telegram</a><a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a><div class="burger" id="burger"><span></span><span></span><span></span></div></div>
+  <div class="nav-links">
+    <a href="index.html#how">How it works</a><a href="index.html#crm">The CRM</a><a href="pricing.html">Pricing</a><a href="case-studies.html">Case Studies</a><a href="index.html#onyx">Onyx</a><a href="policy.html">Policy</a><a href="affiliate.html">Affiliate</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-wa btn-sm">WhatsApp</a>
+    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
 </div></nav>
+<div class="scrim" id="scrim"></div>
 <div class="drawer" id="drawer"><div class="drawer-close" id="drawerClose">×</div>
-  <a href="index.html">Home <small>→</small></a><a href="pricing.html">Pricing <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="onboarding.html" style="color:var(--gold2)">Onboarding <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a><a href="presentation.html">CRM Tour <small>→</small></a>
-  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
+  <a href="index.html">Home <small>→</small></a><a href="pricing.html">Pricing <small>→</small></a><a href="case-studies.html">Case Studies <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="onboarding.html" style="color:var(--gold2)">Onboarding <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a>
+  <a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
 </div>
 
-<header class="phero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
+<header class="hero"><div class="wrap">
   <div class="reveal"><span class="eyebrow"><span class="dot"></span> Onboarding</span></div>
-  <h1 class="reveal">From message to <span class="grad">live spend</span> — same day.</h1>
-  <p class="reveal">No drawn-out sales process. No contracts to chase. Tell us what you run, pick a tier, get your BM + CRM access, warm up, and scale. Most operators are live in under an hour.</p>
-  <div class="phero-cta reveal"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Start onboarding now →</a><a href="pricing.html" class="btn btn-ghost btn-lg">See pricing</a></div>
+  <h1 class="reveal">From first message to <span class="grad">first spend — in a day.</span></h1>
+  <p class="hero-sub reveal">No forms, no waiting rooms. Message an operator, get matched to the right structure, and be live the same day — with replacements on standby from minute one.</p>
+  <div class="hero-cta reveal">
+    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Start onboarding →</a>
+    <a href="pricing.html" class="btn btn-ghost btn-lg">See packages</a>
+  </div>
 </div></header>
 
-<section class="sec" style="padding-top:64px"><div class="wrap">
-  <div class="sec-head reveal"><h2>The whole process, <span class="grad">step by step</span>.</h2></div>
-  <div class="timeline">
-    <div class="tl-step reveal-l"><div class="dot">1</div><div class="box"><div class="t">Reach out</div><h3>Message us on Telegram</h3><p>Tell us your vertical, target GEOs, and rough monthly spend. We don't ask questions about your offer — just enough to recommend the right structure.</p><span class="when">~2 minutes</span></div></div>
-    <div class="tl-step reveal-l"><div class="dot">2</div><div class="box"><div class="t">Pick a tier</div><h3>We recommend, you choose</h3><p>One-time BM3 / BM10 to start, monthly Single / Dual / Top Agency to scale, or Onyx / Agency Unlimited for high volume. Top up your wallet in the CRM.</p><span class="when">~5 minutes</span></div></div>
-    <div class="tl-step reveal-l"><div class="dot">3</div><div class="box"><div class="t">Get access</div><h3>BM + CRM delivered</h3><p>Your Business Manager and ad accounts are shared in, and you get your operator dashboard login. Connect via your antidetect browser (Dolphin, AdsPower, etc.).</p><span class="when">~10 minutes</span></div></div>
-    <div class="tl-step reveal-l"><div class="dot">4</div><div class="box"><div class="t">Warm up</div><h3>Soft spend first, then scale</h3><p>Run a low-spend soft creative for the first 24h to build trust signals, then open the taps. Your account manager guides the warm-up curve.</p><span class="when">First 24 hours</span></div></div>
-    <div class="tl-step reveal-l"><div class="dot">5</div><div class="box"><div class="t">Scale &amp; relax</div><h3>We keep you live</h3><p>If an account drops, the CRM auto-fires a replacement in 5–10 minutes and pings you on Telegram. You focus on creative and scaling — we handle the infrastructure.</p><span class="when">Ongoing</span></div></div>
+<section class="sec" style="padding-top:56px"><div class="wrap">
+  <div class="sec-head reveal"><span class="kick">The process</span><h2>Seven steps to <span class="grad">live &amp; scaling.</span></h2></div>
+  <div class="steps reveal">
+    <div class="stp"><div class="dot">1</div><div class="box"><div class="t">Reach out</div><h3>Message us on Telegram</h3><p>Tell us your vertical, target GEOs, and monthly spend. That's all we need to point you at the right structure.</p><span class="when">2 minutes</span></div></div>
+    <div class="stp"><div class="dot">2</div><div class="box"><div class="t">Match</div><h3>We recommend your package</h3><p>Based on your volume and vertical, we recommend the right tier — one-time BM, monthly, Onyx, or the full agency layer.</p><span class="when">Same conversation</span></div></div>
+    <div class="stp"><div class="dot">3</div><div class="box"><div class="t">Payment</div><h3>Top up your CRM wallet</h3><p>We set up wallet top-up in the CRM. Crypto and other methods supported. Instant delivery on eligible packages.</p><span class="when">Minutes</span></div></div>
+    <div class="stp"><div class="dot">4</div><div class="box"><div class="t">Delivery</div><h3>Receive your AdsPower profile</h3><p>We hand you a ready AdsPower profile, loaded with your BM and ad accounts — the distributor for your assets.</p><span class="when">Same day</span></div></div>
+    <div class="stp"><div class="dot">5</div><div class="box"><div class="t">Secure</div><h3>Share to your own profile + backup</h3><p>Share the assets into your own profile, then set up a <b style="color:#fff">backup profile</b> with all BMs shared to it — so a profile going down never costs you access.</p><span class="when">15 minutes</span></div></div>
+    <div class="stp"><div class="dot">6</div><div class="box"><div class="t">Warm up</div><h3>Run clean warm-up spend</h3><p>Low $5–15/day for 24–48h, names unchanged. Daily limits start low by design and climb fast once you're spending.</p><span class="when">24–48 hours</span></div></div>
+    <div class="stp"><div class="dot">7</div><div class="box"><div class="t">Scale</div><h3>Push volume — replacements on standby</h3><p>Scale gradually with the CRM tracking everything. The second Meta swings, one click swaps in a fresh account in 5–10 minutes.</p><span class="when">Ongoing</span></div></div>
   </div>
 </div></section>
 
 <section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>What you'll <span class="grad">need ready</span>.</h2></div>
-  <div class="grid-3 stagger">
-    <div class="card tilt burst"><div class="ic">🧭</div><h3>Your vertical &amp; GEOs</h3><p>So we map you to the right BM trust profile and account type.</p></div>
-    <div class="card tilt burst"><div class="ic">🌐</div><h3>An antidetect browser</h3><p>Dolphin Anty, AdsPower, or similar to run your shared accounts cleanly.</p></div>
-    <div class="card tilt burst"><div class="ic">💳</div><h3>Your own cards</h3><p>You attach your own payment methods for ad spend and keep full billing control.</p></div>
+  <div class="sec-head reveal"><span class="kick">What you'll have</span><h2>Everything, <span class="grad">from day one.</span></h2></div>
+  <div class="grid g3 stagger">
+    <div class="card"><div class="ic">🗂️</div><h3>Your BM &amp; accounts</h3><p>Delivered inside a ready profile, plus your own working profile and a backup holding the same assets.</p></div>
+    <div class="card"><div class="ic">🖥️</div><h3>CRM access</h3><p>Live spend, status, one-click replacement, and wallet top-up — your whole operation in one dashboard.</p></div>
+    <div class="card"><div class="ic">🛎️</div><h3>A direct operator line</h3><p>24/7 Telegram support. Warm-up questions, scaling advice, or an instant replacement — a real human, same day.</p></div>
   </div>
 </div></section>
 
 <section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>Onboarding <span class="grad">questions</span>.</h2></div>
-  <div class="faq reveal">
-    <details class="qa"><summary>How fast can I actually start spending?<span class="pl">+</span></summary><div class="a">Most operators are live the same day — often within an hour of payment. Warm-up is the only deliberate wait, and that's 24h of soft spend to protect the account.</div></details>
-    <details class="qa"><summary>Do I need a big budget to start?<span class="pl">+</span></summary><div class="a">No. Start on a $200 one-time BM3 Verified to test the infrastructure, then scale into monthly or enterprise as your spend grows.</div></details>
-    <details class="qa"><summary>What if my account gets banned during onboarding?<span class="pl">+</span></summary><div class="a">That's the whole point of ScaleShield — replacements land in 5–10 minutes via the CRM. Bans don't stop you; they're just a status flip we handle.</div></details>
-    <details class="qa"><summary>Is there a contract?<span class="pl">+</span></summary><div class="a">No long-term lock-in. One-time packages are pay-once; subscriptions are month-to-month.</div></details>
+  <div class="cta-band reveal">
+    <span class="eyebrow"><span class="dot"></span> Let's get you live</span>
+    <h2>Ready to start? <span class="grad">We're online now.</span></h2>
+    <p>Message an operator with your vertical, GEOs, and monthly spend — and be scaling the same day.</p>
+    <div class="row"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Start onboarding →</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">WhatsApp us</a></div>
   </div>
 </div></section>
-
-<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta-band reveal">
-  <span class="eyebrow"><span class="dot"></span> Cohort closing soon</span>
-  <h2 style="margin-top:16px">Onboarding slots are <span class="grad">limited this week</span>.</h2>
-  <p>We cap new onboardings to keep replacement speed fast for everyone. Message us now to claim a slot in this cohort.</p>
-  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Claim your slot →</a>
-</div></div></section>
 
 <footer class="foot"><div class="wrap">
   <div class="foot-grid">
     <div><div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div><p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers.</p></div>
-    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="presentation.html">CRM Tour</a><a href="onboarding.html">Onboarding</a></div>
-    <div><h5>Proof</h5><a href="case-study-marco.html">Marco — $2.1M/mo</a><a href="case-study-sarah.html">Sarah — $9.6M/mo</a><a href="case-study-deepak.html">Deepak — $18M YTD</a></div>
+    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="index.html#crm">The CRM</a><a href="onboarding.html">Onboarding</a><a href="policy.html">Policy &amp; Warranty</a></div>
+    <div><h5>Proof</h5><a href="case-studies.html">Case Studies</a><a href="index.html#how">How it works</a><a href="affiliate.html">Affiliate — earn 15%</a></div>
     <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a></div>
   </div>
-  <div class="foot-bottom"><div>© 2026 ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
+  <div class="foot-bottom"><div>© <span id="year">2026</span> ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
 </div></footer>
 
 <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="float-tg" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
-<script src="ss.js"></script>
+<div class="mcta">
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start →</a>
+  <a href="pricing.html" class="btn btn-ghost">Pricing</a>
+</div>
+
+<script src="sx.js"></script>
 </body>
 </html>

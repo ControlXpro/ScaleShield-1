@@ -4,93 +4,166 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ScaleShield — Pricing & Packages</title>
-<meta name="description" content="ScaleShield pricing — from a $200 one-time verified BM to $35,000/mo Agency Unlimited. Every tier: 24/7 support, replacements, use your own cards. No questions asked." />
+<meta name="description" content="ScaleShield pricing — from a $200 one-time verified BM to fully custom unlimited ad-account software. Every tier: 24/7 support, unlimited replacements, use your own cards. No questions asked." />
 <link rel="icon" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ss.css">
+<link rel="stylesheet" href="sx.css">
 <style>
-.pcat{margin-bottom:60px}.pcat-head{text-align:center;margin-bottom:30px}
-.pcat-head .t{font-family:'Sora';font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2)}
-.pcat-head .s{color:var(--mut);font-size:15px;margin-top:8px}
-.tier.enterprise{grid-column:1/-1;background:linear-gradient(120deg,rgba(214,177,94,.08),rgba(120,90,255,.06))}
-.ent-grid{display:grid;grid-template-columns:1fr;gap:24px}@media(min-width:860px){.ent-grid{grid-template-columns:1.1fr .9fr;align-items:center}}
-.guar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}@media(max-width:820px){.guar{grid-template-columns:repeat(2,1fr)}}
-.guar .g{text-align:center;padding:24px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
-.guar .g .ic{font-size:26px}.guar .g h4{font-size:14px;margin:10px 0 6px}.guar .g p{font-size:12.5px;color:var(--mut)}
-.cmp{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.cmp-row:last-child{border-bottom:none}
-.cmp-row>div{padding:15px 16px;font-size:13px;display:flex;align-items:center}.cmp-row.head>div{font-weight:800;font-family:'Sora'}.cmp-row.head .ss{color:var(--gold2)}
-.cmp-row>div:first-child{color:var(--mut)}.cmp .ss-col{background:rgba(214,177,94,.05)}.cmp .yes{color:var(--green);font-weight:700}.cmp .no{color:var(--red)}
-@media(max-width:760px){.cmp-row>div{padding:10px 7px;font-size:11px}}
+  .pcat{margin-bottom:56px}
+  .pcat-head{text-align:center;margin-bottom:28px}
+  .pcat-head .t{font-family:var(--disp);font-size:12.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2)}
+  .pcat-head .s{color:var(--mut);font-size:15px;margin-top:8px}
+  .ent{grid-column:1/-1;background:radial-gradient(700px 300px at 80% -30%,rgba(214,177,94,.14),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.008))}
+  .ent .split{gap:32px}
+  .tiers.duo{grid-template-columns:repeat(2,1fr);max-width:820px;margin-left:auto;margin-right:auto}
+  @media(max-width:640px){.tiers.duo{grid-template-columns:1fr}}
+  .cmp{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+  .cmp-row:last-child{border-bottom:none}
+  .cmp-row>div{padding:15px 16px;font-size:13.5px;display:flex;align-items:center}
+  .cmp-row.head>div{font-weight:800;font-family:var(--disp)}.cmp-row.head .ss{color:var(--gold2)}
+  .cmp-row>div:first-child{color:var(--mut)}.cmp .ss-col{background:rgba(214,177,94,.05)}
+  .cmp .yes{color:var(--green);font-weight:700}
+  @media(max-width:760px){.cmp-row>div{padding:10px 8px;font-size:11px}}
 </style>
 </head>
 <body>
+
 <div class="ticker"><div class="ticker-track">
-  <span><b>Cohort closing soon</b> · limited onboarding slots this week</span><span><b>5–10 min</b> avg replacement</span><span><b>$1B+</b> managed</span><span><b>24/7</b> support</span>
-  <span><b>Cohort closing soon</b> · limited onboarding slots this week</span><span><b>5–10 min</b> avg replacement</span><span><b>$1B+</b> managed</span><span><b>24/7</b> support</span>
+  <span><b>New cohort</b> onboarding this week — limited slots</span><span><b>5–10 min</b> average replacement</span><span><b>$1B+</b> ad spend managed</span><span><b>24/7</b> operator support</span>
+  <span><b>New cohort</b> onboarding this week — limited slots</span><span><b>5–10 min</b> average replacement</span><span><b>$1B+</b> ad spend managed</span><span><b>24/7</b> operator support</span>
 </div></div>
+
 <nav class="nav" id="nav"><div class="wrap nav-inner">
   <a href="index.html" class="brand"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></a>
-  <div class="nav-links"><a href="presentation.html">CRM Tour</a><a href="case-studies.html">Case Studies</a><a href="pricing.html" style="color:var(--gold2)">Pricing</a><a href="index.html#onyx">Onyx</a><a href="onboarding.html">Onboarding</a><a href="policy.html">Policy</a><a href="affiliate.html">Affiliate</a></div>
-  <div class="nav-cta"><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-sm btn-wa">WhatsApp</a><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Telegram</a><a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a><div class="burger" id="burger"><span></span><span></span><span></span></div></div>
+  <div class="nav-links">
+    <a href="index.html#how">How it works</a><a href="index.html#crm">The CRM</a><a href="pricing.html" style="color:var(--gold2)">Pricing</a><a href="case-studies.html">Case Studies</a><a href="index.html#onyx">Onyx</a><a href="policy.html">Policy</a><a href="affiliate.html">Affiliate</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-wa btn-sm">WhatsApp</a>
+    <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
 </div></nav>
+<div class="scrim" id="scrim"></div>
 <div class="drawer" id="drawer"><div class="drawer-close" id="drawerClose">×</div>
-  <a href="index.html">Home <small>→</small></a><a href="index.html#how">How it works <small>→</small></a><a href="index.html#demo">Live demo <small>→</small></a><a href="pricing.html" style="color:var(--gold2)">Pricing <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="onboarding.html">Onboarding <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a><a href="presentation.html">CRM Tour <small>→</small></a>
-  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
+  <a href="index.html">Home <small>→</small></a><a href="index.html#how">How it works <small>→</small></a><a href="pricing.html" style="color:var(--gold2)">Pricing <small>→</small></a><a href="case-studies.html">Case Studies <small>→</small></a><a href="index.html#onyx">Onyx BM2500 <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a>
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a>
+  <a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
 </div>
 
-<header class="phero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
+<header class="hero"><div class="wrap">
   <div class="reveal"><span class="eyebrow"><span class="dot"></span> Pricing &amp; packages</span></div>
   <h1 class="reveal">Pick the tier. <span class="grad">Start spending today.</span></h1>
-  <p class="reveal">From a $200 one-time verified BM to a $35,000/mo unlimited agency layer. Every package: 24/7 support, replacements, and your own cards for ad spend. No questions asked.</p>
-  <div class="phero-cta reveal"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to an operator →</a><a href="#compare" class="btn btn-ghost btn-lg">Compare tiers</a></div>
+  <p class="hero-sub reveal">From a $200 one-time verified BM to fully custom unlimited ad-account software. Every package: 24/7 support, replacements, and your own cards for ad spend. No questions asked.</p>
+  <div class="hero-cta reveal">
+    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Talk to an operator →</a>
+    <a href="#compare" class="btn btn-ghost btn-lg">Compare tiers ↓</a>
+  </div>
 </div></header>
 
-<section class="sec" style="padding-top:60px"><div class="wrap">
-  <div class="guar reveal">
-    <div class="g"><div class="ic">⚡</div><h4>5–10 min replacements</h4><p>Dead account swapped before you lose momentum.</p></div>
-    <div class="g"><div class="ic">🤐</div><h4>No questions asked</h4><p>Your offer is your business. Gray / BH welcome.</p></div>
-    <div class="g"><div class="ic">💳</div><h4>Use your own cards</h4><p>Full control of your ad-spend billing.</p></div>
-    <div class="g"><div class="ic">🛎️</div><h4>24/7 real humans</h4><p>Telegram support that moves at operator speed.</p></div>
+<section class="sec" style="padding-top:48px"><div class="wrap">
+  <div class="guars stagger">
+    <div class="guar"><div class="ic">⚡</div><h4>5–10 min replacements</h4><p>Dead account swapped before you lose momentum.</p></div>
+    <div class="guar"><div class="ic">🤐</div><h4>No questions asked</h4><p>Your offer is your business. Gray / BH welcome.</p></div>
+    <div class="guar"><div class="ic">💳</div><h4>Use your own cards</h4><p>Full control of your ad-spend billing.</p></div>
+    <div class="guar"><div class="ic">🛎️</div><h4>24/7 real humans</h4><p>Telegram support at operator speed.</p></div>
   </div>
 </div></section>
 
-<section class="sec" style="padding-top:0"><div class="wrap">
+<section class="sec" style="padding-top:20px"><div class="wrap">
+
+  <!-- ONE-TIME -->
   <div class="pcat">
     <div class="pcat-head reveal"><div class="t">Quick Start · One-Time</div><div class="s">Pay once, get access — no subscription.</div></div>
-    <div class="pgrid stagger">
-      <div class="tier tilt burst"><span class="tier-tag">Verified · One-Time</span><div class="tier-name">BM3 Verified</div><div class="tier-price">$200<small> / one-time</small></div><p class="tier-desc">Verified Business Manager with 3 agency ad accounts. Stronger trust profile means better deliverability and longevity.</p><ul class="tier-list"><li>Verified Business Manager status</li><li>3 ad accounts inside one BM</li><li>Higher trust + better limits</li><li>One payment, no subscription</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal spend</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM3 Verified</a></div>
-      <div class="tier tilt burst"><span class="tier-tag">Instant · One-Time</span><div class="tier-name">BM10 Instant</div><div class="tier-price">$550<small> / one-time</small></div><p class="tier-desc">A Business Manager with 10 ad accounts in a single transaction. Instant delivery via wallet top-up in the CRM.</p><ul class="tier-list"><li>1 BM containing 10 ad accounts</li><li>One payment, no commitment</li><li>Wallet top-up &amp; auto-delivery in CRM</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal (24h)</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM10</a></div>
-      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-style:dashed"><div style="font-size:30px">🛟</div><div class="tier-name" style="margin:14px 0 8px">Not sure which?</div><p class="tier-desc" style="min-height:auto">Tell us your vertical, GEOs, and spend — we'll recommend the right structure in minutes.</p><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" style="margin-top:14px">Ask an operator</a></div>
+    <div class="tiers stagger">
+      <div class="tier"><span class="tier-tag muted">Verified · One-Time</span>
+        <div class="tier-name">BM3 Verified</div><div class="tier-price">$200<small> once</small></div>
+        <p class="tier-desc">Verified Business Manager with 3 agency ad accounts. Stronger trust profile means better deliverability and longevity.</p>
+        <ul class="tier-list"><li>Verified BM status</li><li><b>3</b> ad accounts inside one BM</li><li>Higher trust + better limits</li><li>One payment, no subscription</li><li>Use your own cards</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-block">Get BM3 Verified</a>
+      </div>
+      <div class="tier pop"><span class="tier-tag">Best Value · One-Time</span>
+        <div class="tier-name">BM10 Instant</div><div class="tier-price">$550<small> once</small></div>
+        <p class="tier-desc">A Business Manager with 10 ad accounts in a single transaction. Instant delivery via wallet top-up in the CRM.</p>
+        <ul class="tier-list"><li><b>10</b> ad accounts in one BM</li><li>One payment, no commitment</li><li>Wallet top-up &amp; auto-delivery</li><li>Replace on $0 / minimal (24h)</li><li>Use your own cards</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-block">Get BM10 Instant</a>
+      </div>
+      <div class="tier" style="justify-content:center;align-items:center;text-align:center;border-style:dashed">
+        <div style="font-size:34px;margin-bottom:12px">🛟</div>
+        <div class="tier-name">Not sure which?</div>
+        <p class="tier-desc" style="min-height:auto;margin:10px 0 18px">Tell us your vertical, GEOs, and spend — we'll recommend the right structure in minutes.</p>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-block">Ask an operator</a>
+      </div>
     </div>
   </div>
+
+  <!-- MONTHLY -->
   <div class="pcat">
     <div class="pcat-head reveal"><div class="t">Monthly Subscriptions</div><div class="s">Long-term stable infrastructure with unlimited replacements.</div></div>
-    <div class="pgrid stagger">
-      <div class="tier tilt burst"><span class="tier-tag">Solo</span><div class="tier-name">Single Agency Account</div><div class="tier-price">$450<small> / month</small></div><p class="tier-desc">One stable agency ad account — ideal for predictable single-account spend with higher daily ceilings.</p><ul class="tier-list"><li>1 agency ad account</li><li>Higher trust + higher daily caps</li><li>24/7 support &amp; unlimited replacements</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Single</a></div>
-      <div class="tier popular tilt burst"><span class="tier-tag">Most Popular</span><div class="tier-name">Top Agency Package</div><div class="tier-price">$1,950<small> / month</small></div><p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling. Priority response.</p><ul class="tier-list"><li>Top-tier agency BM setup</li><li>Priority 24/7 support</li><li>Unlimited replacements</li><li>Aggressive scaling-ready</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Top Agency</a></div>
-      <div class="tier tilt burst"><span class="tier-tag">Scale</span><div class="tier-name">Dual Agency Accounts</div><div class="tier-price">$850<small> / month</small></div><p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p><ul class="tier-list"><li>2 agency ad accounts</li><li>Better for higher volume</li><li>24/7 support &amp; unlimited replacements</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span><span class="tmp warm">⚠ Warm up first</span><span class="tmp v">BH / GH friendly</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Dual</a></div>
+    <div class="tiers stagger">
+      <div class="tier"><span class="tier-tag muted">Solo</span>
+        <div class="tier-name">Single Agency</div><div class="tier-price">$450<small> / mo</small></div>
+        <p class="tier-desc">One stable agency ad account — ideal for predictable single-account spend with higher daily ceilings.</p>
+        <ul class="tier-list"><li><b>1</b> agency ad account</li><li>Higher trust + higher caps</li><li><b>Unlimited</b> replacements</li><li>24/7 support</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-block">Get Single</a>
+      </div>
+      <div class="tier pop"><span class="tier-tag">Most Popular</span>
+        <div class="tier-name">Top Agency</div><div class="tier-price">$1,950<small> / mo</small></div>
+        <p class="tier-desc">Top-tier subscription for serious operators: <b>15 ad accounts with unlimited replacements</b>, built for large volume and aggressive scaling.</p>
+        <ul class="tier-list"><li><b>15</b> ad accounts included</li><li><b>Unlimited</b> replacements</li><li>Top-tier agency BM setup</li><li>Priority 24/7 support</li><li>Use your own cards</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-block">Get Top Agency</a>
+      </div>
+      <div class="tier"><span class="tier-tag muted">Scale</span>
+        <div class="tier-name">Dual Agency</div><div class="tier-price">$850<small> / mo</small></div>
+        <p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher-volume operations.</p>
+        <ul class="tier-list"><li><b>2</b> agency ad accounts</li><li>Better for higher volume</li><li><b>Unlimited</b> replacements</li><li>24/7 support</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-block">Get Dual</a>
+      </div>
     </div>
   </div>
+
+  <!-- ENTERPRISE -->
   <div class="pcat" style="margin-bottom:0">
-    <div class="pcat-head reveal"><div class="t">Enterprise</div><div class="s">Custom architecture for high-spend operators &amp; agencies.</div></div>
-    <div class="pgrid stagger" style="margin-bottom:20px">
-      <div class="tier tilt burst"><span class="tier-tag">Custom</span><div class="tier-name">Custom Package</div><div class="tier-price">Quote<small> / tailored</small></div><p class="tier-desc">Built around your vertical, GEOs, and spend profile. Talk to support and we'll architect the right structure.</p><ul class="tier-list"><li>Custom BM &amp; account structure</li><li>Vertical-specific setup</li><li>24/7 support &amp; unlimited replacements</li><li>Bespoke onboarding plan</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Talk to Sales</a></div>
-      <div class="tier tilt burst" style="border-color:var(--line2);background:linear-gradient(180deg,rgba(214,177,94,.09),rgba(255,255,255,.01))"><span class="tier-tag">Onyx · Exclusive</span><div class="tier-name">Onyx BM2500</div><div class="tier-price">$15,000<small> / one-time</small></div><p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources. <a href="index.html#onyx" style="color:var(--gold2);text-decoration:underline">Full details →</a></p><ul class="tier-list"><li>Up to 2,500 accounts in one hub BM</li><li>Distributed sourcing</li><li>One-click share to any BM</li><li>Auto-replacement in 5–10 minutes</li><li>BM-level recovery</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Onyx BM2500</a></div>
-      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;text-align:center"><div style="font-size:30px">♾️</div><div class="tier-name" style="margin:12px 0 4px">Need unlimited?</div><p class="tier-desc" style="min-height:auto">The full agency layer is below — unlimited BMs, unlimited accounts, dedicated management.</p><a href="#enterprise" class="btn btn-ghost tier-cta" style="margin-top:12px">See Agency Unlimited ↓</a></div>
+    <div class="pcat-head reveal"><div class="t">Enterprise &amp; Exclusive</div><div class="s">Custom architecture for high-spend operators &amp; agencies.</div></div>
+    <div class="tiers duo stagger" style="margin-bottom:20px">
+      <div class="tier pop"><span class="tier-tag">Onyx · Exclusive</span>
+        <div class="tier-name">Onyx BM2500</div><div class="tier-price">$15,000<small> once</small></div>
+        <p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust BM from multiple sources.</p>
+        <ul class="tier-list"><li>Up to <b>2,500</b> accounts in one hub BM</li><li>Distributed sourcing</li><li>One-click share to any BM</li><li>Auto-replacement in 5–10 min</li><li>BM-level recovery</li></ul>
+        <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-block">Get Onyx BM2500</a>
+      </div>
+      <div class="tier" style="justify-content:center;text-align:center">
+        <div style="font-size:34px;margin-bottom:12px">♾️</div>
+        <div class="tier-name">Need unlimited?</div>
+        <p class="tier-desc" style="min-height:auto;margin:10px 0 18px">Unlimited ad accounts through our software, with dedicated management — see the full solution below.</p>
+        <a href="#enterprise" class="btn btn-ghost btn-block">See Unlimited Software ↓</a>
+      </div>
     </div>
-    <div class="tier enterprise reveal" id="enterprise"><div class="ent-grid">
-      <div><span class="tier-tag">Enterprise · Unlimited</span><div class="tier-name" style="font-size:30px">Agency Unlimited</div><div class="tier-price">$35,000<small> / month</small></div><p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for buyers at the very top end of the volume curve.</p></div>
-      <div><ul class="tier-list"><li><b>Unlimited</b> ad accounts</li><li><b>Unlimited</b> Business Managers</li><li>Dedicated account manager</li><li>Priority replacement queue</li><li>Custom infrastructure architecture</li><li>White-glove onboarding</li><li>Operational support 24/7</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" style="margin-top:14px">Talk to Enterprise</a></div>
-    </div></div>
+
+    <div class="tier ent reveal" id="enterprise" style="padding:34px">
+      <div class="split">
+        <div>
+          <span class="tier-tag" style="position:static;display:inline-block;margin-bottom:14px">Enterprise · Unlimited</span>
+          <div class="tier-name" style="font-size:30px">Unlimited Ad Accounts Software</div>
+          <div class="tier-price">Custom<small> · tailored setup</small></div>
+          <p class="tier-desc" style="min-height:auto">The full agency layer, powered by our software — unlimited Business Managers and unlimited ad accounts, with dedicated relationship management. Built around your operation; contact support to set it up.</p>
+        </div>
+        <div>
+          <ul class="tier-list"><li><b>Unlimited</b> ad accounts</li><li><b>Unlimited</b> Business Managers</li><li>Dedicated account manager</li><li>Priority replacement queue</li><li>Custom infrastructure architecture</li><li>White-glove onboarding</li></ul>
+          <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-block" style="margin-top:8px">Contact support to set up →</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div></section>
 
+<!-- COMPARE -->
 <section class="sec" id="compare" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>How tiers <span class="grad">stack up</span>.</h2></div>
+  <div class="sec-head reveal"><span class="kick">Compare</span><h2>How the tiers <span class="grad">stack up.</span></h2></div>
   <div class="cmp reveal">
-    <div class="cmp-row head"><div></div><div>One-Time BMs</div><div>Monthly</div><div class="ss">Enterprise / Onyx</div></div>
+    <div class="cmp-row head"><div></div><div>One-Time</div><div>Monthly</div><div class="ss">Enterprise / Onyx</div></div>
     <div class="cmp-row"><div>Replacements</div><div>On $0 / minimal</div><div class="yes">Unlimited</div><div class="ss-col yes">Unlimited · priority</div></div>
     <div class="cmp-row"><div>Support</div><div>24/7</div><div>24/7</div><div class="ss-col yes">24/7 + dedicated AM</div></div>
     <div class="cmp-row"><div>Best for</div><div>Testing / starting</div><div>Steady scaling</div><div class="ss-col">$2M+/mo operators</div></div>
@@ -99,34 +172,42 @@
   </div>
 </div></section>
 
+<!-- FAQ -->
 <section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>Pricing <span class="grad">questions</span>.</h2></div>
+  <div class="sec-head reveal"><span class="kick">FAQ</span><h2>Pricing <span class="grad">questions.</span></h2></div>
   <div class="faq reveal">
     <details class="qa"><summary>Is it really no questions asked?<span class="pl">+</span></summary><div class="a">Yes. We provide infrastructure. What you run on it is your business — gray and blackhat verticals included.</div></details>
     <details class="qa"><summary>Do one-time packages include replacements?<span class="pl">+</span></summary><div class="a">One-time BMs are replaced if they arrive on $0 / minimal spend (within 24h for BM10). Monthly and enterprise tiers add unlimited replacements for the life of the subscription.</div></details>
-    <details class="qa"><summary>Can I upgrade later?<span class="pl">+</span></summary><div class="a">Anytime. Start on a one-time BM, move to monthly, then scale to Onyx or Agency Unlimited as your volume grows. We migrate your setup.</div></details>
-    <details class="qa"><summary>How do I pay?<span class="pl">+</span></summary><div class="a">Message us on Telegram and we'll set up wallet top-up in the CRM. Crypto and other methods supported — ask support.</div></details>
+    <details class="qa"><summary>Can I upgrade later?<span class="pl">+</span></summary><div class="a">Anytime. Start on a one-time BM, move to monthly, then scale to Onyx or our Unlimited Ad Accounts Software as your volume grows. We migrate your setup.</div></details>
+    <details class="qa"><summary>How do I pay?<span class="pl">+</span></summary><div class="a">Message us on Telegram and we'll set up wallet top-up in the CRM. Crypto and other methods supported — just ask support.</div></details>
   </div>
 </div></section>
 
-<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta-band reveal">
-  <span class="eyebrow"><span class="dot"></span> Ready when you are</span>
-  <h2 style="margin-top:16px">Stop losing accounts. <span class="grad">Start today.</span></h2>
-  <p>Tell us your vertical, GEOs, and monthly spend. We'll recommend the right tier and get you live the same day.</p>
-  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to ScaleShield →</a>
-</div></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="cta-band reveal">
+    <span class="eyebrow"><span class="dot"></span> Ready when you are</span>
+    <h2>Stop losing accounts. <span class="grad">Start today.</span></h2>
+    <p>Tell us your vertical, GEOs, and monthly spend. We'll recommend the right tier and get you live the same day.</p>
+    <div class="row"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Talk to ScaleShield →</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">WhatsApp us</a></div>
+  </div>
+</div></section>
 
 <footer class="foot"><div class="wrap">
   <div class="foot-grid">
     <div><div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div><p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers.</p></div>
-    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="presentation.html">CRM Tour</a><a href="onboarding.html">Onboarding</a></div>
-    <div><h5>Proof</h5><a href="case-study-marco.html">Marco — $2.1M/mo</a><a href="case-study-sarah.html">Sarah — $9.6M/mo</a><a href="case-study-deepak.html">Deepak — $18M YTD</a></div>
+    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="index.html#onyx">Onyx BM2500</a><a href="index.html#crm">The CRM</a><a href="onboarding.html">Onboarding</a><a href="policy.html">Policy &amp; Warranty</a></div>
+    <div><h5>Proof</h5><a href="case-studies.html">Case Studies</a><a href="index.html#how">How it works</a><a href="affiliate.html">Affiliate — earn 15%</a></div>
     <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a></div>
   </div>
-  <div class="foot-bottom"><div>© 2026 ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
+  <div class="foot-bottom"><div>© <span id="year">2026</span> ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
 </div></footer>
 
 <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="float-tg" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
-<script src="ss.js"></script>
+<div class="mcta">
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Talk to us →</a>
+  <a href="#enterprise" class="btn btn-ghost">Enterprise</a>
+</div>
+
+<script src="sx.js"></script>
 </body>
 </html>

@@ -3,369 +3,271 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ScaleShield — Premium Meta Agency Infrastructure</title>
-<meta name="description" content="ScaleShield — premium Meta agency infrastructure for high-volume media buyers. $1B+ ad spend managed, accounts replaced in 5–10 minutes, 24/7 support. BM packages from $200 one-time to $35,000/mo enterprise." />
+<title>ScaleShield — Meta Ad Accounts That Survive the Ban</title>
+<meta name="description" content="Premium Meta agency ad accounts, replaced in 5–10 minutes when Meta bans. Unlimited replacements, use your own cards, no questions asked. $1B+ in ad spend managed. Gray / blackhat friendly." />
 <link rel="icon" href="favicon.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ss.css">
-<style>
-.hero{position:relative;padding:170px 0 90px;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.22;filter:saturate(1.1)}
-.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(214,177,94,.14),transparent 60%),linear-gradient(180deg,rgba(7,8,11,.4),var(--bg) 92%)}
-.hero-inner{position:relative;z-index:2;text-align:center;max-width:960px;margin:0 auto}
-.hero h1{font-size:clamp(40px,7vw,82px);font-weight:900;margin:22px 0 0}
-.hero .sub{font-size:clamp(16px,2.1vw,21px);color:var(--mut);max-width:640px;margin:24px auto 0;line-height:1.55}
-.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
-.hero-assure{margin-top:22px;font-size:13px;color:var(--mut2);display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
-.hero-assure span{display:inline-flex;align-items:center;gap:7px}.hero-assure .ck{color:var(--gold2);font-weight:800}
-.trust-strip{margin-top:64px}
-.proof-band{padding:42px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.012)}
-.proof-lead{text-align:center;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut2);margin-bottom:24px}
-.logo-row{display:flex;gap:46px;justify-content:center;flex-wrap:wrap;align-items:center}
-.logo-row .lg{font-family:'Sora';font-weight:800;font-size:19px;color:rgba(255,255,255,.34);letter-spacing:.04em;transition:color .3s}
-.logo-row .lg:hover{color:rgba(255,255,255,.7)}
-.story{display:grid;gap:18px}
-.story-card{border:1px solid var(--line);border-radius:var(--radius);padding:38px 34px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));position:relative;overflow:hidden}
-.story-card .step{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);opacity:.8}
-.story-card h3{font-size:clamp(24px,3.4vw,38px);margin:12px 0 10px}
-.story-card p{color:var(--mut);font-size:16px;max-width:640px}
-.story-card.danger{border-color:rgba(255,100,110,.3)}.story-card.danger h3{color:var(--red)}
-.glitch{position:relative;display:inline-block}
-.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden}
-.glitch::before{color:var(--red);animation:gl1 2.4s infinite linear alternate}
-.glitch::after{color:var(--gold2);animation:gl2 3s infinite linear alternate}
-@keyframes gl1{0%,92%,100%{clip-path:inset(0 0 100% 0);transform:none}93%{clip-path:inset(10% 0 60% 0);transform:translateX(-3px)}96%{clip-path:inset(40% 0 30% 0);transform:translateX(3px)}}
-@keyframes gl2{0%,90%,100%{clip-path:inset(100% 0 0 0);transform:none}91%{clip-path:inset(60% 0 20% 0);transform:translateX(3px)}97%{clip-path:inset(20% 0 50% 0);transform:translateX(-2px)}}
-.demo{border:1px solid var(--line2);border-radius:22px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--bg2));box-shadow:0 40px 100px rgba(0,0,0,.5)}
-.demo-top{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
-.demo-top .dotc{width:11px;height:11px;border-radius:50%}
-.demo-top .dotc.r{background:#ff5f57}.demo-top .dotc.y{background:#febc2e}.demo-top .dotc.g{background:#28c840}
-.demo-top .url{margin-left:14px;font-size:12.5px;color:var(--mut2);font-family:ui-monospace,monospace}
-.demo-row{display:grid;grid-template-columns:1.4fr 1fr 1fr .9fr;gap:8px;padding:13px 22px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13.5px;align-items:center}
-.demo-row.head{color:var(--mut2);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
-.demo-acct{font-family:ui-monospace,monospace;color:var(--gold-warm)}
-.demo-spend{font-weight:700}
-.demo-pill{font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;display:inline-block}
-.demo-pill.active{background:rgba(67,224,139,.14);color:var(--green);border:1px solid rgba(67,224,139,.3)}
-.demo-pill.disabled{background:rgba(255,100,110,.14);color:var(--red);border:1px solid rgba(255,100,110,.3)}
-.demo-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:22px;border-top:1px solid var(--line)}
-.demo-stat{text-align:center}.demo-stat .n{font-family:'Sora';font-size:26px;font-weight:900}.demo-stat .l{font-size:11.5px;color:var(--mut2);margin-top:3px}
-.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:900px){.reviews{grid-template-columns:1fr}}
-.review{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));transition:transform .35s,border-color .35s;display:block}
-.review:hover{transform:translateY(-6px);border-color:var(--line2)}
-.review .stars{color:var(--gold2);font-size:15px;letter-spacing:2px;margin-bottom:14px}
-.review .q{font-size:15px;color:var(--ink);line-height:1.6}
-.review .who{margin-top:18px;font-size:13px;color:var(--gold-warm);font-weight:700}
-.review .res{margin-top:4px;font-size:12.5px;color:var(--mut)}
-.review .link{margin-top:14px;font-size:12.5px;color:var(--gold2);font-weight:700}
-.pcat{margin-bottom:64px}.pcat-head{text-align:center;margin-bottom:34px}
-.pcat-head .t{font-family:'Sora';font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2)}
-.pcat-head .s{color:var(--mut);font-size:15px;margin-top:8px}
-.tier.enterprise{grid-column:1/-1;background:linear-gradient(120deg,rgba(214,177,94,.08),rgba(120,90,255,.06))}
-.ent-grid{display:grid;grid-template-columns:1fr;gap:24px}
-@media(min-width:860px){.ent-grid{grid-template-columns:1.1fr .9fr;align-items:center}}
-.onyx{position:relative;padding:110px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.onyx-bg{position:absolute;inset:0;z-index:0}
-.onyx-bg img{width:100%;height:100%;object-fit:cover;opacity:.26}
-.onyx-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent,var(--bg) 78%)}
-.onyx-inner{position:relative;z-index:2;text-align:center;max-width:880px;margin:0 auto}
-.onyx h2{font-size:clamp(36px,6vw,68px);font-weight:900;margin:20px 0}
-.onyx .tag{color:var(--mut);font-size:18px;max-width:680px;margin:0 auto 14px}
-.onyx-feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:42px 0 36px;text-align:left}
-@media(max-width:820px){.onyx-feats{grid-template-columns:1fr}}
-.onyx-feat{border:1px solid var(--line2);border-radius:14px;padding:20px;background:rgba(214,177,94,.04)}
-.onyx-feat .ic{font-size:20px;color:var(--gold2)}.onyx-feat h4{font-family:'Sora';font-size:15px;margin:10px 0 6px}.onyx-feat p{font-size:13px;color:var(--mut)}
-.onyx-price{font-family:'Sora';font-size:50px;font-weight:900;margin:8px 0 26px}.onyx-price small{font-size:16px;color:var(--mut2);font-weight:600}
-.cmp{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}
-.cmp-row:last-child{border-bottom:none}
-.cmp-row>div{padding:16px 18px;font-size:13.5px;display:flex;align-items:center}
-.cmp-row.head>div{font-weight:800;font-family:'Sora';font-size:14px}.cmp-row.head .ss{color:var(--gold2)}
-.cmp-row>div:first-child{color:var(--mut);font-weight:500}
-.cmp .ss-col{background:rgba(214,177,94,.05)}.cmp .yes{color:var(--green);font-weight:700}.cmp .no{color:var(--red);font-weight:600}
-@media(max-width:760px){.cmp-row>div{padding:11px 8px;font-size:11.5px}}
-.wow{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:760px){.wow{grid-template-columns:1fr}}
-.wow-card{border:1px solid var(--line);border-radius:var(--radius);padding:30px}
-.wow-card.bad{border-color:rgba(255,100,110,.25);background:rgba(255,100,110,.03)}
-.wow-card.good{border-color:var(--line2);background:rgba(214,177,94,.04)}
-.wow-card h3{font-size:20px;margin-bottom:18px}.wow-card.bad h3{color:var(--red)}.wow-card.good h3{color:var(--gold2)}
-.wow-card ul{list-style:none;display:grid;gap:12px}.wow-card li{font-size:14px;color:var(--mut);padding-left:26px;position:relative}
-.wow-card.bad li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:800}
-.wow-card.good li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
-.contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:780px;margin:40px auto 0}
-@media(max-width:760px){.contact-cards{grid-template-columns:1fr}}
-.cc{border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:transform .3s,border-color .3s;background:rgba(255,255,255,.02);text-align:center}
-.cc:hover{transform:translateY(-6px);border-color:var(--line2)}
-.cc .ic{font-size:28px;margin-bottom:12px}.cc h4{font-size:17px;margin-bottom:6px}.cc p{font-size:13px;color:var(--mut)}
-</style>
+<link rel="stylesheet" href="sx.css">
 </head>
 <body>
 
-
+<!-- URGENCY TICKER -->
 <div class="ticker"><div class="ticker-track">
-  <span><b>Live</b> · $1B+ ad spend managed through ScaleShield infrastructure</span>
-  <span><b>5–10 min</b> average account replacement time</span>
-  <span><b>Cohort closing soon</b> · onboarding slots limited this week</span>
-  <span><b>24/7</b> operator support · we don't ask questions</span>
-  <span><b>Live</b> · $1B+ ad spend managed through ScaleShield infrastructure</span>
-  <span><b>5–10 min</b> average account replacement time</span>
-  <span><b>Cohort closing soon</b> · onboarding slots limited this week</span>
-  <span><b>24/7</b> operator support · we don't ask questions</span>
+  <span><b>New cohort</b> onboarding this week — limited slots</span><span><b>5–10 min</b> average replacement</span><span><b>$1B+</b> ad spend managed</span><span><b>Unlimited</b> replacements on monthly</span><span><b>24/7</b> operator support</span>
+  <span><b>New cohort</b> onboarding this week — limited slots</span><span><b>5–10 min</b> average replacement</span><span><b>$1B+</b> ad spend managed</span><span><b>Unlimited</b> replacements on monthly</span><span><b>24/7</b> operator support</span>
 </div></div>
 
+<!-- NAV -->
 <nav class="nav" id="nav"><div class="wrap nav-inner">
   <a href="index.html" class="brand"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></a>
   <div class="nav-links">
-    <a href="#how">How it works</a><a href="presentation.html">CRM Tour</a><a href="case-studies.html">Case Studies</a>
-    <a href="pricing.html">Pricing</a><a href="#onyx" style="color:var(--gold2)">Onyx</a>
-    <a href="policy.html">Policy</a><a href="#verticals">Verticals</a><a href="#faq">FAQ</a>
+    <a href="#how">How it works</a><a href="#crm">The CRM</a><a href="pricing.html">Pricing</a><a href="case-studies.html">Case Studies</a><a href="#onyx">Onyx</a><a href="policy.html">Policy</a><a href="affiliate.html">Affiliate</a>
   </div>
   <div class="nav-cta">
-    <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-sm btn-wa">WhatsApp</a>
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Telegram</a>
+    <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-wa btn-sm">WhatsApp</a>
     <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn-login">Log in <small>dashboard ↗</small></a>
     <div class="burger" id="burger"><span></span><span></span><span></span></div>
   </div>
 </div></nav>
 
-<div class="drawer" id="drawer">
-  <div class="drawer-close" id="drawerClose">×</div>
-  <a href="#proof">Proof <small>→</small></a><a href="#how">How it works <small>→</small></a>
-  <a href="#demo">Live demo <small>→</small></a><a href="pricing.html">Pricing <small>→</small></a>
-  <a href="#onyx" style="color:var(--gold2)">Onyx BM2500 <small>→</small></a>
-  <a href="case-studies.html">Case Studies <small>→</small></a>
-  <a href="#verticals">Verticals <small>→</small></a><a href="#reviews">Reviews <small>→</small></a>
-  <a href="#faq">FAQ <small>→</small></a><a href="affiliate.html">Affiliate Program <small>→</small></a>
-  <a href="onboarding.html">Onboarding <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="presentation.html">CRM Tour <small>→</small></a>
-  <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" style="color:var(--gold2)">Log in <small>↗</small></a>
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer"><div class="drawer-close" id="drawerClose">×</div>
+  <a href="#how">How it works <small>→</small></a><a href="#crm">The CRM <small>→</small></a><a href="pricing.html">Pricing <small>→</small></a><a href="case-studies.html">Case Studies <small>→</small></a><a href="#onyx">Onyx BM2500 <small>→</small></a><a href="policy.html">Policy &amp; Warranty <small>→</small></a><a href="affiliate.html">Affiliate <small>→</small></a>
   <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram <small>↗</small></a>
   <a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp <small>↗</small></a>
-  <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram <small>↗</small></a>
+  <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in — dashboard <small>↗</small></a>
 </div>
 
-<header class="hero">
-  <div class="hero-bg"><img src="hero-bg.jpg" alt="" data-parallax="0.18"></div>
-  <div class="orb a"></div><div class="orb b"></div>
-  <div class="wrap hero-inner">
-    <div class="reveal"><span class="eyebrow"><span class="dot"></span> Premium Meta agency infrastructure</span></div>
-    <h1 class="reveal">Scale Meta with<br><span class="grad" data-scramble="infrastructure that survives the hit.">infrastructure that survives the hit.</span></h1>
-    <p class="sub reveal">$1B+ in ad spend already runs through ScaleShield. Stable agency accounts, replacements in 5–10 minutes, and a proprietary CRM that keeps you live when Meta swings the ban hammer.</p>
-    <div class="hero-cta reveal">
-      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Talk to ScaleShield →</a>
-      <a href="pricing.html" class="btn btn-ghost btn-lg">See packages</a>
-    </div>
-    <div class="hero-assure reveal">
-      <span><span class="ck">✓</span> No questions asked</span><span><span class="ck">✓</span> Gray / blackhat friendly</span>
-      <span><span class="ck">✓</span> Use your own cards</span><span><span class="ck">✓</span> 24/7 support</span>
-    </div>
-    <div class="trust-strip reveal">
-      <div class="trust-cell"><div class="num grad" data-count="1" data-suffix="B+" data-prefix="$">$0</div><div class="lbl">Ad spend managed</div></div>
-      <div class="trust-cell"><div class="num grad" data-count="400" data-suffix="K+">0</div><div class="lbl">Ad accounts in hub</div></div>
-      <div class="trust-cell"><div class="num grad" data-count="10" data-suffix=" min">0</div><div class="lbl">Avg. replacement time</div></div>
-      <div class="trust-cell"><div class="num grad" data-count="24" data-suffix="/7">0</div><div class="lbl">Operator support</div></div>
-    </div>
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="reveal"><span class="eyebrow"><span class="dot"></span> Premium Meta agency infrastructure</span></div>
+  <h1 class="reveal">Meta bans accounts. <span class="grad">You'll never stop spending.</span></h1>
+  <p class="hero-sub reveal">Premium agency ad accounts that survive the hit — dead accounts swapped in <b style="color:#fff">5–10 minutes</b>, unlimited replacements, and a CRM that keeps you live while your competitors go dark. Over <b style="color:#fff">$1B</b> in ad spend already runs on ScaleShield.</p>
+  <div class="hero-cta reveal">
+    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Start scaling today →</a>
+    <a href="pricing.html" class="btn btn-ghost btn-lg">See packages &amp; pricing</a>
   </div>
-</header>
-
-<section class="proof-band" id="proof"><div class="wrap">
-  <div class="proof-lead reveal">Trusted by operators running the verticals that actually need infrastructure</div>
-  <div class="logo-row reveal">
-    <div class="lg">E-COMMERCE</div><div class="lg">iGAMING</div><div class="lg">NUTRA</div>
-    <div class="lg">LEAD-GEN</div><div class="lg">GREY / BH</div><div class="lg">D2C BRANDS</div>
+  <div class="hero-tags reveal">
+    <span class="t"><b>✓</b> No questions asked</span>
+    <span class="t"><b>✓</b> Gray / blackhat friendly</span>
+    <span class="t"><b>✓</b> Use your own cards</span>
+    <span class="t"><b>✓</b> Same-day setup</span>
   </div>
-</div></section>
 
+  <div class="stats reveal">
+    <div class="stat"><div class="n grad" data-count="1" data-prefix="$" data-suffix="B+">$0</div><div class="l">Ad spend managed</div></div>
+    <div class="stat"><div class="n grad" data-count="400" data-suffix="K+">0</div><div class="l">Ad accounts in hub</div></div>
+    <div class="stat"><div class="n grad">5–10<small style="font-size:.5em"> min</small></div><div class="l">Avg. replacement time</div></div>
+    <div class="stat"><div class="n grad">24/7</div><div class="l">Operator support</div></div>
+  </div>
+</div></header>
+
+<!-- VERTICALS MARQUEE -->
+<div class="marq" style="margin-top:60px"><div class="marq-track">
+  <span class="m">E-COMMERCE</span><span class="m">iGAMING</span><span class="m">NUTRA</span><span class="m">LEAD-GEN</span><span class="m">CRYPTO</span><span class="m">DATING</span><span class="m">GREY / BH</span><span class="m">D2C BRANDS</span>
+  <span class="m">E-COMMERCE</span><span class="m">iGAMING</span><span class="m">NUTRA</span><span class="m">LEAD-GEN</span><span class="m">CRYPTO</span><span class="m">DATING</span><span class="m">GREY / BH</span><span class="m">D2C BRANDS</span>
+</div></div>
+
+<!-- PROBLEM / CYCLE -->
 <section class="sec" id="how"><div class="wrap">
   <div class="sec-head reveal">
-    <span class="eyebrow"><span class="dot"></span> The operator's reality</span>
-    <h2 style="margin-top:18px">From live spend to <span class="grad">dead account</span> — and back online.</h2>
-    <p>Every media buyer running real volume knows this cycle. ScaleShield is the layer that breaks it.</p>
+    <span class="kick">The operator's reality</span>
+    <h2>Your offer is finally printing. <span class="grad">Then Meta pulls the account.</span></h2>
+    <p>Every media buyer running real volume knows the cycle. ScaleShield is the layer that breaks it — so a ban costs you minutes, not days.</p>
   </div>
-  <div class="story stagger">
-    <div class="story-card"><div class="step">01 · You're scaling</div><h3>Spend is live. Numbers are climbing.</h3><p>ROAS is working, budgets are ramping, the offer is printing. Everything's green.</p></div>
-    <div class="story-card danger"><div class="step">02 · Then Meta hits</div><h3 class="glitch" data-text="Account disabled.">Account disabled.</h3><p>No warning. Mid-scale. The exact moment your offer was finally working — Meta pulls the account.</p></div>
-    <div class="story-card danger"><div class="step">03 · The damage</div><h3>Your account is dead. Your money is frozen.</h3><p>$0 in spend today is no consolation. Every hour offline costs more than the package itself. Resellers go quiet. Personal accounts evaporate.</p></div>
-    <div class="story-card"><div class="step">04 · Infrastructure that survives</div><h3>One ban doesn't stop you. <span class="grad">Distributed sourcing does.</span></h3><p>Accounts sourced across many channels, shared into high-trust BMs, recoverable at the BM level. No single point of failure.</p></div>
-    <div class="story-card"><div class="step">05 · Back online</div><h3>Replaced in <span class="grad">5–10 minutes</span>. Still scaling.</h3><p>One click in the CRM shares a fresh account into your BM. You're spending again before the competition even files a support ticket.</p></div>
-  </div>
-</div></section>
-
-<section class="sec" id="demo" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal">
-    <span class="eyebrow"><span class="dot"></span> The proprietary CRM</span>
-    <h2 style="margin-top:18px">Every account, every BM, <span class="grad">one operator dashboard</span>.</h2>
-    <p>Real-time spend, live status, one-click share to any BM, instant replacement. This is what you log into.</p>
-  </div>
-  <div class="demo reveal-sc">
-    <div class="demo-top"><span class="dotc r"></span><span class="dotc y"></span><span class="dotc g"></span><span class="url">app.scaleshield.pro / operator-dashboard</span></div>
-    <div>
-      <div class="demo-row head"><div>Ad account</div><div>Spend</div><div>Business Manager</div><div>Status</div></div>
-      <div class="demo-row"><div class="demo-acct">act_4837201881</div><div class="demo-spend" data-live="12840" data-step="60">$12,840</div><div>HT 4527</div><div><span class="demo-pill active">Active</span></div></div>
-      <div class="demo-row"><div class="demo-acct">act_6011482290</div><div class="demo-spend" data-live="8940" data-step="40">$8,940</div><div>HT 2647</div><div><span class="demo-pill active">Active</span></div></div>
-      <div class="demo-row"><div class="demo-acct">act_1182405903</div><div class="demo-spend" data-live="23610" data-step="80">$23,610</div><div>HT 3207</div><div><span class="demo-pill active">Active</span></div></div>
-      <div class="demo-row"><div class="demo-acct">act_9920381773</div><div class="demo-spend">$5,180</div><div>Adminpanel</div><div><span class="demo-pill disabled">Disabled → replacing</span></div></div>
-      <div class="demo-row"><div class="demo-acct">act_2841019384</div><div class="demo-spend" data-live="15720" data-step="55">$15,720</div><div>HT 6125</div><div><span class="demo-pill active">Active</span></div></div>
-      <div class="demo-row"><div class="demo-acct">act_7102849173</div><div class="demo-spend" data-live="31450" data-step="90">$31,450</div><div>HT 8372</div><div><span class="demo-pill active">Active</span></div></div>
-    </div>
-    <div class="demo-foot">
-      <div class="demo-stat"><div class="n grad">$1.94M</div><div class="l">Total ad spend tracked</div></div>
-      <div class="demo-stat"><div class="n grad">38</div><div class="l">Active accounts</div></div>
-      <div class="demo-stat"><div class="n grad">5 min</div><div class="l">Last replacement</div></div>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:30px" class="reveal"><a href="presentation.html" class="btn btn-primary btn-lg magnetic">Take the full CRM tour →</a></div>
-</div></section>
-
-<section class="sec" id="reviews" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal">
-    <span class="eyebrow"><span class="dot"></span> Real teams, real numbers</span>
-    <h2 style="margin-top:18px">Operators who stopped <span class="grad">losing accounts</span>.</h2>
-  </div>
-  <div class="reviews stagger">
-    <a href="case-study.html?id=marco" class="review tilt"><div class="stars">★★★★★</div><p class="q">"I was losing $40k/mo to bans and downtime. With ScaleShield I run $2.1M/mo smooth — replacements land before I even notice the disable."</p><div class="who">Marco V. — Nutra, EU</div><div class="res">$40k/mo lost → $2.1M/mo stable</div><div class="link">Read the full case study →</div></a>
-    <a href="case-study.html?id=sarah" class="review tilt"><div class="stars">★★★★★</div><p class="q">"Scaled my D2C brand to $9.6M/mo across 4 verticals. Onyx is the only reason our hub BM is never a single point of failure."</p><div class="who">Sarah K. — Atlas Media Group</div><div class="res">$9.6M/mo · 2,500 accounts</div><div class="link">Read the full case study →</div></a>
-    <a href="case-study.html?id=deepak" class="review tilt"><div class="stars">★★★★★</div><p class="q">"11 BMs running in parallel for crypto. 230+ replacements last quarter, average 4 minutes. No questions, no downtime."</p><div class="who">Deepak R. — MENA Crypto</div><div class="res">$18M YTD · 11 BMs</div><div class="link">Read the full case study →</div></a>
-  </div>
-  <div style="text-align:center;margin-top:34px" class="reveal"><a href="case-studies.html" class="btn btn-ghost btn-lg magnetic">View all 20 case studies →</a></div>
-</div></section>
-
-<section class="sec" id="pricing" style="background:linear-gradient(180deg,transparent,rgba(214,177,94,.03),transparent)"><div class="wrap">
-  <div class="sec-head reveal">
-    <span class="eyebrow"><span class="dot"></span> Pricing</span>
-    <h2 style="margin-top:18px">Choose the infrastructure that <span class="grad">fits your scale</span>.</h2>
-    <p>From a $200 verified BM to a $35,000/mo unlimited enterprise package. Every tier includes 24/7 support.</p>
-  </div>
-  <div class="pcat">
-    <div class="pcat-head reveal"><div class="t">Quick Start · One-Time</div><div class="s">Pay once, get access — no subscription.</div></div>
-    <div class="pgrid stagger">
-      <div class="tier tilt burst"><span class="tier-tag">Verified · One-Time</span><div class="tier-name">BM3 Verified</div><div class="tier-price">$200<small> / one-time</small></div><p class="tier-desc">Verified Business Manager with 3 agency ad accounts. Stronger trust profile, better longevity.</p><ul class="tier-list"><li>Verified Business Manager status</li><li>3 ad accounts inside one BM</li><li>Higher trust + better limits</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal spend</span><span class="tmp warm">⚠ Warm up first</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM3 Verified</a></div>
-      <div class="tier tilt burst"><span class="tier-tag">Instant · One-Time</span><div class="tier-name">BM10 Instant</div><div class="tier-price">$550<small> / one-time</small></div><p class="tier-desc">A Business Manager with 10 ad accounts in one transaction. Instant delivery via wallet top-up.</p><ul class="tier-list"><li>1 BM containing 10 ad accounts</li><li>One payment, no commitment</li><li>Wallet top-up &amp; auto-delivery</li><li>Use your own cards for ad spend</li></ul><div class="tier-meta"><span class="tmp w">✓ Replace on $0 / minimal (24h)</span><span class="tmp warm">⚠ Warm up first</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get BM10</a></div>
-      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-style:dashed"><div style="font-size:30px">🛟</div><div class="tier-name" style="margin:14px 0 8px">Not sure which?</div><p class="tier-desc" style="min-height:auto">Tell us your vertical, GEOs, and spend — we'll recommend the right structure in minutes.</p><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic" style="margin-top:14px">Ask an operator</a></div>
-    </div>
-  </div>
-  <div class="pcat">
-    <div class="pcat-head reveal"><div class="t">Monthly Subscriptions</div><div class="s">Long-term stable infrastructure with unlimited replacements.</div></div>
-    <div class="pgrid stagger">
-      <div class="tier tilt burst"><span class="tier-tag">Solo</span><div class="tier-name">Single Agency Account</div><div class="tier-price">$450<small> / month</small></div><p class="tier-desc">One stable agency ad account — predictable single-account spend with higher daily ceilings.</p><ul class="tier-list"><li>1 agency ad account</li><li>Higher trust + higher daily caps</li><li>24/7 support &amp; unlimited replacements</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Single</a></div>
-      <div class="tier popular tilt burst"><span class="tier-tag">Most Popular</span><div class="tier-name">Top Agency Package</div><div class="tier-price">$1,950<small> / month</small></div><p class="tier-desc">Top-tier subscription for serious operators running large volumes and aggressive scaling.</p><ul class="tier-list"><li>Top-tier agency BM setup</li><li>Priority 24/7 support</li><li>Unlimited replacements</li><li>Aggressive scaling-ready</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Top Agency</a></div>
-      <div class="tier tilt burst"><span class="tier-tag">Scale</span><div class="tier-name">Dual Agency Accounts</div><div class="tier-price">$850<small> / month</small></div><p class="tier-desc">Two agency ad accounts for parallel offers, A/B testing, or higher volume operations.</p><ul class="tier-list"><li>2 agency ad accounts</li><li>Better for higher volume</li><li>24/7 support &amp; unlimited replacements</li></ul><div class="tier-meta"><span class="tmp w">✓ Unlimited replacements</span></div><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Get Dual</a></div>
-    </div>
-  </div>
-  <div class="pcat" style="margin-bottom:0">
-    <div class="pcat-head reveal"><div class="t">Enterprise</div><div class="s">Custom architecture for high-spend operators &amp; agencies.</div></div>
-    <div class="pgrid stagger" style="margin-bottom:20px">
-      <div class="tier tilt burst"><span class="tier-tag">Custom</span><div class="tier-name">Custom Package</div><div class="tier-price">Quote<small> / tailored</small></div><p class="tier-desc">Built around your vertical, GEOs, and spend profile. We architect the right structure.</p><ul class="tier-list"><li>Custom BM &amp; account structure</li><li>Vertical-specific setup</li><li>24/7 support &amp; unlimited replacements</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost tier-cta magnetic">Talk to Sales</a></div>
-      <div class="tier tilt burst" style="border-color:var(--line2);background:linear-gradient(180deg,rgba(214,177,94,.09),rgba(255,255,255,.01))"><span class="tier-tag">Onyx · Exclusive</span><div class="tier-name">Onyx BM2500</div><div class="tier-price">$15,000<small> / one-time</small></div><p class="tier-desc">Up to 2,500 ad accounts in one high-trust BM from multiple sources. <a href="#onyx" style="color:var(--gold2);text-decoration:underline">Full details ↓</a></p><ul class="tier-list"><li>Up to 2,500 accounts in one hub BM</li><li>Distributed sourcing</li><li>Auto-replacement in 5–10 minutes</li><li>BM-level recovery</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic">Get Onyx BM2500</a></div>
-      <div class="tier tilt" style="display:flex;flex-direction:column;justify-content:center;text-align:center"><div style="font-size:30px">♾️</div><div class="tier-name" style="margin:12px 0 4px">Need unlimited?</div><p class="tier-desc" style="min-height:auto">The full agency layer — unlimited BMs, unlimited accounts, dedicated management.</p><a href="#enterprise" class="btn btn-ghost tier-cta" style="margin-top:12px">See Agency Unlimited ↓</a></div>
-    </div>
-    <div class="tier enterprise reveal" id="enterprise"><div class="ent-grid">
-      <div><span class="tier-tag">Enterprise · Unlimited</span><div class="tier-name" style="font-size:30px">Agency Unlimited</div><div class="tier-price">$35,000<small> / month</small></div><p class="tier-desc">The full agency layer. Unlimited Business Managers, unlimited ad accounts, dedicated relationship management for buyers at the very top end of the volume curve.</p></div>
-      <div><ul class="tier-list"><li><b>Unlimited</b> ad accounts</li><li><b>Unlimited</b> Business Managers</li><li>Dedicated account manager</li><li>Priority replacement queue</li><li>Custom infrastructure architecture</li><li>White-glove onboarding</li></ul><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary tier-cta magnetic" style="margin-top:14px">Talk to Enterprise</a></div>
-    </div></div>
-  </div>
-  <div style="text-align:center;margin-top:30px" class="reveal"><a href="pricing.html" class="btn btn-ghost">See full pricing page →</a></div>
-</div></section>
-
-<section class="onyx" id="onyx">
-  <div class="onyx-bg"><img src="onyx-bg.jpg" alt="" data-parallax="0.1"></div>
-  <div class="wrap onyx-inner reveal">
-    <span class="eyebrow"><span class="dot"></span> Exclusive Tier · Onyx</span>
-    <h2>Onyx <span class="grad">BM2500</span></h2>
-    <p class="tag">A one-of-a-kind infrastructure for uninterrupted scaling. Up to <b style="color:#fff">2,500 ad accounts shared into a single high-trust BM</b> from multiple sources — distributed sourcing means no single point of failure.</p>
-    <div class="onyx-feats">
-      <div class="onyx-feat"><div class="ic">🌐</div><h4>Distributed sourcing</h4><p>Accounts pulled from many independent channels. One source dies, the hub stays alive.</p></div>
-      <div class="onyx-feat"><div class="ic">⚡</div><h4>5–10 min replacement</h4><p>Auto-replacement pipeline shares a fresh account into your BM the moment one drops.</p></div>
-      <div class="onyx-feat"><div class="ic">🛡️</div><h4>BM-level recovery</h4><p>If the hub BM is hit, transfer all accounts to a fresh BM and keep spending.</p></div>
-    </div>
-    <div class="onyx-price grad">$15,000<small> / one-time</small></div>
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Get Onyx BM2500 →</a>
-  </div>
-</section>
-
-<section class="sec" id="verticals"><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow"><span class="dot"></span> Built for your offer</span><h2 style="margin-top:18px">Verticals that <span class="grad">actually need infrastructure</span>.</h2></div>
-  <div class="grid-3 stagger">
-    <div class="card tilt burst"><div class="ic">🛍️</div><h3>Neutral &amp; e-com</h3><p>D2C brands, dropshipping, lead-gen, and white-hat offers that need stable accounts and higher daily caps.</p></div>
-    <div class="card tilt burst"><div class="ic">🎰</div><h3>iGaming &amp; nutra</h3><p>Higher-risk verticals where account longevity and fast replacements decide profit vs downtime.</p></div>
-    <div class="card tilt burst"><div class="ic">🕶️</div><h3>Grey &amp; blackhat</h3><p>We don't ask questions. Aggressive offers welcome — the infrastructure absorbs the bans they attract.</p></div>
+  <div class="grid g4 stagger">
+    <div class="card"><div class="ic">📈</div><h3>You're scaling</h3><p>ROAS is working, budgets ramping, the offer is live. Everything's green.</p></div>
+    <div class="card"><div class="ic">⛔</div><h3>Meta hits</h3><p>No warning, mid-scale. The exact moment it's working, the account is disabled.</p></div>
+    <div class="card"><div class="ic">🧊</div><h3>You're frozen</h3><p>Spend stops. Budget's stuck. Every hour offline costs more than the package did.</p></div>
+    <div class="card" style="border-color:var(--line2);background:linear-gradient(180deg,rgba(214,177,94,.1),transparent)"><div class="ic">⚡</div><h3>We swap it</h3><p>One click in the CRM shares a fresh account into your BM. You're live again in 5–10 minutes.</p></div>
   </div>
 </div></section>
 
-<section class="sec" id="trust" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>Built for operators who need <span class="grad">reliability, not lectures</span>.</h2></div>
-  <div class="grid-3 stagger">
-    <div class="card tilt burst" style="text-align:center"><div class="ic">🤐</div><h3>We don't ask questions</h3><p>Your offer is your business. We provide the infrastructure and stay out of your operation.</p></div>
-    <div class="card tilt burst" style="text-align:center"><div class="ic">⚫</div><h3>Works with gray / blackhat</h3><p>The whole system is engineered around verticals that get banned. That's the point.</p></div>
-    <div class="card tilt burst" style="text-align:center"><div class="ic">⚡</div><h3>No delays. No bullshit.</h3><p>24/7 support, instant replacements, real humans in Telegram who move at operator speed.</p></div>
-  </div>
-</div></section>
-
+<!-- WHAT YOU GET -->
 <section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>ScaleShield <span class="grad">vs Personal Accounts vs Resellers</span></h2></div>
-  <div class="cmp reveal">
-    <div class="cmp-row head"><div></div><div class="ss">ScaleShield</div><div>Personal acct</div><div>Random reseller</div></div>
-    <div class="cmp-row"><div>Survives bans</div><div class="ss-col yes">✓ Distributed</div><div class="no">✕ Single point</div><div class="no">✕ Gone</div></div>
-    <div class="cmp-row"><div>Replacement time</div><div class="ss-col yes">5–10 min</div><div class="no">Days / never</div><div class="no">Hours–days</div></div>
-    <div class="cmp-row"><div>Proprietary CRM</div><div class="ss-col yes">✓ Live dashboard</div><div class="no">✕</div><div class="no">✕</div></div>
-    <div class="cmp-row"><div>Gray / BH friendly</div><div class="ss-col yes">✓ Always</div><div class="no">✕ Risky</div><div>~ Sometimes</div></div>
-    <div class="cmp-row"><div>24/7 support</div><div class="ss-col yes">✓ Real humans</div><div class="no">✕</div><div class="no">✕ Ghosts you</div></div>
-    <div class="cmp-row"><div>Use your own cards</div><div class="ss-col yes">✓</div><div class="yes">✓</div><div>~ Varies</div></div>
+  <div class="sec-head reveal">
+    <span class="kick">The infrastructure</span>
+    <h2>Not "an account." <span class="grad">A system that survives.</span></h2>
+    <p>Distributed sourcing, high-trust Business Managers, and BM-level recovery — so no single ban ever takes you offline.</p>
+  </div>
+  <div class="grid g3 stagger">
+    <div class="card"><div class="ic">🛡️</div><h3>Accounts that last</h3><p>High-trust agency ad accounts inside verified Business Managers — better deliverability, higher daily ceilings, longer lifespan.</p></div>
+    <div class="card"><div class="ic">♻️</div><h3>Unlimited replacements</h3><p>On monthly plans, whatever happens to an account we replace it — unlimited, no questions asked. Your job is offers; ours is live accounts.</p></div>
+    <div class="card"><div class="ic">🌐</div><h3>Distributed sourcing</h3><p>Accounts sourced across many channels and shared into high-trust hub BMs. A hit in one place never starves the rest.</p></div>
+    <div class="card"><div class="ic">💳</div><h3>Your own cards</h3><p>You keep full control of ad-spend billing. Top up, launch, scale — on your terms.</p></div>
+    <div class="card"><div class="ic">🤐</div><h3>No questions asked</h3><p>We provide infrastructure. What you run on it is your business — gray and blackhat verticals included.</p></div>
+    <div class="card"><div class="ic">🛎️</div><h3>24/7 real operators</h3><p>Telegram support that moves at operator speed. Real humans, same-day, every day.</p></div>
   </div>
 </div></section>
 
+<!-- CRM HIGHLIGHT -->
+<section class="sec" id="crm" style="padding-top:0"><div class="wrap">
+  <div class="split">
+    <div class="reveal">
+      <span class="kick">The proprietary CRM</span>
+      <h2 style="font-size:clamp(28px,4vw,44px);margin-bottom:16px">Every account, every BM — <span class="grad">one dashboard.</span></h2>
+      <p style="color:var(--mut);font-size:16px;margin-bottom:22px">Real-time spend, live status, one-click share to any BM, instant replacement. This is the control panel that keeps you scaling when Meta swings.</p>
+      <div class="grid" style="gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--gold2);font-weight:900">→</span><p style="font-size:14.5px;color:var(--mut)"><b style="color:#fff">One-click replacement</b> — swap a dead account into your BM without leaving the dashboard.</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--gold2);font-weight:900">→</span><p style="font-size:14.5px;color:var(--mut)"><b style="color:#fff">Live spend &amp; status</b> across every account and Business Manager, in real time.</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:var(--gold2);font-weight:900">→</span><p style="font-size:14.5px;color:var(--mut)"><b style="color:#fff">Wallet top-up &amp; auto-delivery</b> — buy and receive accounts instantly.</p></div>
+      </div>
+      <a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener" class="btn btn-ghost btn-lg" style="margin-top:26px">Open the dashboard ↗</a>
+    </div>
+    <div class="mock reveal">
+      <div class="mock-bar"><i></i><i style="background:var(--gold2)"></i><i style="background:var(--green)"></i><span style="margin-left:8px">app.scaleshield.pro / operator-dashboard</span></div>
+      <div class="mock-body">
+        <div class="mrow" style="color:var(--mut2);font-size:11px;text-transform:uppercase;letter-spacing:.08em"><span>Ad account</span><span>Spend</span><span>BM</span><span>Status</span></div>
+        <div class="mrow"><span class="mono">act_4837201881</span><span>$13,446</span><span class="mono">HT 4527</span><span class="pill ok">Active</span></div>
+        <div class="mrow"><span class="mono">act_6011482290</span><span>$9,497</span><span class="mono">HT 2647</span><span class="pill ok">Active</span></div>
+        <div class="mrow"><span class="mono">act_1182405903</span><span>$24,521</span><span class="mono">HT 3207</span><span class="pill ok">Active</span></div>
+        <div class="mrow"><span class="mono">act_9920381773</span><span>$5,180</span><span class="mono">HT 3207</span><span class="pill warn">Replacing…</span></div>
+        <div class="mrow"><span class="mono">act_7741023665</span><span>$18,902</span><span class="mono">HT 4527</span><span class="pill ok">Active</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOW IT WORKS -->
 <section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>Operations <span class="grad">with and without</span> ScaleShield.</h2></div>
-  <div class="wow stagger">
-    <div class="wow-card bad"><h3>Without ScaleShield</h3><ul><li>Account dies mid-scale, spend freezes</li><li>Days of downtime chasing replacements</li><li>Resellers ghost you when it matters</li><li>No visibility — you find out when it's dead</li><li>One ban takes down the whole operation</li></ul></div>
-    <div class="wow-card good"><h3>With ScaleShield</h3><ul><li>Replacement live in 5–10 minutes</li><li>Real-time status in the CRM dashboard</li><li>24/7 humans who move at your speed</li><li>Distributed sourcing — no single failure</li><li>BM-level recovery keeps you spending</li></ul></div>
+  <div class="sec-head reveal">
+    <span class="kick">Live in a day</span>
+    <h2>From message to <span class="grad">first spend</span>.</h2>
+  </div>
+  <div class="flow stagger">
+    <div class="f"><h4>Message us</h4><p>Tell us your vertical, GEOs, and monthly spend on Telegram.</p></div>
+    <div class="f"><h4>We architect</h4><p>We recommend the right structure and set up your BM + accounts.</p></div>
+    <div class="f"><h4>Get access</h4><p>We hand you a ready AdsPower profile — share assets to your own.</p></div>
+    <div class="f"><h4>Warm up</h4><p>Run clean warm-up spend for 24–48h; limits climb fast.</p></div>
+    <div class="f"><h4>Scale</h4><p>Push volume with replacements on standby the second Meta swings.</p></div>
   </div>
 </div></section>
 
-<section class="sec" id="faq" style="padding-top:0"><div class="wrap">
-  <div class="sec-head reveal"><h2>Quick <span class="grad">answers</span>.</h2></div>
+<!-- PRICING PREVIEW -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal">
+    <span class="kick">Pricing</span>
+    <h2>Start at <span class="grad">$200.</span> Scale to unlimited.</h2>
+    <p>From a one-time verified BM to a full agency layer. Every tier: 24/7 support, replacements, your own cards.</p>
+  </div>
+  <div class="tiers stagger">
+    <div class="tier"><span class="tier-tag muted">One-Time</span>
+      <div class="tier-name">BM3 Verified</div>
+      <div class="tier-price">$200<small> once</small></div>
+      <p class="tier-desc">A verified Business Manager with 3 agency ad accounts. Higher trust, better limits, no subscription.</p>
+      <ul class="tier-list"><li>Verified BM status</li><li><b>3</b> ad accounts inside</li><li>Replace on $0 / minimal spend</li><li>Use your own cards</li></ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-ghost btn-block">Get BM3 Verified</a>
+    </div>
+    <div class="tier pop"><span class="tier-tag">Most Popular</span>
+      <div class="tier-name">Top Agency</div>
+      <div class="tier-price">$1,950<small> / mo</small></div>
+      <p class="tier-desc">Top-tier subscription for serious operators: 15 ad accounts with unlimited replacements, built for aggressive scaling.</p>
+      <ul class="tier-list"><li><b>15</b> ad accounts included</li><li><b>Unlimited</b> replacements</li><li>Priority 24/7 support</li><li>Aggressive-scaling ready</li></ul>
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-block">Get Top Agency</a>
+    </div>
+    <div class="tier"><span class="tier-tag muted">Exclusive</span>
+      <div class="tier-name">Onyx BM2500</div>
+      <div class="tier-price">$15,000<small> once</small></div>
+      <p class="tier-desc">Up to 2,500 ad accounts shared into one high-trust hub BM from distributed sources. No single point of failure.</p>
+      <ul class="tier-list"><li>Up to <b>2,500</b> accounts in one BM</li><li>One-click share to any BM</li><li>BM-level recovery</li><li>Auto-replace in 5–10 min</li></ul>
+      <a href="#onyx" class="btn btn-ghost btn-block">See Onyx →</a>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:30px" class="reveal"><a href="pricing.html" class="btn btn-ghost btn-lg">Compare all tiers &amp; pricing →</a></div>
+</div></section>
+
+<!-- ONYX -->
+<section class="sec" id="onyx" style="padding-top:0"><div class="wrap">
+  <div class="cta-band reveal" style="text-align:left">
+    <div class="split" style="align-items:center">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Onyx · Exclusive tier</span>
+        <h2 style="margin:18px 0 14px;text-align:left">Onyx <span class="grad">BM2500</span></h2>
+        <p style="margin:0 0 22px 0;text-align:left;font-size:16px">A one-of-a-kind hub for uninterrupted scaling — up to <b style="color:#fff">2,500 ad accounts</b> shared into a single high-trust BM from multiple sources. Distributed sourcing means one ban never stops the machine.</p>
+        <div class="row" style="justify-content:flex-start"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Get Onyx BM2500</a><a href="case-studies.html" class="btn btn-ghost btn-lg">See it in action</a></div>
+      </div>
+      <div class="grid g2" style="gap:14px">
+        <div class="glass" style="padding:20px"><div class="grad" style="font-family:var(--disp);font-weight:900;font-size:30px">2,500</div><p style="font-size:13px;color:var(--mut);margin-top:4px">Accounts in one hub BM</p></div>
+        <div class="glass" style="padding:20px"><div class="grad" style="font-family:var(--disp);font-weight:900;font-size:30px">5–10m</div><p style="font-size:13px;color:var(--mut);margin-top:4px">Auto-replacement</p></div>
+        <div class="glass" style="padding:20px"><div class="grad" style="font-family:var(--disp);font-weight:900;font-size:30px">1-click</div><p style="font-size:13px;color:var(--mut);margin-top:4px">Share to any BM</p></div>
+        <div class="glass" style="padding:20px"><div class="grad" style="font-family:var(--disp);font-weight:900;font-size:30px">BM-lvl</div><p style="font-size:13px;color:var(--mut);margin-top:4px">Full recovery</p></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal">
+    <span class="kick">Proof</span>
+    <h2>Operators who <span class="grad">don't go dark.</span></h2>
+  </div>
+  <div class="quotes stagger">
+    <div class="quote"><div class="stars">★★★★★</div><p>"Scaled my D2C brand to $9.6M/mo across 4 verticals. Onyx is the only reason our hub BM is never a single point of failure."</p><div class="who"><div class="av">SK</div><div><div class="nm">Sarah K.</div><div class="rl">Atlas Media Group · $9.6M/mo</div></div></div></div>
+    <div class="quote"><div class="stars">★★★★★</div><p>"Meta disabled my main account mid-launch. New one was live in under 10 minutes. I didn't even pause the campaign."</p><div class="who"><div class="av">MR</div><div><div class="nm">Marco R.</div><div class="rl">Nutra · $2.1M/mo</div></div></div></div>
+    <div class="quote"><div class="stars">★★★★★</div><p>"$18M year-to-date. The CRM plus unlimited replacements means downtime just isn't part of my business anymore."</p><div class="who"><div class="av">DP</div><div><div class="nm">Deepak P.</div><div class="rl">E-com · $18M YTD</div></div></div></div>
+  </div>
+  <div style="text-align:center;margin-top:30px" class="reveal"><a href="case-studies.html" class="btn btn-ghost btn-lg">Read the full case studies →</a></div>
+</div></section>
+
+<!-- GUARANTEES -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><span class="kick">Risk, removed</span><h2>What you're <span class="grad">covered on.</span></h2></div>
+  <div class="guars stagger">
+    <div class="guar"><div class="ic">⚡</div><h4>5–10 min replacements</h4><p>Dead account swapped before you lose momentum.</p></div>
+    <div class="guar"><div class="ic">♾️</div><h4>Unlimited on monthly</h4><p>Whatever happens, we replace it. No questions.</p></div>
+    <div class="guar"><div class="ic">💳</div><h4>Your own cards</h4><p>Full control of your ad-spend billing.</p></div>
+    <div class="guar"><div class="ic">🛡️</div><h4>Free on $0 spend</h4><p>Any account that dies before it spends is replaced free.</p></div>
+  </div>
+</div></section>
+
+<!-- FAQ -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><span class="kick">FAQ</span><h2>Answers, <span class="grad">fast.</span></h2></div>
   <div class="faq reveal">
-    <details class="qa"><summary>How fast are replacements really?<span class="pl">+</span></summary><div class="a">Most replacements land in 5–10 minutes through the CRM's one-click share. Enterprise and Onyx tiers run a priority queue for near-instant turnaround — our fastest logged replacement was 47 seconds.</div></details>
-    <details class="qa"><summary>Do you work with gray / blackhat verticals?<span class="pl">+</span></summary><div class="a">Yes. The entire infrastructure is engineered around verticals that get banned frequently. We don't ask questions about your offer.</div></details>
-    <details class="qa"><summary>Can I use my own cards for ad spend?<span class="pl">+</span></summary><div class="a">Yes — every package lets you attach your own payment methods for ad spend. You keep full control of your billing.</div></details>
-    <details class="qa"><summary>What's the difference between one-time and monthly?<span class="pl">+</span></summary><div class="a">One-time packages (BM3, BM10) are pay-once with replacement on $0 / minimal spend. Monthly subscriptions add unlimited replacements and ongoing priority support.</div></details>
-    <details class="qa"><summary>What is Onyx BM2500?<span class="pl">+</span></summary><div class="a">Our exclusive tier — up to 2,500 ad accounts shared into a single high-trust BM from distributed sources, with BM-level recovery and white-glove support.</div></details>
-    <details class="qa"><summary>How do I get started?<span class="pl">+</span></summary><div class="a">Message us on Telegram. Tell us your vertical, GEOs, and spend, and we'll recommend the right structure and get you onboarded the same day. See the <a href="onboarding.html" style="color:var(--gold2);text-decoration:underline">onboarding steps</a>.</div></details>
+    <details class="qa"><summary>How fast are replacements really?<span class="pl">+</span></summary><div class="a">5–10 minutes on average. One click in the CRM shares a fresh account into your BM — you're spending again before your competition even notices they're down.</div></details>
+    <details class="qa"><summary>Is it really no questions asked?<span class="pl">+</span></summary><div class="a">Yes. We provide infrastructure. What you run on it is your business — gray and blackhat verticals included.</div></details>
+    <details class="qa"><summary>What happens when Meta disables an account?<span class="pl">+</span></summary><div class="a">On monthly plans, replacements are unlimited and unconditional — we swap in a fresh account, no matter what happened. One-time BMs are replaced free if they die on $0 / minimal spend.</div></details>
+    <details class="qa"><summary>Can I use my own payment cards?<span class="pl">+</span></summary><div class="a">Always. You keep full control of your ad-spend billing — top up, launch, and scale on your own terms.</div></details>
+    <details class="qa"><summary>How do I get started?<span class="pl">+</span></summary><div class="a">Message us on Telegram with your vertical, GEOs, and monthly spend. We recommend the right tier and get you live the same day.</div></details>
   </div>
 </div></section>
 
-<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta-band reveal">
-  <span class="eyebrow"><span class="dot"></span> Partner Program</span>
-  <h2 style="margin-top:16px">Refer media buyers. Earn <span class="grad">15% recurring</span>.</h2>
-  <p>Know other operators? Send them our way and earn 15% recurring on everything they spend — for as long as they stay.</p>
-  <a href="affiliate.html" class="btn btn-primary btn-lg magnetic">Join the affiliate program →</a>
-</div></div></section>
-
-<section class="sec" id="contact" style="padding-top:0;text-align:center"><div class="wrap">
-  <div class="sec-head reveal" style="margin-bottom:10px"><h2>Talk to <span class="grad">ScaleShield</span>.</h2><p>Real operators, 24/7. Tell us what you're running and we'll architect the right infrastructure.</p></div>
-  <div class="contact-cards stagger">
-    <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="cc tilt"><div class="ic">✈️</div><h4>Telegram</h4><p>Fastest response · @scaleshieldsupport</p></a>
-    <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="cc tilt"><div class="ic">💬</div><h4>WhatsApp</h4><p>Message us directly</p></a>
-    <a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener" class="cc tilt"><div class="ic">📸</div><h4>Instagram</h4><p>@scaleshield.pro</p></a>
+<!-- FINAL CTA -->
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="cta-band reveal">
+    <span class="eyebrow"><span class="dot"></span> Ready when you are</span>
+    <h2>Stop losing accounts. <span class="grad">Start scaling today.</span></h2>
+    <p>Tell us your vertical, GEOs, and monthly spend — we'll recommend the right structure and get you live the same day.</p>
+    <div class="row">
+      <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Talk to ScaleShield →</a>
+      <a href="https://wa.me/447412860721" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">WhatsApp us</a>
+    </div>
   </div>
-  <div style="margin-top:40px"><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic">Get started on Telegram →</a></div>
 </div></section>
 
+<!-- FOOTER -->
 <footer class="foot"><div class="wrap">
   <div class="foot-grid">
-    <div><div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div><p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers. Stable accounts, instant replacements, 24/7 support.</p></div>
-    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="#onyx">Onyx BM2500</a><a href="presentation.html">CRM Tour</a><a href="onboarding.html">Onboarding</a></div>
-    <div><h5>Proof</h5><a href="case-study-marco.html">Marco — $2.1M/mo</a><a href="case-study-sarah.html">Sarah — $9.6M/mo</a><a href="case-study-deepak.html">Deepak — $18M YTD</a><a href="affiliate.html">Affiliate</a></div>
-    <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://scaleshield-dashboard.lively-sunset-0c93.workers.dev/login" target="_blank" rel="noopener">Log in ↗</a></div>
+    <div>
+      <div class="brand" style="margin-bottom:14px"><img src="logo.png" alt="ScaleShield"><span>Scale<span class="grad">Shield</span></span></div>
+      <p style="color:var(--mut);font-size:14px;max-width:320px">Premium Meta agency infrastructure for high-volume media buyers. Built for operators who scale.</p>
+    </div>
+    <div><h5>Product</h5><a href="pricing.html">Pricing</a><a href="#onyx">Onyx BM2500</a><a href="#crm">The CRM</a><a href="onboarding.html">Onboarding</a><a href="policy.html">Policy &amp; Warranty</a></div>
+    <div><h5>Proof</h5><a href="case-studies.html">Case Studies</a><a href="#how">How it works</a><a href="affiliate.html">Affiliate — earn 15%</a></div>
+    <div><h5>Connect</h5><a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener">Telegram ↗</a><a href="https://wa.me/447412860721" target="_blank" rel="noopener">WhatsApp ↗</a><a href="https://www.instagram.com/scaleshield.pro/" target="_blank" rel="noopener">Instagram ↗</a></div>
   </div>
-  <div class="foot-bottom"><div>© 2026 ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
+  <div class="foot-bottom"><div>© <span id="year">2026</span> ScaleShield. Premium agency infrastructure.</div><div>Built for operators who scale.</div></div>
 </div></footer>
 
+<!-- FLOATING + STICKY MOBILE CTA -->
 <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="float-tg" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
+<div class="mcta">
+  <a href="https://t.me/scaleshieldsupport" target="_blank" rel="noopener" class="btn btn-primary">Start scaling →</a>
+  <a href="pricing.html" class="btn btn-ghost">Pricing</a>
+</div>
 
-<script src="ss.js"></script>
+<script src="sx.js"></script>
 </body>
 </html>
