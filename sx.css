@@ -262,3 +262,41 @@ h1,h2,h3,h4,h5{font-family:var(--disp);font-weight:800;line-height:1.05;letter-s
 .stagger.in>*:nth-child(5){transition-delay:.32s}
 .stagger.in>*:nth-child(6){transition-delay:.4s}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.stagger>*{opacity:1;transform:none}}
+
+/* ============ RESPONSIVE HARDENING — every resolution, nothing broken ============ */
+/* long words / URLs / labels never force horizontal scroll or clip */
+h1,h2,h3,h4,h5,p,li,a,span,summary,div{overflow-wrap:break-word}
+/* flex & grid children may shrink below intrinsic content width (prevents overflow) */
+.hero-cta>*,.cta-band .row>*,.split>*,.grid>*,.tiers>*,.quotes>*,.guars>*,.flow>*,.incl>*,.rules>*,.stats>*,.cs>*{min-width:0}
+.mock,.cmp{max-width:100%}
+img,svg{max-width:100%;height:auto}
+
+/* laptops / small desktop */
+@media(max-width:1080px){ .hero h1{max-width:18ch} }
+/* tablets */
+@media(max-width:900px){ .split{gap:26px} .sec-head{margin-bottom:40px} }
+/* phones — stack CTA rows full-width so long labels can never clip */
+@media(max-width:640px){
+  .hero{padding:46px 0 22px}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta .btn{width:100%}
+  .cta-band{padding:46px 22px}
+  .cta-band .row{flex-direction:column;align-items:stretch}
+  .cta-band .row .btn{width:100%}
+  .marq-track .m{font-size:16px}
+  .foot-bottom{flex-direction:column;gap:6px;text-align:center}
+  .foot-bottom>div{width:100%}
+}
+/* small phones (≤400) — final safety: allow labels to wrap, tighten spacing */
+@media(max-width:400px){
+  .wrap{padding:0 16px}
+  .sec{padding:50px 0}
+  .btn{white-space:normal;line-height:1.25}
+  .btn-lg{padding:15px 18px;font-size:15px}
+  .stat{padding:20px 12px}
+  .stat .n{font-size:26px}
+  .tier{padding:24px}
+  .card{padding:22px}
+  .cta-band{padding:36px 16px}
+  .eyebrow{font-size:11px;padding:7px 13px}
+}
