@@ -131,6 +131,14 @@ h1,h2,h3,h4,h5{font-family:var(--disp);font-weight:800;line-height:1.05;letter-s
 @keyframes orb2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-14%,10%,0) scale(1.12)}}
 @keyframes orb3{from{transform:translate3d(0,0,0) scale(1);opacity:.28}to{transform:translate3d(10%,-14%,0) scale(1.24);opacity:.5}}
 @media(prefers-reduced-motion:reduce){.hero-fx span{animation:none!important}}
+/* floating icon backdrop */
+.hero-icons{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.hero-icons i{position:absolute;font-style:normal;line-height:1;font-size:clamp(22px,2.6vw,38px);
+  opacity:.22;will-change:transform;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5));
+  animation:floaty 14s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-26px) rotate(6deg)}}
+@media(max-width:760px){.hero-icons i{font-size:22px;opacity:.12}.hero-icons i.hide-sm{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-icons i{animation:none}}
 
 /* stat strip */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line)}
