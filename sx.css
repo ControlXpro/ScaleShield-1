@@ -114,6 +114,23 @@ h1,h2,h3,h4,h5{font-family:var(--disp);font-weight:800;line-height:1.05;letter-s
 .hero-tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
 .hero-tags .t{font-size:12.5px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:6px 13px;background:rgba(255,255,255,.02)}
 .hero-tags .t b{color:var(--gold2)}
+/* ---- centered hero + animated backdrop (home) ---- */
+.hero-center{text-align:center}
+.hero-center .wrap{position:relative;z-index:2}
+.hero-center h1,.hero-center .hero-sub{margin-left:auto;margin-right:auto}
+.hero-center .hero-cta,.hero-center .hero-tags{justify-content:center}
+.hero-fx{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-fx span{position:absolute;display:block;border-radius:50%;aspect-ratio:1;filter:blur(60px);will-change:transform,opacity}
+.hero-fx .b1{width:clamp(300px,40vw,560px);left:-6%;top:-14%;opacity:.62;
+  background:radial-gradient(circle at 50% 50%,rgba(214,177,94,.58),rgba(214,177,94,0) 68%);animation:orb1 19s ease-in-out infinite alternate}
+.hero-fx .b2{width:clamp(340px,46vw,660px);right:-10%;top:0%;opacity:.6;
+  background:radial-gradient(circle at 50% 50%,rgba(242,210,122,.52),rgba(242,210,122,0) 68%);animation:orb2 23s ease-in-out infinite alternate}
+.hero-fx .b3{width:clamp(280px,34vw,520px);left:30%;bottom:-20%;opacity:.5;
+  background:radial-gradient(circle at 50% 50%,rgba(123,97,255,.4),rgba(123,97,255,0) 70%);animation:orb3 27s ease-in-out infinite alternate}
+@keyframes orb1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(16%,12%,0) scale(1.18)}}
+@keyframes orb2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-14%,10%,0) scale(1.12)}}
+@keyframes orb3{from{transform:translate3d(0,0,0) scale(1);opacity:.28}to{transform:translate3d(10%,-14%,0) scale(1.24);opacity:.5}}
+@media(prefers-reduced-motion:reduce){.hero-fx span{animation:none!important}}
 
 /* stat strip */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line)}
